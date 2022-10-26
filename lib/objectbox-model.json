@@ -1,0 +1,114 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:4387961578365705839",
+      "lastPropertyId": "4:2914310562962358659",
+      "name": "Book",
+      "properties": [
+        {
+          "id": "1:440511761705935766",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5852570933097988751",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:6218204680826590668",
+          "name": "author",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:3535836821107933985",
+          "name": "chapters",
+          "targetId": "2:7322332654755077441"
+        }
+      ]
+    },
+    {
+      "id": "2:7322332654755077441",
+      "lastPropertyId": "1:8984828347236359649",
+      "name": "Chapter",
+      "properties": [
+        {
+          "id": "1:8984828347236359649",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:4675358278237952481",
+          "name": "paragraphs",
+          "targetId": "3:6493177431338303413"
+        }
+      ]
+    },
+    {
+      "id": "3:6493177431338303413",
+      "lastPropertyId": "1:2415980714103244111",
+      "name": "Paragraph",
+      "properties": [
+        {
+          "id": "1:2415980714103244111",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "3:2652675960758816000",
+          "name": "pieces",
+          "targetId": "4:2797481375256060018"
+        }
+      ]
+    },
+    {
+      "id": "4:2797481375256060018",
+      "lastPropertyId": "3:1415951895446300480",
+      "name": "Piece",
+      "properties": [
+        {
+          "id": "1:279090183780420962",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3126761373932798512",
+          "name": "content",
+          "type": 9
+        },
+        {
+          "id": "3:1415951895446300480",
+          "name": "isWord",
+          "type": 1
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "4:2797481375256060018",
+  "lastIndexId": "0:0",
+  "lastRelationId": "3:2652675960758816000",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    2914310562962358659
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}
