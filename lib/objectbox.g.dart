@@ -12,6 +12,7 @@ import 'dart:typed_data';
 import 'package:flat_buffers/flat_buffers.dart' as fb;
 import 'package:objectbox/internal.dart'; // generated code can access "internal" functionality
 import 'package:objectbox/objectbox.dart';
+import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/book.dart';
 
@@ -19,92 +20,54 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 4387961578365705839),
+      id: const IdUid(1, 8109595226576839299),
       name: 'Book',
-      lastPropertyId: const IdUid(4, 2914310562962358659),
+      lastPropertyId: const IdUid(4, 6478967737572497596),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 440511761705935766),
+            id: const IdUid(1, 3156524355314541616),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 5852570933097988751),
+            id: const IdUid(2, 3550267704506108043),
             name: 'title',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 6218204680826590668),
+            id: const IdUid(3, 8633761191670243090),
             name: 'author',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6478967737572497596),
+            name: 'cover',
+            type: 23,
             flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
-            id: const IdUid(1, 3535836821107933985),
+            id: const IdUid(1, 1269702027936163610),
             name: 'chapters',
-            targetId: const IdUid(2, 7322332654755077441))
+            targetId: const IdUid(2, 5339570489338973461))
       ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(2, 7322332654755077441),
+      id: const IdUid(2, 5339570489338973461),
       name: 'Chapter',
-      lastPropertyId: const IdUid(1, 8984828347236359649),
+      lastPropertyId: const IdUid(2, 6034394794130613884),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 8984828347236359649),
-            name: 'id',
-            type: 6,
-            flags: 1)
-      ],
-      relations: <ModelRelation>[
-        ModelRelation(
-            id: const IdUid(2, 4675358278237952481),
-            name: 'paragraphs',
-            targetId: const IdUid(3, 6493177431338303413))
-      ],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(3, 6493177431338303413),
-      name: 'Paragraph',
-      lastPropertyId: const IdUid(1, 2415980714103244111),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 2415980714103244111),
-            name: 'id',
-            type: 6,
-            flags: 1)
-      ],
-      relations: <ModelRelation>[
-        ModelRelation(
-            id: const IdUid(3, 2652675960758816000),
-            name: 'pieces',
-            targetId: const IdUid(4, 2797481375256060018))
-      ],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(4, 2797481375256060018),
-      name: 'Piece',
-      lastPropertyId: const IdUid(3, 1415951895446300480),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 279090183780420962),
+            id: const IdUid(1, 4894759026733352324),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 3126761373932798512),
+            id: const IdUid(2, 6034394794130613884),
             name: 'content',
             type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 1415951895446300480),
-            name: 'isWord',
-            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -112,15 +75,15 @@ final _entities = <ModelEntity>[
 ];
 
 /// Open an ObjectBox store with the model declared in this file.
-Store openStore(
+Future<Store> openStore(
         {String? directory,
         int? maxDBSizeInKB,
         int? fileMode,
         int? maxReaders,
         bool queriesCaseSensitiveDefault = true,
-        String? macosApplicationGroup}) =>
+        String? macosApplicationGroup}) async =>
     Store(getObjectBoxModel(),
-        directory: directory,
+        directory: directory ?? (await defaultStoreDirectory()).path,
         maxDBSizeInKB: maxDBSizeInKB,
         fileMode: fileMode,
         maxReaders: maxReaders,
@@ -131,13 +94,13 @@ Store openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(4, 2797481375256060018),
+      lastEntityId: const IdUid(2, 5339570489338973461),
       lastIndexId: const IdUid(0, 0),
-      lastRelationId: const IdUid(3, 2652675960758816000),
+      lastRelationId: const IdUid(1, 1269702027936163610),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [2914310562962358659],
+      retiredPropertyUids: const [],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -156,10 +119,13 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (Book object, fb.Builder fbb) {
           final titleOffset = fbb.writeString(object.title);
           final authorOffset = fbb.writeString(object.author);
+          final coverOffset =
+              object.cover == null ? null : fbb.writeListInt8(object.cover!);
           fbb.startTable(5);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, titleOffset);
           fbb.addOffset(2, authorOffset);
+          fbb.addOffset(3, coverOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -172,7 +138,9 @@ ModelDefinition getObjectBoxModel() {
               title: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
               author: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''));
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              cover: const fb.Uint8ListReader(lazy: false)
+                  .vTableGetNullable(buffer, rootOffset, 10) as Uint8List?);
           InternalToManyAccess.setRelInfo(object.chapters, store,
               RelInfo<Book>.toMany(1, object.id), store.box<Book>());
           return object;
@@ -180,15 +148,16 @@ ModelDefinition getObjectBoxModel() {
     Chapter: EntityDefinition<Chapter>(
         model: _entities[1],
         toOneRelations: (Chapter object) => [],
-        toManyRelations: (Chapter object) =>
-            {RelInfo<Chapter>.toMany(2, object.id): object.paragraphs},
+        toManyRelations: (Chapter object) => {},
         getId: (Chapter object) => object.id,
         setId: (Chapter object, int id) {
           object.id = id;
         },
         objectToFB: (Chapter object, fb.Builder fbb) {
-          fbb.startTable(2);
+          final contentOffset = fbb.writeString(object.content);
+          fbb.startTable(3);
           fbb.addInt64(0, object.id);
+          fbb.addOffset(1, contentOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -197,63 +166,9 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = Chapter(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
-          InternalToManyAccess.setRelInfo(object.paragraphs, store,
-              RelInfo<Chapter>.toMany(2, object.id), store.box<Chapter>());
-          return object;
-        }),
-    Paragraph: EntityDefinition<Paragraph>(
-        model: _entities[2],
-        toOneRelations: (Paragraph object) => [],
-        toManyRelations: (Paragraph object) =>
-            {RelInfo<Paragraph>.toMany(3, object.id): object.pieces},
-        getId: (Paragraph object) => object.id,
-        setId: (Paragraph object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Paragraph object, fb.Builder fbb) {
-          fbb.startTable(2);
-          fbb.addInt64(0, object.id);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Paragraph(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
-          InternalToManyAccess.setRelInfo(object.pieces, store,
-              RelInfo<Paragraph>.toMany(3, object.id), store.box<Paragraph>());
-          return object;
-        }),
-    Piece: EntityDefinition<Piece>(
-        model: _entities[3],
-        toOneRelations: (Piece object) => [],
-        toManyRelations: (Piece object) => {},
-        getId: (Piece object) => object.id,
-        setId: (Piece object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Piece object, fb.Builder fbb) {
-          final contentOffset = fbb.writeString(object.content);
-          fbb.startTable(4);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, contentOffset);
-          fbb.addBool(2, object.isWord);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Piece(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               content: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              isWord: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 8, false));
+                  .vTableGet(buffer, rootOffset, 6, ''));
 
           return object;
         })
@@ -273,6 +188,10 @@ class Book_ {
   /// see [Book.author]
   static final author = QueryStringProperty<Book>(_entities[0].properties[2]);
 
+  /// see [Book.cover]
+  static final cover =
+      QueryByteVectorProperty<Book>(_entities[0].properties[3]);
+
   /// see [Book.chapters]
   static final chapters =
       QueryRelationToMany<Book, Chapter>(_entities[0].relations[0]);
@@ -283,29 +202,7 @@ class Chapter_ {
   /// see [Chapter.id]
   static final id = QueryIntegerProperty<Chapter>(_entities[1].properties[0]);
 
-  /// see [Chapter.paragraphs]
-  static final paragraphs =
-      QueryRelationToMany<Chapter, Paragraph>(_entities[1].relations[0]);
-}
-
-/// [Paragraph] entity fields to define ObjectBox queries.
-class Paragraph_ {
-  /// see [Paragraph.id]
-  static final id = QueryIntegerProperty<Paragraph>(_entities[2].properties[0]);
-
-  /// see [Paragraph.pieces]
-  static final pieces =
-      QueryRelationToMany<Paragraph, Piece>(_entities[2].relations[0]);
-}
-
-/// [Piece] entity fields to define ObjectBox queries.
-class Piece_ {
-  /// see [Piece.id]
-  static final id = QueryIntegerProperty<Piece>(_entities[3].properties[0]);
-
-  /// see [Piece.content]
-  static final content = QueryStringProperty<Piece>(_entities[3].properties[1]);
-
-  /// see [Piece.isWord]
-  static final isWord = QueryBooleanProperty<Piece>(_entities[3].properties[2]);
+  /// see [Chapter.content]
+  static final content =
+      QueryStringProperty<Chapter>(_entities[1].properties[1]);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:freader/widgets/reader/reader_widget.dart';
-import '../models/book.dart';
+import 'package:freader/models/book.dart';
+
+import 'reader_screen.dart';
 
 class ReaderPage extends StatefulWidget {
   final Book book;
@@ -14,13 +15,16 @@ class ReaderPage extends StatefulWidget {
 
 class _ReaderPageState extends State<ReaderPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Reader'),
-        ),
-        body: ReaderWidget(
-          book: widget.book,
-        ));
+      body: ReaderScreen(
+        chapter: widget.book.chapters[3],
+      ),
+    );
   }
 }

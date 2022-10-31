@@ -1,3 +1,7 @@
+import 'dart:typed_data';
+
+import 'package:image/image.dart';
+
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -5,32 +9,27 @@ class Book {
   int id;
   String title;
   String author;
+  Uint8List? cover;
   final chapters = ToMany<Chapter>();
 
-  Book({this.id = 0, required this.title, required this.author});
+  Book({this.id = 0, required this.title, required this.author, this.cover});
 }
 
 @Entity()
 class Chapter {
   int id;
-  final paragraphs = ToMany<Paragraph>();
+  String content;
 
-  Chapter({this.id = 0});
+  Chapter({this.id = 0, required this.content});
 }
 
-@Entity()
 class Paragraph {
-  int id;
-  final pieces = ToMany<Piece>();
-
-  Paragraph({this.id = 0});
+  final List<Piece> pieces = [];
 }
 
-@Entity()
 class Piece {
-  int id;
   String content;
   bool isWord;
 
-  Piece({this.id = 0, required this.content, required this.isWord});
+  Piece({required this.content, required this.isWord});
 }

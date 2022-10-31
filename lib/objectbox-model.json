@@ -4,111 +4,69 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:4387961578365705839",
-      "lastPropertyId": "4:2914310562962358659",
+      "id": "1:8109595226576839299",
+      "lastPropertyId": "4:6478967737572497596",
       "name": "Book",
       "properties": [
         {
-          "id": "1:440511761705935766",
+          "id": "1:3156524355314541616",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:5852570933097988751",
+          "id": "2:3550267704506108043",
           "name": "title",
           "type": 9
         },
         {
-          "id": "3:6218204680826590668",
+          "id": "3:8633761191670243090",
           "name": "author",
           "type": 9
+        },
+        {
+          "id": "4:6478967737572497596",
+          "name": "cover",
+          "type": 23
         }
       ],
       "relations": [
         {
-          "id": "1:3535836821107933985",
+          "id": "1:1269702027936163610",
           "name": "chapters",
-          "targetId": "2:7322332654755077441"
+          "targetId": "2:5339570489338973461"
         }
       ]
     },
     {
-      "id": "2:7322332654755077441",
-      "lastPropertyId": "1:8984828347236359649",
+      "id": "2:5339570489338973461",
+      "lastPropertyId": "2:6034394794130613884",
       "name": "Chapter",
       "properties": [
         {
-          "id": "1:8984828347236359649",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        }
-      ],
-      "relations": [
-        {
-          "id": "2:4675358278237952481",
-          "name": "paragraphs",
-          "targetId": "3:6493177431338303413"
-        }
-      ]
-    },
-    {
-      "id": "3:6493177431338303413",
-      "lastPropertyId": "1:2415980714103244111",
-      "name": "Paragraph",
-      "properties": [
-        {
-          "id": "1:2415980714103244111",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        }
-      ],
-      "relations": [
-        {
-          "id": "3:2652675960758816000",
-          "name": "pieces",
-          "targetId": "4:2797481375256060018"
-        }
-      ]
-    },
-    {
-      "id": "4:2797481375256060018",
-      "lastPropertyId": "3:1415951895446300480",
-      "name": "Piece",
-      "properties": [
-        {
-          "id": "1:279090183780420962",
+          "id": "1:4894759026733352324",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:3126761373932798512",
+          "id": "2:6034394794130613884",
           "name": "content",
           "type": 9
-        },
-        {
-          "id": "3:1415951895446300480",
-          "name": "isWord",
-          "type": 1
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "4:2797481375256060018",
+  "lastEntityId": "2:5339570489338973461",
   "lastIndexId": "0:0",
-  "lastRelationId": "3:2652675960758816000",
+  "lastRelationId": "1:1269702027936163610",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [
-    2914310562962358659
-  ],
+  "retiredPropertyUids": [],
   "retiredRelationUids": [],
   "version": 1
 }
