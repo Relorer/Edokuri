@@ -26,8 +26,12 @@ class EpubService {
     }
 
     var book = Book(
-        author: epub.Author ?? "no author",
-        title: epub.Title ?? "no title",
+        author: epub.Author != null && epub.Author!.isNotEmpty
+            ? epub.Author!
+            : "no author",
+        title: epub.Title != null && epub.Title!.isNotEmpty
+            ? epub.Title!
+            : "no title",
         cover: cover);
 
     for (var value in chapters) {

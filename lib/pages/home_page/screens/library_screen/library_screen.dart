@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freader/Services/epub_service.dart';
 import 'package:freader/Services/file_picker_service.dart';
 import 'package:freader/pages/home_page/screens/library_screen/widgets/book_card_widget.dart';
@@ -103,7 +104,40 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     SectorTitleWidget(
                       leftText: "Library",
                       onPressed: () {
-                        _addButtonHandler();
+                        // showDialog(
+                        //     context: context,
+                        //     builder: (_) => new AlertDialog(
+                        //           shape: RoundedRectangleBorder(
+                        //               borderRadius: BorderRadius.all(
+                        //                   Radius.circular(10.0))),
+                        //           content: Builder(
+                        //             builder: (context) {
+                        //               // Get available height and width of the build area of this widget. Make a choice depending on the size.
+                        //               var height =
+                        //                   MediaQuery.of(context).size.height;
+                        //               var width =
+                        //                   MediaQuery.of(context).size.width;
+
+                        //               return Container(
+                        //                 height: height - 400,
+                        //                 width: 300,
+                        //                 child: Column(children: [
+                        //                   InkWell(
+                        //                     onTap: () {},
+                        //                     child: Row(children: [
+                        //                       SvgPicture.asset(
+                        //                         "assets/icons/upload.svg",
+                        //                         color: Theme.of(context)
+                        //                             .paleElementColor,
+                        //                       ),
+                        //                       const Text("Upload new book")
+                        //                     ]),
+                        //                   )
+                        //                 ]),
+                        //               );
+                        //             },
+                        //           ),
+                        //         ));
                       },
                     ),
                     const SizedBox(

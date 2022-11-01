@@ -32,7 +32,16 @@ class BookCardWidget extends StatelessWidget {
                     width: 70,
                     fit: BoxFit.fitHeight,
                     image: MemoryImage(book.cover!))
-                : Container(),
+                : Container(
+                    height: 110,
+                    width: 70,
+                    color: Theme.of(context).paleElementColor,
+                    child: const Center(
+                        child: Text(
+                      "cover",
+                      style: TextStyle(color: Colors.white60),
+                    )),
+                  ),
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),

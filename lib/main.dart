@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> setHighRefreshRate() async {
-    await FlutterDisplayMode.setHighRefreshRate();
+    // await FlutterDisplayMode.setHighRefreshRate();
     await Future<dynamic>.delayed(
       const Duration(milliseconds: 100),
     );
