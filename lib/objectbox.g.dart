@@ -14,58 +14,58 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'models/book.dart';
+import 'src/models/book.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 8109595226576839299),
+      id: const IdUid(1, 7555383519736908052),
       name: 'Book',
-      lastPropertyId: const IdUid(4, 6478967737572497596),
+      lastPropertyId: const IdUid(4, 8135821839891028441),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 3156524355314541616),
+            id: const IdUid(1, 6689691318167578119),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 3550267704506108043),
+            id: const IdUid(2, 9158977824534214653),
             name: 'title',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 8633761191670243090),
+            id: const IdUid(3, 6144954415665077897),
             name: 'author',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 6478967737572497596),
+            id: const IdUid(4, 8135821839891028441),
             name: 'cover',
             type: 23,
             flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
-            id: const IdUid(1, 1269702027936163610),
+            id: const IdUid(1, 5203724193353101733),
             name: 'chapters',
-            targetId: const IdUid(2, 5339570489338973461))
+            targetId: const IdUid(2, 7150137983610600479))
       ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(2, 5339570489338973461),
+      id: const IdUid(2, 7150137983610600479),
       name: 'Chapter',
-      lastPropertyId: const IdUid(2, 6034394794130613884),
+      lastPropertyId: const IdUid(2, 2973545806953025121),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 4894759026733352324),
+            id: const IdUid(1, 7687381543777686108),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 6034394794130613884),
+            id: const IdUid(2, 2973545806953025121),
             name: 'content',
             type: 9,
             flags: 0)
@@ -94,9 +94,9 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(2, 5339570489338973461),
+      lastEntityId: const IdUid(2, 7150137983610600479),
       lastIndexId: const IdUid(0, 0),
-      lastRelationId: const IdUid(1, 1269702027936163610),
+      lastRelationId: const IdUid(1, 5203724193353101733),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
