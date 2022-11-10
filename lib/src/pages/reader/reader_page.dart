@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:freader/src/core/circular_progress_indicator_pale.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/models/book_indexes.dart';
+import 'package:freader/src/pages/reader/widgets/reader_page_view_widget.dart';
 import 'package:freader/src/theme/theme.dart';
-
-import 'widgets/reader_slider_widget.dart';
 
 class ReaderPage extends StatefulWidget {
   final Book book;
@@ -24,22 +23,42 @@ class ReaderPage extends StatefulWidget {
 }
 
 class _ReaderPageState extends State<ReaderPage> {
-  final List<String> _pages = [];
+  late PageController pageController;
+
+  Size? _pageSize;
+  List<String> _pages = [];
   final _containerKey = GlobalKey();
+
+  int chapter = 0;
+
+  int get startChapter => chapter == 0 ? 0 : 1;
 
   @override
   void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_) => _paginate());
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _pageSize =
+            (_containerKey.currentContext?.findRenderObject() as RenderBox)
+                .size;
+      });
+      setChapter(0);
+    });
     super.initState();
+    pageController = PageController(initialPage: startChapter);
   }
 
-  void _paginate() {
-    final pageSize =
-        (_containerKey.currentContext?.findRenderObject() as RenderBox).size;
+  void setChapter(int index) {
+    setState(() {
+      chapter = index;
+      _pages = _paginate(_pageSize!, widget.book.chapters[chapter].content);
+      if (pageController.hasClients) {
+        pageController.jumpToPage(startChapter);
+      }
+    });
+  }
 
-    _pages.clear();
-
-    var content = widget.book.chapters[3].content.replaceAll("\n", "\n\n");
+  List<String> _paginate(Size pageSize, String content) {
+    final result = <String>[];
 
     final textSpan = TextSpan(
         text: content,
@@ -70,22 +89,20 @@ class _ReaderPageState extends State<ReaderPage> {
             textPainter.getPositionForOffset(Offset(left, top)).offset;
         final pageText =
             content.substring(currentPageStartIndex, currentPageEndIndex);
-        _pages.add(pageText);
+        result.add(pageText);
         currentPageStartIndex = currentPageEndIndex;
         currentPageBottom = top + pageSize.height;
       }
     }
 
     final lastPageText = content.substring(currentPageStartIndex);
-    setState(() {
-      _pages.add(lastPageText);
-    });
+    result.add(lastPageText);
+
+    return result;
   }
 
   @override
   Widget build(BuildContext context) {
-    CarouselController buttonCarouselController = CarouselController();
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Theme.of(context).colorScheme.background,
       statusBarColor: Theme.of(context).colorScheme.background,
@@ -141,8 +158,8 @@ class _ReaderPageState extends State<ReaderPage> {
                               thumbShape:
                                   RoundSliderThumbShape(enabledThumbRadius: 5)),
                           child: Slider(
-                            value: 7,
-                            max: 25,
+                            value: 1,
+                            max: 20,
                             onChanged: null,
                           ),
                         ),
@@ -161,13 +178,20 @@ class _ReaderPageState extends State<ReaderPage> {
                 child: SizedBox(
                     width: double.maxFinite,
                     key: _containerKey,
-                    child: _pages.isEmpty
-                        ? Container()
-                        : ReaderSliderWidget(
-                            pages: _pages,
-                            carouselController: buttonCarouselController,
-                            onPageChanged: ((index, reason) {}),
-                          )),
+                    child: _pageSize == null
+                        ? const CircularProgressIndicatorPale()
+                        : ReaderChapterPageView(
+                            pageController: pageController,
+                            pagesContent: _pages,
+                            isFirstChapter: chapter == 0,
+                            isLastChapter:
+                                chapter > widget.book.chapters.length - 1,
+                            moveNext: () {
+                              setChapter(chapter + 1);
+                            },
+                            movePrev: () {
+                              setChapter(chapter - 1);
+                            })),
               ),
               const SizedBox(
                 height: 20,
@@ -175,7 +199,7 @@ class _ReaderPageState extends State<ReaderPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "Chapter 75 of 586",
+                  "Chapter ${chapter + 1} of ${widget.book.chapters.length}",
                   style: TextStyle(color: Theme.of(context).paleElementColor),
                 ),
               ),
@@ -187,23 +211,6 @@ class _ReaderPageState extends State<ReaderPage> {
         ),
       ),
     ));
-  }
-
-  @override
-  void didUpdateWidget(covariant ReaderPage oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void dispose() {
-    print("dispose");
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Theme.of(context).secondBackgroundColor,
-      statusBarColor: Theme.of(context).secondBackgroundColor,
-      statusBarIconBrightness: Brightness.light,
-    ));
-    super.dispose();
   }
 }
 

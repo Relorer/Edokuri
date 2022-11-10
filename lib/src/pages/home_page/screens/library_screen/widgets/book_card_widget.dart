@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:freader/src/controllers/db_controller/provider_db_controller.dart';
 import 'package:freader/src/core/button_with_icon.dart';
 import 'package:freader/src/models/book.dart';
@@ -14,11 +15,19 @@ class BookCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _openBook() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => ReaderPage(book: book),
-        ),
-      );
+      Navigator.of(context)
+          .push(
+            MaterialPageRoute(
+              builder: (context) => ReaderPage(book: book),
+            ),
+          )
+          .then((value) =>
+              SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                systemNavigationBarColor:
+                    Theme.of(context).secondBackgroundColor,
+                statusBarColor: Theme.of(context).secondBackgroundColor,
+                statusBarIconBrightness: Brightness.light,
+              )));
     }
 
     _removeBook() {

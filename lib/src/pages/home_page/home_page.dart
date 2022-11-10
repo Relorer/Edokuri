@@ -1,8 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/library_screen.dart';
 import 'package:freader/src/theme/theme.dart';
-import 'package:need_resume/need_resume.dart';
 import 'widget/main_navigation_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends ResumableState<HomePage> {
+class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = <Widget>[
@@ -24,17 +24,6 @@ class _HomePageState extends ResumableState<HomePage> {
       'Sets',
     ),
   ];
-
-  @override
-  void onResume() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Theme.of(context).secondBackgroundColor,
-      statusBarColor: Theme.of(context).secondBackgroundColor,
-      statusBarIconBrightness: Brightness.light,
-    ));
-
-    print('HomeScreen is resumed!');
-  }
 
   @override
   Widget build(BuildContext context) {
