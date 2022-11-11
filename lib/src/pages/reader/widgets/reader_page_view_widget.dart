@@ -3,6 +3,7 @@ import 'package:freader/src/pages/reader/widgets/reader_page_widget.dart';
 
 class ReaderChapterPageView extends StatelessWidget {
   final PageController pageController;
+  final ValueChanged<int>? onPageChanged;
 
   final List<String> pagesContent;
   final bool isFirstChapter;
@@ -18,7 +19,8 @@ class ReaderChapterPageView extends StatelessWidget {
       required this.isLastChapter,
       required this.moveNext,
       required this.movePrev,
-      required this.pageController});
+      required this.pageController,
+      required this.onPageChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -29,25 +31,29 @@ class ReaderChapterPageView extends StatelessWidget {
           ))
     ];
 
-    if (!isFirstChapter) {
-      pages.insert(
-          0,
-          TextButton(
-              onPressed: () {
-                movePrev();
-              },
-              child: Text("Prev")));
-    }
+    // if (!isFirstChapter) {
+    //   pages.insert(
+    //       0,
+    //       TextButton(
+    //           onPressed: () {
+    //             movePrev();
+    //           },
+    //           child: Text("Prev")));
+    // }
 
-    if (!isLastChapter) {
-      pages.add(TextButton(
-          onPressed: () {
-            moveNext();
-          },
-          child: Text("Next")));
-    }
+    // if (!isLastChapter) {
+    //   pages.add(TextButton(
+    //       onPressed: () {
+    //         moveNext();
+    //       },
+    //       child: const Text(
+    //         "Next chapter",
+    //         style: TextStyle(color: Colors.amber),
+    //       )));
+    // }
 
     return PageView.builder(
+      onPageChanged: onPageChanged,
       controller: pageController,
       physics: const BouncingScrollPhysics(),
       itemCount: pages.length,

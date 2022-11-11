@@ -26,7 +26,10 @@ class _ReaderPageState extends State<ReaderPage> {
   late PageController pageController;
 
   Size? _pageSize;
-  List<String> _pages = [];
+  List<String> _prevChapter = [];
+  List<String> _curChapter = [];
+  List<String> _nextChapter = [];
+
   final _containerKey = GlobalKey();
 
   int chapter = 0;
@@ -47,10 +50,36 @@ class _ReaderPageState extends State<ReaderPage> {
     pageController = PageController(initialPage: startChapter);
   }
 
+  void pageChangedHandler(int index) {
+    print("pasha");
+    if (index < _prevChapter.length) {
+      setState(() {});
+      print(index);
+    }
+    if (index >= _curChapter.length + _prevChapter.length) {
+      setState(() {
+        _prevChapter = _curChapter;
+        _curChapter = _nextChapter;
+        _
+      });
+      print(index);
+    }
+  }
+
   void setChapter(int index) {
     setState(() {
       chapter = index;
-      _pages = _paginate(_pageSize!, widget.book.chapters[chapter].content);
+      _prevChapter = index != 0
+          ? _paginate(_pageSize!, widget.book.chapters[chapter - 1].content)
+          : [];
+
+      _curChapter =
+          _paginate(_pageSize!, widget.book.chapters[chapter].content);
+
+      _nextChapter = index + 1 < widget.book.chapters.length
+          ? _paginate(_pageSize!, widget.book.chapters[chapter + 1].content)
+          : [];
+
       if (pageController.hasClients) {
         pageController.jumpToPage(startChapter);
       }
@@ -181,8 +210,13 @@ class _ReaderPageState extends State<ReaderPage> {
                     child: _pageSize == null
                         ? const CircularProgressIndicatorPale()
                         : ReaderChapterPageView(
+                            onPageChanged: pageChangedHandler,
                             pageController: pageController,
-                            pagesContent: _pages,
+                            pagesContent: [
+                              ..._prevChapter,
+                              ..._curChapter,
+                              ..._nextChapter
+                            ],
                             isFirstChapter: chapter == 0,
                             isLastChapter:
                                 chapter > widget.book.chapters.length - 1,
