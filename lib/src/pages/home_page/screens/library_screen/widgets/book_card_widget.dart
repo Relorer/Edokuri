@@ -14,7 +14,7 @@ class BookCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _openBook() {
+    openBook() {
       Navigator.of(context)
           .push(
             MaterialPageRoute(
@@ -30,7 +30,7 @@ class BookCardWidget extends StatelessWidget {
               )));
     }
 
-    _removeBook() {
+    removeBook() {
       ProviderDbController.ctr(context).removeBook(book);
       Navigator.pop(context);
     }
@@ -42,9 +42,10 @@ class BookCardWidget extends StatelessWidget {
       child: InkWell(
         highlightColor: Theme.of(context).secondBackgroundColor.withAlpha(40),
         splashColor: Theme.of(context).secondBackgroundColor.withAlpha(30),
-        onTap: _openBook,
+        onTap: openBook,
         onLongPress: () {
           showModalBottomSheet<void>(
+            barrierColor: Colors.transparent,
             backgroundColor: Colors.transparent,
             context: context,
             builder: (BuildContext context) {
@@ -71,18 +72,18 @@ class BookCardWidget extends StatelessWidget {
                         ),
                         ButtonWithIcon(
                           text: "Continue reading",
-                          onTap: _openBook,
+                          onTap: openBook,
                           svg: readingSvg,
                         ),
                         ButtonWithIcon(
                           text: "Go to Set",
                           svg: goToSetSvg,
-                          onTap: _openBook,
+                          onTap: openBook,
                         ),
                         ButtonWithIcon(
                           text: "Delete",
                           svg: deleteSvg,
-                          onTap: _removeBook,
+                          onTap: removeBook,
                         ),
                         const SizedBox(
                           height: 50,

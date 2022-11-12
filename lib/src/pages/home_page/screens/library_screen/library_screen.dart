@@ -73,6 +73,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           leftText: "Library",
                           onPressed: () {
                             showDialog(
+                              barrierColor: Colors.transparent,
                               context: context,
                               builder: (BuildContext context) {
                                 return const AlertDialogWidget();

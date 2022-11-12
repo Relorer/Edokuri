@@ -53,6 +53,7 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
                     horizontalTitleGap: 15,
                     minVerticalPadding: 0,
                     minLeadingWidth: 0,
+                    dense: true,
                     title: Text(
                       getSortTypeName(e),
                       style: Theme.of(context).dialogTextStyle,
