@@ -6,7 +6,7 @@ import 'package:freader/src/controllers/library_sort_controller/provider_library
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 
-import 'objectbox.g.dart';
+import '../objectbox.g.dart';
 import 'pages/home_page/home_page.dart';
 import 'theme/theme.dart';
 
@@ -30,7 +30,7 @@ class _AppState extends State<App> {
     getApplicationDocumentsDirectory().then((dir) {
       setState(() {
         _store =
-            Store(getObjectBoxModel(), directory: "${dir.path}/objectbox10");
+            Store(getObjectBoxModel(), directory: "${dir.path}/objectbox11");
       });
     });
   }

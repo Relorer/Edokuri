@@ -9,21 +9,13 @@ part of 'reader_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ReaderController on ReaderControllerBase, Store {
-  late final _$currentChapterAtom =
-      Atom(name: 'ReaderControllerBase.currentChapter', context: context);
+  Computed<int>? _$completedPagesComputed;
 
   @override
-  int get currentChapter {
-    _$currentChapterAtom.reportRead();
-    return super.currentChapter;
-  }
-
-  @override
-  set currentChapter(int value) {
-    _$currentChapterAtom.reportWrite(value, super.currentChapter, () {
-      super.currentChapter = value;
-    });
-  }
+  int get completedPages =>
+      (_$completedPagesComputed ??= Computed<int>(() => super.completedPages,
+              name: 'ReaderControllerBase.completedPages'))
+          .value;
 
   late final _$pageCountAtom =
       Atom(name: 'ReaderControllerBase.pageCount', context: context);
@@ -38,6 +30,22 @@ mixin _$ReaderController on ReaderControllerBase, Store {
   set pageCount(int value) {
     _$pageCountAtom.reportWrite(value, super.pageCount, () {
       super.pageCount = value;
+    });
+  }
+
+  late final _$currentChapterAtom =
+      Atom(name: 'ReaderControllerBase.currentChapter', context: context);
+
+  @override
+  int get currentChapter {
+    _$currentChapterAtom.reportRead();
+    return super.currentChapter;
+  }
+
+  @override
+  set currentChapter(int value) {
+    _$currentChapterAtom.reportWrite(value, super.currentChapter, () {
+      super.currentChapter = value;
     });
   }
 
@@ -57,19 +65,37 @@ mixin _$ReaderController on ReaderControllerBase, Store {
     });
   }
 
-  late final _$completedPagesAtom =
-      Atom(name: 'ReaderControllerBase.completedPages', context: context);
+  late final _$currentCompletedChapterAtom = Atom(
+      name: 'ReaderControllerBase.currentCompletedChapter', context: context);
 
   @override
-  int get completedPages {
-    _$completedPagesAtom.reportRead();
-    return super.completedPages;
+  int get currentCompletedChapter {
+    _$currentCompletedChapterAtom.reportRead();
+    return super.currentCompletedChapter;
   }
 
   @override
-  set completedPages(int value) {
-    _$completedPagesAtom.reportWrite(value, super.completedPages, () {
-      super.completedPages = value;
+  set currentCompletedChapter(int value) {
+    _$currentCompletedChapterAtom
+        .reportWrite(value, super.currentCompletedChapter, () {
+      super.currentCompletedChapter = value;
+    });
+  }
+
+  late final _$currentCompletedPageAtom =
+      Atom(name: 'ReaderControllerBase.currentCompletedPage', context: context);
+
+  @override
+  int get currentCompletedPage {
+    _$currentCompletedPageAtom.reportRead();
+    return super.currentCompletedPage;
+  }
+
+  @override
+  set currentCompletedPage(int value) {
+    _$currentCompletedPageAtom.reportWrite(value, super.currentCompletedPage,
+        () {
+      super.currentCompletedPage = value;
     });
   }
 
@@ -102,11 +128,11 @@ mixin _$ReaderController on ReaderControllerBase, Store {
       ActionController(name: 'ReaderControllerBase', context: context);
 
   @override
-  void _updatePosition(List<String> chapter, int index, int sumPages) {
+  void pageChangedHandler(int index) {
     final _$actionInfo = _$ReaderControllerBaseActionController.startAction(
-        name: 'ReaderControllerBase._updatePosition');
+        name: 'ReaderControllerBase.pageChangedHandler');
     try {
-      return super._updatePosition(chapter, index, sumPages);
+      return super.pageChangedHandler(index);
     } finally {
       _$ReaderControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -115,11 +141,13 @@ mixin _$ReaderController on ReaderControllerBase, Store {
   @override
   String toString() {
     return '''
-currentChapter: ${currentChapter},
 pageCount: ${pageCount},
+currentChapter: ${currentChapter},
 currentPage: ${currentPage},
-completedPages: ${completedPages},
-chaptersContent: ${chaptersContent}
+currentCompletedChapter: ${currentCompletedChapter},
+currentCompletedPage: ${currentCompletedPage},
+chaptersContent: ${chaptersContent},
+completedPages: ${completedPages}
     ''';
   }
 }

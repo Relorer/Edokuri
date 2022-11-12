@@ -42,7 +42,10 @@ class _ReaderPageState extends ResumableState<ReaderPage>
     book.currentChapter = readerController.currentChapter;
     book.currentPositionInChapter =
         readerController.getCurrentPositionInChapter();
-    book.title = "test";
+
+    book.currentCompletedChapter = readerController.currentCompletedChapter;
+    book.currentCompletedPositionInChapter =
+        readerController.getCurrentCompletedPositionInChapter();
     dbController.putBook(book);
   }
 

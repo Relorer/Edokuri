@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
@@ -8,54 +9,89 @@ part 'reader_controller.g.dart';
 
 class ReaderController = ReaderControllerBase with _$ReaderController;
 
+class PositionInBook {
+  final int chapter;
+  final int indexInChapter;
+
+  PositionInBook(this.chapter, this.indexInChapter);
+}
+
 abstract class ReaderControllerBase with Store {
+  @observable
+  int pageCount = 1;
+
   int currentPageIndex = -1;
 
   @observable
   int currentChapter = 0;
 
   @observable
-  int pageCount = 1;
-
-  @observable
   int currentPage = 0;
 
+  int currentCompletedPageIndex = -1;
+
   @observable
-  int completedPages = 0;
+  int currentCompletedChapter = 0;
+
+  @observable
+  int currentCompletedPage = 0;
+
+  @computed
+  int get completedPages => currentCompletedChapter > currentChapter
+      ? pageCount
+      : currentCompletedChapter < currentChapter
+          ? 0
+          : currentCompletedPage;
 
   @observable
   List<List<String>> chaptersContent = [];
 
   int getCurrentPositionInChapter() {
-    return _getPositionInChapter(chaptersContent);
+    return _getPositionInChapter(chaptersContent, currentChapter, currentPage);
   }
 
-  int _getPositionInChapter(List<List<String>> chapters) {
+  int getCurrentCompletedPositionInChapter() {
+    return _getPositionInChapter(
+        chaptersContent, currentCompletedChapter, currentCompletedPage);
+  }
+
+  int _getPositionInChapter(
+      List<List<String>> chapters, int chapter, int page) {
     var position = 0;
-    for (var i = 0; i < currentPage; i++) {
-      position += chapters[currentChapter][i].length;
+    for (var i = 0; i < page; i++) {
+      position += chapters[chapter][i].length;
     }
     return position;
   }
 
-  void pageChangedHandler(int index) {
-    currentPageIndex = index;
+  PositionInBook _getPositionInBook(List<List<String>> chapters, int index) {
     var sumPages = 0;
-    for (var element in chaptersContent) {
+    for (var element in chapters) {
       sumPages += element.length;
       if (index < sumPages) {
-        _updatePosition(element, index, sumPages);
-        break;
+        return PositionInBook(
+            chapters.indexOf(element), index - sumPages + element.length);
       }
     }
+
+    throw Exception("Index out of range");
   }
 
   @action
-  void _updatePosition(List<String> chapter, int index, int sumPages) {
-    currentChapter = chaptersContent.indexOf(chapter);
-    currentPage = index - sumPages + chapter.length;
-    completedPages = currentPage;
-    pageCount = chapter.length;
+  void pageChangedHandler(int index) {
+    final newPosition = _getPositionInBook(chaptersContent, index);
+
+    currentChapter = newPosition.chapter;
+    currentPage = newPosition.indexInChapter;
+    pageCount = chaptersContent[newPosition.chapter].length;
+
+    if (currentCompletedChapter < currentChapter) {
+      currentCompletedChapter = currentChapter;
+      currentCompletedPage = currentPage;
+    } else if (currentCompletedChapter == currentChapter &&
+        currentCompletedPage < currentPage) {
+      currentCompletedPage = currentPage;
+    }
   }
 
   @action
@@ -65,15 +101,26 @@ abstract class ReaderControllerBase with Store {
     for (var element in book.chapters) {
       temp.add(await _paginate(pageSize, element.content));
     }
-    print(book.currentPositionInChapter);
-    print(book.currentPositionInChapter);
-    print(book.currentPositionInChapter);
-    print(book.currentPositionInChapter);
     currentPageIndex = currentPageIndex < 0
         ? _getPageIndexByChapterAndPosition(
             temp, book.currentChapter, book.currentPositionInChapter)
+        : _getPageIndexByChapterAndPosition(temp, currentChapter,
+            _getPositionInChapter(temp, currentChapter, currentPage));
+
+    currentCompletedPageIndex = currentCompletedPageIndex < 0
+        ? _getPageIndexByChapterAndPosition(temp, book.currentCompletedChapter,
+            book.currentCompletedPositionInChapter)
         : _getPageIndexByChapterAndPosition(
-            temp, currentChapter, _getPositionInChapter(temp));
+            temp,
+            currentCompletedChapter,
+            _getPositionInChapter(
+                temp, currentCompletedChapter, currentCompletedPage));
+
+    var completedPosition = _getPositionInBook(temp, currentCompletedPageIndex);
+
+    currentCompletedChapter = completedPosition.chapter;
+    currentCompletedPage = completedPosition.indexInChapter;
+
     chaptersContent = temp;
     pageChangedHandler(currentPageIndex);
   }

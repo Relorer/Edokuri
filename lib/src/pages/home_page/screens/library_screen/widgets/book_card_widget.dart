@@ -139,7 +139,8 @@ class BookCardWidget extends StatelessWidget {
                       child: SizedBox(
                         height: 4,
                         child: LinearProgressIndicator(
-                          value: 0.35, // percent filled
+                          value: book.currentCompletedChapter /
+                              book.chapters.length,
                           valueColor: AlwaysStoppedAnimation<Color>(
                               Theme.of(context).progressBarActiveColor),
                           backgroundColor:

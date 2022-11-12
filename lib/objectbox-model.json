@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7555383519736908052",
-      "lastPropertyId": "9:7259448540946722934",
+      "lastPropertyId": "10:1800119381801977056",
       "name": "Book",
       "properties": [
         {
@@ -40,13 +40,13 @@
           "type": 6
         },
         {
-          "id": "8:2928209274812443226",
-          "name": "currentCompletedChapter",
+          "id": "9:7259448540946722934",
+          "name": "currentCompletedPositionInChapter",
           "type": 6
         },
         {
-          "id": "9:7259448540946722934",
-          "name": "currentCompletedPositionInChapter",
+          "id": "10:1800119381801977056",
+          "name": "currentCompletedChapter",
           "type": 6
         }
       ],
@@ -99,7 +99,8 @@
     5794279794749668715,
     7821271336732925949,
     5842152475922765198,
-    6762947303672325621
+    6762947303672325621,
+    2928209274812443226
   ],
   "retiredRelationUids": [],
   "version": 1
