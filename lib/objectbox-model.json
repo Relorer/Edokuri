@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7555383519736908052",
-      "lastPropertyId": "4:8135821839891028441",
+      "lastPropertyId": "9:7259448540946722934",
       "name": "Book",
       "properties": [
         {
@@ -28,6 +28,26 @@
           "id": "4:8135821839891028441",
           "name": "cover",
           "type": 23
+        },
+        {
+          "id": "6:6364408280469893264",
+          "name": "currentChapter",
+          "type": 6
+        },
+        {
+          "id": "7:4895552604198307302",
+          "name": "currentPositionInChapter",
+          "type": 6
+        },
+        {
+          "id": "8:2928209274812443226",
+          "name": "currentCompletedChapter",
+          "type": 6
+        },
+        {
+          "id": "9:7259448540946722934",
+          "name": "currentCompletedPositionInChapter",
+          "type": 6
         }
       ],
       "relations": [
@@ -58,15 +78,29 @@
       "relations": []
     }
   ],
-  "lastEntityId": "2:7150137983610600479",
-  "lastIndexId": "0:0",
+  "lastEntityId": "4:649863265971279226",
+  "lastIndexId": "3:7767308458628164458",
   "lastRelationId": "1:5203724193353101733",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredEntityUids": [
+    1387448267151481711,
+    649863265971279226
+  ],
+  "retiredIndexUids": [
+    1250819911507410361
+  ],
+  "retiredPropertyUids": [
+    1431697030432315360,
+    7983776831871254100,
+    3211101095300342013,
+    3368242616918313339,
+    5794279794749668715,
+    7821271336732925949,
+    5842152475922765198,
+    6762947303672325621
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

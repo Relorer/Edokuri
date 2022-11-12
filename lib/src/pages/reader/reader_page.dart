@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:freader/src/controllers/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/db_controller/provider_db_controller.dart';
+import 'package:freader/src/controllers/reader_controller/provider_reader_controller.dart';
+import 'package:freader/src/controllers/reader_controller/reader_controller.dart';
 import 'package:freader/src/core/circular_progress_indicator_pale.dart';
 import 'package:freader/src/models/book.dart';
-import 'package:freader/src/models/book_indexes.dart';
+import 'package:freader/src/pages/reader/widgets/reader_chapter_progress_bar.dart';
 import 'package:freader/src/pages/reader/widgets/reader_page_view_widget.dart';
 import 'package:freader/src/theme/theme.dart';
+import 'package:need_resume/need_resume.dart';
 
 class ReaderPage extends StatefulWidget {
   final Book book;
@@ -22,112 +27,63 @@ class ReaderPage extends StatefulWidget {
   }
 }
 
-class _ReaderPageState extends State<ReaderPage> {
-  late PageController pageController;
+class _ReaderPageState extends ResumableState<ReaderPage>
+    with WidgetsBindingObserver {
+  ReaderController readerController = ReaderController();
 
-  Size? _pageSize;
-  List<String> _prevChapter = [];
-  List<String> _curChapter = [];
-  List<String> _nextChapter = [];
+  late Book book;
+  late DBController dbController;
+
+  late PageController pageController;
 
   final _containerKey = GlobalKey();
 
-  int chapter = 0;
-
-  int get startChapter => chapter == 0 ? 0 : 1;
+  void _savePosition() {
+    book.currentChapter = readerController.currentChapter;
+    book.currentPositionInChapter =
+        readerController.getCurrentPositionInChapter();
+    book.title = "test";
+    dbController.putBook(book);
+  }
 
   @override
   void initState() {
+    book = widget.book;
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        _pageSize =
-            (_containerKey.currentContext?.findRenderObject() as RenderBox)
-                .size;
-      });
-      setChapter(0);
+      final pageSize =
+          (_containerKey.currentContext?.findRenderObject() as RenderBox).size;
+      readerController.loadContent(book, pageSize);
+      dbController = ProviderDbController.ctr(context);
     });
     super.initState();
-    pageController = PageController(initialPage: startChapter);
+    pageController = PageController();
+    WidgetsBinding.instance.addObserver(this);
   }
 
-  void pageChangedHandler(int index) {
-    print("pasha");
-    if (index < _prevChapter.length) {
-      setState(() {});
-      print(index);
-    }
-    if (index >= _curChapter.length + _prevChapter.length) {
-      setState(() {
-        _prevChapter = _curChapter;
-        _curChapter = _nextChapter;
-        _
-      });
-      print(index);
-    }
-  }
+  @override
+  void didChangeMetrics() {
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+          systemNavigationBarColor: Theme.of(context).colorScheme.background,
+          statusBarColor: Theme.of(context).colorScheme.background,
+          statusBarIconBrightness: Brightness.dark,
+        ));
+        final pageSize =
+            (_containerKey.currentContext?.findRenderObject() as RenderBox)
+                .size;
 
-  void setChapter(int index) {
-    setState(() {
-      chapter = index;
-      _prevChapter = index != 0
-          ? _paginate(_pageSize!, widget.book.chapters[chapter - 1].content)
-          : [];
-
-      _curChapter =
-          _paginate(_pageSize!, widget.book.chapters[chapter].content);
-
-      _nextChapter = index + 1 < widget.book.chapters.length
-          ? _paginate(_pageSize!, widget.book.chapters[chapter + 1].content)
-          : [];
-
-      if (pageController.hasClients) {
-        pageController.jumpToPage(startChapter);
-      }
-    });
-  }
-
-  List<String> _paginate(Size pageSize, String content) {
-    final result = <String>[];
-
-    final textSpan = TextSpan(
-        text: content,
-        style: const TextStyle(fontSize: 19, wordSpacing: 2, height: 1.6));
-    final textPainter = TextPainter(
-      text: textSpan,
-      textDirection: TextDirection.ltr,
+        readerController.loadContent(book, pageSize);
+      },
     );
-    textPainter.layout(
-      minWidth: 0,
-      maxWidth: pageSize.width,
-    );
+    super.didChangeMetrics();
+  }
 
-    List<LineMetrics> lines = textPainter.computeLineMetrics();
-    double currentPageBottom = pageSize.height;
-    int currentPageStartIndex = 0;
-    int currentPageEndIndex = 0;
-
-    for (int i = 0; i < lines.length; i++) {
-      final line = lines[i];
-
-      final left = line.left;
-      final top = line.baseline - line.ascent;
-      final bottom = line.baseline + line.descent;
-
-      if (currentPageBottom < bottom) {
-        currentPageEndIndex =
-            textPainter.getPositionForOffset(Offset(left, top)).offset;
-        final pageText =
-            content.substring(currentPageStartIndex, currentPageEndIndex);
-        result.add(pageText);
-        currentPageStartIndex = currentPageEndIndex;
-        currentPageBottom = top + pageSize.height;
-      }
-    }
-
-    final lastPageText = content.substring(currentPageStartIndex);
-    result.add(lastPageText);
-
-    return result;
+  @override
+  void dispose() {
+    _savePosition();
+    super.dispose();
   }
 
   @override
@@ -138,119 +94,85 @@ class _ReaderPageState extends State<ReaderPage> {
       statusBarIconBrightness: Brightness.dark,
     ));
 
-    return Scaffold(
-        body: SafeArea(
-      child: Container(
-        color: Theme.of(context).colorScheme.background,
-        child: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Close",
-                          style: TextStyle(
-                              color: Theme.of(context).paleElementColor,
-                              fontWeight: FontWeight.w500),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: Stack(
-                      alignment: Alignment.center,
-                      children: const [
-                        ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          child: LinearProgressIndicator(
-                            value: 0.5,
-                            color: Color(0xffF2A922),
-                            backgroundColor: Colors.black12,
-                          ),
-                        ),
-                        SliderTheme(
-                          data: SliderThemeData(
-                              activeTrackColor: Colors.transparent,
-                              inactiveTrackColor: Colors.transparent,
-                              disabledActiveTickMarkColor: Colors.transparent,
-                              disabledActiveTrackColor: Colors.transparent,
-                              disabledInactiveTickMarkColor: Colors.transparent,
-                              disabledInactiveTrackColor: Colors.transparent,
-                              disabledThumbColor: Color(0xffF2A922),
-                              thumbShape:
-                                  RoundSliderThumbShape(enabledThumbRadius: 5)),
-                          child: Slider(
-                            value: 1,
-                            max: 20,
-                            onChanged: null,
-                          ),
-                        ),
-                      ],
-                    )),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                  ],
+    return ProviderReaderController.setController(
+      controller: readerController,
+      child: Scaffold(
+          body: SafeArea(
+        child: Container(
+          color: Theme.of(context).colorScheme.background,
+          child: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: Row(
+                    children: [
+                      InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Close",
+                            style: TextStyle(
+                                color: Theme.of(context).paleElementColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14),
+                          )),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      const Expanded(child: ReaderChapterProgressBar()),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: SizedBox(
-                    width: double.maxFinite,
-                    key: _containerKey,
-                    child: _pageSize == null
-                        ? const CircularProgressIndicatorPale()
-                        : ReaderChapterPageView(
-                            onPageChanged: pageChangedHandler,
-                            pageController: pageController,
-                            pagesContent: [
-                              ..._prevChapter,
-                              ..._curChapter,
-                              ..._nextChapter
-                            ],
-                            isFirstChapter: chapter == 0,
-                            isLastChapter:
-                                chapter > widget.book.chapters.length - 1,
-                            moveNext: () {
-                              setChapter(chapter + 1);
-                            },
-                            movePrev: () {
-                              setChapter(chapter - 1);
-                            })),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  "Chapter ${chapter + 1} of ${widget.book.chapters.length}",
-                  style: TextStyle(color: Theme.of(context).paleElementColor),
+                Expanded(
+                    child: SizedBox(
+                        width: double.maxFinite,
+                        key: _containerKey,
+                        child: Observer(
+                          builder: (context) {
+                            if (readerController.chaptersContent.isEmpty) {
+                              return const CircularProgressIndicatorPale();
+                            }
+                            return ReaderChapterPageView(
+                              onPageChanged:
+                                  readerController.pageChangedHandler,
+                              pageController: PageController(
+                                  initialPage:
+                                      readerController.currentPageIndex),
+                              pagesContent: readerController.chaptersContent
+                                  .expand((x) => x)
+                                  .toList(),
+                            );
+                          },
+                        ))),
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Observer(builder: (_) {
+                    return Text(
+                      "Part ${readerController.currentChapter + 1} of ${book.chapters.length}",
+                      style: TextStyle(
+                          color: Theme.of(context).paleElementColor,
+                          fontSize: 12),
+                    );
+                  }),
+                ),
+                const SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
           ),
         ),
-      ),
-    ));
+      )),
+    );
   }
-}
-
-class WordIndexWithKey {
-  final WordIndex wordIndex;
-  final GlobalKey<State<StatefulWidget>> key;
-
-  WordIndexWithKey(this.wordIndex, this.key);
 }

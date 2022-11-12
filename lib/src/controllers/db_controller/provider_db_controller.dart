@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:freader/objectbox.g.dart';
 import 'package:freader/src/controllers/base_provider.dart';
+import 'package:objectbox/objectbox.dart';
 
 import 'db_controller.dart';
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/models/book.dart';
+import 'package:freader/src/theme/theme_consts.dart';
 
 class WordWidget extends StatelessWidget {
   final Piece word;
@@ -14,7 +15,7 @@ class WordWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xffFBE1B2),
+          color: progressBarActive.withOpacity(0.5),
           borderRadius: BorderRadius.circular(4),
         ),
         child: Text(

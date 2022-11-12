@@ -64,41 +64,36 @@ class _LibraryScreenState extends State<LibraryScreen> {
               ),
             ),
           ),
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: ContentContainerWidget(children: [
-              SectorTitleWidget(
-                leftText: "Library",
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const AlertDialogWidget();
-                    },
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: double.maxFinite,
-                child: Observer(builder: (context) {
-                  return SizedBox(
-                    width: double.maxFinite,
-                    child: Column(
-                      children: ProviderDbController.ctr(context)
-                          .books
-                          .map((element) => BookCardWidget(
-                                book: element,
-                              ))
-                          .toList(),
-                    ),
-                  );
-                }),
-              )
-            ]),
-          )
+          SliverList(
+              delegate: SliverChildBuilderDelegate(
+                  (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 10),
+                        child: SectorTitleWidget(
+                          leftText: "Library",
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const AlertDialogWidget();
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                  childCount: 1)),
+          Observer(builder: (_) {
+            return SliverList(
+              delegate: SliverChildBuilderDelegate(
+                  (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: BookCardWidget(
+                          book: ProviderDbController.ctr(context).books[index],
+                        ),
+                      ),
+                  childCount: ProviderDbController.ctr(context).books.length),
+            );
+          })
         ],
       ),
     );

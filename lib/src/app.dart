@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:freader/objectbox.g.dart';
 import 'package:freader/src/controllers/db_controller/provider_db_controller.dart';
 import 'package:freader/src/controllers/file_controller/provider_file_controller.dart';
 import 'package:freader/src/controllers/library_sort_controller/provider_library_sort_controller.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 
+import 'objectbox.g.dart';
 import 'pages/home_page/home_page.dart';
 import 'theme/theme.dart';
 
@@ -18,7 +18,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late Store? _store;
+  Store? _store;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _AppState extends State<App> {
     getApplicationDocumentsDirectory().then((dir) {
       setState(() {
         _store =
-            Store(getObjectBoxModel(), directory: "${dir.path}/objectbox5");
+            Store(getObjectBoxModel(), directory: "${dir.path}/objectbox10");
       });
     });
   }

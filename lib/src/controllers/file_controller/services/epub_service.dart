@@ -27,7 +27,11 @@ class EpubService {
         title: epub.Title != null && epub.Title!.isNotEmpty
             ? epub.Title!
             : "no title",
-        cover: cover);
+        cover: cover,
+        currentChapter: 0,
+        currentCompletedChapter: 0,
+        currentPositionInChapter: 0,
+        currentCompletedPositionInChapter: 0);
 
     for (var value in chapters) {
       var doc = parse(await value.readHtmlContent());

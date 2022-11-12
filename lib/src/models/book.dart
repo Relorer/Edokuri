@@ -7,10 +7,25 @@ class Book {
   int id;
   String title;
   String author;
+  int currentChapter;
+  int currentPositionInChapter;
+  int currentCompletedChapter;
+  int currentCompletedPositionInChapter;
+
   Uint8List? cover;
+
   final chapters = ToMany<Chapter>();
 
-  Book({this.id = 0, required this.title, required this.author, this.cover});
+  Book({
+    this.id = 0,
+    required this.title,
+    required this.author,
+    required this.currentChapter,
+    required this.currentCompletedChapter,
+    required this.currentCompletedPositionInChapter,
+    required this.currentPositionInChapter,
+    this.cover,
+  });
 }
 
 @Entity()

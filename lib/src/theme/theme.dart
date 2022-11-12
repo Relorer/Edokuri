@@ -10,6 +10,11 @@ ThemeData basicTheme() => ThemeData(
             letterSpacing: 18 * 0.1,
             fontWeight: FontWeight.bold),
       ),
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: paleElement,
+        selectionColor: paleElement,
+        selectionHandleColor: paleElement,
+      ),
       colorScheme: ColorScheme.fromSwatch()
           .copyWith(secondary: paleElement)
           .copyWith(background: white),
