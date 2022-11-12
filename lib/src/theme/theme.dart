@@ -54,7 +54,12 @@ extension LightThemeEx on ThemeData {
     return const TextStyle(fontSize: 12, color: darkGray);
   }
 
-  TextStyle get dialogTextStyle {
+  TextStyle get dialogTextStylePale {
+    return const TextStyle(
+        fontSize: 16, color: paleElement, fontWeight: FontWeight.bold);
+  }
+
+  TextStyle get dialogTextStyleBright {
     return const TextStyle(
         fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold);
   }

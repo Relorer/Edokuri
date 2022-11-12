@@ -3,11 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
 
-class MainNavigation extends StatelessWidget {
+class HomePageNavigation extends StatelessWidget {
   final int currentIndex;
   final Function(int)? onTap;
 
-  const MainNavigation(
+  const HomePageNavigation(
       {Key? key, required this.currentIndex, required this.onTap})
       : super(key: key);
 

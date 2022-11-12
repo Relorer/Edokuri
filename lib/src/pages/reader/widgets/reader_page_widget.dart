@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/models/book.dart';
+import 'package:freader/src/core/utils/string_utils.dart';
 import 'word_widget.dart';
 
 class ReaderPageWidget extends StatelessWidget {

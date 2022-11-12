@@ -6,7 +6,7 @@ import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/controllers/db_controller/provider_db_controller.dart';
 import 'package:freader/src/controllers/reader_controller/provider_reader_controller.dart';
 import 'package:freader/src/controllers/reader_controller/reader_controller.dart';
-import 'package:freader/src/core/circular_progress_indicator_pale.dart';
+import 'package:freader/src/core/widgets/circular_progress_indicator_pale.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/pages/reader/widgets/reader_chapter_progress_bar.dart';
 import 'package:freader/src/pages/reader/widgets/reader_page_view_widget.dart';

@@ -11,6 +11,7 @@ class Book {
   int currentPositionInChapter;
   int currentCompletedChapter;
   int currentCompletedPositionInChapter;
+  List<String> words;
 
   Uint8List? cover;
 
@@ -24,6 +25,7 @@ class Book {
     required this.currentCompletedChapter,
     required this.currentCompletedPositionInChapter,
     required this.currentPositionInChapter,
+    required this.words,
     this.cover,
   });
 }
@@ -45,21 +47,4 @@ class Piece {
   bool isWord;
 
   Piece({required this.content, required this.isWord});
-}
-
-final RegExp _pieceOfLineExp =
-    RegExp(r"(([a-zA-Z]|('|-|’)[a-zA-Z])+(?=([^a-zA-Z]|$))|[^a-zA-Z]+)");
-
-final RegExp _wordExp = RegExp(r"[a-zA-Z]+");
-
-List<Paragraph> getParagraphs(String content) {
-  return content
-      .split("\n")
-      .map((p) => Paragraph()
-        ..pieces.addAll(_pieceOfLineExp
-            .allMatches(p.trim())
-            .map((e) => e[0])
-            .where((e) => e?.isNotEmpty ?? false)
-            .map((e) => Piece(content: e!, isWord: _wordExp.hasMatch(e)))))
-      .toList();
 }

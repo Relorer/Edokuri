@@ -27,12 +27,7 @@ class _AppState extends State<App> {
       setHighRefreshRate();
     });
 
-    getApplicationDocumentsDirectory().then((dir) {
-      setState(() {
-        _store =
-            Store(getObjectBoxModel(), directory: "${dir.path}/objectbox11");
-      });
-    });
+    initStore();
   }
 
   Future<void> setHighRefreshRate() async {
@@ -42,6 +37,15 @@ class _AppState extends State<App> {
     );
 
     setState(() {});
+  }
+
+  void initStore() {
+    getApplicationDocumentsDirectory().then((dir) {
+      setState(() {
+        _store =
+            Store(getObjectBoxModel(), directory: "${dir.path}/objectbox11");
+      });
+    });
   }
 
   @override

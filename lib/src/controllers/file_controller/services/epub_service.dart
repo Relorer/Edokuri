@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:epubx/epubx.dart';
+import 'package:freader/src/core/utils/string_utils.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:html/parser.dart';
 import 'package:image/image.dart';
@@ -31,15 +32,21 @@ class EpubService {
         currentChapter: 0,
         currentCompletedChapter: 0,
         currentPositionInChapter: 0,
-        currentCompletedPositionInChapter: 0);
+        currentCompletedPositionInChapter: 0,
+        words: []);
+
+    List<String> words = [];
 
     for (var value in chapters) {
       var doc = parse(await value.readHtmlContent());
       var content = _stripHtmlIfNeeded(doc.body!.innerHtml).trim();
       if (content.isNotEmpty) {
+        words.addAll(getAllWords(content));
         book.chapters.add(Chapter(content: content));
       }
     }
+
+    book.words.addAll(words.toSet());
 
     return book;
   }

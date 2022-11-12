@@ -30,7 +30,7 @@ class ButtonWithIcon extends StatelessWidget {
           ),
           Text(
             text,
-            style: Theme.of(context).dialogTextStyle,
+            style: Theme.of(context).dialogTextStyleBright,
           )
         ]),
       ),

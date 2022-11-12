@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:freader/src/controllers/db_controller/provider_db_controller.dart';
-import 'package:freader/src/core/button_with_icon.dart';
+import 'package:freader/src/core/widgets/button_with_icon.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/pages/reader/reader_page.dart';
 import 'package:freader/src/theme/svgs.dart';
@@ -65,7 +65,7 @@ class BookCardWidget extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           book.title,
-                          style: Theme.of(context).dialogTextStyle,
+                          style: Theme.of(context).dialogTextStyleBright,
                         ),
                         const SizedBox(
                           height: 10,

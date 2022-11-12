@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/library_screen.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'widget/main_navigation_widget.dart';
+import 'package:freader/src/theme/system_bars.dart';
+import 'widget/home_page_navigation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,15 +25,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Theme.of(context).secondBackgroundColor,
-      statusBarColor: Theme.of(context).secondBackgroundColor,
-      statusBarIconBrightness: Brightness.light,
-    ));
+    setUpBarDefaultStyles(context);
 
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        bottomNavigationBar: MainNavigation(
+        bottomNavigationBar: HomePageNavigation(
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
