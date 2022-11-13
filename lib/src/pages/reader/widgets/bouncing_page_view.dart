@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/pages/reader/widgets/reader_page_widget.dart';
+import 'package:freader/src/pages/reader/widgets/reader_page.dart';
+import 'package:freader/src/theme/theme_consts.dart';
 
-class ReaderChapterPageView extends StatelessWidget {
+class BouncingPageView extends StatelessWidget {
   final PageController pageController;
   final ValueChanged<int>? onPageChanged;
 
   final List<String> pagesContent;
 
-  const ReaderChapterPageView(
+  const BouncingPageView(
       {super.key,
       required this.pagesContent,
       required this.pageController,
@@ -22,8 +23,8 @@ class ReaderChapterPageView extends StatelessWidget {
       itemCount: pagesContent.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Center(child: ReaderPageWidget(content: pagesContent[index])),
+          padding: const EdgeInsets.symmetric(horizontal: doubleDefaultMargin),
+          child: Center(child: ReaderPage(content: pagesContent[index])),
         );
       },
     );

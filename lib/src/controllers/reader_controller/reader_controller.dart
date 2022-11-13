@@ -95,11 +95,11 @@ abstract class ReaderControllerBase with Store {
   }
 
   @action
-  Future loadContent(Book book, Size pageSize) async {
+  Future loadContent(Book book, Size pageSize, TextStyle style) async {
     chaptersContent = [];
     final List<List<String>> temp = [];
     for (var element in book.chapters) {
-      temp.add(await _paginate(pageSize, element.content));
+      temp.add(await _paginate(pageSize, element.content, style));
     }
     currentPageIndex = currentPageIndex < 0
         ? _getPageIndexByChapterAndPosition(
@@ -144,13 +144,12 @@ abstract class ReaderControllerBase with Store {
     return index;
   }
 
-  Future<List<String>> _paginate(Size pageSize, String content) async {
+  Future<List<String>> _paginate(
+      Size pageSize, String content, TextStyle style) async {
     return Future(() {
       final result = <String>[];
 
-      final textSpan = TextSpan(
-          text: content,
-          style: const TextStyle(fontSize: 18, wordSpacing: 2, height: 1.6));
+      final textSpan = TextSpan(text: content, style: style);
       final textPainter = TextPainter(
         text: textSpan,
         textDirection: TextDirection.ltr,

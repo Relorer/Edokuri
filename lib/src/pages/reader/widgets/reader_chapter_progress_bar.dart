@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/reader_controller/provider_reader_controller.dart';
+import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
 class ReaderChapterProgressBar extends StatelessWidget {
@@ -10,6 +11,8 @@ class ReaderChapterProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final readerController = ProviderReaderController.ctr(context);
+
     return Observer(
         builder: (context) => Stack(
               alignment: Alignment.center,
@@ -18,12 +21,9 @@ class ReaderChapterProgressBar extends StatelessWidget {
                   borderRadius:
                       const BorderRadius.all(Radius.circular(defaultRadius)),
                   child: LinearProgressIndicator(
-                    value: ProviderReaderController.ctr(context)
-                            .completedPages /
-                        (max(
-                            ProviderReaderController.ctr(context).pageCount - 1,
-                            1)),
-                    color: Color(0xffF2A922),
+                    value: readerController.completedPages /
+                        (max(readerController.pageCount - 1, 1)),
+                    color: Theme.of(context).progressBarActiveColor,
                     backgroundColor: Colors.black12,
                   ),
                 ),
@@ -35,18 +35,14 @@ class ReaderChapterProgressBar extends StatelessWidget {
                       disabledActiveTrackColor: Colors.transparent,
                       disabledInactiveTickMarkColor: Colors.transparent,
                       disabledInactiveTrackColor: Colors.transparent,
-                      disabledThumbColor: const Color(0xffF2A922),
+                      disabledThumbColor:
+                          Theme.of(context).progressBarActiveColor,
                       overlayShape: SliderComponentShape.noOverlay,
                       thumbShape:
                           const RoundSliderThumbShape(enabledThumbRadius: 5)),
                   child: Slider(
-                    value: ProviderReaderController.ctr(context)
-                        .currentPage
-                        .toDouble(),
-                    max: ProviderReaderController.ctr(context)
-                            .pageCount
-                            .toDouble() -
-                        1,
+                    value: readerController.currentPage.toDouble(),
+                    max: readerController.pageCount.toDouble() - 1,
                     onChanged: null,
                   ),
                 ),

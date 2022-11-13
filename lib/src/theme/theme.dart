@@ -33,6 +33,14 @@ extension LightThemeEx on ThemeData {
     return paleElement;
   }
 
+  Color get unknownWordColor {
+    return unknownWord;
+  }
+
+  Color get savedWordColor {
+    return savedWord;
+  }
+
   TextStyle get sectorTitleStye {
     return const TextStyle(
         fontSize: 16, color: paleElement, fontWeight: FontWeight.bold);
@@ -62,6 +70,20 @@ extension LightThemeEx on ThemeData {
   TextStyle get dialogTextStyleBright {
     return const TextStyle(
         fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold);
+  }
+
+  TextStyle get readerHeadPanelTextStyle {
+    return const TextStyle(
+        color: paleElement, fontWeight: FontWeight.w500, fontSize: 14);
+  }
+
+  TextStyle get readerFooterPanelTextStyle {
+    return const TextStyle(color: paleElement, fontSize: 12);
+  }
+
+  TextStyle get readerPageTextStyle {
+    return const TextStyle(
+        fontSize: 18, wordSpacing: 2, height: 1.6, color: Colors.black87);
   }
 
   Color get progressBarActiveColor {

@@ -119,9 +119,9 @@ mixin _$ReaderController on ReaderControllerBase, Store {
       AsyncAction('ReaderControllerBase.loadContent', context: context);
 
   @override
-  Future<dynamic> loadContent(Book book, Size pageSize) {
+  Future<dynamic> loadContent(Book book, Size pageSize, TextStyle style) {
     return _$loadContentAsyncAction
-        .run(() => super.loadContent(book, pageSize));
+        .run(() => super.loadContent(book, pageSize, style));
   }
 
   late final _$ReaderControllerBaseActionController =

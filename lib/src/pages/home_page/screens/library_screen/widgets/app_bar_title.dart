@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class TitleWidget extends StatelessWidget {
+class AppBarTitle extends StatelessWidget {
   final String leftText;
   final String rightText;
 
-  const TitleWidget({Key? key, required this.leftText, required this.rightText})
+  const AppBarTitle({Key? key, required this.leftText, required this.rightText})
       : super(key: key);
 
   @override

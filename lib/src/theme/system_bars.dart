@@ -12,8 +12,8 @@ void setUpBarDefaultStyles(BuildContext context) {
 
 void setUpBarReaderStyles(BuildContext context) {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: Theme.of(context).secondBackgroundColor,
-    statusBarColor: Theme.of(context).secondBackgroundColor,
-    statusBarIconBrightness: Brightness.light,
+    systemNavigationBarColor: Theme.of(context).colorScheme.background,
+    statusBarColor: Theme.of(context).colorScheme.background,
+    statusBarIconBrightness: Brightness.dark,
   ));
 }

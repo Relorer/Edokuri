@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/pages/home_page/screens/library_screen/widgets/title_widget.dart';
+import 'package:freader/src/pages/home_page/screens/library_screen/widgets/app_bar_title.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
@@ -27,7 +27,7 @@ class LibraryAppBar extends StatelessWidget {
                   vertical: defaultMargin, horizontal: doubleDefaultMargin),
               child: Column(
                 children: const [
-                  TitleWidget(
+                  AppBarTitle(
                     leftText: "today",
                     rightText: "47m",
                   ),

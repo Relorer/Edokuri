@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/utils/string_utils.dart';
-import 'word_widget.dart';
+import 'package:freader/src/pages/reader/widgets/known_word.dart';
+import 'package:freader/src/theme/theme.dart';
+import 'base_word.dart';
 
-class ReaderPageWidget extends StatelessWidget {
+class ReaderPage extends StatelessWidget {
   final String content;
 
-  const ReaderPageWidget({Key? key, required this.content}) : super(key: key);
+  const ReaderPage({Key? key, required this.content}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +17,7 @@ class ReaderPageWidget extends StatelessWidget {
       width: double.maxFinite,
       child: SelectableText.rich(
         TextSpan(
-            style: const TextStyle(
-                fontSize: 18, wordSpacing: 2, height: 1.6, color: Colors.black),
+            style: Theme.of(context).readerPageTextStyle,
             children: paragraphs
                 .map((p) => TextSpan(
                       children: [
@@ -24,7 +25,7 @@ class ReaderPageWidget extends StatelessWidget {
                             ? TextSpan(
                                 children: [
                                   WidgetSpan(
-                                      child: WordWidget(
+                                      child: KnownWord(
                                     word: e,
                                     onTap: () {},
                                   )),

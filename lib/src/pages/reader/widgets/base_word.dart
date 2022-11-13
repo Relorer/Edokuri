@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/models/book.dart';
+import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
-class WordWidget extends StatelessWidget {
+class BaseWord extends StatelessWidget {
+  final Color color;
   final Piece word;
   final GestureTapCallback? onTap;
 
-  const WordWidget({Key? key, required this.word, this.onTap})
+  const BaseWord(
+      {Key? key, required this.word, this.onTap, required this.color})
       : super(key: key);
 
   @override
@@ -15,12 +18,14 @@ class WordWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: progressBarActive.withOpacity(0.5),
+          color: color,
           borderRadius: BorderRadius.circular(defaultRadius),
         ),
         child: Text(
           word.content,
-          style: const TextStyle(fontSize: 18),
+          style: TextStyle(
+              fontSize: Theme.of(context).readerPageTextStyle.fontSize,
+              color: Theme.of(context).readerPageTextStyle.color),
         ),
       ),
     );
