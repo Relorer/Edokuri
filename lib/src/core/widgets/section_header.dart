@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
+import 'package:freader/src/theme/theme_consts.dart';
 
 class SectorTitleWidget extends StatelessWidget {
   final String leftText;
@@ -13,7 +14,7 @@ class SectorTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.all(doubleDefaultMargin),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

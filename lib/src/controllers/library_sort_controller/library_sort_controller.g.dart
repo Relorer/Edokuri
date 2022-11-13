@@ -37,7 +37,7 @@ mixin _$LibrarySortController on LibrarySortControllerBase, Store {
       ActionController(name: 'LibrarySortControllerBase', context: context);
 
   @override
-  void setSortType(SortTypes type) {
+  void setSortType(SortTypes? type) {
     final _$actionInfo = _$LibrarySortControllerBaseActionController
         .startAction(name: 'LibrarySortControllerBase.setSortType');
     try {

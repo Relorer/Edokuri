@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/reader_controller/provider_reader_controller.dart';
+import 'package:freader/src/theme/theme_consts.dart';
 
 class ReaderChapterProgressBar extends StatelessWidget {
   const ReaderChapterProgressBar({super.key});
@@ -14,7 +15,8 @@ class ReaderChapterProgressBar extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  borderRadius:
+                      const BorderRadius.all(Radius.circular(defaultRadius)),
                   child: LinearProgressIndicator(
                     value: ProviderReaderController.ctr(context)
                             .completedPages /

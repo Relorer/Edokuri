@@ -9,7 +9,7 @@ class GraphWidget extends StatelessWidget {
     return Expanded(
       child: SizedBox.expand(
         child: Container(
-          color: Theme.of(context).paleElementColor,
+          color: Theme.of(context).secondBackgroundColor,
         ),
       ),
     );

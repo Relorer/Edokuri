@@ -13,7 +13,7 @@ class SortTypesList extends StatelessWidget {
     return Column(
       children: [
         ...SortTypes.values.map((e) => ListTile(
-              horizontalTitleGap: defaultHorizontalMargin,
+              horizontalTitleGap: defaultMargin,
               minVerticalPadding: 0,
               minLeadingWidth: 0,
               dense: true,
@@ -36,9 +36,7 @@ class SortTypesList extends StatelessWidget {
                   }),
                   value: e,
                   groupValue: sortCtr.sortType,
-                  onChanged: (SortTypes? value) {
-                    sortCtr.setSortType(value!);
-                  },
+                  onChanged: sortCtr.setSortType,
                 );
               }),
             ))

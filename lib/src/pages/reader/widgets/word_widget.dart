@@ -16,7 +16,7 @@ class WordWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: progressBarActive.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(defaultRadius),
         ),
         child: Text(
           word.content,

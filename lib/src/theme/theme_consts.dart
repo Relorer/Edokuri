@@ -5,5 +5,7 @@ const progressBarActive = Color(0xFFFBD143);
 const paleElement = Color(0xFF778797);
 const white = Color(0xFFF2F2F2);
 
-const double defaultVerticalMargin = 10;
-const double defaultHorizontalMargin = 20;
+const double defaultMargin = 10;
+const double doubleDefaultMargin = 20;
+
+const double defaultRadius = 4;

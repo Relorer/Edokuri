@@ -20,7 +20,6 @@ class HomePageNavigation extends StatelessWidget {
         child: NavigationBar(
           backgroundColor: Theme.of(context).secondBackgroundColor,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-          surfaceTintColor: Colors.amber,
           onDestinationSelected: onTap,
           height: 55,
           elevation: 0,

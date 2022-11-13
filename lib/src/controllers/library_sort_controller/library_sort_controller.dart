@@ -28,7 +28,7 @@ abstract class LibrarySortControllerBase with Store {
   String get sortTypeName => getSortTypeName(sortType);
 
   @action
-  void setSortType(SortTypes type) {
-    sortType = type;
+  void setSortType(SortTypes? type) {
+    sortType = type ?? SortTypes.recent;
   }
 }

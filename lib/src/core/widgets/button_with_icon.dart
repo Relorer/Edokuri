@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freader/src/theme/theme.dart';
+import 'package:freader/src/theme/theme_consts.dart';
 
 class ButtonWithIcon extends StatelessWidget {
   final String text;
@@ -16,7 +17,7 @@ class ButtonWithIcon extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       customBorder: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(defaultRadius),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 3),

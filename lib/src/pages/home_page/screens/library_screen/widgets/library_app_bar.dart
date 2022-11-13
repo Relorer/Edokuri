@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/title_widget.dart';
 import 'package:freader/src/theme/theme.dart';
+import 'package:freader/src/theme/theme_consts.dart';
 
 import 'stats_graph.dart';
 
@@ -12,17 +13,18 @@ class LibraryAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      titleSpacing: 0,
       expandedHeight: appBarHeight,
+      titleSpacing: 0,
+      elevation: 0,
       floating: true,
       pinned: true,
-      elevation: 0,
       flexibleSpace: SingleChildScrollView(
         child: SizedBox(
           height: appBarHeight,
           child: Container(
               color: Theme.of(context).secondBackgroundColor,
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                  vertical: defaultMargin, horizontal: doubleDefaultMargin),
               child: Column(
                 children: const [
                   TitleWidget(
@@ -30,7 +32,7 @@ class LibraryAppBar extends StatelessWidget {
                     rightText: "47m",
                   ),
                   SizedBox(
-                    height: 20,
+                    height: doubleDefaultMargin,
                   ),
                   GraphWidget(),
                 ],

@@ -17,7 +17,7 @@ class BooksSectionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        contentPadding: const EdgeInsets.all(24),
+        contentPadding: const EdgeInsets.all(doubleDefaultMargin),
         backgroundColor: Theme.of(context).secondBackgroundColor,
         content: SizedBox(
           width: double.maxFinite,
@@ -32,8 +32,7 @@ class BooksSectionDialog extends StatelessWidget {
                 svg: uploadSvg,
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: defaultVerticalMargin),
+                padding: const EdgeInsets.symmetric(vertical: defaultMargin),
                 child: Text(
                   "Sort by:",
                   style: Theme.of(context).dialogTextStylePale,
