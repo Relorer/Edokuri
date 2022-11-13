@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:freader/generated/locale_keys.g.dart';
 import 'package:freader/src/pages/reader/widgets/reader_chapter_progress_bar.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
@@ -15,7 +17,7 @@ class ReaderHeadPanel extends StatelessWidget {
           InkWell(
               onTap: () => Navigator.pop(context),
               child: Text(
-                "Close",
+                LocaleKeys.close.tr(),
                 style: Theme.of(context).readerHeadPanelTextStyle,
               )),
           const SizedBox(

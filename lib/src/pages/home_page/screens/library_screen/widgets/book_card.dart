@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freader/generated/locale.dart';
 import 'package:freader/src/controllers/db_controller/provider_db_controller.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card_content.dart';
@@ -33,7 +34,7 @@ class BookCard extends StatelessWidget {
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) => BookCardDialog(
-        bookTitle: book.title,
+        bookTitle: book.title ?? LocaleKeys.no_title.tr(),
         openBook: () => openBook(context),
         removeBook: () => removeBook(context),
       ),
@@ -56,10 +57,10 @@ class BookCard extends StatelessWidget {
             cover: book.cover,
           ),
           BookCardContent(
-            author: book.author,
+            author: book.author ?? LocaleKeys.no_author.tr(),
             chaptersCount: book.chapters.length,
             currentCompletedChapter: book.currentCompletedChapter,
-            title: book.title,
+            title: book.title ?? LocaleKeys.no_title.tr(),
           )
         ]),
       ),

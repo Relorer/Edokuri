@@ -1,3 +1,4 @@
+import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/section_header.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/books_section_dialog.dart';
@@ -20,7 +21,7 @@ class LibraryBooksSectionHeader extends StatelessWidget {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
             (context, index) => SectorTitleWidget(
-                  leftText: "Library",
+                  leftText: LocaleKeys.library.tr(),
                   onPressed: () => menuButtonHandler(context),
                 ),
             childCount: 1));

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:freader/src/controllers/db_controller/provider_db_controller.dart';
@@ -60,6 +61,9 @@ class _AppState extends State<App> {
             builder: (context) => ProviderFileController(
                   dbController: ProviderDbController.ctr(context),
                   child: MaterialApp(
+                    localizationsDelegates: context.localizationDelegates,
+                    supportedLocales: context.supportedLocales,
+                    locale: context.locale,
                     theme: basicTheme(),
                     debugShowCheckedModeBanner: false,
                     initialRoute: '/',

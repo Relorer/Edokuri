@@ -1,3 +1,4 @@
+import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/app_bar_title.dart';
 import 'package:freader/src/theme/theme.dart';
@@ -26,15 +27,16 @@ class LibraryAppBar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(
                   vertical: defaultMargin, horizontal: doubleDefaultMargin),
               child: Column(
-                children: const [
+                children: [
                   AppBarTitle(
-                    leftText: "today",
-                    rightText: "47m",
+                    leftText: LocaleKeys.today.tr(),
+                    rightText: LocaleKeys.short_min
+                        .tr(namedArgs: {"count": 47.toString()}),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: doubleDefaultMargin,
                   ),
-                  GraphWidget(),
+                  const GraphWidget(),
                 ],
               )),
         ),

@@ -1,3 +1,4 @@
+import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/ellipsis_text.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card_progress_bar.dart';
@@ -47,11 +48,12 @@ class BookCardContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 EllipsisText(
-                  "Records: 145",
+                  LocaleKeys.records.tr(namedArgs: {"count": 145.toString()}),
                   style: Theme.of(context).bookSubInfoStyle,
                 ),
                 EllipsisText(
-                  "64% New words",
+                  LocaleKeys.new_words
+                      .tr(namedArgs: {"persent": 10.toString()}),
                   style: Theme.of(context).bookSubInfoStyle,
                 )
               ],

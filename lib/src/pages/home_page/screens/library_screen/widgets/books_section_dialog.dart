@@ -1,3 +1,4 @@
+import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/controllers/file_controller/provider_file_controller.dart';
 import 'package:freader/src/core/widgets/button_with_icon.dart';
@@ -27,14 +28,14 @@ class BooksSectionDialog extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ButtonWithIcon(
-                text: "Upload new book",
+                text: LocaleKeys.upload_new_book.tr(),
                 onTap: () => _upload(context),
                 svg: uploadSvg,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: defaultMargin),
                 child: Text(
-                  "Sort by:",
+                  LocaleKeys.sort_by.tr(),
                   style: Theme.of(context).dialogTextStylePale,
                 ),
               ),

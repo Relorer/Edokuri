@@ -1,3 +1,4 @@
+import 'package:freader/generated/locale.dart';
 import 'package:mobx/mobx.dart';
 
 part 'library_sort_controller.g.dart';
@@ -7,13 +8,13 @@ enum SortTypes { amountNewWords, name, progress, recent }
 String getSortTypeName(SortTypes type) {
   switch (type) {
     case SortTypes.amountNewWords:
-      return "Amount of new words";
+      return LocaleKeys.amount_of_new_words.tr();
     case SortTypes.name:
-      return "Name";
+      return LocaleKeys.name.tr();
     case SortTypes.progress:
-      return "Progress";
+      return LocaleKeys.progress.tr();
     case SortTypes.recent:
-      return "Recent";
+      return LocaleKeys.recent.tr();
   }
 }
 

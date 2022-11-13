@@ -1,3 +1,4 @@
+import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/button_with_icon.dart';
 import 'package:freader/src/theme/svgs.dart';
@@ -43,17 +44,17 @@ class BookCardDialog extends StatelessWidget {
                 height: defaultMargin,
               ),
               ButtonWithIcon(
-                text: "Continue reading",
+                text: LocaleKeys.continue_reading.tr(),
                 onTap: openBook,
                 svg: readingSvg,
               ),
               ButtonWithIcon(
-                text: "Go to Set",
+                text: LocaleKeys.go_to_set.tr(),
                 svg: goToSetSvg,
                 onTap: openBookSet,
               ),
               ButtonWithIcon(
-                text: "Delete",
+                text: LocaleKeys.delete.tr(),
                 svg: deleteSvg,
                 onTap: removeBook,
               ),

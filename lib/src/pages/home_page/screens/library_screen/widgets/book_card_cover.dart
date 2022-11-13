@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/theme/theme.dart';
 
@@ -20,10 +21,10 @@ class BookCardCover extends StatelessWidget {
             height: 110,
             width: 70,
             color: Theme.of(context).paleElementColor,
-            child: const Center(
+            child: Center(
                 child: Text(
-              "cover",
-              style: TextStyle(color: Colors.white60),
+              LocaleKeys.cover.tr(),
+              style: const TextStyle(color: Colors.white60),
             )),
           );
   }

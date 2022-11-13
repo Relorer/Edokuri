@@ -5,8 +5,8 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class Book {
   int id;
-  String title;
-  String author;
+  String? title;
+  String? author;
   int currentChapter;
   int currentPositionInChapter;
   int currentCompletedChapter;

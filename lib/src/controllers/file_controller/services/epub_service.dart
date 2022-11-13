@@ -22,12 +22,8 @@ class EpubService {
     }
 
     var book = Book(
-        author: epub.Author != null && epub.Author!.isNotEmpty
-            ? epub.Author!
-            : "no author",
-        title: epub.Title != null && epub.Title!.isNotEmpty
-            ? epub.Title!
-            : "no title",
+        author: epub.Author,
+        title: epub.Title,
         cover: cover,
         currentChapter: 0,
         currentCompletedChapter: 0,
