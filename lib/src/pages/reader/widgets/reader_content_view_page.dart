@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/utils/string_utils.dart';
 import 'package:freader/src/pages/reader/widgets/known_word.dart';
+import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
 import 'package:freader/src/theme/theme.dart';
-import 'base_word.dart';
 
-class ReaderPage extends StatelessWidget {
+class ReaderContentViewPage extends StatelessWidget {
   final String content;
 
-  const ReaderPage({Key? key, required this.content}) : super(key: key);
+  const ReaderContentViewPage({Key? key, required this.content})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,9 @@ class ReaderPage extends StatelessWidget {
                                   WidgetSpan(
                                       child: KnownWord(
                                     word: e,
-                                    onTap: () {},
+                                    onTap: () =>
+                                        TapOnWordHandlerProvider.of(context)
+                                            .tapOnWordHandler(e.content),
                                   )),
                                 ],
                               )

@@ -135,7 +135,7 @@ packages:
     source: hosted
     version: "4.3.0"
   collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: collection
       url: "https://pub.dartlang.org"
@@ -183,6 +183,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.4"
+  dictionaryx:
+    dependency: "direct main"
+    description:
+      name: dictionaryx
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.5"
   easy_localization:
     dependency: "direct main"
     description:
@@ -258,6 +265,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.1"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -322,6 +336,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  google_mlkit_commons:
+    dependency: transitive
+    description:
+      name: google_mlkit_commons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
+  google_mlkit_translation:
+    dependency: "direct main"
+    description:
+      name: google_mlkit_translation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.0"
   graphs:
     dependency: transitive
     description:
@@ -336,6 +364,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.15.1"
+  http:
+    dependency: "direct main"
+    description:
+      name: http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.5"
   http_multi_server:
     dependency: transitive
     description:
@@ -691,6 +726,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliding_up_panel:
+    dependency: "direct main"
+    description:
+      name: sliding_up_panel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0+1"
   source_gen:
     dependency: transitive
     description:
@@ -761,6 +803,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.14"
+  textfield_tags:
+    dependency: "direct main"
+    description:
+      name: textfield_tags
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   timing:
     dependency: transitive
     description:

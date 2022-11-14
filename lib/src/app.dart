@@ -4,6 +4,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:freader/src/controllers/db_controller/provider_db_controller.dart';
 import 'package:freader/src/controllers/file_controller/provider_file_controller.dart';
 import 'package:freader/src/controllers/library_sort_controller/provider_library_sort_controller.dart';
+import 'package:freader/src/controllers/translator_controller/provider_translator_controller.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 
@@ -20,6 +22,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   Store? _store;
+  OnDeviceTranslator? _translator;
 
   @override
   void initState() {
@@ -28,7 +31,27 @@ class _AppState extends State<App> {
       setHighRefreshRate();
     });
 
+    initTranslationMLKit();
+
     initStore();
+  }
+
+  initTranslationMLKit() async {
+    final modelManager = OnDeviceTranslatorModelManager();
+
+    await loadLanguageMonel(modelManager, TranslateLanguage.english.bcpCode);
+    await loadLanguageMonel(modelManager, TranslateLanguage.russian.bcpCode);
+
+    _translator = OnDeviceTranslator(
+        sourceLanguage: TranslateLanguage.english,
+        targetLanguage: TranslateLanguage.russian);
+  }
+
+  loadLanguageMonel(
+      OnDeviceTranslatorModelManager manager, String model) async {
+    if (!await manager.isModelDownloaded(model)) {
+      await manager.downloadModel(model);
+    }
   }
 
   Future<void> setHighRefreshRate() async {
@@ -44,34 +67,37 @@ class _AppState extends State<App> {
     getApplicationDocumentsDirectory().then((dir) {
       setState(() {
         _store =
-            Store(getObjectBoxModel(), directory: "${dir.path}/objectbox11");
+            Store(getObjectBoxModel(), directory: "${dir.path}/objectbox12");
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_store == null) {
+    if (_store == null || _translator == null) {
       return Container();
     }
-    return ProviderLibrarySortController(
-      child: ProviderDbController(
-        store: _store!,
-        child: Builder(
-            builder: (context) => ProviderFileController(
-                  dbController: ProviderDbController.ctr(context),
-                  child: MaterialApp(
-                    localizationsDelegates: context.localizationDelegates,
-                    supportedLocales: context.supportedLocales,
-                    locale: context.locale,
-                    theme: basicTheme(),
-                    debugShowCheckedModeBanner: false,
-                    initialRoute: '/',
-                    routes: {
-                      '/': (context) => const HomePage(),
-                    },
-                  ),
-                )),
+    return ProviderTranslatorController(
+      translator: _translator!,
+      child: ProviderLibrarySortController(
+        child: ProviderDbController(
+          store: _store!,
+          child: Builder(
+              builder: (context) => ProviderFileController(
+                    dbController: ProviderDbController.ctr(context),
+                    child: MaterialApp(
+                      localizationsDelegates: context.localizationDelegates,
+                      supportedLocales: context.supportedLocales,
+                      locale: context.locale,
+                      theme: basicTheme(),
+                      debugShowCheckedModeBanner: false,
+                      initialRoute: '/',
+                      routes: {
+                        '/': (context) => const HomePage(),
+                      },
+                    ),
+                  )),
+        ),
       ),
     );
   }
@@ -79,6 +105,7 @@ class _AppState extends State<App> {
   @override
   void dispose() {
     _store?.close();
+    _translator?.close();
     super.dispose();
   }
 }

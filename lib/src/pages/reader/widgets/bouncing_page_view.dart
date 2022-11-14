@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/pages/reader/widgets/reader_page.dart';
+import 'package:freader/src/pages/reader/widgets/reader_content_view_page.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
 class BouncingPageView extends StatelessWidget {
@@ -23,8 +23,10 @@ class BouncingPageView extends StatelessWidget {
       itemCount: pagesContent.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: doubleDefaultMargin),
-          child: Center(child: ReaderPage(content: pagesContent[index])),
+          padding: const EdgeInsets.symmetric(
+              horizontal: doubleDefaultMargin, vertical: 0),
+          child: Center(
+              child: ReaderContentViewPage(content: pagesContent[index])),
         );
       },
     );

@@ -4,8 +4,10 @@ import 'package:flutter/widgets.dart';
 
 class BouncingCustomScrollView extends StatelessWidget {
   final List<Widget> slivers;
+  final ScrollController? controller;
 
-  const BouncingCustomScrollView({super.key, required this.slivers});
+  const BouncingCustomScrollView(
+      {super.key, required this.slivers, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,7 @@ class BouncingCustomScrollView extends StatelessWidget {
           },
           physics: const BouncingScrollPhysics()),
       child: CustomScrollView(
+        controller: controller,
         slivers: slivers,
       ),
     );

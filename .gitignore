@@ -47,3 +47,5 @@ app.*.map.json
 /android/app/release
 
 lib/objectbox.g.dart
+
+*.env

@@ -10,4 +10,4 @@ const savedWord = Color(0xFFD9560B);
 const double defaultMargin = 10;
 const double doubleDefaultMargin = 20;
 
-const double defaultRadius = 4;
+const double defaultRadius = 8;

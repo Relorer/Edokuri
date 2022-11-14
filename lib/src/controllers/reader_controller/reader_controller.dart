@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
@@ -149,6 +148,8 @@ abstract class ReaderControllerBase with Store {
     return Future(() {
       final result = <String>[];
 
+      final pageHeight = pageSize.height - 20;
+
       final textSpan = TextSpan(text: content, style: style);
       final textPainter = TextPainter(
         text: textSpan,
@@ -160,7 +161,7 @@ abstract class ReaderControllerBase with Store {
       );
 
       List<LineMetrics> lines = textPainter.computeLineMetrics();
-      double currentPageBottom = pageSize.height;
+      double currentPageBottom = pageHeight;
       int currentPageStartIndex = 0;
       int currentPageEndIndex = 0;
 
@@ -178,7 +179,7 @@ abstract class ReaderControllerBase with Store {
               content.substring(currentPageStartIndex, currentPageEndIndex);
           result.add(pageText);
           currentPageStartIndex = currentPageEndIndex;
-          currentPageBottom = top + pageSize.height;
+          currentPageBottom = top + pageHeight;
         }
       }
 

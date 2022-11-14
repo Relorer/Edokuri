@@ -11,7 +11,8 @@ class ReaderHeadPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(doubleDefaultMargin),
+      padding: const EdgeInsets.symmetric(
+          horizontal: doubleDefaultMargin, vertical: defaultMargin),
       child: Row(
         children: [
           InkWell(
