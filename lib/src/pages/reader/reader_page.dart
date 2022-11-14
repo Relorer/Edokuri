@@ -112,7 +112,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
             topLeft: Radius.circular(defaultRadius),
             topRight: Radius.circular(defaultRadius),
           ),
-          maxHeight: MediaQuery.of(context).size.height * 0.7,
+          maxHeight: MediaQuery.of(context).size.height * 0.75,
           color: Theme.of(context).colorScheme.background,
           panelBuilder: (ScrollController sc) => record == null
               ? Container()

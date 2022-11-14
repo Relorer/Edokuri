@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:http/http.dart' as http;
@@ -18,19 +19,27 @@ class YandexDictionaryService {
     List<String> translations = [];
     List<Example> examples = [];
 
-    var ur = Uri.parse(
-        "https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${dotenv.env['YANDEX_DICTIONARY_KEY']}&lang=en-ru&text=${word}");
-    final result = await http.get(ur);
-    final parsedJson = jsonDecode(result.body);
+    var connectivityResult = await (Connectivity().checkConnectivity());
 
-    for (var def in parsedJson["def"] ?? []) {
-      for (var tr in def["tr"] ?? []) {
-        translations.add(tr["text"]);
-        for (var syn in tr["syn"] ?? []) {
-          translations.add(syn["text"]);
-        }
-        for (var ex in tr["ex"] ?? []) {
-          examples.add(Example(ex["text"], ex["tr"][0]["text"]));
+    if (connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.mobile) {
+      var ur = Uri.parse(
+          "https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${dotenv.env['YANDEX_DICTIONARY_KEY']}&lang=en-ru&text=$word");
+      final result = await http.get(ur);
+
+      if (result.statusCode == 200) {
+        final parsedJson = jsonDecode(result.body);
+
+        for (var def in parsedJson["def"] ?? []) {
+          for (var tr in def["tr"] ?? []) {
+            translations.add(tr["text"]);
+            for (var syn in tr["syn"] ?? []) {
+              translations.add(syn["text"]);
+            }
+            for (var ex in tr["ex"] ?? []) {
+              examples.add(Example(ex["text"], ex["tr"][0]["text"]));
+            }
+          }
         }
       }
     }

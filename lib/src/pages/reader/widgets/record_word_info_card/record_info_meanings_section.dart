@@ -1,9 +1,6 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:freader/src/core/utils/iterable_extensions.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:freader/src/models/record.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_section_header.dart';
 import 'package:freader/src/theme/theme_consts.dart';

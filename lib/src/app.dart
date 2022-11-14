@@ -42,9 +42,11 @@ class _AppState extends State<App> {
     await loadLanguageMonel(modelManager, TranslateLanguage.english.bcpCode);
     await loadLanguageMonel(modelManager, TranslateLanguage.russian.bcpCode);
 
-    _translator = OnDeviceTranslator(
-        sourceLanguage: TranslateLanguage.english,
-        targetLanguage: TranslateLanguage.russian);
+    setState(() {
+      _translator = OnDeviceTranslator(
+          sourceLanguage: TranslateLanguage.english,
+          targetLanguage: TranslateLanguage.russian);
+    });
   }
 
   loadLanguageMonel(

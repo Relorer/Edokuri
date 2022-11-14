@@ -31,8 +31,9 @@ class _RecordInfoTranslationsSectionState
                 backgroundColor:
                     Theme.of(context).unknownWordColor.withOpacity(0.6),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: EdgeInsets.all(0),
-                visualDensity: VisualDensity(horizontal: 0.0, vertical: -2),
+                padding: const EdgeInsets.all(0),
+                visualDensity:
+                    const VisualDensity(horizontal: 0.0, vertical: -2),
                 label: Text(translations[index]),
                 selected: false,
                 onSelected: (bool selected) {

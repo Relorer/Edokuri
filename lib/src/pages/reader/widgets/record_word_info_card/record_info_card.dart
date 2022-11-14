@@ -34,6 +34,25 @@ class RecordInfoCardState extends State<RecordInfoCard> {
   Widget build(BuildContext context) {
     final record = widget.record;
 
+    final sections = [
+      RecordInfoHeader(record.original),
+      RecordInfoTranslationsSection(
+        translations: record.translations,
+      )
+    ];
+
+    if (record.examples.isNotEmpty) {
+      sections.add(RecordInfoExamplesSection(examples: record.examples));
+    }
+    if (record.synonyms.isNotEmpty) {
+      sections.add(RecordInfoSynonymsSection(synonyms: record.synonyms));
+    }
+    if (record.meanings.isNotEmpty) {
+      sections.add(RecordInfoMeaningsSection(
+        meanings: record.meanings,
+      ));
+    }
+
     return Container(
       margin: const EdgeInsets.symmetric(
           vertical: doubleDefaultMargin * 2, horizontal: doubleDefaultMargin),
@@ -54,23 +73,7 @@ class RecordInfoCardState extends State<RecordInfoCard> {
               horizontal: doubleDefaultMargin, vertical: doubleDefaultMargin),
           child: Wrap(
             runSpacing: defaultMargin,
-            children: [
-              RecordInfoHeader(record.original),
-              RecordInfoTranslationsSection(
-                translations: record.translations,
-              ),
-              record.examples.isNotEmpty
-                  ? RecordInfoExamplesSection(examples: record.examples)
-                  : Container(),
-              record.synonyms.isNotEmpty
-                  ? RecordInfoSynonymsSection(synonyms: record.synonyms)
-                  : Container(),
-              record.meanings.isNotEmpty
-                  ? RecordInfoMeaningsSection(
-                      meanings: record.meanings,
-                    )
-                  : Container()
-            ],
+            children: sections,
           ),
         ),
       ),
