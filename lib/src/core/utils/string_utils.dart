@@ -26,3 +26,7 @@ List<String> getAllWords(String content) {
       .where((e) => _wordExp.hasMatch(e))
       .toList();
 }
+
+bool containsWord(String content) {
+  return _wordExp.hasMatch(content);
+}

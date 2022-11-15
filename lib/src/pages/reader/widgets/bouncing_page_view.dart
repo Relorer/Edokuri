@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page.dart';
 import 'package:freader/src/theme/theme_consts.dart';
+
+import 'reader_content_view_page/reader_content_view_page.dart';
 
 class BouncingPageView extends StatelessWidget {
   final PageController pageController;

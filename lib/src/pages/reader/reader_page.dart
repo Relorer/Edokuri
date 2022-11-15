@@ -81,6 +81,8 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   }
 
   _tapOnWordHandler(String word) async {
+    if (word.isEmpty) return;
+
     panelController.close();
 
     Future.delayed(
