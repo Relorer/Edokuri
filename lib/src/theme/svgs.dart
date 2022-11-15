@@ -6,3 +6,5 @@ const menuSvg = "assets/icons/menu.svg";
 const readingSvg = "assets/icons/reading.svg";
 const goToSetSvg = "assets/icons/go_to_set.svg";
 const deleteSvg = "assets/icons/delete.svg";
+
+const translatedByGoogleSvg = "assets/images/translated_by_google.svg";

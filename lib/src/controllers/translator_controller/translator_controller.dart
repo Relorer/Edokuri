@@ -1,3 +1,5 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:freader/src/controllers/translator_controller/services/google_translator_service.dart';
 import 'package:freader/src/controllers/translator_controller/services/msa_dictionary_service.dart';
 import 'package:freader/src/controllers/translator_controller/services/yandex_dictionary_service.dart';
 import 'package:freader/src/models/record.dart';
@@ -16,31 +18,49 @@ abstract class TranslatorControllerBase with Store {
   final MSADictionaryService msaDicService = MSADictionaryService();
   final OnDeviceTranslator _translator;
   final YandexDictionaryService yaDicService = YandexDictionaryService();
+  final GoogleTranslatorService gService = GoogleTranslatorService();
 
   TranslatorControllerBase(this._translator);
 
   Future<Record> translate(String content, String sentence) async {
-    content = content.toLowerCase().trim();
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    final hasInterner = connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.mobile;
+
+    content = content.trim();
 
     List<Translation> translations = [];
     List<Meaning> meanings = [];
     List<String> synonyms = [];
     List<Example> examples = [];
 
-    if (!content.contains(" ")) {
-      final yaResult = await yaDicService.lookup(content);
-      final msaResult = await msaDicService.lookup(content);
+    if (!content.contains(" ") || content.length < 30) {
+      content = content.toLowerCase();
 
-      translations = yaResult.translations;
-      examples = yaResult.examples;
-      synonyms = msaResult.synonyms;
-      meanings = msaResult.meanings;
+      var msaResult = msaDicService.lookup(content).then((value) {
+        meanings = value.meanings;
+        synonyms = value.synonyms;
+        synonyms.removeWhere((element) => element.toLowerCase() == content);
+      });
 
-      synonyms.removeWhere((element) => element.toLowerCase() == content);
+      var yaResult = hasInterner
+          ? yaDicService.lookup(content).then((value) {
+              translations = value.translations;
+              examples = value.examples;
+            })
+          : Future(() => null);
+
+      await Future.wait([msaResult, yaResult]);
     }
 
     if (translations.isEmpty) {
-      translations.add(Translation(await _translator.translateText(content)));
+      final googleTranslate =
+          hasInterner ? await gService.translate(content) : "";
+
+      translations.add(googleTranslate.isNotEmpty
+          ? Translation(googleTranslate, source: "google")
+          : Translation(await _translator.translateText(content),
+              source: "google"));
     }
 
     return Record(

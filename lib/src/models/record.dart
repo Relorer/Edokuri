@@ -26,10 +26,10 @@ class Translation {
 
   final String text;
   bool selected;
-  final bool fromUser;
+  final String source;
 
   Translation(this.text,
-      {this.id = 0, this.selected = false, this.fromUser = false});
+      {this.id = 0, this.selected = false, required this.source});
 }
 
 @Entity()

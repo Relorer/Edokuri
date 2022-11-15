@@ -11,7 +11,7 @@ class RecordInfoHeader extends StatelessWidget {
       width: double.maxFinite,
       child: Text(
         title.contains(" ") ? title : title.toUpperCase(),
-        textAlign: TextAlign.center,
+        textAlign: title.contains("\n") ? TextAlign.left : TextAlign.center,
         style: const TextStyle(
             fontSize: 16, color: Colors.black87, fontWeight: FontWeight.bold),
       ),

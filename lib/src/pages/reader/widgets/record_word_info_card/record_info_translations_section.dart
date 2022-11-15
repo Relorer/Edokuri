@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freader/src/models/record.dart';
+import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
@@ -36,6 +38,11 @@ class _RecordInfoTranslationsSectionState
             translations.length,
             (int index) {
               return ChoiceChip(
+                shape: translations[index].source == "google"
+                    ? const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(defaultRadius)))
+                    : null,
                 pressElevation: 3,
                 selectedColor:
                     Theme.of(context).unknownWordColor.withOpacity(0.6),
@@ -48,7 +55,7 @@ class _RecordInfoTranslationsSectionState
                 label: Text(
                   translations[index].text,
                   softWrap: true,
-                  maxLines: 4294967296,
+                  maxLines: 10000,
                 ),
                 selected: translations[index].selected,
                 onSelected: (bool selected) {
@@ -61,6 +68,14 @@ class _RecordInfoTranslationsSectionState
             },
           ).toList(),
         ),
+        translations.first.source == "google"
+            ? Padding(
+                padding: const EdgeInsets.symmetric(vertical: defaultMargin),
+                child: SvgPicture.asset(
+                  translatedByGoogleSvg,
+                ),
+              )
+            : Container(),
         Padding(
           padding: const EdgeInsets.only(top: defaultMargin),
           child: TextFormField(
@@ -75,7 +90,7 @@ class _RecordInfoTranslationsSectionState
                       .selected = true;
                 } else {
                   translations
-                      .add(Translation(value, fromUser: true, selected: true));
+                      .add(Translation(value, source: "user", selected: true));
                 }
 
                 _textEditingController.clear();
