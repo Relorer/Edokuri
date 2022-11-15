@@ -22,7 +22,7 @@ abstract class TranslatorControllerBase with Store {
   Future<Record> translate(String content, String sentence) async {
     content = content.toLowerCase().trim();
 
-    List<String> translations = [];
+    List<Translation> translations = [];
     List<Meaning> meanings = [];
     List<String> synonyms = [];
     List<Example> examples = [];
@@ -40,15 +40,16 @@ abstract class TranslatorControllerBase with Store {
     }
 
     if (translations.isEmpty) {
-      translations.add(await _translator.translateText(content));
+      translations.add(Translation(await _translator.translateText(content)));
     }
 
     return Record(
-        original: content,
-        synonyms: synonyms,
-        sentence: sentence,
-        translations: translations)
+      original: content,
+      synonyms: synonyms,
+      sentence: sentence,
+    )
       ..meanings.addAll(meanings)
-      ..examples.addAll(examples);
+      ..examples.addAll(examples)
+      ..translations.addAll(translations);
   }
 }

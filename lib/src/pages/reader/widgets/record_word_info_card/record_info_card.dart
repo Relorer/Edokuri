@@ -7,9 +7,8 @@ import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_in
 import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_translations_section.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
-import 'package:textfield_tags/textfield_tags.dart';
 
-class RecordInfoCard extends StatefulWidget {
+class RecordInfoCard extends StatelessWidget {
   final Record record;
   final ScrollController scrollController;
 
@@ -17,23 +16,7 @@ class RecordInfoCard extends StatefulWidget {
       {super.key, required this.record, required this.scrollController});
 
   @override
-  State<RecordInfoCard> createState() => RecordInfoCardState();
-}
-
-class RecordInfoCardState extends State<RecordInfoCard> {
-  late TextfieldTagsController _controller;
-
-  @override
-  initState() {
-    _controller = TextfieldTagsController();
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final record = widget.record;
-
     final sections = [
       RecordInfoHeader(record.original),
       RecordInfoTranslationsSection(
@@ -66,7 +49,7 @@ class RecordInfoCardState extends State<RecordInfoCard> {
             ),
           ]),
       child: SingleChildScrollView(
-        controller: widget.scrollController,
+        controller: scrollController,
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(

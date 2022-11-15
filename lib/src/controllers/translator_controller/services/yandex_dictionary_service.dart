@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class YandexPartOfRecord {
-  List<String> translations;
+  List<Translation> translations;
   List<Example> examples;
 
   YandexPartOfRecord({
@@ -16,7 +16,7 @@ class YandexPartOfRecord {
 
 class YandexDictionaryService {
   Future<YandexPartOfRecord> lookup(String word) async {
-    List<String> translations = [];
+    List<Translation> translations = [];
     List<Example> examples = [];
 
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -32,9 +32,9 @@ class YandexDictionaryService {
 
         for (var def in parsedJson["def"] ?? []) {
           for (var tr in def["tr"] ?? []) {
-            translations.add(tr["text"]);
+            translations.add(Translation(tr["text"]));
             for (var syn in tr["syn"] ?? []) {
-              translations.add(syn["text"]);
+              translations.add(Translation(syn["text"]));
             }
             for (var ex in tr["ex"] ?? []) {
               examples.add(Example(ex["text"], ex["tr"][0]["text"]));

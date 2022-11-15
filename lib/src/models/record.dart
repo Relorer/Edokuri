@@ -5,19 +5,31 @@ class Record {
   int id;
 
   String original;
-  List<String> translations;
+  final translations = ToMany<Translation>();
   final meanings = ToMany<Meaning>();
   final examples = ToMany<Example>();
   List<String> synonyms;
 
   String sentence;
 
-  Record(
-      {this.id = 0,
-      required this.original,
-      required this.synonyms,
-      required this.sentence,
-      required this.translations});
+  Record({
+    this.id = 0,
+    required this.original,
+    required this.synonyms,
+    required this.sentence,
+  });
+}
+
+@Entity()
+class Translation {
+  int id;
+
+  final String text;
+  bool selected;
+  final bool fromUser;
+
+  Translation(this.text,
+      {this.id = 0, this.selected = false, this.fromUser = false});
 }
 
 @Entity()

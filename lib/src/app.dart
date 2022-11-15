@@ -69,7 +69,7 @@ class _AppState extends State<App> {
     getApplicationDocumentsDirectory().then((dir) {
       setState(() {
         _store =
-            Store(getObjectBoxModel(), directory: "${dir.path}/objectbox12");
+            Store(getObjectBoxModel(), directory: "${dir.path}/objectbox13");
       });
     });
   }

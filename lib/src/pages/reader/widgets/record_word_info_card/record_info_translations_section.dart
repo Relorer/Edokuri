@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:freader/src/models/record.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
 class RecordInfoTranslationsSection extends StatefulWidget {
-  final List<String> translations;
+  final List<Translation> translations;
 
   const RecordInfoTranslationsSection({super.key, required this.translations});
 
@@ -14,6 +15,13 @@ class RecordInfoTranslationsSection extends StatefulWidget {
 
 class _RecordInfoTranslationsSectionState
     extends State<RecordInfoTranslationsSection> {
+  final TextEditingController _textEditingController = TextEditingController();
+
+  @override
+  initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final translations = widget.translations;
@@ -28,17 +36,21 @@ class _RecordInfoTranslationsSectionState
             translations.length,
             (int index) {
               return ChoiceChip(
-                backgroundColor:
+                pressElevation: 3,
+                selectedColor:
                     Theme.of(context).unknownWordColor.withOpacity(0.6),
+                backgroundColor:
+                    Theme.of(context).unknownWordColor.withOpacity(0.2),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 padding: const EdgeInsets.all(0),
                 visualDensity:
                     const VisualDensity(horizontal: 0.0, vertical: -2),
-                label: Text(translations[index]),
-                selected: false,
+                label: Text(translations[index].text),
+                selected: translations[index].selected,
                 onSelected: (bool selected) {
                   setState(() {
-                    // _value = selected ? index : null;
+                    translations[index].selected =
+                        !translations[index].selected;
                   });
                 },
               );
@@ -48,6 +60,23 @@ class _RecordInfoTranslationsSectionState
         Padding(
           padding: const EdgeInsets.only(top: defaultMargin),
           child: TextFormField(
+            controller: _textEditingController,
+            onFieldSubmitted: ((value) {
+              setState(() {
+                value = value.trim().toLowerCase();
+
+                if (translations.any((element) => element.text == value)) {
+                  translations
+                      .firstWhere((element) => element.text == value)
+                      .selected = true;
+                } else {
+                  translations
+                      .add(Translation(value, fromUser: true, selected: true));
+                }
+
+                _textEditingController.clear();
+              });
+            }),
             decoration: InputDecoration(
               border: const UnderlineInputBorder(),
               enabledBorder: UnderlineInputBorder(

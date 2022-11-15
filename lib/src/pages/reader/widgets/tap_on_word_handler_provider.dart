@@ -9,7 +9,7 @@ class TapOnWordHandlerProvider extends InheritedWidget {
   static TapOnWordHandlerProvider of(BuildContext context) {
     final TapOnWordHandlerProvider? result =
         context.dependOnInheritedWidgetOfExactType<TapOnWordHandlerProvider>();
-    assert(result != null, 'No FrogColor found in context');
+    assert(result != null, 'No TapOnWordHandlerProvider found in context');
     return result!;
   }
 

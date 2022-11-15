@@ -81,14 +81,18 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   }
 
   _tapOnWordHandler(String word) async {
-    if (panelController.isPanelClosed) {
+    panelController.close();
+
+    Future.delayed(
+        Duration(milliseconds: panelController.isPanelClosed ? 0 : 200),
+        (() async {
       record =
           await ProviderTranslatorController.ctr(context).translate(word, "");
       setState(() {});
       if (record != null) {
         panelController.open();
       }
-    }
+    }));
   }
 
   @override
@@ -97,46 +101,52 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
 
     return ProviderReaderController.setController(
       controller: readerController,
-      child: Scaffold(
-        body: SlidingUpPanel(
-          controller: panelController,
-          minHeight: 0,
-          renderPanelSheet: false,
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 10.0,
-              color: Color.fromRGBO(0, 0, 0, 0.25),
-            )
-          ],
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(defaultRadius),
-            topRight: Radius.circular(defaultRadius),
-          ),
-          maxHeight: MediaQuery.of(context).size.height * 0.75,
-          color: Theme.of(context).colorScheme.background,
-          panelBuilder: (ScrollController sc) => record == null
-              ? Container()
-              : RecordInfoCard(
-                  record: record!,
-                  scrollController: sc,
+      child: TapOnWordHandlerProvider(
+        tapOnWordHandler: _tapOnWordHandler,
+        child: Scaffold(
+          body: SlidingUpPanel(
+            onPanelClosed: (() {
+              setState(() {
+                record = null;
+              });
+            }),
+            controller: panelController,
+            minHeight: 0,
+            renderPanelSheet: false,
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 10.0,
+                color: Color.fromRGBO(0, 0, 0, 0.25),
+              )
+            ],
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(defaultRadius),
+              topRight: Radius.circular(defaultRadius),
+            ),
+            maxHeight: MediaQuery.of(context).size.height * 0.75,
+            color: Theme.of(context).colorScheme.background,
+            panelBuilder: (ScrollController sc) => record == null
+                ? Container()
+                : RecordInfoCard(
+                    record: record!,
+                    scrollController: sc,
+                  ),
+            body: SafeArea(
+              child: Container(
+                color: Theme.of(context).colorScheme.background,
+                child: Column(
+                  children: [
+                    const ReaderHeadPanel(),
+                    Expanded(
+                      key: _containerKey,
+                      child: const ReaderContentView(),
+                    ),
+                    ReaderFooterPanel(
+                      currentPart: readerController.currentChapter + 1,
+                      partCount: book.chapters.length,
+                    ),
+                  ],
                 ),
-          body: SafeArea(
-            child: Container(
-              color: Theme.of(context).colorScheme.background,
-              child: Column(
-                children: [
-                  const ReaderHeadPanel(),
-                  Expanded(
-                    key: _containerKey,
-                    child: TapOnWordHandlerProvider(
-                        tapOnWordHandler: _tapOnWordHandler,
-                        child: const ReaderContentView()),
-                  ),
-                  ReaderFooterPanel(
-                    currentPart: readerController.currentChapter + 1,
-                    partCount: book.chapters.length,
-                  ),
-                ],
               ),
             ),
           ),

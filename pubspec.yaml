@@ -59,8 +59,6 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   http: ^0.13.5
   flutter_dotenv: ^5.0.2
-  textfield_tags: ^2.0.2
-  collection: ^1.16.0
   connectivity_plus: ^2.1.0
   
 dev_dependencies:
