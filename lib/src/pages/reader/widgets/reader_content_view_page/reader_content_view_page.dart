@@ -51,7 +51,9 @@ class ReaderContentViewPage extends StatelessWidget {
       child: SelectableText.rich(
         selectionControls: ReaderTextSelectionControls(
           getSelectedText: ((p0) =>
-              piecesOfPage.sublist(p0.start, p0.end).join().trim()),
+              piecesOfPage.length >= p0.start && piecesOfPage.length >= p0.end
+                  ? piecesOfPage.sublist(p0.start, p0.end).join().trim()
+                  : ""),
           handleTranslate: tapOnWordHandler,
           canTranslate: containsWord,
         ),

@@ -38,7 +38,8 @@ class RecordInfoCard extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.symmetric(
-          vertical: doubleDefaultMargin * 2, horizontal: doubleDefaultMargin),
+          vertical: doubleDefaultMargin * 2,
+          horizontal: doubleDefaultMargin - 1),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(defaultRadius)),

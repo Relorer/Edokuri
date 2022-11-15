@@ -44,8 +44,12 @@ class _RecordInfoTranslationsSectionState
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 padding: const EdgeInsets.all(0),
                 visualDensity:
-                    const VisualDensity(horizontal: 0.0, vertical: -2),
-                label: Text(translations[index].text),
+                    const VisualDensity(horizontal: 0.0, vertical: 0),
+                label: Text(
+                  translations[index].text,
+                  softWrap: true,
+                  maxLines: 4294967296,
+                ),
                 selected: translations[index].selected,
                 onSelected: (bool selected) {
                   setState(() {

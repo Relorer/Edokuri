@@ -82,6 +82,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
 
   _tapOnWordHandler(String word) async {
     if (word.isEmpty) return;
+    FocusScope.of(context).unfocus();
 
     panelController.close();
 
@@ -114,6 +115,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
             }),
             controller: panelController,
             minHeight: 0,
+            maxHeight: MediaQuery.of(context).size.height * 0.75,
             renderPanelSheet: false,
             boxShadow: const [
               BoxShadow(
@@ -125,7 +127,6 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
               topLeft: Radius.circular(defaultRadius),
               topRight: Radius.circular(defaultRadius),
             ),
-            maxHeight: MediaQuery.of(context).size.height * 0.75,
             color: Theme.of(context).colorScheme.background,
             panelBuilder: (ScrollController sc) => record == null
                 ? Container()

@@ -10,7 +10,7 @@ class RecordInfoHeader extends StatelessWidget {
     return SizedBox(
       width: double.maxFinite,
       child: Text(
-        title.toUpperCase(),
+        title.contains(" ") ? title : title.toUpperCase(),
         textAlign: TextAlign.center,
         style: const TextStyle(
             fontSize: 16, color: Colors.black87, fontWeight: FontWeight.bold),
