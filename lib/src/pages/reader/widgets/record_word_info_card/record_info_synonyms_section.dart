@@ -22,6 +22,7 @@ class RecordInfoSynonymsSection extends StatelessWidget {
             synonyms.length,
             (int index) {
               return ActionChip(
+                pressElevation: 3,
                 onPressed: (() => TapOnWordHandlerProvider.of(context)
                     .tapOnWordHandler(synonyms[index].toLowerCase())),
                 backgroundColor:
