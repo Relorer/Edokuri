@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReaderTextSelectionControls extends MaterialTextSelectionControls {
   final void Function(String text) handleTranslate;
@@ -25,45 +26,51 @@ class ReaderTextSelectionControls extends MaterialTextSelectionControls {
     final selectedText = getSelectedText(delegate.textEditingValue.selection);
 
     return _TextSelectionControlsToolbar(
-        globalEditableRegion: globalEditableRegion,
-        textLineHeight: textLineHeight,
-        selectionMidpoint: selectionMidpoint,
-        endpoints: endpoints,
-        delegate: delegate,
-        clipboardStatus: clipboardStatus,
-        handleCopy: canCopy(delegate)
-            ? () async {
-                handleCopy(delegate);
-                await Clipboard.setData(ClipboardData(text: selectedText));
-              }
-            : null,
-        handleSelectAll:
-            canSelectAll(delegate) ? () => handleSelectAll(delegate) : null,
-        handleTranslate: canTranslate(selectedText)
-            ? () async {
-                var cdata = await Clipboard.getData(Clipboard.kTextPlain);
-                var prevClipboardValue = cdata?.text;
-                handleCopy(delegate);
-                handleTranslate(selectedText);
-                await Clipboard.setData(
-                    ClipboardData(text: prevClipboardValue));
-              }
-            : null);
+      globalEditableRegion: globalEditableRegion,
+      textLineHeight: textLineHeight,
+      selectionMidpoint: selectionMidpoint,
+      endpoints: endpoints,
+      delegate: delegate,
+      clipboardStatus: clipboardStatus,
+      handleCopy: canCopy(delegate)
+          ? () async {
+              handleCopy(delegate);
+              await Clipboard.setData(ClipboardData(text: selectedText));
+            }
+          : null,
+      handleSelectAll:
+          canSelectAll(delegate) ? () => handleSelectAll(delegate) : null,
+      handleTranslate: canTranslate(selectedText)
+          ? () async {
+              var cdata = await Clipboard.getData(Clipboard.kTextPlain);
+              var prevClipboardValue = cdata?.text;
+              handleCopy(delegate);
+              handleTranslate(selectedText);
+              await Clipboard.setData(ClipboardData(text: prevClipboardValue));
+            }
+          : null,
+      handleSearch: canTranslate(selectedText)
+          ? (() {
+              launchUrl(
+                  Uri.https("www.google.com", "search", {'q': selectedText}));
+            })
+          : null,
+    );
   }
 }
 
 class _TextSelectionControlsToolbar extends StatefulWidget {
-  const _TextSelectionControlsToolbar({
-    required this.clipboardStatus,
-    required this.delegate,
-    required this.endpoints,
-    required this.globalEditableRegion,
-    required this.handleCopy,
-    required this.handleSelectAll,
-    required this.handleTranslate,
-    required this.selectionMidpoint,
-    required this.textLineHeight,
-  });
+  const _TextSelectionControlsToolbar(
+      {required this.clipboardStatus,
+      required this.delegate,
+      required this.endpoints,
+      required this.globalEditableRegion,
+      required this.handleCopy,
+      required this.handleSelectAll,
+      required this.handleTranslate,
+      required this.selectionMidpoint,
+      required this.textLineHeight,
+      required this.handleSearch});
 
   final ClipboardStatusNotifier? clipboardStatus;
   final TextSelectionDelegate delegate;
@@ -72,6 +79,7 @@ class _TextSelectionControlsToolbar extends StatefulWidget {
   final VoidCallback? handleCopy;
   final VoidCallback? handleSelectAll;
   final VoidCallback? handleTranslate;
+  final VoidCallback? handleSearch;
   final Offset selectionMidpoint;
   final double textLineHeight;
 
@@ -164,6 +172,11 @@ class _TextSelectionControlsToolbarState
         _TextSelectionToolbarItemData(
           label: "Translate",
           onPressed: widget.handleTranslate!,
+        ),
+      if (widget.handleSearch != null)
+        _TextSelectionToolbarItemData(
+          label: "Search",
+          onPressed: widget.handleSearch!,
         ),
     ];
 

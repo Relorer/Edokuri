@@ -1,6 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.freader">
     <uses-permission android:name="android.permission.INTERNET" />
+    <queries>
+  <intent>
+    <action android:name="android.intent.action.WEB_SEARCH" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="https" />
+  </intent>
+</queries>
    <application
         android:label="freader"
         android:name="${applicationName}"

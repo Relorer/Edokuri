@@ -1,3 +1,4 @@
+import 'package:freader/src/models/user.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -8,15 +9,20 @@ class Record {
   final translations = ToMany<Translation>();
   final meanings = ToMany<Meaning>();
   final examples = ToMany<Example>();
+
+  final user = ToOne<User>();
   List<String> synonyms;
 
   String sentence;
+
+  final bool known;
 
   Record({
     this.id = 0,
     required this.original,
     required this.synonyms,
     required this.sentence,
+    required this.known,
   });
 }
 

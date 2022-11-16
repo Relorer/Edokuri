@@ -44,6 +44,8 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
 
   final _containerKey = GlobalKey();
 
+  bool blockPage = false;
+
   @override
   initState() {
     book = widget.book;
@@ -82,15 +84,18 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
 
   _tapOnWordHandler(String word) async {
     if (word.isEmpty) return;
-    FocusScope.of(context).unfocus();
 
-    panelController.close();
+    await panelController.close().then((value) => setState(() {
+          FocusScope.of(context).unfocus();
+          blockPage = true;
+        }));
 
     Future.delayed(
         Duration(milliseconds: panelController.isPanelClosed ? 0 : 200),
         (() async {
-      record =
-          await ProviderTranslatorController.ctr(context).translate(word, "");
+      final db = ProviderDbController.ctr(context);
+      record = await ProviderTranslatorController.ctr(context)
+          .translate(word, "", db.records);
       setState(() {});
       if (record != null) {
         panelController.open();
@@ -109,8 +114,16 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
         child: Scaffold(
           body: SlidingUpPanel(
             onPanelClosed: (() {
+              if (record == null) return;
+              final db = ProviderDbController.ctr(context);
+              if (record!.translations.any((element) => element.selected)) {
+                db.putRecord(record!);
+              } else if (!record!.known && record!.id > 0) {
+                db.removeRecord(record!);
+              }
               setState(() {
                 record = null;
+                blockPage = false;
               });
             }),
             controller: panelController,
@@ -135,21 +148,29 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                     scrollController: sc,
                   ),
             body: SafeArea(
-              child: Container(
-                color: Theme.of(context).colorScheme.background,
-                child: Column(
-                  children: [
-                    const ReaderHeadPanel(),
-                    Expanded(
-                      key: _containerKey,
-                      child: const ReaderContentView(),
+              child: Stack(
+                children: [
+                  Container(
+                    color: Theme.of(context).colorScheme.background,
+                    child: Column(
+                      children: [
+                        const ReaderHeadPanel(),
+                        Expanded(
+                          key: _containerKey,
+                          child: const ReaderContentView(),
+                        ),
+                        ReaderFooterPanel(
+                          currentPart: readerController.currentChapter + 1,
+                          partCount: book.chapters.length,
+                        ),
+                      ],
                     ),
-                    ReaderFooterPanel(
-                      currentPart: readerController.currentChapter + 1,
-                      partCount: book.chapters.length,
-                    ),
-                  ],
-                ),
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    height: blockPage ? null : 0,
+                  )
+                ],
               ),
             ),
           ),

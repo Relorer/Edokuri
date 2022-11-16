@@ -35,6 +35,28 @@ mixin _$DBController on DBControllerBase, Store {
   }
 
   @override
+  void putRecord(Record record) {
+    final _$actionInfo = _$DBControllerBaseActionController.startAction(
+        name: 'DBControllerBase.putRecord');
+    try {
+      return super.putRecord(record);
+    } finally {
+      _$DBControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeRecord(Record record) {
+    final _$actionInfo = _$DBControllerBaseActionController.startAction(
+        name: 'DBControllerBase.removeRecord');
+    try {
+      return super.removeRecord(record);
+    } finally {
+      _$DBControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 

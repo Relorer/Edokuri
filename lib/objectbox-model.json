@@ -84,7 +84,7 @@
     },
     {
       "id": "5:3361953551612294549",
-      "lastPropertyId": "7:799677527719828614",
+      "lastPropertyId": "9:3524221325269390467",
       "name": "Record",
       "properties": [
         {
@@ -107,6 +107,19 @@
           "id": "7:799677527719828614",
           "name": "sentence",
           "type": 9
+        },
+        {
+          "id": "8:4587309740183470285",
+          "name": "userId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:133781243373213545",
+          "relationTarget": "User"
+        },
+        {
+          "id": "9:3524221325269390467",
+          "name": "known",
+          "type": 1
         }
       ],
       "relations": [
@@ -213,11 +226,56 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "9:6015724316383097691",
+      "lastPropertyId": "1:5572751855861730296",
+      "name": "Set",
+      "properties": [
+        {
+          "id": "1:5572751855861730296",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "5:1477696099011964640",
+          "name": "words",
+          "targetId": "5:3361953551612294549"
+        }
+      ]
+    },
+    {
+      "id": "10:3868571538302709343",
+      "lastPropertyId": "1:7403710144245054579",
+      "name": "User",
+      "properties": [
+        {
+          "id": "1:7403710144245054579",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "8:2699600491711327792",
+          "name": "sets",
+          "targetId": "5:3361953551612294549"
+        },
+        {
+          "id": "11:4219675911884232121",
+          "name": "records",
+          "targetId": "5:3361953551612294549"
+        }
+      ]
     }
   ],
-  "lastEntityId": "8:6433317616701733098",
-  "lastIndexId": "3:7767308458628164458",
-  "lastRelationId": "4:4965465496389844989",
+  "lastEntityId": "10:3868571538302709343",
+  "lastIndexId": "4:133781243373213545",
+  "lastRelationId": "11:4219675911884232121",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -243,6 +301,11 @@
     8082450620234890309,
     7841301724705397812
   ],
-  "retiredRelationUids": [],
+  "retiredRelationUids": [
+    7882998993682163128,
+    6036615136464742833,
+    5579582447667158341,
+    1605410030014890279
+  ],
   "version": 1
 }

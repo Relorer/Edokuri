@@ -22,7 +22,14 @@ abstract class TranslatorControllerBase with Store {
 
   TranslatorControllerBase(this._translator);
 
-  Future<Record> translate(String content, String sentence) async {
+  Future<Record> translate(
+      String content, String sentence, List<Record> cache) async {
+    final fromCache = cache.where((element) =>
+        element.original.toLowerCase() == content.trim().toLowerCase());
+    if (fromCache.isNotEmpty && fromCache.first.translations.isNotEmpty) {
+      return fromCache.first;
+    }
+
     final connectivityResult = await (Connectivity().checkConnectivity());
     final hasInterner = connectivityResult == ConnectivityResult.wifi ||
         connectivityResult == ConnectivityResult.mobile;
@@ -35,16 +42,17 @@ abstract class TranslatorControllerBase with Store {
     List<Example> examples = [];
 
     if (!content.contains(" ") || content.length < 30) {
-      content = content.toLowerCase();
+      final contentLowerCase = content.toLowerCase();
 
-      var msaResult = msaDicService.lookup(content).then((value) {
+      var msaResult = msaDicService.lookup(contentLowerCase).then((value) {
         meanings = value.meanings;
         synonyms = value.synonyms;
-        synonyms.removeWhere((element) => element.toLowerCase() == content);
+        synonyms.removeWhere(
+            (element) => element.toLowerCase() == contentLowerCase);
       });
 
       var yaResult = hasInterner
-          ? yaDicService.lookup(content).then((value) {
+          ? yaDicService.lookup(contentLowerCase).then((value) {
               translations = value.translations;
               examples = value.examples;
             })
@@ -64,10 +72,7 @@ abstract class TranslatorControllerBase with Store {
     }
 
     return Record(
-      original: content,
-      synonyms: synonyms,
-      sentence: sentence,
-    )
+        original: content, synonyms: synonyms, sentence: sentence, known: false)
       ..meanings.addAll(meanings)
       ..examples.addAll(examples)
       ..translations.addAll(translations);
