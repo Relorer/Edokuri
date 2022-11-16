@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/controllers/reader_controller/reader_controller.dart';
 import 'package:freader/src/controllers/translator_controller/translator_controller.dart';
+import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:freader/src/pages/reader/widgets/reader_content_view.dart';
@@ -32,26 +33,26 @@ class ReaderPage extends StatefulWidget {
 }
 
 class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
-  late DBController db;
+  late DBController _db;
   late ReaderController reader;
-  late TranslatorController translator;
+  late TranslatorController _translator;
 
-  late Book book;
+  late Book _book;
 
-  Record? record;
-  final PanelController panelController = PanelController();
-  bool blockBody = false;
+  Record? _record;
+  final PanelController _panelController = PanelController();
+  bool _blockBody = false;
 
   late Orientation _currentOrientation;
   final _containerKey = GlobalKey();
 
   @override
   initState() {
-    book = widget.book;
+    _book = widget.book;
 
-    db = context.read<DBController>();
-    reader = context.read<ReaderController>();
-    translator = context.read<TranslatorController>();
+    _db = context.read<DBController>();
+    reader = getIt<ReaderController>(param1: _book);
+    _translator = context.read<TranslatorController>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _currentOrientation = MediaQuery.of(context).orientation;
@@ -65,11 +66,13 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     EasyDebounce.debounce('load-content', const Duration(seconds: 1), () {
-      setUpBarReaderStyles(context);
-      final newOrientation = MediaQuery.of(context).orientation;
-      if (_currentOrientation != newOrientation) {
-        _loadContent(context);
-        _currentOrientation = newOrientation;
+      if (mounted) {
+        setUpBarReaderStyles(context);
+        final newOrientation = MediaQuery.of(context).orientation;
+        if (_currentOrientation != newOrientation) {
+          _loadContent(context);
+          _currentOrientation = newOrientation;
+        }
       }
     });
 
@@ -80,47 +83,49 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     final pageSize =
         (_containerKey.currentContext?.findRenderObject() as RenderBox).size;
 
-    reader.loadContent(book, pageSize, Theme.of(context).readerPageTextStyle);
+    reader.loadContent(_book, pageSize, Theme.of(context).readerPageTextStyle);
   }
 
   _tapOnWordHandler(String word) async {
     if (word.isEmpty) return;
 
-    await panelController.close().then((value) => setState(() {
+    await _panelController.close().then((value) => setState(() {
           FocusScope.of(context).unfocus();
-          blockBody = true;
+          _blockBody = true;
         }));
 
     Future.delayed(
-        Duration(milliseconds: panelController.isPanelClosed ? 0 : 200),
+        Duration(milliseconds: _panelController.isPanelClosed ? 0 : 200),
         (() async {
-      final temp = db.getRecord(word);
-      record = temp != null && temp.translations.isNotEmpty
+      final temp = _db.getRecord(word);
+      _record = temp != null && temp.translations.isNotEmpty
           ? temp
-          : await context.read<TranslatorController>().translate(word, "");
+          : await _translator.translate(word, "");
       setState(() {});
-      if (record != null) {
-        panelController.open();
+      if (_record != null) {
+        _panelController.open();
       }
     }));
   }
 
   _panelCloseHandler() {
-    if (record == null) return;
-    if (record!.translations.any((element) => element.selected)) {
-      db.putRecord(record!);
-    } else if (!record!.known && record!.id > 0) {
-      db.removeRecord(record!);
+    if (_record == null) return;
+    if (_record!.translations.any((element) => element.selected)) {
+      _record!.translations.removeWhere(
+          (element) => element.source == "user" && !element.selected);
+      _db.putRecord(_record!);
+    } else if (!_record!.known && _record!.id > 0) {
+      _db.removeRecord(_record!);
     }
     setState(() {
-      record = null;
-      blockBody = false;
+      _record = null;
+      _blockBody = false;
     });
   }
 
   @override
   void dispose() {
-    reader.savePosition(book);
+    reader.savePosition(_book);
     super.dispose();
   }
 
@@ -128,34 +133,39 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     setUpBarReaderStyles(context);
 
-    return TapOnWordHandlerProvider(
-      tapOnWordHandler: _tapOnWordHandler,
-      child: Scaffold(
-        body: ReaderPageSlidingUpPanel(
-          controller: panelController,
-          panelCloseHandler: _panelCloseHandler,
-          blockBody: blockBody,
-          body: SafeArea(
-            child: Container(
-              color: Theme.of(context).colorScheme.background,
-              child: Column(
-                children: [
-                  const ReaderHeadPanel(),
-                  Expanded(
-                    key: _containerKey,
-                    child: const ReaderContentView(),
-                  ),
-                  const ReaderFooterPanel(),
-                ],
+    return MultiProvider(
+      providers: [
+        Provider<ReaderController>(create: (_) => reader),
+      ],
+      child: TapOnWordHandlerProvider(
+        tapOnWordHandler: _tapOnWordHandler,
+        child: Scaffold(
+          body: ReaderPageSlidingUpPanel(
+            controller: _panelController,
+            panelCloseHandler: _panelCloseHandler,
+            blockBody: _blockBody,
+            body: SafeArea(
+              child: Container(
+                color: Theme.of(context).colorScheme.background,
+                child: Column(
+                  children: [
+                    const ReaderHeadPanel(),
+                    Expanded(
+                      key: _containerKey,
+                      child: const ReaderContentView(),
+                    ),
+                    const ReaderFooterPanel(),
+                  ],
+                ),
               ),
             ),
+            panelBuilder: (ScrollController sc) => _record == null
+                ? Container()
+                : RecordInfoCard(
+                    record: _record!,
+                    scrollController: sc,
+                  ),
           ),
-          panelBuilder: (ScrollController sc) => record == null
-              ? Container()
-              : RecordInfoCard(
-                  record: record!,
-                  scrollController: sc,
-                ),
         ),
       ),
     );

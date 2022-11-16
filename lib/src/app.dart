@@ -27,7 +27,6 @@ class _AppState extends State<App> {
   final FileController _fileController = getIt<FileController>();
   final LibrarySortController _librarySortController =
       getIt<LibrarySortController>();
-  final ReaderController _readerController = getIt<ReaderController>();
 
   @override
   void initState() {
@@ -55,7 +54,6 @@ class _AppState extends State<App> {
           Provider<FileController>(create: (_) => _fileController),
           Provider<LibrarySortController>(
               create: (_) => _librarySortController),
-          Provider<ReaderController>(create: (_) => _readerController),
         ],
         child: MaterialApp(
           localizationsDelegates: context.localizationDelegates,

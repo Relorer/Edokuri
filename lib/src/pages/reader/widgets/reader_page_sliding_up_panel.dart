@@ -44,7 +44,7 @@ class ReaderPageSlidingUpPanel extends StatelessWidget {
         children: [
           body,
           Container(
-            color: Colors.amber,
+            color: Colors.transparent,
             height: blockBody ? null : 0,
           )
         ],

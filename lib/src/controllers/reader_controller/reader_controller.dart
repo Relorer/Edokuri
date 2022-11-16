@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 import 'package:freader/src/controllers/db_controller/db_controller.dart';
+import 'package:freader/src/core/utils/string_utils.dart';
 import 'package:freader/src/models/book.dart';
+import 'package:freader/src/models/record.dart';
 import 'package:mobx/mobx.dart';
 
 part 'reader_controller.g.dart';
@@ -102,7 +104,18 @@ abstract class ReaderControllerBase with Store {
   }
 
   void _completePage(int chapter, int page) {
-    print(chaptersContent[chapter][page]);
+    final words = getParagraphs(chaptersContent[chapter][page])
+        .expand(
+          (element) => element.pieces,
+        )
+        .where(
+          (element) => element.isWord && db.getRecord(element.content) == null,
+        );
+
+    for (var element in words) {
+      db.putRecord(Record(
+          original: element.content, synonyms: [], sentence: "", known: true));
+    }
   }
 
   @action
