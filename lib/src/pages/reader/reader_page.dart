@@ -1,3 +1,4 @@
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:freader/src/controllers/db_controller/db_controller.dart';
@@ -31,45 +32,47 @@ class ReaderPage extends StatefulWidget {
 }
 
 class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
-  PanelController panelController = PanelController();
-  late DBController dbController;
-  late ReaderController readerController;
-
-  late Orientation _currentOrientation;
+  late DBController db;
+  late ReaderController reader;
+  late TranslatorController translator;
 
   late Book book;
 
   Record? record;
-
-  final _containerKey = GlobalKey();
+  final PanelController panelController = PanelController();
   bool blockBody = false;
+
+  late Orientation _currentOrientation;
+  final _containerKey = GlobalKey();
+
   @override
   initState() {
     book = widget.book;
 
+    db = context.read<DBController>();
+    reader = context.read<ReaderController>();
+    translator = context.read<TranslatorController>();
+
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      dbController = context.read<DBController>();
-      readerController = context.read<ReaderController>();
       _currentOrientation = MediaQuery.of(context).orientation;
       _loadContent(context);
     });
 
-    super.initState();
     WidgetsBinding.instance.addObserver(this);
+    super.initState();
   }
 
   @override
   void didChangeMetrics() {
-    Future.delayed(
-      const Duration(seconds: 1),
-      () {
-        setUpBarReaderStyles(context);
-        if (_currentOrientation != MediaQuery.of(context).orientation) {
-          _loadContent(context);
-          _currentOrientation = MediaQuery.of(context).orientation;
-        }
-      },
-    );
+    EasyDebounce.debounce('load-content', const Duration(seconds: 1), () {
+      setUpBarReaderStyles(context);
+      final newOrientation = MediaQuery.of(context).orientation;
+      if (_currentOrientation != newOrientation) {
+        _loadContent(context);
+        _currentOrientation = newOrientation;
+      }
+    });
+
     super.didChangeMetrics();
   }
 
@@ -77,8 +80,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     final pageSize =
         (_containerKey.currentContext?.findRenderObject() as RenderBox).size;
 
-    readerController.loadContent(
-        book, pageSize, Theme.of(context).readerPageTextStyle);
+    reader.loadContent(book, pageSize, Theme.of(context).readerPageTextStyle);
   }
 
   _tapOnWordHandler(String word) async {
@@ -92,7 +94,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     Future.delayed(
         Duration(milliseconds: panelController.isPanelClosed ? 0 : 200),
         (() async {
-      final temp = dbController.getRecord(word);
+      final temp = db.getRecord(word);
       record = temp != null && temp.translations.isNotEmpty
           ? temp
           : await context.read<TranslatorController>().translate(word, "");
@@ -106,9 +108,9 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   _panelCloseHandler() {
     if (record == null) return;
     if (record!.translations.any((element) => element.selected)) {
-      dbController.putRecord(record!);
+      db.putRecord(record!);
     } else if (!record!.known && record!.id > 0) {
-      dbController.removeRecord(record!);
+      db.removeRecord(record!);
     }
     setState(() {
       record = null;
@@ -116,20 +118,9 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     });
   }
 
-  _savePosition() {
-    book.currentChapter = readerController.currentChapter;
-    book.currentPositionInChapter =
-        readerController.getCurrentPositionInChapter();
-
-    book.currentCompletedChapter = readerController.currentCompletedChapter;
-    book.currentCompletedPositionInChapter =
-        readerController.getCurrentCompletedPositionInChapter();
-    dbController.putBook(book);
-  }
-
   @override
   void dispose() {
-    _savePosition();
+    reader.savePosition(book);
     super.dispose();
   }
 

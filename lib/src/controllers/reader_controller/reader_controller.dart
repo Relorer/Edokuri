@@ -17,9 +17,9 @@ class _PositionInBook {
 }
 
 abstract class ReaderControllerBase with Store {
-  final DBController dbController;
+  final DBController db;
 
-  ReaderControllerBase(this.dbController);
+  ReaderControllerBase(this.db);
 
   @observable
   int pageCount = 1;
@@ -134,6 +134,18 @@ abstract class ReaderControllerBase with Store {
 
     chaptersContent = temp;
     pageChangedHandler(currentPageIndex);
+  }
+
+  void savePosition(Book book) {
+    if (chaptersContent.isEmpty) return;
+
+    book.currentChapter = currentChapter;
+    book.currentPositionInChapter = getCurrentPositionInChapter();
+
+    book.currentCompletedChapter = currentCompletedChapter;
+    book.currentCompletedPositionInChapter =
+        getCurrentCompletedPositionInChapter();
+    db.putBook(book);
   }
 
   int _getPageIndexByChapterAndPosition(
