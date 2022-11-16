@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/library_sort_controller/library_sort_controller.dart';
-import 'package:freader/src/controllers/library_sort_controller/provider_library_sort_controller.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
+import 'package:provider/provider.dart';
 
 class SortTypesList extends StatelessWidget {
   const SortTypesList({super.key});
@@ -23,7 +23,8 @@ class SortTypesList extends StatelessWidget {
               ),
               contentPadding: EdgeInsets.zero,
               leading: Observer(builder: (_) {
-                final sortCtr = ProviderLibrarySortController.ctr(context);
+                final librarySort = context.read<LibrarySortController>();
+
                 return Radio<SortTypes>(
                   visualDensity: const VisualDensity(
                     horizontal: VisualDensity.minimumDensity,
@@ -35,8 +36,8 @@ class SortTypesList extends StatelessWidget {
                     return Theme.of(context).paleElementColor;
                   }),
                   value: e,
-                  groupValue: sortCtr.sortType,
-                  onChanged: sortCtr.setSortType,
+                  groupValue: librarySort.sortType,
+                  onChanged: librarySort.setSortType,
                 );
               }),
             ))

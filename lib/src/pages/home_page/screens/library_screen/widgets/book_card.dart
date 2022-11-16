@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freader/generated/locale.dart';
-import 'package:freader/src/controllers/db_controller/provider_db_controller.dart';
+import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card_content.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card_cover.dart';
@@ -8,6 +8,7 @@ import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_
 import 'package:freader/src/pages/reader/reader_page.dart';
 import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme.dart';
+import 'package:provider/provider.dart';
 
 class BookCard extends StatelessWidget {
   final Book book;
@@ -25,7 +26,7 @@ class BookCard extends StatelessWidget {
   }
 
   removeBook(BuildContext context) {
-    ProviderDbController.ctr(context).removeBook(book);
+    context.read<DBController>().removeBook(book);
     Navigator.pop(context);
   }
 

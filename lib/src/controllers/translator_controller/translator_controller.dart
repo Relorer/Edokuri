@@ -22,14 +22,7 @@ abstract class TranslatorControllerBase with Store {
 
   TranslatorControllerBase(this._translator);
 
-  Future<Record> translate(
-      String content, String sentence, List<Record> cache) async {
-    final fromCache = cache.where((element) =>
-        element.original.toLowerCase() == content.trim().toLowerCase());
-    if (fromCache.isNotEmpty && fromCache.first.translations.isNotEmpty) {
-      return fromCache.first;
-    }
-
+  Future<Record> translate(String content, String sentence) async {
     final connectivityResult = await (Connectivity().checkConnectivity());
     final hasInterner = connectivityResult == ConnectivityResult.wifi ||
         connectivityResult == ConnectivityResult.mobile;

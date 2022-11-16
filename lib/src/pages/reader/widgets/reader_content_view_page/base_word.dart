@@ -19,7 +19,7 @@ class BaseWord extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(defaultRadius),
+          borderRadius: BorderRadius.circular(defaultRadius / 2),
         ),
         child: Text(
           word.content,

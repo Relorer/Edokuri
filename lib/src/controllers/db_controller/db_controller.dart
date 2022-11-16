@@ -36,6 +36,15 @@ abstract class DBControllerBase with Store {
     records.addAll(_user.records);
   }
 
+  Record? getRecord(String original) {
+    final fromCache = records.where((element) =>
+        element.original.toLowerCase() == original.trim().toLowerCase());
+    if (fromCache.isNotEmpty) {
+      return fromCache.first;
+    }
+    return null;
+  }
+
   @action
   void putBook(Book book) {
     _bookBox.put(book);

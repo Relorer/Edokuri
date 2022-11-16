@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
+import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:mobx/mobx.dart';
 
@@ -8,14 +9,18 @@ part 'reader_controller.g.dart';
 
 class ReaderController = ReaderControllerBase with _$ReaderController;
 
-class PositionInBook {
+class _PositionInBook {
   final int chapter;
   final int indexInChapter;
 
-  PositionInBook(this.chapter, this.indexInChapter);
+  _PositionInBook(this.chapter, this.indexInChapter);
 }
 
 abstract class ReaderControllerBase with Store {
+  final DBController dbController;
+
+  ReaderControllerBase(this.dbController);
+
   @observable
   int pageCount = 1;
 
@@ -63,12 +68,12 @@ abstract class ReaderControllerBase with Store {
     return position;
   }
 
-  PositionInBook _getPositionInBook(List<List<String>> chapters, int index) {
+  _PositionInBook _getPositionInBook(List<List<String>> chapters, int index) {
     var sumPages = 0;
     for (var element in chapters) {
       sumPages += element.length;
       if (index < sumPages) {
-        return PositionInBook(
+        return _PositionInBook(
             chapters.indexOf(element), index - sumPages + element.length);
       }
     }
@@ -87,10 +92,17 @@ abstract class ReaderControllerBase with Store {
     if (currentCompletedChapter < currentChapter) {
       currentCompletedChapter = currentChapter;
       currentCompletedPage = currentPage;
+      _completePage(
+          currentChapter - 1, chaptersContent[currentChapter - 1].length - 1);
     } else if (currentCompletedChapter == currentChapter &&
         currentCompletedPage < currentPage) {
       currentCompletedPage = currentPage;
+      _completePage(currentChapter, currentPage - 1);
     }
+  }
+
+  void _completePage(int chapter, int page) {
+    print(chaptersContent[chapter][page]);
   }
 
   @action

@@ -63,6 +63,7 @@ dependencies:
   easy_debounce: ^2.0.2+1
   translator: ^0.1.7
   url_launcher: ^6.1.6
+  get_it: ^7.2.0
   
 dev_dependencies:
   flutter_test:
