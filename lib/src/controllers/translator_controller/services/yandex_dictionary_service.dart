@@ -1,4 +1,5 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:freader/src/controllers/translator_controller/translate_source.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -27,9 +28,9 @@ class YandexDictionaryService {
 
       for (var def in parsedJson["def"] ?? []) {
         for (var tr in def["tr"] ?? []) {
-          translations.add(Translation(tr["text"], source: "yandex"));
+          translations.add(Translation(tr["text"], source: yandexSource));
           for (var syn in tr["syn"] ?? []) {
-            translations.add(Translation(syn["text"], source: "yandex"));
+            translations.add(Translation(syn["text"], source: yandexSource));
           }
           for (var ex in tr["ex"] ?? []) {
             examples.add(Example(ex["text"], ex["tr"][0]["text"]));

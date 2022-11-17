@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:freader/src/controllers/translator_controller/translate_source.dart';
+import 'package:freader/src/controllers/translator_controller/translator_controller.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
@@ -38,8 +40,8 @@ class _RecordInfoTranslationsSectionState
             translations.length,
             (int index) {
               return ChoiceChip(
-                shape: translations[index].source == "google" ||
-                        translations[index].text.length > 30
+                shape: translations[index].source == googleSource ||
+                        translations[index].text.length > maxPhraseLength
                     ? const RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.all(Radius.circular(defaultRadius)))
@@ -69,7 +71,7 @@ class _RecordInfoTranslationsSectionState
             },
           ).toList(),
         ),
-        translations.first.source == "google"
+        translations.first.source == googleSource
             ? Padding(
                 padding: const EdgeInsets.symmetric(vertical: defaultMargin),
                 child: SvgPicture.asset(
@@ -90,8 +92,8 @@ class _RecordInfoTranslationsSectionState
                       .firstWhere((element) => element.text == value)
                       .selected = true;
                 } else {
-                  translations
-                      .add(Translation(value, source: "user", selected: true));
+                  translations.add(
+                      Translation(value, source: userSource, selected: true));
                 }
 
                 _textEditingController.clear();

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/controllers/reader_controller/reader_controller.dart';
+import 'package:freader/src/controllers/translator_controller/translate_source.dart';
 import 'package:freader/src/controllers/translator_controller/translator_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/models/book.dart';
@@ -112,7 +113,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     if (_record == null) return;
     if (_record!.translations.any((element) => element.selected)) {
       _record!.translations.removeWhere(
-          (element) => element.source == "user" && !element.selected);
+          (element) => element.source == userSource && !element.selected);
       _record!.known = false;
       _db.putRecord(_record!);
     } else if (!_record!.known && _record!.id > 0) {

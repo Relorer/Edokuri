@@ -2,11 +2,14 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:freader/src/controllers/translator_controller/services/google_translator_service.dart';
 import 'package:freader/src/controllers/translator_controller/services/msa_dictionary_service.dart';
 import 'package:freader/src/controllers/translator_controller/services/yandex_dictionary_service.dart';
+import 'package:freader/src/controllers/translator_controller/translate_source.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:mobx/mobx.dart';
 
 part 'translator_controller.g.dart';
+
+const maxPhraseLength = 30;
 
 class TranslatorController = TranslatorControllerBase
     with _$TranslatorController;
@@ -34,7 +37,7 @@ abstract class TranslatorControllerBase with Store {
     List<String> synonyms = [];
     List<Example> examples = [];
 
-    if (!content.contains(" ") || content.length < 30) {
+    if (!content.contains(" ") || content.length < maxPhraseLength) {
       final contentLowerCase = content.toLowerCase();
 
       var msaResult = msaDicService.lookup(contentLowerCase).then((value) {
@@ -59,9 +62,9 @@ abstract class TranslatorControllerBase with Store {
           hasInterner ? await gService.translate(content) : "";
 
       translations.add(googleTranslate.isNotEmpty
-          ? Translation(googleTranslate, source: "google")
+          ? Translation(googleTranslate, source: googleSource)
           : Translation(await _translator.translateText(content),
-              source: "google"));
+              source: googleSource));
     }
 
     return Record(
