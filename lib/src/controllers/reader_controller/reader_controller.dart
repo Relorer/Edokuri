@@ -119,7 +119,8 @@ abstract class ReaderControllerBase with Store {
             original: element.content.toLowerCase(),
             synonyms: [],
             sentence: "",
-            known: true));
+            known: true,
+            creationDate: DateTime.now()));
       }
     });
   }

@@ -65,6 +65,8 @@ class _RecordInfoTranslationsSectionState
                   setState(() {
                     translations[index].selected =
                         !translations[index].selected;
+                    translations[index].selectionDate =
+                        selected ? DateTime.now() : null;
                   });
                 },
               );

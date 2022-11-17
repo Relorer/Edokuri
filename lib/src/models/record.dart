@@ -4,26 +4,25 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class Record {
   int id;
+  final user = ToOne<User>();
 
-  String original;
   final translations = ToMany<Translation>();
   final meanings = ToMany<Meaning>();
   final examples = ToMany<Example>();
-
-  final user = ToOne<User>();
-  List<String> synonyms;
-
-  String sentence;
+  final List<String> synonyms;
+  final String original;
+  final String sentence;
+  final DateTime creationDate;
 
   bool known;
 
-  Record({
-    this.id = 0,
-    required this.original,
-    required this.synonyms,
-    required this.sentence,
-    required this.known,
-  });
+  Record(
+      {this.id = 0,
+      required this.original,
+      required this.synonyms,
+      required this.sentence,
+      required this.known,
+      required this.creationDate});
 }
 
 @Entity()
@@ -31,11 +30,15 @@ class Translation {
   int id;
 
   final String text;
-  bool selected;
   final String source;
+  bool selected;
+  DateTime? selectionDate;
 
   Translation(this.text,
-      {this.id = 0, this.selected = false, required this.source});
+      {this.id = 0,
+      this.selected = false,
+      required this.source,
+      this.selectionDate});
 }
 
 @Entity()

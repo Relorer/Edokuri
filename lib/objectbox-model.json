@@ -84,7 +84,7 @@
     },
     {
       "id": "5:3361953551612294549",
-      "lastPropertyId": "9:3524221325269390467",
+      "lastPropertyId": "10:7605897003299823390",
       "name": "Record",
       "properties": [
         {
@@ -120,6 +120,11 @@
           "id": "9:3524221325269390467",
           "name": "known",
           "type": 1
+        },
+        {
+          "id": "10:7605897003299823390",
+          "name": "creationDate",
+          "type": 10
         }
       ],
       "relations": [
@@ -200,7 +205,7 @@
     },
     {
       "id": "8:6433317616701733098",
-      "lastPropertyId": "5:6957773393937181550",
+      "lastPropertyId": "6:460523475386207985",
       "name": "Translation",
       "properties": [
         {
@@ -223,6 +228,11 @@
           "id": "5:6957773393937181550",
           "name": "source",
           "type": 9
+        },
+        {
+          "id": "6:460523475386207985",
+          "name": "selectionDate",
+          "type": 10
         }
       ],
       "relations": []

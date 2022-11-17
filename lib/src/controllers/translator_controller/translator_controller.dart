@@ -68,7 +68,11 @@ abstract class TranslatorControllerBase with Store {
     }
 
     return Record(
-        original: content, synonyms: synonyms, sentence: sentence, known: false)
+        original: content,
+        synonyms: synonyms,
+        sentence: sentence,
+        known: false,
+        creationDate: DateTime.now())
       ..meanings.addAll(meanings)
       ..examples.addAll(examples)
       ..translations.addAll(translations);
