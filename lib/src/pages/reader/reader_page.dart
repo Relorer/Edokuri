@@ -113,6 +113,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     if (_record!.translations.any((element) => element.selected)) {
       _record!.translations.removeWhere(
           (element) => element.source == "user" && !element.selected);
+      _record!.known = false;
       _db.putRecord(_record!);
     } else if (!_record!.known && _record!.id > 0) {
       _db.removeRecord(_record!);

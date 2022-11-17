@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/generated/locale.dart';
 import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/models/book.dart';
@@ -58,12 +59,23 @@ class BookCard extends StatelessWidget {
           BookCardCover(
             cover: book.cover,
           ),
-          BookCardContent(
-            author: book.author ?? LocaleKeys.no_author.tr(),
-            chaptersCount: book.chapters.length,
-            currentCompletedChapter: book.currentCompletedChapter,
-            title: book.title ?? LocaleKeys.no_title.tr(),
-          )
+          Observer(builder: (_) {
+            return BookCardContent(
+              author: book.author ?? LocaleKeys.no_author.tr(),
+              chaptersCount: book.chapters.length,
+              currentCompletedChapter: book.currentCompletedChapter,
+              title: book.title ?? LocaleKeys.no_title.tr(),
+              recordsCount: context
+                  .read<DBController>()
+                  .getSavedRecordsByBook(book)
+                  .length,
+              newWordsPersent: 100 -
+                  (context.read<DBController>().getRecordsByBook(book).length /
+                          book.words.length *
+                          100)
+                      .toInt(),
+            );
+          })
         ]),
       ),
     );

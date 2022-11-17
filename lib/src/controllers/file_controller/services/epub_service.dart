@@ -42,7 +42,7 @@ class EpubService {
       }
     }
 
-    book.words.addAll(words.toSet());
+    book.words.addAll(words.toSet().map((e) => e.toLowerCase()));
 
     return book;
   }

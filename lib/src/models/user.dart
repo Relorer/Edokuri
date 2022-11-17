@@ -5,6 +5,7 @@ import 'package:objectbox/objectbox.dart';
 class User {
   int id;
 
+  @Backlink('user')
   final records = ToMany<Record>();
   final sets = ToMany<Record>();
 

@@ -25,10 +25,9 @@ abstract class DBControllerBase with Store {
     books.addAll(_bookBox.query().build().find());
 
     final temp = _userBox.getAll();
-
     if (temp.isEmpty) {
       _user = User();
-      _userBox.put(_user);
+      _user.id = _userBox.put(_user);
     } else {
       _user = temp.first;
     }
@@ -39,6 +38,7 @@ abstract class DBControllerBase with Store {
   Record? getRecord(String original) {
     final fromCache = records.where((element) =>
         element.original.toLowerCase() == original.trim().toLowerCase());
+
     if (fromCache.isNotEmpty) {
       return fromCache.first;
     }
@@ -47,7 +47,7 @@ abstract class DBControllerBase with Store {
 
   @action
   void putBook(Book book) {
-    _bookBox.put(book);
+    book.id = _bookBox.put(book);
     if (!books.contains(book)) {
       books.add(book);
     }
@@ -59,13 +59,30 @@ abstract class DBControllerBase with Store {
     books.removeWhere((b) => b.id == book.id);
   }
 
+  List<Record> getRecordsByBook(Book book) {
+    return records
+        .where((element) =>
+            book.words.any((word) => word == element.original.toLowerCase()))
+        .toList();
+  }
+
+  List<Record> getSavedRecordsByBook(Book book) {
+    return getRecordsByBook(book).where((element) => !element.known).toList();
+  }
+
   @action
   void putRecord(Record record) {
+    _recordBox.removeMany(records
+        .where((element) =>
+            element.original.toLowerCase() == record.original.toLowerCase())
+        .map((e) => e.id)
+        .toList());
+    records.removeWhere((element) =>
+        element.original.toLowerCase() == record.original.toLowerCase());
+
     record.user.target = _user;
-    _recordBox.put(record);
-    if (!records.contains(record)) {
-      records.add(record);
-    }
+    records.add(record);
+    record.id = _recordBox.put(record);
   }
 
   @action

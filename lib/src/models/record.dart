@@ -15,7 +15,7 @@ class Record {
 
   String sentence;
 
-  final bool known;
+  bool known;
 
   Record({
     this.id = 0,

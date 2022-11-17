@@ -38,7 +38,8 @@ class _RecordInfoTranslationsSectionState
             translations.length,
             (int index) {
               return ChoiceChip(
-                shape: translations[index].source == "google"
+                shape: translations[index].source == "google" ||
+                        translations[index].text.length > 30
                     ? const RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.all(Radius.circular(defaultRadius)))

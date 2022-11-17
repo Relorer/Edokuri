@@ -10,13 +10,17 @@ class BookCardContent extends StatelessWidget {
   final String author;
   final int currentCompletedChapter;
   final int chaptersCount;
+  final int newWordsPersent;
+  final int recordsCount;
 
   const BookCardContent(
       {super.key,
       required this.author,
       required this.chaptersCount,
       required this.currentCompletedChapter,
-      required this.title});
+      required this.title,
+      required this.newWordsPersent,
+      required this.recordsCount});
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +52,13 @@ class BookCardContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 EllipsisText(
-                  LocaleKeys.records.tr(namedArgs: {"count": 145.toString()}),
+                  LocaleKeys.records
+                      .tr(namedArgs: {"count": recordsCount.toString()}),
                   style: Theme.of(context).bookSubInfoStyle,
                 ),
                 EllipsisText(
                   LocaleKeys.new_words
-                      .tr(namedArgs: {"persent": 10.toString()}),
+                      .tr(namedArgs: {"persent": newWordsPersent.toString()}),
                   style: Theme.of(context).bookSubInfoStyle,
                 )
               ],
