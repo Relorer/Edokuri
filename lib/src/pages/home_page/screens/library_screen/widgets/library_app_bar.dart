@@ -24,19 +24,30 @@ class LibraryAppBar extends StatelessWidget {
           height: appBarHeight,
           child: Container(
               color: Theme.of(context).secondBackgroundColor,
-              padding: const EdgeInsets.symmetric(
-                  vertical: defaultMargin, horizontal: doubleDefaultMargin),
+              padding: const EdgeInsets.symmetric(vertical: defaultMargin),
               child: Column(
                 children: [
-                  AppBarTitle(
-                    leftText: LocaleKeys.today.tr(),
-                    rightText: LocaleKeys.short_min
-                        .tr(namedArgs: {"count": 47.toString()}),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: doubleDefaultMargin),
+                    child: AppBarTitle(
+                      leftText: LocaleKeys.today.tr(),
+                      rightText: LocaleKeys.short_min
+                          .tr(namedArgs: {"count": 47.toString()}),
+                    ),
                   ),
                   const SizedBox(
                     height: doubleDefaultMargin,
                   ),
-                  const GraphWidget(),
+                  Expanded(
+                    child: SizedBox.expand(
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: defaultMargin),
+                        child: GraphWidget(),
+                      ),
+                    ),
+                  ),
                 ],
               )),
         ),

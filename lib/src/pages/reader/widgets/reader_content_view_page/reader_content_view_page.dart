@@ -68,7 +68,7 @@ class ReaderContentViewPage extends StatelessWidget {
         }
       }
 
-      if (paragraphs.indexOf(paragraph) < paragraphs.length - 1) {
+      if (paragraphs.indexOf(paragraph) < paragraphs.length - 2) {
         textSpans.add(const TextSpan(text: "\n"));
         piecesOfPage.add("\n");
       }
