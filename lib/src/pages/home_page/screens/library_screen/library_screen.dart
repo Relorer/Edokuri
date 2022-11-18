@@ -17,7 +17,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     double appBarHeight =
-        min((MediaQuery.of(context).size.height - 110) * .3, 300);
+        min((MediaQuery.of(context).size.height - 110) * .35, 300);
 
     return BouncingCustomScrollView(
       slivers: [

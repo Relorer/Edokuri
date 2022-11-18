@@ -24,7 +24,8 @@ class LibraryAppBar extends StatelessWidget {
           height: appBarHeight,
           child: Container(
               color: Theme.of(context).secondBackgroundColor,
-              padding: const EdgeInsets.symmetric(vertical: defaultMargin),
+              padding:
+                  const EdgeInsets.symmetric(vertical: doubleDefaultMargin),
               child: Column(
                 children: [
                   Padding(
@@ -39,9 +40,9 @@ class LibraryAppBar extends StatelessWidget {
                   const SizedBox(
                     height: doubleDefaultMargin,
                   ),
-                  Expanded(
+                  const Expanded(
                     child: SizedBox.expand(
-                      child: const Padding(
+                      child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: defaultMargin),
                         child: GraphWidget(),

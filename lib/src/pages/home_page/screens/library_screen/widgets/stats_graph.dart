@@ -1,9 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:freader/src/models/book.dart';
 import 'package:freader/src/models/graph.dart';
-import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'dart:math';
 
@@ -27,9 +25,18 @@ class GraphWidget extends StatelessWidget {
 }
 
 class Graph extends CustomPainter {
+  final Map<int, String> weekdayName = {
+    1: "MO",
+    2: "TU",
+    3: "WE",
+    4: "TH",
+    5: "FR",
+    6: "SA",
+    7: "SU"
+  };
+
   final GraphData data;
 
-  final double columnNameHeight = doubleDefaultMargin;
   late Iterable<int> recordsByDays;
   late double avg;
   late int maxValue;
@@ -43,6 +50,27 @@ class Graph extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.drawRect(Rect.fromLTRB(0, 0, size.width, size.height),
+        Paint()..color = Colors.transparent);
+
+    const textStyle = TextStyle(
+      color: paleElement,
+      fontSize: 12,
+    );
+    final textSpan = TextSpan(
+      text: weekdayName[0],
+      style: textStyle,
+    );
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout(
+      minWidth: 0,
+      maxWidth: size.width,
+    );
+    final columnNameHeight = textPainter.size.height + defaultMargin;
+
     final graphHeight = size.height - columnNameHeight;
 
     const edge = defaultMargin;
@@ -59,69 +87,64 @@ class Graph extends CustomPainter {
       final x1 = i * columnWidth + offsetBetween * i + edge;
       final x2 = x1 + columnWidth;
 
-      _drawColumn(canvas, x1, edge, x2, graphHeight, data.days[i]);
+      _drawColumn(canvas, x1, doubleDefaultMargin, x2,
+          graphHeight - defaultMargin, data.days[i]);
+
+      final textSpan = TextSpan(
+        text: weekdayName[data.days[i].date.weekday],
+        style: textStyle,
+      );
+      final textPainter = TextPainter(
+        text: textSpan,
+        textDirection: TextDirection.ltr,
+      );
+      textPainter.layout(
+        minWidth: 0,
+        maxWidth: size.width,
+      );
+      final offset = Offset(x1 + columnWidth / 2 - textPainter.size.width / 2,
+          size.height - textPainter.size.height);
+
+      textPainter.paint(canvas, offset);
     }
 
-    _drawGrid(canvas, size);
-    // const textStyle = TextStyle(
-    //   color: Colors.black,
-    //   fontSize: 30,
-    // );
-    // const textSpan = TextSpan(
-    //   text: 'FR',
-    //   style: textStyle,
-    // );
-    // final textPainter = TextPainter(
-    //   text: textSpan,
-    //   textDirection: TextDirection.ltr,
-    // );
-    // textPainter.layout(
-    //   minWidth: 0,
-    //   maxWidth: size.width,
-    // );
-    // final xCenter = (size.width - textPainter.width) / 2;
-    // final yCenter = (size.height - textPainter.height) / 2;
-    // final offset = Offset(xCenter, yCenter);
-    // textPainter.paint(canvas, offset);
+    _drawGrid(canvas, Size(size.width, size.height - columnNameHeight));
   }
 
   _drawColumn(Canvas canvas, double left, double top, double right,
       double bottom, GraphDayData data) {
-    final paint = Paint()
-      ..style = PaintingStyle.fill
-      ..color = Colors.amber;
-
-    const radius = Radius.circular(defaultRadius);
-
-    final maxInThisDay = [
-      data.newKnownWords,
-      data.newSavedWords,
-      data.reviewedWords
-    ].reduce(max);
+    final paint = Paint();
 
     final height = bottom - top;
+
+    final newSavedWordsY1 = bottom - data.newSavedWords / maxValue * height;
+    final newSavedWordsY2 = bottom;
+
+    final reviewedWordsY1 =
+        newSavedWordsY1 - data.reviewedWords / maxValue * height;
+    final reviewedWordsY2 = newSavedWordsY1;
+
+    final newKnownWordsY1 =
+        reviewedWordsY1 - data.newKnownWords / maxValue * height;
+    final newKnownWordsY2 = reviewedWordsY1;
 
     //newKnownWords
     canvas.drawRRect(
         RRect.fromLTRBAndCorners(
-            left,
-            ((height - data.newSavedWords / maxValue * height) -
-                    data.reviewedWords / maxValue * height) -
-                data.newKnownWords / maxValue * height,
-            right,
-            (height - data.newSavedWords / maxValue * height) -
-                data.reviewedWords / maxValue * height,
-            topRight: radius),
+          left,
+          newKnownWordsY1,
+          right,
+          newKnownWordsY2,
+        ),
         paint..color = white);
 
     //reviewedWords
     canvas.drawRRect(
         RRect.fromLTRBAndCorners(
           left,
-          (height - data.newSavedWords / maxValue * height) -
-              data.reviewedWords / maxValue * height,
+          reviewedWordsY1,
           right,
-          height - data.newSavedWords / maxValue * height,
+          reviewedWordsY2,
         ),
         paint..color = unknownWord);
 
@@ -129,36 +152,41 @@ class Graph extends CustomPainter {
     canvas.drawRRect(
         RRect.fromLTRBAndCorners(
           left,
-          height - data.newSavedWords / maxValue * height,
+          newSavedWordsY1,
           right,
-          bottom,
+          newSavedWordsY2,
         ),
         paint..color = savedWord);
 
-    final paint2 = Paint()
+    //rounding
+    final roundingPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = defaultRadius * 2
-      ..color = Colors.amber;
+      ..strokeWidth = defaultRadius
+      ..color = darkGray;
+
+    const radius = Radius.circular(defaultRadius);
 
     canvas.drawRRect(
         RRect.fromLTRBAndCorners(
-            left - defaultRadius,
-            height - data.newSavedWords / maxValue * height - defaultRadius,
-            right + defaultRadius,
-            bottom + defaultRadius,
-            bottomLeft: Radius.circular(defaultRadius * 2),
-            bottomRight: Radius.circular(defaultRadius * 2)),
-        paint2..color = darkGray);
+            left - defaultRadius / 2,
+            newKnownWordsY1 - defaultRadius / 2,
+            right + defaultRadius / 2,
+            bottom + defaultRadius / 2,
+            bottomLeft: radius,
+            bottomRight: radius,
+            topLeft: radius,
+            topRight: radius),
+        roundingPaint);
   }
 
   _drawGrid(Canvas canvas, Size size) {
-    final height = size.height - columnNameHeight;
+    final height = size.height;
 
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.4
       ..strokeCap = StrokeCap.round
-      ..color = paleElement.withOpacity(0.3);
+      ..color = paleElement.withOpacity(0.15);
 
     _drawHorizontalLine(canvas, size, 0, paint);
     _drawHorizontalDashPath(
