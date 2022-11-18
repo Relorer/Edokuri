@@ -40,7 +40,7 @@ class LibraryAppBar extends StatelessWidget {
                   const SizedBox(
                     height: doubleDefaultMargin,
                   ),
-                  const StatsGraph()
+                  StatsGraph(),
                 ],
               )),
         ),

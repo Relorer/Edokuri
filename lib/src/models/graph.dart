@@ -5,11 +5,13 @@ class GraphData {
 }
 
 class GraphDayData {
-  final int newSavedWords;
-  final int newKnownWords;
+  final int newSavedRecords;
+  final int newKnownRecords;
   final int reviewedWords;
   final DateTime date;
 
-  GraphDayData(
-      this.newSavedWords, this.newKnownWords, this.reviewedWords, this.date);
+  GraphDayData(this.date,
+      {this.newSavedRecords = 0,
+      this.newKnownRecords = 0,
+      this.reviewedWords = 0});
 }

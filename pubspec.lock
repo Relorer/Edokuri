@@ -887,6 +887,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  touchable:
+    dependency: "direct main"
+    description:
+      name: touchable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   translator:
     dependency: "direct main"
     description:
