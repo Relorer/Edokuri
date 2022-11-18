@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:freader/src/models/graph.dart';
+import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
-import 'dart:math';
 
 import 'package:path_drawing/path_drawing.dart';
 
-class GraphWidget extends StatelessWidget {
-  const GraphWidget({Key? key}) : super(key: key);
+class StatsGraph extends StatelessWidget {
+  const StatsGraph({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +20,18 @@ class GraphWidget extends StatelessWidget {
             random.nextInt(100), DateTime.now().subtract(Duration(days: e))))
         .toList());
 
-    return CustomPaint(painter: Graph(data));
+    return Expanded(
+      child: SizedBox.expand(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: defaultMargin),
+          child: CustomPaint(painter: _Graph(context, data)),
+        ),
+      ),
+    );
   }
 }
 
-class Graph extends CustomPainter {
+class _Graph extends CustomPainter {
   final Map<int, String> weekdayName = {
     1: "MO",
     2: "TU",
@@ -35,41 +42,45 @@ class Graph extends CustomPainter {
     7: "SU"
   };
 
+  final BuildContext context;
   final GraphData data;
 
   late Iterable<int> recordsByDays;
   late double avg;
   late int maxValue;
+  late TextStyle graphWeekdayStyle;
 
-  Graph(this.data) {
+  late double columnNameHeight;
+
+  _Graph(this.context, this.data) {
     recordsByDays = data.days
         .map((e) => e.newKnownWords + e.newSavedWords + e.reviewedWords);
     avg = recordsByDays.reduce((a, b) => a + b) / data.days.length;
     maxValue = recordsByDays.reduce(max);
+    graphWeekdayStyle = Theme.of(context).graphWeekdayStyle;
+
+    columnNameHeight =
+        _getTextPainterGraphWeekday(weekdayName[0]!).size.height +
+            defaultMargin;
+  }
+
+  TextPainter _getTextPainterGraphWeekday(String text) {
+    return TextPainter(
+      text: TextSpan(
+        text: weekdayName[0],
+        style: graphWeekdayStyle,
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout(
+        minWidth: 0,
+        maxWidth: double.maxFinite,
+      );
   }
 
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Rect.fromLTRB(0, 0, size.width, size.height),
         Paint()..color = Colors.transparent);
-
-    const textStyle = TextStyle(
-      color: paleElement,
-      fontSize: 12,
-    );
-    final textSpan = TextSpan(
-      text: weekdayName[0],
-      style: textStyle,
-    );
-    final textPainter = TextPainter(
-      text: textSpan,
-      textDirection: TextDirection.ltr,
-    );
-    textPainter.layout(
-      minWidth: 0,
-      maxWidth: size.width,
-    );
-    final columnNameHeight = textPainter.size.height + defaultMargin;
 
     final graphHeight = size.height - columnNameHeight;
 
@@ -89,26 +100,19 @@ class Graph extends CustomPainter {
 
       _drawColumn(canvas, x1, doubleDefaultMargin, x2,
           graphHeight - defaultMargin, data.days[i]);
-
-      final textSpan = TextSpan(
-        text: weekdayName[data.days[i].date.weekday],
-        style: textStyle,
-      );
-      final textPainter = TextPainter(
-        text: textSpan,
-        textDirection: TextDirection.ltr,
-      );
-      textPainter.layout(
-        minWidth: 0,
-        maxWidth: size.width,
-      );
-      final offset = Offset(x1 + columnWidth / 2 - textPainter.size.width / 2,
-          size.height - textPainter.size.height);
-
-      textPainter.paint(canvas, offset);
+      _drawColumnName(canvas, weekdayName[data.days[i].date.weekday]!,
+          x1 + columnWidth / 2, size.height);
     }
 
     _drawGrid(canvas, Size(size.width, size.height - columnNameHeight));
+  }
+
+  _drawColumnName(Canvas canvas, String name, double x, double y) {
+    final namePainter = _getTextPainterGraphWeekday(name);
+    final offset =
+        Offset(x - namePainter.size.width / 2, y - namePainter.size.height);
+
+    namePainter.paint(canvas, offset);
   }
 
   _drawColumn(Canvas canvas, double left, double top, double right,

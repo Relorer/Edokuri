@@ -40,15 +40,7 @@ class LibraryAppBar extends StatelessWidget {
                   const SizedBox(
                     height: doubleDefaultMargin,
                   ),
-                  const Expanded(
-                    child: SizedBox.expand(
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: defaultMargin),
-                        child: GraphWidget(),
-                      ),
-                    ),
-                  ),
+                  const StatsGraph()
                 ],
               )),
         ),

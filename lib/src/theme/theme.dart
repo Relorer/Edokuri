@@ -54,6 +54,10 @@ extension LightThemeEx on ThemeData {
         height: 1.5);
   }
 
+  TextStyle get graphWeekdayStyle {
+    return const TextStyle(fontSize: 12, color: paleElement);
+  }
+
   TextStyle get bookAuthorStyle {
     return const TextStyle(fontSize: 14, color: paleElement);
   }
