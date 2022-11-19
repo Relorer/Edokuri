@@ -20,8 +20,9 @@ class _PositionInBook {
 
 abstract class ReaderControllerBase with Store {
   final DBController db;
+  final Book book;
 
-  ReaderControllerBase(this.db);
+  ReaderControllerBase(this.db, this.book);
 
   @observable
   int pageCount = 1;
@@ -126,7 +127,7 @@ abstract class ReaderControllerBase with Store {
   }
 
   @action
-  Future loadContent(Book book, Size pageSize, TextStyle style) async {
+  Future loadContent(Size pageSize, TextStyle style) async {
     chaptersContent = [];
     final List<List<String>> temp = [];
     for (var element in book.chapters) {
@@ -156,7 +157,7 @@ abstract class ReaderControllerBase with Store {
     pageChangedHandler(currentPageIndex);
   }
 
-  void savePosition(Book book) {
+  void savePosition() {
     if (chaptersContent.isEmpty) return;
 
     book.currentChapter = currentChapter;

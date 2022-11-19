@@ -48,9 +48,10 @@ abstract class DBControllerBase with Store {
   @action
   void putBook(Book book) {
     book.id = _bookBox.put(book);
-    if (!books.contains(book)) {
-      books.add(book);
+    if (books.contains(book)) {
+      books.remove(book);
     }
+    books.add(book);
   }
 
   @action

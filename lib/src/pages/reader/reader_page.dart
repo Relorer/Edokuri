@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/controllers/reader_controller/reader_controller.dart';
+import 'package:freader/src/controllers/reading_timer_controller/reading_timer_controller.dart';
 import 'package:freader/src/controllers/translator_controller/translate_source.dart';
 import 'package:freader/src/controllers/translator_controller/translator_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
@@ -36,9 +37,8 @@ class ReaderPage extends StatefulWidget {
 class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   late DBController _db;
   late ReaderController reader;
+  late ReadingTimerController readerTimer;
   late TranslatorController _translator;
-
-  late Book _book;
 
   Record? _record;
   final PanelController _panelController = PanelController();
@@ -47,12 +47,13 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   late Orientation _currentOrientation;
   final _containerKey = GlobalKey();
 
+  DateTime? startReading;
+
   @override
   initState() {
-    _book = widget.book;
-
     _db = context.read<DBController>();
-    reader = getIt<ReaderController>(param1: _book);
+    reader = getIt<ReaderController>(param1: widget.book);
+    readerTimer = getIt<ReadingTimerController>(param1: widget.book);
     _translator = context.read<TranslatorController>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -62,6 +63,8 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
 
     WidgetsBinding.instance.addObserver(this);
     super.initState();
+
+    readerTimer.startReadingTimer();
   }
 
   @override
@@ -70,8 +73,10 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
       case AppLifecycleState.detached:
       case AppLifecycleState.inactive:
       case AppLifecycleState.paused:
+        readerTimer.stopReadingTimer();
         break;
       case AppLifecycleState.resumed:
+        readerTimer.startReadingTimer();
         break;
     }
     super.didChangeAppLifecycleState(state);
@@ -97,7 +102,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     final pageSize =
         (_containerKey.currentContext?.findRenderObject() as RenderBox).size;
 
-    reader.loadContent(_book, pageSize, Theme.of(context).readerPageTextStyle);
+    reader.loadContent(pageSize, Theme.of(context).readerPageTextStyle);
   }
 
   _tapOnWordHandler(String word) async {
@@ -140,7 +145,8 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    reader.savePosition(_book);
+    reader.savePosition();
+    readerTimer.stopReadingTimer();
     super.dispose();
   }
 
