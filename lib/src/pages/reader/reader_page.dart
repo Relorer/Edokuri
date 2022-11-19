@@ -105,7 +105,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     reader.loadContent(pageSize, Theme.of(context).readerPageTextStyle);
   }
 
-  _tapOnWordHandler(String word) async {
+  _tapOnWordHandler(String word, int indexOnPage) async {
     if (word.isEmpty) return;
 
     await _panelController.close().then((value) => setState(() {
@@ -119,9 +119,16 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
       final temp = _db.getRecord(word);
       _record = temp != null && temp.translations.isNotEmpty
           ? temp
-          : await _translator.translate(word, "");
+          : await _translator.translate(word);
+
       setState(() {});
       if (_record != null) {
+        if (indexOnPage > -1) {
+          final sentence = reader.getSentence(indexOnPage);
+          if (sentence.length > 1 && !_record!.sentences.contains(sentence)) {
+            _record!.sentences.add(sentence);
+          }
+        }
         _panelController.open();
       }
     }));

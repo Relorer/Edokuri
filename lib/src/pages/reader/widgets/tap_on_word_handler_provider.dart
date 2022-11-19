@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class TapOnWordHandlerProvider extends InheritedWidget {
-  final Function(String) tapOnWordHandler;
+  final Function(String, int) tapOnWordHandler;
 
   const TapOnWordHandlerProvider(
       {super.key, required super.child, required this.tapOnWordHandler});

@@ -11,7 +11,7 @@ class Record {
   final examples = ToMany<Example>();
   final List<String> synonyms;
   final String original;
-  final String sentence;
+  final List<String> sentences;
   final DateTime creationDate;
 
   bool known;
@@ -20,7 +20,7 @@ class Record {
       {this.id = 0,
       required this.original,
       required this.synonyms,
-      required this.sentence,
+      required this.sentences,
       required this.known,
       required this.creationDate});
 }

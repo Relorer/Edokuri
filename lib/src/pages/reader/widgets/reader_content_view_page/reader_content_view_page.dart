@@ -47,15 +47,19 @@ class ReaderContentViewPage extends StatelessWidget {
     final List<InlineSpan> textSpans = [];
     final List<String> piecesOfPage = [];
 
+    int currentIndex = 0;
+
     for (var paragraph in paragraphs) {
       for (var piece in paragraph.pieces) {
+        int tempCurrentIndex = currentIndex;
         textSpans.add(piece.isWord
             ? WidgetSpan(
                 child: Observer(
                 builder: (context) => getWord(
                     context.read<DBController>().getRecord(piece.content),
                     piece,
-                    () => tapOnWordHandler(piece.content)),
+                    () => tapOnWordHandler(piece.content,
+                        content.indexOf(piece.content, tempCurrentIndex))),
               ))
             : TextSpan(
                 text: piece.content,
@@ -66,6 +70,8 @@ class ReaderContentViewPage extends StatelessWidget {
         } else {
           piecesOfPage.addAll(piece.content.split(""));
         }
+
+        currentIndex += piece.content.length;
       }
 
       if (paragraphs.indexOf(paragraph) < paragraphs.length - 2) {
@@ -84,7 +90,7 @@ class ReaderContentViewPage extends StatelessWidget {
                   p0.end > -1
               ? piecesOfPage.sublist(p0.start, p0.end).join().trim()
               : ""),
-          handleTranslate: tapOnWordHandler,
+          handleTranslate: ((text) => tapOnWordHandler(text, -1)),
           canTranslate: containsWord,
         ),
         TextSpan(

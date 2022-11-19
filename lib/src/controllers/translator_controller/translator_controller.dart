@@ -25,7 +25,7 @@ abstract class TranslatorControllerBase with Store {
 
   TranslatorControllerBase(this._translator);
 
-  Future<Record> translate(String content, String sentence) async {
+  Future<Record> translate(String content) async {
     final connectivityResult = await (Connectivity().checkConnectivity());
     final hasInterner = connectivityResult == ConnectivityResult.wifi ||
         connectivityResult == ConnectivityResult.mobile;
@@ -70,7 +70,7 @@ abstract class TranslatorControllerBase with Store {
     return Record(
         original: content,
         synonyms: synonyms,
-        sentence: sentence,
+        sentences: [],
         known: false,
         creationDate: DateTime.now())
       ..meanings.addAll(meanings)

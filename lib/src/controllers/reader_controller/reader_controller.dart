@@ -119,7 +119,7 @@ abstract class ReaderControllerBase with Store {
         db.putRecord(Record(
             original: element.content.toLowerCase(),
             synonyms: [],
-            sentence: "",
+            sentences: [],
             known: true,
             creationDate: DateTime.now()));
       }
@@ -186,6 +186,26 @@ abstract class ReaderControllerBase with Store {
     }
 
     return index;
+  }
+
+  String getSentence(int indexInSentence) {
+    final chapterContent = book.chapters[currentChapter].content;
+
+    final indexInSentenceInChapter =
+        indexInSentence + getCurrentPositionInChapter();
+
+    final endSentenceReg = RegExp(r'(\.|!|\?|\n)');
+
+    final endSentence =
+        chapterContent.indexOf(endSentenceReg, indexInSentenceInChapter);
+    final startSentence =
+        chapterContent.lastIndexOf(endSentenceReg, indexInSentenceInChapter);
+
+    return chapterContent
+        .substring(
+            startSentence > -1 ? startSentence : indexInSentenceInChapter,
+            endSentence > -1 ? endSentence + 1 : indexInSentenceInChapter)
+        .trim();
   }
 
   Future<List<String>> _paginate(
