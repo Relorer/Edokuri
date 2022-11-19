@@ -10,6 +10,8 @@ class GraphDayData {
   final int reviewedWords;
   final DateTime date;
 
+  int get total => newSavedRecords + newKnownRecords + reviewedWords;
+
   GraphDayData(this.date,
       {this.newSavedRecords = 0,
       this.newKnownRecords = 0,

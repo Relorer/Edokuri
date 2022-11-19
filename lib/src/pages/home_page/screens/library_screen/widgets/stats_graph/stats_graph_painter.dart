@@ -1,102 +1,48 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/db_controller/db_controller.dart';
-import 'package:freader/src/core/utils/datetime_extensions.dart';
 import 'package:freader/src/models/graph.dart';
-import 'package:freader/src/models/record.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
 import 'package:path_drawing/path_drawing.dart';
-import 'package:provider/provider.dart';
-import 'package:touchable/touchable.dart';
 
-class StatsGraph extends StatelessWidget {
-  final Random random = Random();
+final Map<int, String> weekdayName = {
+  1: "MO",
+  2: "TU",
+  3: "WE",
+  4: "TH",
+  5: "FR",
+  6: "SA",
+  7: "SU"
+};
 
-  StatsGraph({Key? key}) : super(key: key);
-
-  int _getNewKnownRecords(Iterable<Record> records, DateTime day) {
-    return records
-        .where(
-            (element) => element.creationDate.isSameDate(day) && element.known)
-        .length;
-  }
-
-  int _getNewSavedRecords(Iterable<Record> records, DateTime day) {
-    return records
-        .where((element) =>
-            (element.creationDate.isSameDate(day) ||
-                element.translations.any((element) =>
-                    element.selectionDate?.isSameDate(day) ?? false)) &&
-            !element.known)
-        .length;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final db = context.read<DBController>();
-
-    final graphData = GraphData([
-      ...Iterable<int>.generate(7)
-          .map((e) {
-            final date = DateTime.now().subtract(Duration(days: e));
-            return GraphDayData(date,
-                newKnownRecords: _getNewKnownRecords(db.records, date),
-                newSavedRecords: _getNewSavedRecords(db.records, date));
-          })
-          .toList()
-          .reversed
-    ]);
-
-    return Expanded(
-      child: SizedBox.expand(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: defaultMargin),
-        child: CanvasTouchDetector(
-            gesturesToOverride: [GestureType.onTapDown],
-            builder: (context) => CustomPaint(
-                painter: _Graph(
-                    context,
-                    graphData,
-                    Iterable<int>.generate(7)
-                        .map((e) => random.nextDouble())
-                        .toList()))),
-      )),
-    );
-  }
-}
-
-class _Graph extends CustomPainter {
-  final Map<int, String> weekdayName = {
-    1: "MO",
-    2: "TU",
-    3: "WE",
-    4: "TH",
-    5: "FR",
-    6: "SA",
-    7: "SU"
-  };
-
+class StatsGraphPainter extends CustomPainter {
   final BuildContext context;
-  final GraphData data;
+  final GraphData graphData;
+  final Offset? pressedPosition;
   final List<double> placeholder;
 
   late Iterable<int> recordsByDays;
   late double avg;
   late int maxValue;
-  late TextStyle graphWeekdayStyle;
-
   late double columnNameHeight;
 
-  _Graph(this.context, this.data, this.placeholder) {
-    recordsByDays = data.days
-        .map((e) => e.newKnownRecords + e.newSavedRecords + e.reviewedWords);
+  final radius = const Radius.circular(defaultRadius);
+
+  late TextStyle graphWeekdayStyle;
+
+  StatsGraphPainter(
+      {required this.context,
+      required this.graphData,
+      required this.placeholder,
+      required this.pressedPosition}) {
+    recordsByDays = graphData.days.map((e) => e.total);
     avg = recordsByDays.isNotEmpty
-        ? recordsByDays.reduce((a, b) => a + b) / data.days.length
+        ? recordsByDays.reduce((a, b) => a + b) / graphData.days.length
         : 0;
     maxValue = recordsByDays.isNotEmpty ? recordsByDays.reduce(max) : 0;
+
     graphWeekdayStyle = Theme.of(context).graphWeekdayStyle;
 
     columnNameHeight =
@@ -104,6 +50,70 @@ class _Graph extends CustomPainter {
                 .size
                 .height +
             defaultMargin;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final graphHeight = size.height - columnNameHeight;
+
+    const edge = defaultMargin;
+    final columnCount = graphData.days.length;
+    final offsetCount = columnCount - 1;
+    const columnOffsetRatio = .7;
+
+    final columnWidth = (size.width - edge * 2) /
+        (columnCount + offsetCount * columnOffsetRatio);
+    final offsetBetween =
+        (size.width - columnCount * columnWidth - edge * 2) / offsetCount;
+
+    bool columnSelected = false;
+
+    if (pressedPosition != null) {
+      for (var i = 0; i < columnCount; i++) {
+        final x1 = i * columnWidth + offsetBetween * i + edge;
+        final x2 = x1 + columnWidth;
+        if (pressedPosition!.dx <= x2 + offsetBetween / 2 &&
+            pressedPosition!.dx >= x1 - offsetBetween / 2 &&
+            graphData.days[i].total > 0) {
+          columnSelected = true;
+        }
+      }
+    }
+
+    for (var i = 0; i < columnCount; i++) {
+      final x1 = i * columnWidth + offsetBetween * i + edge;
+      final x2 = x1 + columnWidth;
+
+      final columnNameStyle = i == columnCount - 1
+          ? graphWeekdayStyle.copyWith(color: Colors.white)
+          : graphWeekdayStyle;
+      _drawColumnName(canvas, weekdayName[graphData.days[i].date.weekday]!,
+          x1 + columnWidth / 2, size.height, columnNameStyle);
+
+      if (columnSelected &&
+          !(pressedPosition!.dx <= x2 + offsetBetween / 2 &&
+              pressedPosition!.dx >= x1 - offsetBetween / 2)) {
+        continue;
+      }
+
+      _drawColumn(canvas, x1, defaultMargin * (columnSelected ? 2 : 1), x2,
+          graphHeight - defaultMargin, graphData.days[i], placeholder[i]);
+
+      if (columnSelected &&
+          pressedPosition!.dx <= x2 + offsetBetween / 2 &&
+          pressedPosition!.dx >= x1 - offsetBetween / 2) {
+        var text = _getTextPainterGraphWeekday(
+            graphData.days[i].total.toString(),
+            graphWeekdayStyle.copyWith(
+                fontSize: 10, fontWeight: FontWeight.bold));
+
+        final textOffset = Offset(x1 + columnWidth / 2 - text.size.width / 2,
+            defaultMargin - text.size.height / 2);
+        text.paint(canvas, textOffset);
+      }
+    }
+
+    _drawGrid(canvas, Size(size.width, size.height - columnNameHeight));
   }
 
   TextPainter _getTextPainterGraphWeekday(String text, TextStyle style) {
@@ -117,40 +127,6 @@ class _Graph extends CustomPainter {
         minWidth: 0,
         maxWidth: double.infinity,
       );
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawRect(Rect.fromLTRB(0, 0, size.width, size.height),
-        Paint()..color = Colors.transparent);
-
-    final graphHeight = size.height - columnNameHeight;
-
-    const edge = defaultMargin;
-    final columnCount = data.days.length;
-    final offsetCount = columnCount - 1;
-    const columnOffsetRatio = .7;
-
-    final columnWidth = (size.width - edge * 2) /
-        (columnCount + offsetCount * columnOffsetRatio);
-    final offsetBetween =
-        (size.width - columnCount * columnWidth - edge * 2) / offsetCount;
-
-    for (var i = 0; i < columnCount; i++) {
-      final x1 = i * columnWidth + offsetBetween * i + edge;
-      final x2 = x1 + columnWidth;
-
-      _drawColumn(canvas, x1, doubleDefaultMargin, x2,
-          graphHeight - defaultMargin, data.days[i], placeholder[i]);
-
-      final columnNameStyle = i == columnCount - 1
-          ? graphWeekdayStyle.copyWith(color: Colors.white)
-          : graphWeekdayStyle;
-      _drawColumnName(canvas, weekdayName[data.days[i].date.weekday]!,
-          x1 + columnWidth / 2, size.height, columnNameStyle);
-    }
-
-    _drawGrid(canvas, Size(size.width, size.height - columnNameHeight));
   }
 
   _drawColumnName(
@@ -167,20 +143,19 @@ class _Graph extends CustomPainter {
     final paint = Paint();
 
     final height = bottom - top;
-
     if (maxValue == 0 ||
         day.newKnownRecords + day.newSavedRecords + day.reviewedWords == 0) {
-      final columnHeight = placeholder * height;
+      final columnTop = top + placeholder * height;
       canvas.drawRRect(
           RRect.fromLTRBAndCorners(
             left,
-            columnHeight,
+            columnTop,
             right,
             bottom,
           ),
           paint..color = Theme.of(context).paleElementColor);
 
-      _roundColumns(canvas, left, columnHeight, right, bottom);
+      _roundColumns(canvas, left, columnTop, right, bottom);
     } else {
       final newSavedWordsY1 = bottom - day.newSavedRecords / maxValue * height;
       final newSavedWordsY2 = bottom;
@@ -224,20 +199,6 @@ class _Graph extends CustomPainter {
           ),
           paint..color = savedWord);
 
-      var touchyCanvas = TouchyCanvas(context, canvas);
-      touchyCanvas.drawRRect(
-        RRect.fromLTRBAndCorners(
-          left,
-          newKnownWordsY1,
-          right,
-          newKnownWordsY2,
-        ),
-        paint..color = white,
-        onTapDown: (details) {
-          print(details.globalPosition);
-        },
-      );
-
       _roundColumns(canvas, left, newKnownWordsY1, right, bottom);
     }
   }
@@ -248,8 +209,6 @@ class _Graph extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = defaultRadius
       ..color = darkGray;
-
-    const radius = Radius.circular(defaultRadius);
 
     canvas.drawRRect(
         RRect.fromLTRBAndCorners(
@@ -299,5 +258,5 @@ class _Graph extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

@@ -4,7 +4,7 @@ import 'package:freader/src/pages/home_page/screens/library_screen/widgets/app_b
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
-import 'stats_graph.dart';
+import 'stats_graph/stats_graph.dart';
 
 class LibraryAppBar extends StatelessWidget {
   final double appBarHeight;
