@@ -95,7 +95,7 @@ class StatsGraphPainter extends CustomPainter {
               pressedPosition!.dx >= x1 - offsetBetween / 2)) {
         continue;
       }
-      print(placeholder[i]);
+
       _drawColumn(canvas, x1, defaultMargin * (columnSelected ? 2 : 1), x2,
           graphHeight - defaultMargin, graphData.days[i], placeholder[i]);
 
