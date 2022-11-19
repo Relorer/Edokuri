@@ -258,5 +258,6 @@ class StatsGraphPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) =>
+      (oldDelegate as StatsGraphPainter).pressedPosition != pressedPosition;
 }
