@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 import 'theme_consts.dart';
 
 ThemeData basicTheme() => ThemeData(
-      brightness: Brightness.light,
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(
-            fontSize: 18,
-            color: white,
-            letterSpacing: 18 * 0.1,
-            fontWeight: FontWeight.bold),
-      ),
-      textSelectionTheme: const TextSelectionThemeData(
-        cursorColor: paleElement,
-        selectionColor: paleElement,
-        selectionHandleColor: paleElement,
-      ),
-      colorScheme: ColorScheme.fromSwatch()
-          .copyWith(secondary: paleElement)
-          .copyWith(background: white),
-    );
+    brightness: Brightness.light,
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(
+          fontSize: 18,
+          color: white,
+          letterSpacing: 18 * 0.1,
+          fontWeight: FontWeight.bold),
+    ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: paleElement,
+      selectionColor: paleElement,
+      selectionHandleColor: paleElement,
+    ),
+    colorScheme: ColorScheme.fromSwatch()
+        .copyWith(secondary: paleElement, background: white));
 
 extension LightThemeEx on ThemeData {
   Color get secondBackgroundColor {

@@ -65,6 +65,19 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.detached:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+        break;
+      case AppLifecycleState.resumed:
+        break;
+    }
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
   void didChangeMetrics() {
     EasyDebounce.debounce('load-content', const Duration(seconds: 1), () {
       if (mounted) {

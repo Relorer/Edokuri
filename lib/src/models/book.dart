@@ -16,6 +16,7 @@ class Book {
   Uint8List? cover;
 
   final chapters = ToMany<Chapter>();
+  final readTimes = ToMany<ReadTime>();
 
   Book({
     this.id = 0,
@@ -36,6 +37,19 @@ class Chapter {
   String content;
 
   Chapter({this.id = 0, required this.content});
+}
+
+@Entity()
+class ReadTime {
+  int id;
+  final DateTime start;
+  final DateTime end;
+
+  ReadTime(
+    this.start,
+    this.end, {
+    this.id = 0,
+  });
 }
 
 class Paragraph {

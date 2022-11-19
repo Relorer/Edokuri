@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/core/utils/datetime_extensions.dart';
+import 'package:freader/src/core/utils/random_utils.dart';
 import 'package:freader/src/models/graph.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/stats_graph/stats_graph_painter.dart';
@@ -27,8 +28,9 @@ class _StatsGraphState extends State<StatsGraph> {
   @override
   void initState() {
     super.initState();
-    placeholder =
-        Iterable<int>.generate(7).map((e) => random.nextDouble()).toList();
+    placeholder = Iterable<int>.generate(7)
+        .map((e) => doubleInRange(random, 0.1, 1))
+        .toList();
   }
 
   int _getNewKnownRecords(Iterable<Record> records, DateTime day) {

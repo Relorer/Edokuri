@@ -60,6 +60,11 @@
           "id": "1:5203724193353101733",
           "name": "chapters",
           "targetId": "2:7150137983610600479"
+        },
+        {
+          "id": "12:6183236555812420205",
+          "name": "readTimes",
+          "targetId": "11:6274028539915228853"
         }
       ]
     },
@@ -276,11 +281,35 @@
           "targetId": "5:3361953551612294549"
         }
       ]
+    },
+    {
+      "id": "11:6274028539915228853",
+      "lastPropertyId": "3:2957481251112056396",
+      "name": "ReadTime",
+      "properties": [
+        {
+          "id": "1:3077184995455207889",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5883944155124688713",
+          "name": "start",
+          "type": 10
+        },
+        {
+          "id": "3:2957481251112056396",
+          "name": "end",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "10:3868571538302709343",
+  "lastEntityId": "11:6274028539915228853",
   "lastIndexId": "4:133781243373213545",
-  "lastRelationId": "11:4219675911884232121",
+  "lastRelationId": "12:6183236555812420205",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
