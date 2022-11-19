@@ -224,8 +224,6 @@ class StatsGraphPainter extends CustomPainter {
   }
 
   _drawGrid(Canvas canvas, Size size) {
-    final height = size.height;
-
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.4
@@ -233,9 +231,11 @@ class StatsGraphPainter extends CustomPainter {
       ..color = paleElement.withOpacity(0.15);
 
     _drawHorizontalLine(canvas, size, 0, paint);
+
+    final height = size.height - doubleDefaultMargin;
     _drawHorizontalDashPath(
-        canvas, size, height - avg / maxValue * height, paint);
-    _drawHorizontalLine(canvas, size, height, paint);
+        canvas, size, height - avg / maxValue * height + defaultMargin, paint);
+    _drawHorizontalLine(canvas, size, size.height, paint);
   }
 
   _drawHorizontalLine(Canvas canvas, Size size, double y, Paint paint) {

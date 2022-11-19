@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/core/utils/datetime_extensions.dart';
 import 'package:freader/src/models/graph.dart';
@@ -20,27 +21,12 @@ class StatsGraph extends StatefulWidget {
 class _StatsGraphState extends State<StatsGraph> {
   final Random random = Random();
 
-  late GraphData graphData;
   late List<double> placeholder;
   Offset? pressedPosition;
 
   @override
   void initState() {
     super.initState();
-    final db = context.read<DBController>();
-
-    graphData = GraphData([
-      ...Iterable<int>.generate(7)
-          .map((e) {
-            final date = DateTime.now().subtract(Duration(days: e));
-            return GraphDayData(date,
-                newKnownRecords: _getNewKnownRecords(db.records, date),
-                newSavedRecords: _getNewSavedRecords(db.records, date));
-          })
-          .toList()
-          .reversed
-    ]);
-
     placeholder =
         Iterable<int>.generate(7).map((e) => random.nextDouble()).toList();
   }
@@ -79,12 +65,29 @@ class _StatsGraphState extends State<StatsGraph> {
                       _setPressedPosition(details.globalPosition)),
                   onTapUp: ((details) => _setPressedPosition(null)),
                   onTapCancel: (() => _setPressedPosition(null)),
-                  child: CustomPaint(
-                      painter: StatsGraphPainter(
-                          context: context,
-                          graphData: graphData,
-                          placeholder: placeholder,
-                          pressedPosition: pressedPosition))))),
+                  child: Observer(builder: (_) {
+                    final db = context.read<DBController>();
+                    final graphData = GraphData([
+                      ...Iterable<int>.generate(7)
+                          .map((e) {
+                            final date =
+                                DateTime.now().subtract(Duration(days: e));
+                            return GraphDayData(date,
+                                newKnownRecords:
+                                    _getNewKnownRecords(db.records, date),
+                                newSavedRecords:
+                                    _getNewSavedRecords(db.records, date));
+                          })
+                          .toList()
+                          .reversed
+                    ]);
+                    return CustomPaint(
+                        painter: StatsGraphPainter(
+                            context: context,
+                            graphData: graphData,
+                            placeholder: placeholder,
+                            pressedPosition: pressedPosition));
+                  })))),
     );
   }
 }
