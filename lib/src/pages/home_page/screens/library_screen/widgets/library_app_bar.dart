@@ -36,22 +36,13 @@ class LibraryAppBar extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: doubleDefaultMargin),
                     child: Observer(builder: (_) {
-                      final today = DateTime.now();
-                      final readingTimesForToday = context
-                          .read<DBController>()
-                          .books
-                          .expand((element) => element.readTimes)
-                          .where((element) => element.start.isSameDate(today))
-                          .map((e) =>
-                              e.end.millisecondsSinceEpoch -
-                              e.start.millisecondsSinceEpoch);
-                      final readingTimeForToday = readingTimesForToday.isEmpty
-                          ? 0
-                          : readingTimesForToday.reduce((t1, t2) => t1 + t2);
                       return AppBarTitle(
                         leftText: LocaleKeys.today.tr(),
                         rightText: LocaleKeys.short_min.tr(namedArgs: {
-                          "count": (readingTimeForToday / 1000 ~/ 60).toString()
+                          "count": (context
+                                  .read<DBController>()
+                                  .readingTimeForTodayInMinutes)
+                              .toString()
                         }),
                       );
                     }),

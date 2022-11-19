@@ -1,3 +1,4 @@
+import 'package:freader/src/core/utils/datetime_extensions.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:freader/src/models/user.dart';
@@ -13,6 +14,22 @@ abstract class DBControllerBase with Store {
 
   ObservableList<Book> books = ObservableList<Book>.of([]);
   ObservableList<Record> records = ObservableList<Record>.of([]);
+
+  @computed
+  int get readingTimeForTodayInMinutes {
+    final today = DateTime.now();
+    final readingTimesForToday = books
+        .expand((element) => element.readTimes)
+        .where((element) => element.start.isSameDate(today))
+        .map((e) =>
+            e.end.millisecondsSinceEpoch - e.start.millisecondsSinceEpoch);
+
+    final readingTimeForToday = readingTimesForToday.isEmpty
+        ? 0
+        : readingTimesForToday.reduce((t1, t2) => t1 + t2);
+
+    return readingTimeForToday / 1000 ~/ 60;
+  }
 
   late box.Box<Book> _bookBox;
   late box.Box<User> _userBox;
