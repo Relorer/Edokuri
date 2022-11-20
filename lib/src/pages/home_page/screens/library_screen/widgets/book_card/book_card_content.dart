@@ -43,7 +43,7 @@ class BookCardContent extends StatelessWidget {
             ),
             BookCardProgressBar(
               current: currentCompletedChapter,
-              max: chaptersCount - 1,
+              max: chaptersCount,
             ),
             const SizedBox(
               height: defaultMargin * 0.5,

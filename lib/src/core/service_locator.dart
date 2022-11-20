@@ -12,7 +12,7 @@ final getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
   getIt.registerFactory(() => FileController(getIt<DBController>()));
-  getIt.registerFactory(() => LibrarySortController());
+  getIt.registerFactory(() => LibrarySortController(getIt<DBController>()));
   getIt.registerFactoryParam<ReaderController, Book, void>(
       (book, _) => ReaderController(getIt<DBController>(), book));
   getIt.registerFactoryParam<ReadingTimerController, Book, void>(

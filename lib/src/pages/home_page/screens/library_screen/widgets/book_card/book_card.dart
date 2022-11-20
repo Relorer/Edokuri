@@ -69,11 +69,7 @@ class BookCard extends StatelessWidget {
                   .read<DBController>()
                   .getSavedRecordsByBook(book)
                   .length,
-              newWordsPersent: 100 -
-                  (context.read<DBController>().getRecordsByBook(book).length /
-                          book.words.length *
-                          100)
-                      .toInt(),
+              newWordsPersent: book.newWords(context.read<DBController>()),
             );
           })
         ]),

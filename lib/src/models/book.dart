@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -29,6 +30,11 @@ class Book {
     required this.words,
     this.cover,
   });
+
+  int newWords(DBController db) {
+    return 100 -
+        (db.getRecordsByBook(this).length / words.length * 100).toInt();
+  }
 }
 
 @Entity()
