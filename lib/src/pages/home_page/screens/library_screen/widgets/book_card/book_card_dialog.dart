@@ -28,41 +28,28 @@ class BookCardDialog extends StatelessWidget {
       ),
       child: Container(
         color: Theme.of(context).secondBackgroundColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: defaultMargin, vertical: defaultMargin),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                bookTitle,
-                style: Theme.of(context).dialogTextStyleBright,
-              ),
-              const SizedBox(
-                height: defaultMargin,
-              ),
-              ButtonWithIcon(
-                text: LocaleKeys.continue_reading.tr(),
-                onTap: openBook,
-                svg: readingSvg,
-              ),
-              ButtonWithIcon(
-                text: LocaleKeys.go_to_set.tr(),
-                svg: goToSetSvg,
-                onTap: openBookSet,
-              ),
-              ButtonWithIcon(
-                text: LocaleKeys.delete.tr(),
-                svg: deleteSvg,
-                onTap: removeBook,
-              ),
-              const SizedBox(
-                height: 55,
-              )
-            ],
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ButtonWithIcon(
+              text: LocaleKeys.continue_reading.tr(),
+              onTap: openBook,
+              svg: readingSvg,
+            ),
+            ButtonWithIcon(
+              text: LocaleKeys.go_to_set.tr(),
+              svg: goToSetSvg,
+              onTap: openBookSet,
+            ),
+            ButtonWithIcon(
+              text: LocaleKeys.delete.tr(),
+              svg: deleteSvg,
+              onTap: removeBook,
+            ),
+            const SizedBox(
+              height: 55,
+            )
+          ],
         ),
       ),
     );

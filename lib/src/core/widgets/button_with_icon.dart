@@ -14,26 +14,28 @@ class ButtonWithIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      customBorder: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(defaultRadius),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 3),
-        child: Row(children: [
-          SvgPicture.asset(
-            svg,
-            color: Theme.of(context).paleElementColor,
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-          Text(
-            text,
-            style: Theme.of(context).dialogTextStyleBright,
-          )
-        ]),
+    return Material(
+      color: Theme.of(context).secondBackgroundColor,
+      child: InkWell(
+        highlightColor: Colors.white.withAlpha(40),
+        splashColor: Colors.white.withAlpha(30),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(doubleDefaultMargin),
+          child: Row(children: [
+            SvgPicture.asset(
+              svg,
+              color: Theme.of(context).paleElementColor,
+            ),
+            const SizedBox(
+              width: doubleDefaultMargin,
+            ),
+            Text(
+              text,
+              style: Theme.of(context).dialogTextStyleBright,
+            )
+          ]),
+        ),
       ),
     );
   }
