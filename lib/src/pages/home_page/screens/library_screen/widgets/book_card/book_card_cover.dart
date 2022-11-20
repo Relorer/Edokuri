@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
