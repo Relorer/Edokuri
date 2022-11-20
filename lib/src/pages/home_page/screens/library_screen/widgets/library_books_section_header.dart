@@ -7,10 +7,10 @@ class LibraryBooksSectionHeader extends StatelessWidget {
   const LibraryBooksSectionHeader({super.key});
 
   void menuButtonHandler(BuildContext context) {
-    showDialog(
-      barrierColor: Colors.transparent,
+    showGeneralDialog(
       context: context,
-      builder: (BuildContext context) {
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
         return const BooksSectionDialog();
       },
     );

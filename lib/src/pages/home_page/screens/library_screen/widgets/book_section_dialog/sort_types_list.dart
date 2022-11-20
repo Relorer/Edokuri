@@ -10,38 +10,43 @@ class SortTypesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ...SortTypes.values.map((e) => ListTile(
-              horizontalTitleGap: defaultMargin,
-              minVerticalPadding: 0,
-              minLeadingWidth: 0,
-              dense: true,
-              title: Text(
-                getSortTypeName(e),
-                style: Theme.of(context).dialogTextStyleBright,
-              ),
-              contentPadding: EdgeInsets.zero,
-              leading: Observer(builder: (_) {
-                final librarySort = context.read<LibrarySortController>();
+    return Column(children: [
+      ...SortTypes.values.map((e) => GestureDetector(
+            onTap: () => context.read<LibrarySortController>().setSortType(e),
+            child: Container(
+              color: Theme.of(context).secondBackgroundColor,
+              child: Padding(
+                padding: const EdgeInsets.all(doubleDefaultMargin),
+                child: Row(children: [
+                  Observer(builder: (_) {
+                    final librarySort = context.read<LibrarySortController>();
 
-                return Radio<SortTypes>(
-                  visualDensity: const VisualDensity(
-                    horizontal: VisualDensity.minimumDensity,
-                    vertical: VisualDensity.minimumDensity,
-                  ),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  fillColor: MaterialStateColor.resolveWith(
-                      (Set<MaterialState> states) {
-                    return Theme.of(context).paleElementColor;
+                    return Radio<SortTypes>(
+                      visualDensity: const VisualDensity(
+                        horizontal: VisualDensity.minimumDensity,
+                        vertical: VisualDensity.minimumDensity,
+                      ),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      fillColor: MaterialStateColor.resolveWith(
+                          (Set<MaterialState> states) {
+                        return Theme.of(context).paleElementColor;
+                      }),
+                      value: e,
+                      groupValue: librarySort.sortType,
+                      onChanged: null,
+                    );
                   }),
-                  value: e,
-                  groupValue: librarySort.sortType,
-                  onChanged: librarySort.setSortType,
-                );
-              }),
-            ))
-      ],
-    );
+                  const SizedBox(
+                    width: doubleDefaultMargin,
+                  ),
+                  Text(
+                    getSortTypeName(e),
+                    style: Theme.of(context).dialogTextStyleBright,
+                  )
+                ]),
+              ),
+            ),
+          ))
+    ]);
   }
 }

@@ -7,32 +7,46 @@ class ButtonWithIcon extends StatelessWidget {
   final String text;
   final String svg;
   final GestureTapCallback? onTap;
+  final Color? color;
+  final TextStyle? style;
+  final Color? highlightColor;
 
   const ButtonWithIcon(
-      {Key? key, required this.svg, this.onTap, required this.text})
+      {Key? key,
+      required this.svg,
+      this.onTap,
+      required this.text,
+      this.color,
+      this.highlightColor,
+      this.style})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).secondBackgroundColor,
+      color: color ?? Theme.of(context).secondBackgroundColor,
       child: InkWell(
-        highlightColor: Colors.white.withAlpha(40),
-        splashColor: Colors.white.withAlpha(30),
+        highlightColor: (highlightColor ?? Colors.white).withAlpha(40),
+        splashColor: (highlightColor ?? Colors.white).withAlpha(30),
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(doubleDefaultMargin),
           child: Row(children: [
-            SvgPicture.asset(
-              svg,
-              color: Theme.of(context).paleElementColor,
+            SizedBox(
+              width: 24,
+              child: Center(
+                child: SvgPicture.asset(
+                  svg,
+                  color: Theme.of(context).paleElementColor,
+                ),
+              ),
             ),
             const SizedBox(
               width: doubleDefaultMargin,
             ),
             Text(
               text,
-              style: Theme.of(context).dialogTextStyleBright,
+              style: style ?? Theme.of(context).dialogTextStyleBright,
             )
           ]),
         ),
