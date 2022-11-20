@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
+import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
 
 class BookCardCover extends StatelessWidget {
@@ -20,11 +22,11 @@ class BookCardCover extends StatelessWidget {
         : Container(
             height: 110,
             width: 70,
-            color: Theme.of(context).paleElementColor,
+            color: Theme.of(context).paleElementColor.withOpacity(0.6),
             child: Center(
-                child: Text(
-              LocaleKeys.cover.tr(),
-              style: const TextStyle(color: Colors.white60),
+                child: SvgPicture.asset(
+              imageSvg,
+              color: Colors.white.withOpacity(0.8),
             )),
           );
   }
