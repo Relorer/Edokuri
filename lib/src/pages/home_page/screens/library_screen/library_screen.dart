@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/library_app_bar.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/library_book_list.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/library_books_section_header.dart';
+import 'package:freader/src/pages/home_page/utils/app_bar.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({Key? key}) : super(key: key);
@@ -16,12 +15,9 @@ class LibraryScreen extends StatefulWidget {
 class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
-    double appBarHeight =
-        max((MediaQuery.of(context).size.height - 110) * .35, 200);
-
     return BouncingCustomScrollView(
       slivers: [
-        LibraryAppBar(appBarHeight: appBarHeight),
+        LibraryAppBar(appBarHeight: getAppBarHeight(context)),
         const LibraryBooksSectionHeader(),
         const LibraryBookList()
       ],

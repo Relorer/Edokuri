@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/library_screen.dart';
+import 'package:freader/src/pages/home_page/screens/person_screen/person_screen.dart';
+import 'package:freader/src/pages/home_page/screens/records_screen/records_screen.dart';
 import 'package:freader/src/theme/system_bars.dart';
 import 'widget/home_page_navigation.dart';
 
@@ -15,12 +17,8 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _screens = <Widget>[
     const LibraryScreen(),
-    const Text(
-      'Records',
-    ),
-    const Text(
-      'Sets',
-    ),
+    const RecordsScreen(),
+    const PersonScreen(),
   ];
 
   @override
