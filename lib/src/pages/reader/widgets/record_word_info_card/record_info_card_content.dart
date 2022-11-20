@@ -5,18 +5,14 @@ import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_in
 import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_meanings_section.dart';
 import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_synonyms_section.dart';
 import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_translations_section.dart';
-import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
-class RecordInfoCard extends StatelessWidget {
+class RecordInfoCardContent extends StatelessWidget {
   final Record record;
-  final ScrollController scrollController;
 
-  const RecordInfoCard(
-      {super.key, required this.record, required this.scrollController});
+  const RecordInfoCardContent({super.key, required this.record});
 
-  @override
-  Widget build(BuildContext context) {
+  List<Widget> _getSections(Record record) {
     final sections = [
       RecordInfoHeader(record.original),
       RecordInfoTranslationsSection(
@@ -36,31 +32,14 @@ class RecordInfoCard extends StatelessWidget {
       ));
     }
 
-    return Container(
-      margin: const EdgeInsets.symmetric(
-          vertical: doubleDefaultMargin * 2,
-          horizontal: doubleDefaultMargin - 1),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(defaultRadius)),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: defaultMargin,
-              color: Theme.of(context).paleElementColor.withOpacity(0.2),
-            ),
-          ]),
-      child: SingleChildScrollView(
-        controller: scrollController,
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: doubleDefaultMargin, vertical: doubleDefaultMargin),
-          child: Wrap(
-            runSpacing: defaultMargin,
-            children: sections,
-          ),
-        ),
-      ),
+    return sections;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      runSpacing: defaultMargin,
+      children: _getSections(record),
     );
   }
 }

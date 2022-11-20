@@ -13,7 +13,9 @@ import 'package:freader/src/pages/reader/widgets/reader_content_view.dart';
 import 'package:freader/src/pages/reader/widgets/reader_footer_panel.dart';
 import 'package:freader/src/pages/reader/widgets/reader_head_panel.dart';
 import 'package:freader/src/pages/reader/widgets/reader_page_sliding_up_panel.dart';
-import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_card.dart';
+import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_card_container.dart';
+import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_card_content.dart';
+import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_card_skeleton.dart';
 import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
 import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme.dart';
@@ -116,12 +118,12 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     Future.delayed(
         Duration(milliseconds: _panelController.isPanelClosed ? 0 : 200),
         (() async {
+      _panelController.open();
       final temp = _db.getRecord(word);
       _record = temp != null && temp.translations.isNotEmpty
           ? temp
           : await _translator.translate(word);
 
-      setState(() {});
       if (_record != null) {
         if (indexOnPage > -1) {
           final sentence = reader.getSentence(indexOnPage);
@@ -129,8 +131,10 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
             _record!.sentences.add(sentence);
           }
         }
-        _panelController.open();
       }
+
+      await Future.delayed(const Duration(milliseconds: 100));
+      setState(() {});
     }));
   }
 
@@ -187,12 +191,16 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                 ),
               ),
             ),
-            panelBuilder: (ScrollController sc) => _record == null
-                ? Container()
-                : RecordInfoCard(
-                    record: _record!,
-                    scrollController: sc,
-                  ),
+            panelBuilder: (ScrollController sc) => RecordInfoCardContainer(
+                scrollController: sc,
+                child: AnimatedSwitcher(
+                  switchInCurve: Curves.easeInCubic,
+                  switchOutCurve: Curves.easeOutCubic,
+                  duration: const Duration(milliseconds: 200),
+                  child: _record == null
+                      ? const RecordInfoCardSkeleton()
+                      : RecordInfoCardContent(record: _record!),
+                )),
           ),
         ),
       ),
