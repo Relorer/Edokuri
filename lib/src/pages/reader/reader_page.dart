@@ -115,10 +115,9 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
           _blockBody = true;
         }));
 
-    Future.delayed(
+    final getting = Future.delayed(
         Duration(milliseconds: _panelController.isPanelClosed ? 0 : 200),
         (() async {
-      _panelController.open();
       final temp = _db.getRecord(word);
       _record = temp != null && temp.translations.isNotEmpty
           ? temp
@@ -132,10 +131,19 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
           }
         }
       }
-
-      await Future.delayed(const Duration(milliseconds: 100));
-      setState(() {});
     }));
+
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    if (_record != null) {
+      setState(() {});
+      _panelController.open();
+    } else {
+      _panelController.open();
+      await getting;
+      await Future.delayed(const Duration(milliseconds: 200));
+      setState(() {});
+    }
   }
 
   _panelCloseHandler() {
