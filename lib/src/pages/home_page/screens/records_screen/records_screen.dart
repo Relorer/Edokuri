@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
+import 'package:freader/src/pages/home_page/screens/records_screen/widgets/cards_section_header.dart';
 import 'package:freader/src/pages/home_page/screens/records_screen/widgets/records_app_bar.dart';
+import 'package:freader/src/pages/home_page/screens/records_screen/widgets/studying_section_header.dart';
 import 'package:freader/src/pages/home_page/utils/app_bar.dart';
 
 class RecordsScreen extends StatefulWidget {
@@ -16,6 +18,8 @@ class _RecordsScreenState extends State<RecordsScreen> {
     return BouncingCustomScrollView(
       slivers: [
         RecordsAppBar(appBarHeight: getAppBarHeight(context)),
+        const StudyingSectionHeader(),
+        const CardsSectionHeader()
       ],
     );
   }

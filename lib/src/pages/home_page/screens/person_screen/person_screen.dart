@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar.dart';
+import 'package:freader/src/pages/home_page/screens/person_screen/widgets/sets_section_header.dart';
 import 'package:freader/src/pages/home_page/utils/app_bar.dart';
 
 class PersonScreen extends StatefulWidget {
@@ -16,20 +17,7 @@ class _PersonScreenState extends State<PersonScreen> {
     return BouncingCustomScrollView(
       slivers: [
         PersonAppBar(appBarHeight: getAppBarHeight(context)),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return Container(
-                color: index.isOdd ? Colors.white : Colors.black12,
-                height: 100.0,
-                child: Center(
-                  child: Text('$index', textScaleFactor: 5),
-                ),
-              );
-            },
-            childCount: 20,
-          ),
-        ),
+        const SetsSectionHeader(),
       ],
     );
   }
