@@ -5,9 +5,10 @@ import 'package:flutter/widgets.dart';
 class BouncingCustomScrollView extends StatelessWidget {
   final List<Widget> slivers;
   final ScrollController? controller;
+  final bool revers;
 
   const BouncingCustomScrollView(
-      {super.key, required this.slivers, this.controller});
+      {super.key, required this.slivers, this.controller, this.revers = false});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class BouncingCustomScrollView extends StatelessWidget {
       child: CustomScrollView(
         controller: controller,
         slivers: slivers,
+        reverse: revers,
       ),
     );
   }
