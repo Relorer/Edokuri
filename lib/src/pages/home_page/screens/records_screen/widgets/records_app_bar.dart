@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freader/src/pages/home_page/screens/records_screen/widgets/records_screen_records_cards.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
@@ -20,10 +21,8 @@ class RecordsAppBar extends StatelessWidget {
           height: appBarHeight,
           child: Container(
               color: Theme.of(context).secondBackgroundColor,
-              padding:
-                  const EdgeInsets.symmetric(vertical: doubleDefaultMargin),
               child: Column(
-                children: [],
+                children: const [RecordsScreenRecordsCards()],
               )),
         ),
       ),
