@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/core/widgets/app_bar_space_with_exp_coll.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
+import 'package:provider/provider.dart';
 
 class PersonAppBar extends StatelessWidget {
   final double appBarHeight;
@@ -76,18 +79,35 @@ class PersonAppBar extends StatelessWidget {
                           color: Theme.of(context).paleElementColor,
                         ),
                       ),
-                      Expanded(
-                        child: Column(
+                      Observer(builder: (_) {
+                        final db = context.read<DBController>();
+                        final readingTime = db.books
+                                .map((element) => element.readingTimeInMinutes)
+                                .reduce((t1, t2) => t1 + t2) /
+                            60;
+
+                        return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            PersonAppBarLine("Records:", "743"),
-                            PersonAppBarLine("Known words:", "743"),
-                            PersonAppBarLine("reading:", "743"),
-                            PersonAppBarLine("training:", "743"),
-                            PersonAppBarLine("current streak:", "743"),
+                          children: [
+                            PersonAppBarLine(
+                                "Records:",
+                                db.records
+                                    .where((element) => !element.known)
+                                    .length
+                                    .toString()),
+                            PersonAppBarLine(
+                                "Known words:",
+                                db.records
+                                    .where((element) => element.known)
+                                    .length
+                                    .toString()),
+                            PersonAppBarLine("reading:",
+                                "${readingTime.toStringAsFixed(1)}H"),
+                            const PersonAppBarLine("training:", "0H"),
+                            const PersonAppBarLine("current streak:", "2-days"),
                           ],
-                        ),
-                      )
+                        );
+                      })
                     ],
                   )),
             ),

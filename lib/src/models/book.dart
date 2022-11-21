@@ -35,6 +35,14 @@ class Book {
     return 100 -
         (db.getRecordsByBook(this).length / words.length * 100).toInt();
   }
+
+  int get readingTimeInMinutes => readTimes.isNotEmpty
+      ? readTimes
+              .map((element) => element.timespan)
+              .reduce((t1, t2) => t1 + t2) /
+          1000 ~/
+          60
+      : 0;
 }
 
 @Entity()
@@ -50,6 +58,8 @@ class ReadTime {
   int id;
   final DateTime start;
   final DateTime end;
+
+  int get timespan => end.millisecondsSinceEpoch - start.millisecondsSinceEpoch;
 
   ReadTime(
     this.start,
