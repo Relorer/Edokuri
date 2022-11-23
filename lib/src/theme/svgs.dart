@@ -11,6 +11,8 @@ const settingsSvg = "assets/icons/settings.svg";
 const createSvg = "assets/icons/create.svg";
 const cropSvg = "assets/icons/crop.svg";
 const speakerSvg = "assets/icons/speaker.svg";
+const learnSvg = "assets/icons/learn.svg";
+const testSvg = "assets/icons/test.svg";
 
 const translatedByGoogleSvg = "assets/images/translated_by_google.svg";
 const waveSvg = "assets/images/wave.svg";

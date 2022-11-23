@@ -2,12 +2,11 @@ import 'package:freader/src/models/record.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class Set {
+class SetRecords {
   int id;
 
-  final words = ToMany<Record>();
+  String name;
+  final records = ToMany<Record>();
 
-  Set({
-    this.id = 0,
-  });
+  SetRecords({this.id = 0, required this.name});
 }

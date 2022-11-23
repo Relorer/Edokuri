@@ -3,6 +3,7 @@ import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:freader/src/pages/home_page/screens/records_screen/widgets/cards_section_header.dart';
 import 'package:freader/src/pages/home_page/screens/records_screen/widgets/record_cards_list.dart';
 import 'package:freader/src/pages/home_page/screens/records_screen/widgets/records_app_bar.dart';
+import 'package:freader/src/pages/home_page/screens/records_screen/widgets/studying_cards_list.dart';
 import 'package:freader/src/pages/home_page/screens/records_screen/widgets/studying_section_header.dart';
 import 'package:freader/src/pages/home_page/utils/app_bar.dart';
 
@@ -20,6 +21,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
       slivers: [
         RecordsAppBar(appBarHeight: getAppBarHeight(context)),
         const StudyingSectionHeader(),
+        const StudyingCardsList(),
         const CardsSectionHeader(),
         const RecordCardsList(),
       ],
