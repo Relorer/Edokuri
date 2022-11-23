@@ -146,7 +146,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     }
   }
 
-  _panelCloseHandler() {
+  _saveCurrentRecord() {
     if (_record == null) return;
     if (_record!.translations.any((element) => element.selected)) {
       _record!.translations.removeWhere(
@@ -156,6 +156,10 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     } else if (!_record!.known && _record!.id > 0) {
       _db.removeRecord(_record!);
     }
+  }
+
+  _panelCloseHandler() {
+    _saveCurrentRecord();
     setState(() {
       _record = null;
       _blockBody = false;
@@ -164,6 +168,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    _saveCurrentRecord();
     reader.savePosition();
     readerTimer.stopReadingTimer();
     super.dispose();
