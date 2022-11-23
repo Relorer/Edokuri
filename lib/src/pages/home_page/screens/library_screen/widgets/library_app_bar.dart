@@ -21,7 +21,7 @@ class LibraryAppBar extends StatelessWidget {
       expandedHeight: appBarHeight,
       titleSpacing: 0,
       elevation: 0,
-      floating: true,
+      floating: false,
       pinned: true,
       flexibleSpace: SingleChildScrollView(
         child: SizedBox(
