@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/core/utils/string_utils.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/models/record.dart';

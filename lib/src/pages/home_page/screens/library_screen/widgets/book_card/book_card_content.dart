@@ -36,7 +36,7 @@ class BookCardContent extends StatelessWidget {
             ),
             EllipsisText(
               author,
-              style: Theme.of(context).bookAuthorStyle,
+              style: Theme.of(context).cardSubtitleStyle,
             ),
             const SizedBox(
               height: defaultMargin,

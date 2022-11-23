@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/reader_controller/reader_controller.dart';
+import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:freader/src/core/widgets/circular_progress_indicator_pale.dart';
 import 'package:freader/src/pages/reader/widgets/bouncing_page_view.dart';
 import 'package:provider/provider.dart';

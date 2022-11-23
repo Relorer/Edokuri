@@ -1,29 +1,20 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:freader/src/controllers/translator_controller/services/google_translator_service.dart';
-import 'package:freader/src/controllers/translator_controller/services/msa_dictionary_service.dart';
-import 'package:freader/src/controllers/translator_controller/services/yandex_dictionary_service.dart';
-import 'package:freader/src/controllers/translator_controller/translate_source.dart';
+import 'package:freader/src/controllers/common/translator_controller/services/google_translator_service.dart';
+import 'package:freader/src/controllers/common/translator_controller/services/msa_dictionary_service.dart';
+import 'package:freader/src/controllers/common/translator_controller/services/yandex_dictionary_service.dart';
+import 'package:freader/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
-import 'package:mobx/mobx.dart';
-
-part 'translator_controller.g.dart';
 
 const maxPhraseLength = 30;
 
-class TranslatorController = TranslatorControllerBase
-    with _$TranslatorController;
-
-abstract class TranslatorControllerBase with Store {
-  @observable
-  int pageCount = 1;
-
+class TranslatorController {
   final MSADictionaryService msaDicService = MSADictionaryService();
   final OnDeviceTranslator _translator;
   final YandexDictionaryService yaDicService = YandexDictionaryService();
   final GoogleTranslatorService gService = GoogleTranslatorService();
 
-  TranslatorControllerBase(this._translator);
+  TranslatorController(this._translator);
 
   Future<Record> translate(String content) async {
     final connectivityResult = await (Connectivity().checkConnectivity());

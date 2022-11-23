@@ -1,22 +1,16 @@
-import 'package:freader/src/controllers/db_controller/db_controller.dart';
-import 'package:mobx/mobx.dart';
+import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 
 import 'services/epub_service.dart';
 import 'services/file_picker_service.dart';
 
-part 'file_controller.g.dart';
-
-class FileController = FileControllerBase with _$FileController;
-
-abstract class FileControllerBase with Store {
+class FileController {
   final EpubService _epubService = EpubService();
   final FilePickerService _filePickerService = FilePickerService();
 
   final DBController dbController;
 
-  FileControllerBase(this.dbController);
+  FileController(this.dbController);
 
-  @action
   Future getBookFromUser() async {
     var files = await _filePickerService.getFiles(allowedExtensions: ["epub"]);
     for (var file in files) {

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:freader/src/controllers/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

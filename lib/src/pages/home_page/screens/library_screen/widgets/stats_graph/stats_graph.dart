@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/core/utils/datetime_extensions.dart';
 import 'package:freader/src/core/utils/random_utils.dart';
 import 'package:freader/src/models/graph.dart';

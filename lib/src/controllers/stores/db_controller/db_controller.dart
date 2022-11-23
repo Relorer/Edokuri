@@ -4,7 +4,7 @@ import 'package:freader/src/models/record.dart';
 import 'package:freader/src/models/user.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../objectbox.g.dart' as box;
+import '../../../../objectbox.g.dart' as box;
 part 'db_controller.g.dart';
 
 class DBController = DBControllerBase with _$DBController;

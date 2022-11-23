@@ -17,6 +17,11 @@ class Record {
 
   bool known;
 
+  String get translation => translations
+      .where((element) => element.selected)
+      .map((element) => element.text)
+      .join(", ");
+
   Record(
       {this.id = 0,
       required this.original,

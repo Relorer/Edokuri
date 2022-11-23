@@ -1,11 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:freader/src/controllers/db_controller/db_controller.dart';
-import 'package:freader/src/controllers/file_controller/file_controller.dart';
-import 'package:freader/src/controllers/library_sort_controller/library_sort_controller.dart';
-import 'package:freader/src/controllers/records_sort_controller/record_sort_controller.dart';
-import 'package:freader/src/controllers/translator_controller/translator_controller.dart';
+import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/library_sort_controller/library_sort_controller.dart';
+import 'package:freader/src/controllers/stores/records_sort_controller/record_sort_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +20,6 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final DBController _dbController = getIt<DBController>();
-  final TranslatorController _translatorController =
-      getIt<TranslatorController>();
-  final FileController _fileController = getIt<FileController>();
   final LibrarySortController _librarySortController =
       getIt<LibrarySortController>();
   final RecordsSortController _recordsSortController =
@@ -52,8 +47,6 @@ class _AppState extends State<App> {
     return MultiProvider(
         providers: [
           Provider<DBController>(create: (_) => _dbController),
-          Provider<TranslatorController>(create: (_) => _translatorController),
-          Provider<FileController>(create: (_) => _fileController),
           Provider<LibrarySortController>(
               create: (_) => _librarySortController),
           Provider<RecordsSortController>(

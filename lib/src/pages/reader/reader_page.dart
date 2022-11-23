@@ -1,11 +1,11 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:freader/src/controllers/db_controller/db_controller.dart';
-import 'package:freader/src/controllers/reader_controller/reader_controller.dart';
-import 'package:freader/src/controllers/reading_timer_controller/reading_timer_controller.dart';
-import 'package:freader/src/controllers/translator_controller/translate_source.dart';
-import 'package:freader/src/controllers/translator_controller/translator_controller.dart';
+import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
+import 'package:freader/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
+import 'package:freader/src/controllers/common/translator_controller/translate_source.dart';
+import 'package:freader/src/controllers/common/translator_controller/translator_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/models/record.dart';
@@ -56,7 +56,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     _db = context.read<DBController>();
     reader = getIt<ReaderController>(param1: widget.book);
     readerTimer = getIt<ReadingTimerController>(param1: widget.book);
-    _translator = context.read<TranslatorController>();
+    _translator = getIt<TranslatorController>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _currentOrientation = MediaQuery.of(context).orientation;

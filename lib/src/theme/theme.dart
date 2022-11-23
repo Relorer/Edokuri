@@ -56,7 +56,11 @@ extension LightThemeEx on ThemeData {
     return const TextStyle(fontSize: 12, color: paleElement);
   }
 
-  TextStyle get bookAuthorStyle {
+  TextStyle get cardTitleStyle {
+    return const TextStyle(fontSize: 14, color: darkGray);
+  }
+
+  TextStyle get cardSubtitleStyle {
     return const TextStyle(fontSize: 14, color: paleElement);
   }
 

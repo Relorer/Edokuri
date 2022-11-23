@@ -1,5 +1,5 @@
 import 'package:freader/objectbox.g.dart';
-import 'package:freader/src/controllers/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DBControllerFactory {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:freader/src/controllers/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/core/widgets/app_bar_space_with_exp_coll.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
 import 'package:freader/src/theme/svgs.dart';
