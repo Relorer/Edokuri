@@ -15,8 +15,8 @@ ThemeData basicTheme() => ThemeData(
       selectionColor: paleElement,
       selectionHandleColor: paleElement,
     ),
-    colorScheme: ColorScheme.fromSwatch()
-        .copyWith(secondary: paleElement, background: white));
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+        primary: darkGray, secondary: paleElement, background: white));
 
 extension LightThemeEx on ThemeData {
   Color get secondBackgroundColor {

@@ -14,8 +14,15 @@ class TextFormFieldDefault extends StatelessWidget {
     return TextFormField(
       controller: controller,
       onFieldSubmitted: onFieldSubmitted,
+      cursorColor: Theme.of(context).secondBackgroundColor,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
+        hoverColor: Theme.of(context).secondBackgroundColor,
+        fillColor: Theme.of(context).secondBackgroundColor,
+        prefixIconColor: Theme.of(context).secondBackgroundColor,
+        focusColor: Theme.of(context).secondBackgroundColor,
+        suffixIconColor: Theme.of(context).secondBackgroundColor,
+        iconColor: Theme.of(context).secondBackgroundColor,
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
               color: Theme.of(context).secondBackgroundColor.withOpacity(0.6),

@@ -3,6 +3,7 @@ import 'package:freader/src/controllers/stores/db_controller/db_controller.dart'
 import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:freader/src/core/widgets/sliver_single_child.dart';
 import 'package:freader/src/core/widgets/text_form_field_default.dart';
+import 'package:freader/src/models/set.dart';
 import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
@@ -21,10 +22,16 @@ class SetEditingPage extends StatefulWidget {
 
 class SetEditingPageState extends State<SetEditingPage> {
   late DBController _db;
+  final TextEditingController controller = TextEditingController();
 
   @override
   initState() {
     _db = context.read<DBController>();
+  }
+
+  void _saveHandler() {
+    _db.putSet(SetRecords(name: controller.text));
+    Navigator.pop(context);
   }
 
   @override
@@ -42,7 +49,7 @@ class SetEditingPageState extends State<SetEditingPage> {
               IconButton(
                 icon: const Icon(Icons.check),
                 tooltip: 'Save set',
-                onPressed: () {},
+                onPressed: _saveHandler,
               ),
             ],
           ),
@@ -51,7 +58,7 @@ class SetEditingPageState extends State<SetEditingPage> {
             child: Column(
               children: [
                 TextFormFieldDefault(
-                  onFieldSubmitted: ((value) {}),
+                  controller: controller,
                   labelText: 'Enter set name',
                 ),
               ],
