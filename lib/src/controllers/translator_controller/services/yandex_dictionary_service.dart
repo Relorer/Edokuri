@@ -6,16 +6,19 @@ import 'dart:convert';
 
 class YandexPartOfRecord {
   List<Translation> translations;
+  String transcription;
   List<Example> examples;
 
   YandexPartOfRecord({
     required this.translations,
+    required this.transcription,
     required this.examples,
   });
 }
 
 class YandexDictionaryService {
   Future<YandexPartOfRecord> lookup(String word) async {
+    String transcription = "";
     List<Translation> translations = [];
     List<Example> examples = [];
 
@@ -25,8 +28,8 @@ class YandexDictionaryService {
 
     if (result.statusCode == 200) {
       final parsedJson = jsonDecode(result.body);
-
       for (var def in parsedJson["def"] ?? []) {
+        transcription = def["ts"] ?? "";
         for (var tr in def["tr"] ?? []) {
           translations.add(Translation(tr["text"], source: yandexSource));
           for (var syn in tr["syn"] ?? []) {
@@ -39,6 +42,9 @@ class YandexDictionaryService {
       }
     }
 
-    return YandexPartOfRecord(translations: translations, examples: examples);
+    return YandexPartOfRecord(
+        translations: translations,
+        transcription: transcription,
+        examples: examples);
   }
 }

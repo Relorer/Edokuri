@@ -89,7 +89,7 @@
     },
     {
       "id": "5:3361953551612294549",
-      "lastPropertyId": "11:4242220271480079454",
+      "lastPropertyId": "12:126668975601255262",
       "name": "Record",
       "properties": [
         {
@@ -130,6 +130,11 @@
           "id": "11:4242220271480079454",
           "name": "sentences",
           "type": 30
+        },
+        {
+          "id": "12:126668975601255262",
+          "name": "transcription",
+          "type": 9
         }
       ],
       "relations": [

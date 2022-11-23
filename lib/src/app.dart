@@ -4,7 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:freader/src/controllers/db_controller/db_controller.dart';
 import 'package:freader/src/controllers/file_controller/file_controller.dart';
 import 'package:freader/src/controllers/library_sort_controller/library_sort_controller.dart';
-import 'package:freader/src/controllers/reader_controller/reader_controller.dart';
+import 'package:freader/src/controllers/records_sort_controller/record_sort_controller.dart';
 import 'package:freader/src/controllers/translator_controller/translator_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
@@ -27,6 +27,8 @@ class _AppState extends State<App> {
   final FileController _fileController = getIt<FileController>();
   final LibrarySortController _librarySortController =
       getIt<LibrarySortController>();
+  final RecordsSortController _recordsSortController =
+      getIt<RecordsSortController>();
 
   @override
   void initState() {
@@ -54,6 +56,8 @@ class _AppState extends State<App> {
           Provider<FileController>(create: (_) => _fileController),
           Provider<LibrarySortController>(
               create: (_) => _librarySortController),
+          Provider<RecordsSortController>(
+              create: (_) => _recordsSortController),
         ],
         child: MaterialApp(
           localizationsDelegates: context.localizationDelegates,

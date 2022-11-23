@@ -5,17 +5,17 @@ import 'package:mobx/mobx.dart';
 
 part 'library_sort_controller.g.dart';
 
-enum SortTypes { amountNewWords, name, progress, recent }
+enum BooksSortTypes { amountNewWords, name, progress, recent }
 
-String getSortTypeName(SortTypes type) {
+String getSortTypeName(BooksSortTypes type) {
   switch (type) {
-    case SortTypes.amountNewWords:
+    case BooksSortTypes.amountNewWords:
       return LocaleKeys.amount_of_new_words.tr();
-    case SortTypes.name:
+    case BooksSortTypes.name:
       return LocaleKeys.name.tr();
-    case SortTypes.progress:
+    case BooksSortTypes.progress:
       return LocaleKeys.progress.tr();
-    case SortTypes.recent:
+    case BooksSortTypes.recent:
       return LocaleKeys.recent.tr();
   }
 }
@@ -27,7 +27,7 @@ abstract class LibrarySortControllerBase with Store {
   final DBController db;
 
   @observable
-  SortTypes sortType = SortTypes.recent;
+  BooksSortTypes sortType = BooksSortTypes.recent;
 
   LibrarySortControllerBase(this.db);
 
@@ -35,24 +35,24 @@ abstract class LibrarySortControllerBase with Store {
   String get sortTypeName => getSortTypeName(sortType);
 
   @action
-  void setSortType(SortTypes? type) {
-    sortType = type ?? SortTypes.recent;
+  void setSortType(BooksSortTypes? type) {
+    sortType = type ?? BooksSortTypes.recent;
   }
 
   List<Book> sort(List<Book> books) {
     switch (sortType) {
-      case SortTypes.amountNewWords:
+      case BooksSortTypes.amountNewWords:
         return books.toList()
           ..sort((b1, b2) => b1.newWords(db).compareTo(b2.newWords(db)));
-      case SortTypes.name:
+      case BooksSortTypes.name:
         return books.toList()
           ..sort((b1, b2) =>
               (b1.title ?? "no title").compareTo((b2.title ?? "no title")));
-      case SortTypes.progress:
+      case BooksSortTypes.progress:
         return books.toList()
           ..sort((b1, b2) => (b2.currentCompletedChapter / b2.chapters.length)
               .compareTo(b1.currentCompletedChapter / b1.chapters.length));
-      case SortTypes.recent:
+      case BooksSortTypes.recent:
         return books.toList()
           ..sort((b1, b2) =>
               (b2.readTimes.isNotEmpty ? b2.readTimes.last.end : DateTime(0))

@@ -71,6 +71,7 @@ dependencies:
   flutter_page_indicator: ^0.0.3
   smooth_page_indicator:
     git: https://github.com/Relorer/smooth_page_indicator.git
+  text_to_speech: ^0.2.3
   
 dev_dependencies:
   flutter_test:

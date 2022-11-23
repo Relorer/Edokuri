@@ -11,7 +11,7 @@ class SortTypesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      ...SortTypes.values.map((e) => GestureDetector(
+      ...BooksSortTypes.values.map((e) => GestureDetector(
             onTap: () => context.read<LibrarySortController>().setSortType(e),
             child: Container(
               color: Theme.of(context).secondBackgroundColor,
@@ -21,7 +21,7 @@ class SortTypesList extends StatelessWidget {
                   Observer(builder: (_) {
                     final librarySort = context.read<LibrarySortController>();
 
-                    return Radio<SortTypes>(
+                    return Radio<BooksSortTypes>(
                       visualDensity: const VisualDensity(
                         horizontal: VisualDensity.minimumDensity,
                         vertical: VisualDensity.minimumDensity,

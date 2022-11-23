@@ -118,6 +118,7 @@ abstract class ReaderControllerBase with Store {
       for (var element in words) {
         db.putRecord(Record(
             original: element.content.toLowerCase(),
+            transcription: "",
             synonyms: [],
             sentences: [],
             known: true,

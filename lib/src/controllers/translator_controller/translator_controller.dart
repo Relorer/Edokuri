@@ -32,6 +32,7 @@ abstract class TranslatorControllerBase with Store {
 
     content = content.trim();
 
+    var transcription = "";
     List<Translation> translations = [];
     List<Meaning> meanings = [];
     List<String> synonyms = [];
@@ -51,6 +52,7 @@ abstract class TranslatorControllerBase with Store {
           ? yaDicService.lookup(contentLowerCase).then((value) {
               translations = value.translations;
               examples = value.examples;
+              transcription = value.transcription;
             })
           : Future(() => null);
 
@@ -69,6 +71,7 @@ abstract class TranslatorControllerBase with Store {
 
     return Record(
         original: content,
+        transcription: transcription,
         synonyms: synonyms,
         sentences: [],
         known: false,
