@@ -30,12 +30,17 @@ class AppBarSpaceWithCollapsedAndExpandedParts extends StatelessWidget {
           color: Theme.of(context).secondBackgroundColor,
           child: Stack(
             children: [
-              Opacity(opacity: 1 - opacity, child: collapsed),
-              Opacity(
-                opacity: opacity,
-                child: expanded,
+              IgnorePointer(
+                ignoring: opacity == 0,
+                child: Opacity(
+                  opacity: opacity,
+                  child: expanded,
+                ),
               ),
-              Container(child: always)
+              IgnorePointer(
+                  ignoring: opacity == 1,
+                  child: Opacity(opacity: 1 - opacity, child: collapsed)),
+              Container(child: always),
             ],
           ),
         );

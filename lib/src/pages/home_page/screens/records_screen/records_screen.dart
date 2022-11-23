@@ -15,11 +15,19 @@ class RecordsScreen extends StatefulWidget {
 }
 
 class _RecordsScreenState extends State<RecordsScreen> {
+  final ScrollController controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return BouncingCustomScrollView(
+      controller: controller,
       slivers: [
-        RecordsAppBar(appBarHeight: getAppBarHeight(context)),
+        RecordsAppBar(
+          appBarHeight: getAppBarHeight(context),
+          resetScrollClick: () => controller.animateTo(0,
+              duration: const Duration(seconds: 1),
+              curve: Curves.fastLinearToSlowEaseIn),
+        ),
         const StudyingSectionHeader(),
         const StudyingCardsList(),
         const CardsSectionHeader(),
