@@ -30,6 +30,7 @@ class YandexDictionaryService {
       final parsedJson = jsonDecode(result.body);
       for (var def in parsedJson["def"] ?? []) {
         transcription = def["ts"] ?? "";
+        transcription = transcription.isEmpty ? "" : "[$transcription]";
         for (var tr in def["tr"] ?? []) {
           translations.add(Translation(tr["text"], source: yandexSource));
           for (var syn in tr["syn"] ?? []) {

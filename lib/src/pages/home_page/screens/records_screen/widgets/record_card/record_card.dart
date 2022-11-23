@@ -22,29 +22,49 @@ class RecordCard extends StatelessWidget {
       child: Padding(
           padding: const EdgeInsets.all(defaultMargin),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
                   children: [
-                    AutoSizeText(
-                      record.original,
-                      maxLines: 5,
-                      style: Theme.of(context).cardTitleStyle,
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: Text.rich(TextSpan(children: [
+                        TextSpan(
+                          text: record.original,
+                          style: Theme.of(context).cardTitleStyle,
+                        ),
+                        const TextSpan(text: " "),
+                        TextSpan(
+                          text: record.transcription,
+                          style: Theme.of(context).cardSubtitleStyle,
+                        ),
+                      ])),
                     ),
-                    AutoSizeText(
-                      record.translation,
-                      maxLines: 5,
-                      style: Theme.of(context).cardSubtitleStyle,
+                    const SizedBox(
+                      height: defaultMargin,
+                    ),
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: Text(
+                        record.translation,
+                        style: Theme.of(context).cardSubtitleStyle,
+                      ),
                     ),
                   ],
                 ),
               ),
+              const SizedBox(
+                width: defaultMargin,
+              ),
               IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
                   onPressed: () =>
                       getIt<TTSController>().speak(record.original),
                   icon: SvgPicture.asset(
                     speakerSvg,
-                    color: Theme.of(context).paleElementColor,
+                    color: darkGray,
                   )),
             ],
           )),
