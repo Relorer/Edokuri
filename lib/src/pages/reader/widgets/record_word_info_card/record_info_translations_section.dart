@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freader/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:freader/src/controllers/common/translator_controller/translator_controller.dart';
+import 'package:freader/src/core/widgets/text_form_field_default.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
@@ -20,16 +21,31 @@ class RecordInfoTranslationsSection extends StatefulWidget {
 class _RecordInfoTranslationsSectionState
     extends State<RecordInfoTranslationsSection> {
   final TextEditingController _textEditingController = TextEditingController();
+  late List<Translation> translations = widget.translations;
 
   @override
   initState() {
     super.initState();
   }
 
+  void _fieldSubmittedHandler(String value) {
+    setState(() {
+      value = value.trim().toLowerCase();
+
+      if (translations.any((element) => element.text == value)) {
+        translations.firstWhere((element) => element.text == value).selected =
+            true;
+      } else {
+        translations
+            .add(Translation(value, source: userSource, selected: true));
+      }
+
+      _textEditingController.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final translations = widget.translations;
-
     return Column(
       children: [
         Wrap(
@@ -82,42 +98,12 @@ class _RecordInfoTranslationsSectionState
               )
             : Container(),
         Padding(
-          padding: const EdgeInsets.only(top: defaultMargin),
-          child: TextFormField(
-            controller: _textEditingController,
-            onFieldSubmitted: ((value) {
-              setState(() {
-                value = value.trim().toLowerCase();
-
-                if (translations.any((element) => element.text == value)) {
-                  translations
-                      .firstWhere((element) => element.text == value)
-                      .selected = true;
-                } else {
-                  translations.add(
-                      Translation(value, source: userSource, selected: true));
-                }
-
-                _textEditingController.clear();
-              });
-            }),
-            decoration: InputDecoration(
-              border: const UnderlineInputBorder(),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                    color: Theme.of(context).unknownWordColor.withOpacity(0.6),
-                    width: 0.0),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                    color: Theme.of(context).unknownWordColor.withOpacity(0.6),
-                    width: 0.0),
-              ),
-              floatingLabelBehavior: FloatingLabelBehavior.never,
+            padding: const EdgeInsets.only(top: defaultMargin),
+            child: TextFormFieldDefault(
+              controller: _textEditingController,
+              onFieldSubmitted: _fieldSubmittedHandler,
               labelText: 'Enter your translate',
-            ),
-          ),
-        )
+            ))
       ],
     );
   }
