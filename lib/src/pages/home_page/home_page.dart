@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freader/src/core/widgets/record_with_info_card/record_with_info_card.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/library_screen.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/person_screen.dart';
 import 'package:freader/src/pages/home_page/screens/records_screen/records_screen.dart';
@@ -25,18 +26,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     setUpBarDefaultStyles(context);
 
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        bottomNavigationBar: HomePageNavigation(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-        ),
-        body: SafeArea(
-          child: _screens[_currentIndex],
-        ));
+    return RecordWithInfoCard(
+      body: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          bottomNavigationBar: HomePageNavigation(
+            currentIndex: _currentIndex,
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          ),
+          body: SafeArea(
+            child: _screens[_currentIndex],
+          )),
+    );
   }
 }

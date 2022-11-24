@@ -5,6 +5,7 @@ import 'package:freader/src/controllers/stores/db_controller/db_controller.dart'
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
 import 'package:freader/src/models/record.dart';
+import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
 import 'package:freader/src/pages/set_page/widgets/record_card/record_card_dialog.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
@@ -16,7 +17,9 @@ class RecordCard extends StatelessWidget {
 
   const RecordCard(this.record, {super.key});
 
-  void _openRecordInfo(BuildContext context) {}
+  void _openRecordInfo(BuildContext context) {
+    TapOnWordHandlerProvider.of(context).tapOnWordHandler(record.original, "");
+  }
 
   void _removeRecord(BuildContext context) {
     context.read<DBController>().removeRecord(record);

@@ -36,7 +36,7 @@ abstract class RecordsSortControllerBase with Store {
     switch (sortType) {
       case RecordsSortTypes.alphabetically:
         return records.toList()
-          ..sort((b1, b2) => b1.original.compareTo(b2.original));
+          ..sort((b1, b2) => b2.original.compareTo(b1.original));
 
       default:
     }

@@ -4,7 +4,7 @@ import 'package:freader/src/controllers/common/translator_controller/translator_
 import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/models/record.dart';
-import 'package:freader/src/pages/reader/widgets/reader_page_sliding_up_panel.dart';
+import 'package:freader/src/core/widgets/record_with_info_card/reader_page_sliding_up_panel.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_container.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_content.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_skeleton.dart';
@@ -52,7 +52,9 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
           ? temp
           : await _translator.translate(word);
 
-      if (_record != null && sentence.isNotEmpty) {
+      if (_record != null &&
+          sentence.isNotEmpty &&
+          !_record!.sentences.contains(sentence)) {
         _record!.sentences.add(sentence);
       }
     }));
@@ -98,23 +100,25 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return TapOnWordHandlerProvider(
-        tapOnWordHandler: _tapOnWordHandler,
-        child: ReaderPageSlidingUpPanel(
-          controller: _panelController,
-          panelCloseHandler: _panelCloseHandler,
-          blockBody: _blockBody,
-          body: widget.body,
-          panelBuilder: (ScrollController sc) => RecordInfoCardContainer(
-              scrollController: sc,
-              child: AnimatedSwitcher(
-                switchInCurve: Curves.easeInCubic,
-                switchOutCurve: Curves.easeOutCubic,
-                duration: const Duration(milliseconds: 200),
-                child: _record == null
-                    ? const RecordInfoCardSkeleton()
-                    : RecordInfoCardContent(record: _record!),
-              )),
-        ));
+    return Material(
+      child: TapOnWordHandlerProvider(
+          tapOnWordHandler: _tapOnWordHandler,
+          child: ReaderPageSlidingUpPanel(
+            controller: _panelController,
+            panelCloseHandler: _panelCloseHandler,
+            blockBody: _blockBody,
+            body: widget.body,
+            panelBuilder: (ScrollController sc) => RecordInfoCardContainer(
+                scrollController: sc,
+                child: AnimatedSwitcher(
+                  switchInCurve: Curves.easeInCubic,
+                  switchOutCurve: Curves.easeOutCubic,
+                  duration: const Duration(milliseconds: 200),
+                  child: _record == null
+                      ? const RecordInfoCardSkeleton()
+                      : RecordInfoCardContent(record: _record!),
+                )),
+          )),
+    );
   }
 }

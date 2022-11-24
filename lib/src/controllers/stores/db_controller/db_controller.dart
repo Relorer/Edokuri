@@ -104,8 +104,8 @@ abstract class DBControllerBase with Store {
         element.original.toLowerCase() == record.original.toLowerCase());
 
     record.user.target = _user;
-    records.add(record);
     record.id = _recordBox.put(record);
+    records.add(record);
   }
 
   @action
