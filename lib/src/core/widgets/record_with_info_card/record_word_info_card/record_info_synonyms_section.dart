@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_section_header.dart';
+import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
 import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
@@ -24,7 +24,7 @@ class RecordInfoSynonymsSection extends StatelessWidget {
               return ActionChip(
                 pressElevation: 3,
                 onPressed: (() => TapOnWordHandlerProvider.of(context)
-                    .tapOnWordHandler(synonyms[index].toLowerCase(), -1)),
+                    .tapOnWordHandler(synonyms[index].toLowerCase(), "")),
                 backgroundColor:
                     Theme.of(context).paleElementColor.withOpacity(0.1),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

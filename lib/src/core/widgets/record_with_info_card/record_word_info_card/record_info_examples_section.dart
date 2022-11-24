@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:flutter/material.dart';
-import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_section_header.dart';
+import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
 class RecordInfoExamplesSection extends StatelessWidget {

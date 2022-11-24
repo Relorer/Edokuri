@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:freader/src/core/utils/string_utils.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/models/record.dart';
@@ -37,6 +38,18 @@ class ReaderContentViewPage extends StatelessWidget {
     );
   }
 
+  void _translate(BuildContext context, Piece piece, int index) {
+    final indexOnPage = content.indexOf(piece.content, index);
+    if (indexOnPage > -1) {
+      final sentence =
+          context.read<ReaderController>().getSentence(indexOnPage);
+      TapOnWordHandlerProvider.of(context)
+          .tapOnWordHandler(piece.content, sentence);
+    } else {
+      TapOnWordHandlerProvider.of(context).tapOnWordHandler(piece.content, "");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final tapOnWordHandler =
@@ -58,8 +71,7 @@ class ReaderContentViewPage extends StatelessWidget {
                 builder: (context) => getWord(
                     context.read<DBController>().getRecord(piece.content),
                     piece,
-                    () => tapOnWordHandler(piece.content,
-                        content.indexOf(piece.content, tempCurrentIndex))),
+                    () => _translate(context, piece, tempCurrentIndex)),
               ))
             : TextSpan(
                 text: piece.content,
@@ -90,7 +102,7 @@ class ReaderContentViewPage extends StatelessWidget {
                   p0.end > -1
               ? piecesOfPage.sublist(p0.start, p0.end).join().trim()
               : ""),
-          handleTranslate: ((text) => tapOnWordHandler(text, -1)),
+          handleTranslate: ((text) => tapOnWordHandler(text, "")),
           canTranslate: containsWord,
         ),
         TextSpan(

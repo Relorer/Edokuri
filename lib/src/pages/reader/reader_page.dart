@@ -1,26 +1,17 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:freader/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
-import 'package:freader/src/controllers/common/translator_controller/translate_source.dart';
-import 'package:freader/src/controllers/common/translator_controller/translator_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
+import 'package:freader/src/core/widgets/record_with_info_card/record_with_info_card.dart';
 import 'package:freader/src/models/book.dart';
-import 'package:freader/src/models/record.dart';
 import 'package:freader/src/pages/reader/widgets/reader_content_view.dart';
 import 'package:freader/src/pages/reader/widgets/reader_footer_panel.dart';
 import 'package:freader/src/pages/reader/widgets/reader_head_panel.dart';
-import 'package:freader/src/pages/reader/widgets/reader_page_sliding_up_panel.dart';
-import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_card_container.dart';
-import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_card_content.dart';
-import 'package:freader/src/pages/reader/widgets/record_word_info_card/record_info_card_skeleton.dart';
-import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
 import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ReaderPage extends StatefulWidget {
   final Book book;
@@ -37,14 +28,8 @@ class ReaderPage extends StatefulWidget {
 }
 
 class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
-  late DBController _db;
   late ReaderController reader;
   late ReadingTimerController readerTimer;
-  late TranslatorController _translator;
-
-  Record? _record;
-  final PanelController _panelController = PanelController();
-  bool _blockBody = false;
 
   late Orientation _currentOrientation;
   final _containerKey = GlobalKey();
@@ -53,10 +38,8 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
 
   @override
   initState() {
-    _db = context.read<DBController>();
     reader = getIt<ReaderController>(param1: widget.book);
     readerTimer = getIt<ReadingTimerController>(param1: widget.book);
-    _translator = getIt<TranslatorController>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _currentOrientation = MediaQuery.of(context).orientation;
@@ -107,68 +90,8 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     reader.loadContent(pageSize, Theme.of(context).readerPageTextStyle);
   }
 
-  _tapOnWordHandler(String word, int indexOnPage) async {
-    if (word.isEmpty) return;
-
-    await _panelController.close().then((value) => setState(() {
-          FocusScope.of(context).unfocus();
-          _blockBody = true;
-        }));
-
-    final getting = Future.delayed(
-        Duration(milliseconds: _panelController.isPanelClosed ? 0 : 200),
-        (() async {
-      final temp = _db.getRecord(word);
-      _record = temp != null && temp.translations.isNotEmpty
-          ? temp
-          : await _translator.translate(word);
-
-      if (_record != null) {
-        if (indexOnPage > -1) {
-          final sentence = reader.getSentence(indexOnPage);
-          if (sentence.length > 1 && !_record!.sentences.contains(sentence)) {
-            _record!.sentences.add(sentence);
-          }
-        }
-      }
-    }));
-
-    await Future.delayed(const Duration(milliseconds: 300));
-
-    if (_record != null) {
-      setState(() {});
-      _panelController.open();
-    } else {
-      _panelController.open();
-      await getting;
-      await Future.delayed(const Duration(milliseconds: 200));
-      setState(() {});
-    }
-  }
-
-  _saveCurrentRecord() {
-    if (_record == null) return;
-    if (_record!.translations.any((element) => element.selected)) {
-      _record!.translations.removeWhere(
-          (element) => element.source == userSource && !element.selected);
-      _record!.known = false;
-      _db.putRecord(_record!);
-    } else if (!_record!.known && _record!.id > 0) {
-      _db.removeRecord(_record!);
-    }
-  }
-
-  _panelCloseHandler() {
-    _saveCurrentRecord();
-    setState(() {
-      _record = null;
-      _blockBody = false;
-    });
-  }
-
   @override
   void dispose() {
-    _saveCurrentRecord();
     reader.savePosition();
     readerTimer.stopReadingTimer();
     super.dispose();
@@ -182,41 +105,24 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
       providers: [
         Provider<ReaderController>(create: (_) => reader),
       ],
-      child: TapOnWordHandlerProvider(
-        tapOnWordHandler: _tapOnWordHandler,
-        child: Scaffold(
-          body: ReaderPageSlidingUpPanel(
-            controller: _panelController,
-            panelCloseHandler: _panelCloseHandler,
-            blockBody: _blockBody,
-            body: SafeArea(
-              child: Container(
-                color: Theme.of(context).colorScheme.background,
-                child: Column(
-                  children: [
-                    const ReaderHeadPanel(),
-                    Expanded(
-                      key: _containerKey,
-                      child: const ReaderContentView(),
-                    ),
-                    const ReaderFooterPanel(),
-                  ],
+      child: Scaffold(
+          body: RecordWithInfoCard(
+        body: SafeArea(
+          child: Container(
+            color: Theme.of(context).colorScheme.background,
+            child: Column(
+              children: [
+                const ReaderHeadPanel(),
+                Expanded(
+                  key: _containerKey,
+                  child: const ReaderContentView(),
                 ),
-              ),
+                const ReaderFooterPanel(),
+              ],
             ),
-            panelBuilder: (ScrollController sc) => RecordInfoCardContainer(
-                scrollController: sc,
-                child: AnimatedSwitcher(
-                  switchInCurve: Curves.easeInCubic,
-                  switchOutCurve: Curves.easeOutCubic,
-                  duration: const Duration(milliseconds: 200),
-                  child: _record == null
-                      ? const RecordInfoCardSkeleton()
-                      : RecordInfoCardContent(record: _record!),
-                )),
           ),
         ),
-      ),
+      )),
     );
   }
 }
