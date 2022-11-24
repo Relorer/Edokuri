@@ -22,21 +22,25 @@ class _SetPageState extends State<SetPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BouncingCustomScrollView(
-      controller: controller,
-      slivers: [
-        RecordsAppBar(
-          records: widget.records,
-          appBarHeight: getAppBarHeight(context),
-          resetScrollClick: () => controller.animateTo(0,
-              duration: const Duration(seconds: 1),
-              curve: Curves.fastLinearToSlowEaseIn),
+    return Scaffold(
+      body: SafeArea(
+        child: BouncingCustomScrollView(
+          controller: controller,
+          slivers: [
+            RecordsAppBar(
+              records: widget.records,
+              appBarHeight: getAppBarHeight(context),
+              resetScrollClick: () => controller.animateTo(0,
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.fastLinearToSlowEaseIn),
+            ),
+            const StudyingSectionHeader(),
+            const StudyingCardsList(),
+            const CardsSectionHeader(),
+            RecordCardsList(widget.records),
+          ],
         ),
-        const StudyingSectionHeader(),
-        const StudyingCardsList(),
-        const CardsSectionHeader(),
-        RecordCardsList(widget.records),
-      ],
+      ),
     );
   }
 }

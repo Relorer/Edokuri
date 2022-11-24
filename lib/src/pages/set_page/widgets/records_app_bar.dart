@@ -19,6 +19,7 @@ class RecordsAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+        automaticallyImplyLeading: false,
         expandedHeight: appBarHeight,
         titleSpacing: 0,
         elevation: 0,

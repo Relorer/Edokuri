@@ -8,6 +8,7 @@ import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_cover.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_dialog.dart';
 import 'package:freader/src/pages/reader/reader_page.dart';
+import 'package:freader/src/pages/set_page/set_page.dart';
 import 'package:freader/src/theme/system_bars.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,7 @@ class BookCard extends StatelessWidget {
   final Book book;
   const BookCard({super.key, required this.book});
 
-  openBook(BuildContext context) {
+  void _openBook(BuildContext context) {
     Navigator.of(context)
         .push(
           MaterialPageRoute(
@@ -26,20 +27,32 @@ class BookCard extends StatelessWidget {
             () => setUpBarDefaultStyles(context)));
   }
 
-  removeBook(BuildContext context) {
+  void _removeBook(BuildContext context) {
     context.read<DBController>().removeBook(book);
     Navigator.pop(context);
   }
 
-  longPressHandler(BuildContext context) {
+  void _openBookSet(BuildContext context) {
+    Navigator.pop(context);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SetPage(
+          records: context.read<DBController>().getSavedRecordsByBook(book),
+        ),
+      ),
+    );
+  }
+
+  void _longPressHandler(BuildContext context) {
     showModalBottomSheet<void>(
       barrierColor: Colors.transparent,
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) => BookCardDialog(
         bookTitle: book.title ?? LocaleKeys.no_title.tr(),
-        openBook: () => openBook(context),
-        removeBook: () => removeBook(context),
+        openBook: () => _openBook(context),
+        removeBook: () => _removeBook(context),
+        openBookSet: () => _openBookSet(context),
       ),
     );
   }
@@ -47,8 +60,8 @@ class BookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleCard(
-      onTap: () => openBook(context),
-      onLongPress: () => longPressHandler(context),
+      onTap: () => _openBook(context),
+      onLongPress: () => _longPressHandler(context),
       child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
         BookCardCover(
           cover: book.cover,
