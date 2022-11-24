@@ -3,24 +3,35 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
-import 'package:freader/src/core/utils/records_list_extensions.dart';
+import 'package:freader/src/models/record.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
-import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class RecordsScreenRecordsCards extends StatelessWidget {
-  const RecordsScreenRecordsCards({super.key});
+class RecordsScreenRecordsCards extends StatefulWidget {
+  final List<Record> records;
+
+  const RecordsScreenRecordsCards(this.records, {super.key});
+
+  @override
+  State<RecordsScreenRecordsCards> createState() =>
+      _RecordsScreenRecordsCardsState();
+}
+
+class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
+  late List<Record> _records;
+  @override
+  void initState() {
+    _records = widget.records.toList()..shuffle();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final db = context.read<DBController>();
-    if (db.records.saved.isEmpty) {
+    if (_records.isEmpty) {
       return Container();
     }
-    final records = db.records.saved..shuffle();
 
     return Expanded(
       child: Padding(
@@ -37,7 +48,7 @@ class RecordsScreenRecordsCards extends StatelessWidget {
               child: SizedBox(
                 child: SmoothPageIndicator(
                     controller: config.pageController!,
-                    count: records.length,
+                    count: _records.length,
                     effect: ScrollingDotsEffect(
                         fixedCenter: true,
                         outlinedCenter: false,
@@ -54,8 +65,9 @@ class RecordsScreenRecordsCards extends StatelessWidget {
               padding: const EdgeInsets.only(
                   top: doubleDefaultMargin, bottom: doubleDefaultMargin),
               child: FlipCard(
+                speed: 300,
                 fill: Fill.fillBack,
-                direction: FlipDirection.HORIZONTAL,
+                direction: FlipDirection.VERTICAL,
                 front: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.background,
@@ -67,7 +79,7 @@ class RecordsScreenRecordsCards extends StatelessWidget {
                         children: [
                           Center(
                               child: AutoSizeText(
-                            records[index].original.toUpperCase(),
+                            _records[index].original.toUpperCase(),
                             style: Theme.of(context)
                                 .textTheme
                                 .displayLarge!
@@ -77,12 +89,17 @@ class RecordsScreenRecordsCards extends StatelessWidget {
                           Positioned(
                             right: 0,
                             bottom: 0,
-                            child: SvgPicture.asset(
-                              cropSvg,
-                              height: doubleDefaultMargin * 0.8,
-                              color: Theme.of(context)
-                                  .paleElementColor
-                                  .withOpacity(0.7),
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              icon: SvgPicture.asset(
+                                cropSvg,
+                                height: doubleDefaultMargin * 0.8,
+                                color: Theme.of(context)
+                                    .paleElementColor
+                                    .withOpacity(0.7),
+                              ),
+                              onPressed: () {},
                             ),
                           )
                         ],
@@ -99,7 +116,7 @@ class RecordsScreenRecordsCards extends StatelessWidget {
                         children: [
                           Center(
                               child: AutoSizeText(
-                            records[index]
+                            _records[index]
                                 .translations
                                 .where((element) => element.selected)
                                 .map((e) => e.text)
@@ -114,12 +131,17 @@ class RecordsScreenRecordsCards extends StatelessWidget {
                           Positioned(
                             right: 0,
                             bottom: 0,
-                            child: SvgPicture.asset(
-                              cropSvg,
-                              height: doubleDefaultMargin * 0.8,
-                              color: Theme.of(context)
-                                  .paleElementColor
-                                  .withOpacity(0.7),
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              icon: SvgPicture.asset(
+                                cropSvg,
+                                height: doubleDefaultMargin * 0.8,
+                                color: Theme.of(context)
+                                    .paleElementColor
+                                    .withOpacity(0.7),
+                              ),
+                              onPressed: () {},
                             ),
                           )
                         ],
@@ -128,7 +150,7 @@ class RecordsScreenRecordsCards extends StatelessWidget {
               ),
             );
           },
-          itemCount: records.length,
+          itemCount: _records.length,
         ),
       ),
     );

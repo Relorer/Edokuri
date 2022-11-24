@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:freader/src/pages/home_page/screens/records_screen/widgets/studying_card/studying_card.dart';
+import 'package:freader/src/pages/set_page/widgets/studying_card/studying_card.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
