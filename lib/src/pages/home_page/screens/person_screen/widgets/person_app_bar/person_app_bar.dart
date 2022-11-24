@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/core/widgets/app_bar_space_with_exp_coll.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
+import 'package:freader/src/pages/settings_page/settings_page.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
@@ -13,6 +14,14 @@ class PersonAppBar extends StatelessWidget {
   final double appBarHeight;
 
   const PersonAppBar({super.key, required this.appBarHeight});
+
+  void _openSettings(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SettingsPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +51,7 @@ class PersonAppBar extends StatelessWidget {
                       settingsSvg,
                       color: Theme.of(context).paleElementColor,
                     ),
-                    onPressed: () {},
+                    onPressed: () => _openSettings(context),
                   ),
                 ),
               ),

@@ -13,6 +13,8 @@ const cropSvg = "assets/icons/crop.svg";
 const speakerSvg = "assets/icons/speaker.svg";
 const learnSvg = "assets/icons/learn.svg";
 const testSvg = "assets/icons/test.svg";
+const editSvg = "assets/icons/edit.svg";
+const bookSvg = "assets/icons/book.svg";
 
 const translatedByGoogleSvg = "assets/images/translated_by_google.svg";
 const waveSvg = "assets/images/wave.svg";

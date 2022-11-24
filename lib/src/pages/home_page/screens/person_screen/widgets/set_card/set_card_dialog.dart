@@ -4,31 +4,31 @@ import 'package:freader/src/core/widgets/button_with_icon.dart';
 import 'package:freader/src/core/widgets/default_bottom_sheet.dart';
 import 'package:freader/src/theme/svgs.dart';
 
-class BookCardDialog extends StatelessWidget {
-  final VoidCallback? openBook;
-  final VoidCallback? openBookSet;
-  final VoidCallback? removeBook;
+class SetCardDialog extends StatelessWidget {
+  final VoidCallback? openSet;
+  final VoidCallback? openEditingSet;
+  final VoidCallback? removeSet;
 
-  const BookCardDialog(
-      {super.key, this.openBook, this.removeBook, this.openBookSet});
+  const SetCardDialog(
+      {super.key, this.openSet, this.removeSet, this.openEditingSet});
 
   @override
   Widget build(BuildContext context) {
     return DefaultBottomSheet(children: [
       ButtonWithIcon(
-        text: LocaleKeys.continue_reading.tr(),
-        onTap: openBook,
-        svg: readingSvg,
+        text: "Open set",
+        svg: goToSetSvg,
+        onTap: openSet,
       ),
       ButtonWithIcon(
-        text: LocaleKeys.go_to_set.tr(),
-        svg: goToSetSvg,
-        onTap: openBookSet,
+        text: "Edit set",
+        svg: editSvg,
+        onTap: openEditingSet,
       ),
       ButtonWithIcon(
         text: LocaleKeys.delete.tr(),
         svg: deleteSvg,
-        onTap: removeBook,
+        onTap: removeSet,
       ),
     ]);
   }

@@ -49,7 +49,6 @@ class BookCard extends StatelessWidget {
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) => BookCardDialog(
-        bookTitle: book.title ?? LocaleKeys.no_title.tr(),
         openBook: () => _openBook(context),
         removeBook: () => _removeBook(context),
         openBookSet: () => _openBookSet(context),

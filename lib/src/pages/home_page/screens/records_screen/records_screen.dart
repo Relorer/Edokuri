@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/core/utils/records_list_extensions.dart';
 import 'package:freader/src/pages/set_page/set_page.dart';
@@ -16,8 +17,10 @@ class _RecordsScreenState extends State<RecordsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SetPage(
-      records: context.read<DBController>().records.saved,
-    );
+    return Observer(builder: (_) {
+      return SetPage(
+        records: context.read<DBController>().records.saved,
+      );
+    });
   }
 }

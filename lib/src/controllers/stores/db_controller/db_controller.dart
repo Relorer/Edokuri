@@ -111,7 +111,7 @@ abstract class DBControllerBase with Store {
   @action
   void removeRecord(Record record) {
     _recordBox.remove(record.id);
-    books.removeWhere((b) => b.id == record.id);
+    records.removeWhere((b) => b.id == record.id);
   }
 
   @action
