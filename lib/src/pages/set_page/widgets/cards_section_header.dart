@@ -2,7 +2,9 @@ import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
 import 'package:freader/src/core/widgets/button_with_icon.dart';
+import 'package:freader/src/core/widgets/section_headers/section_header.dart';
 import 'package:freader/src/core/widgets/section_headers/section_header_text.dart';
+import 'package:freader/src/core/widgets/text_form_fields/text_form_field_without_paddings.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/sort_types_list.dart';
 import 'package:freader/src/theme/svgs.dart';
@@ -18,8 +20,13 @@ class CardsSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SectionHeaderText(
-      leftText: "Cards",
+    return SectionHeader(
+      leftChild: const Padding(
+        padding: EdgeInsets.only(right: defaultMargin),
+        child: TextFormFieldWithoutPaddings(
+          labelText: "Search",
+        ),
+      ),
       menuDialogChildren: [
         ButtonWithIcon(
           text: "Add new record",

@@ -31,7 +31,7 @@ class SectionHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          leftChild,
+          Expanded(child: leftChild),
           menuDialogChildren != null
               ? IconButton(
                   padding: EdgeInsets.zero,

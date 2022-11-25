@@ -23,11 +23,14 @@ class TextFormFieldWithoutPaddings extends StatelessWidget {
         focusColor: Theme.of(context).secondBackgroundColor,
         suffixIconColor: Theme.of(context).secondBackgroundColor,
         iconColor: Theme.of(context).secondBackgroundColor,
-        contentPadding: EdgeInsets.zero,
         isDense: true,
         isCollapsed: true,
         border: InputBorder.none,
-        focusedBorder: InputBorder.none,
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+              color: Theme.of(context).secondBackgroundColor.withOpacity(0.2),
+              width: 1.0),
+        ),
         floatingLabelBehavior: FloatingLabelBehavior.never,
         labelStyle: Theme.of(context).sectorTitleStye,
         labelText: labelText,

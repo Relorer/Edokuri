@@ -27,19 +27,28 @@ class _HomePageState extends State<HomePage> {
     setUpBarDefaultStyles(context);
 
     return RecordWithInfoCard(
-      body: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          bottomNavigationBar: HomePageNavigation(
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-          ),
-          body: SafeArea(
-            child: _screens[_currentIndex],
-          )),
+      body: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.background,
+            bottomNavigationBar: HomePageNavigation(
+              currentIndex: _currentIndex,
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+            ),
+            body: SafeArea(
+              child: _screens[_currentIndex],
+            )),
+      ),
     );
   }
 }
