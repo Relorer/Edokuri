@@ -66,9 +66,6 @@ abstract class LibrarySortControllerBase
                   .compareTo(b1.readTimes.isNotEmpty
                       ? b1.readTimes.last.end
                       : DateTime(0)));
-      default:
     }
-
-    throw Exception("Index out of range");
   }
 }

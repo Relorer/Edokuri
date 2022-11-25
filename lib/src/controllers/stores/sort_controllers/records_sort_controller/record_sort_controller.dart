@@ -4,7 +4,7 @@ import 'package:freader/src/models/record.dart';
 import 'package:mobx/mobx.dart';
 part 'record_sort_controller.g.dart';
 
-enum RecordsSortTypes { alphabetically }
+enum RecordsSortTypes { alphabetically, recent }
 
 class RecordsSortController = RecordsSortControllerBase
     with _$RecordsSortController;
@@ -28,6 +28,8 @@ abstract class RecordsSortControllerBase
     switch (type) {
       case RecordsSortTypes.alphabetically:
         return "Alphabetically";
+      case RecordsSortTypes.recent:
+        return "Recent";
     }
   }
 
@@ -44,10 +46,9 @@ abstract class RecordsSortControllerBase
         return records.toList()
           ..sort((b1, b2) =>
               b1.original.toLowerCase().compareTo(b2.original.toLowerCase()));
-
-      default:
+      case RecordsSortTypes.recent:
+        return records.toList()
+          ..sort((b1, b2) => b2.creationDate.compareTo(b1.creationDate));
     }
-
-    throw Exception("Index out of range");
   }
 }
