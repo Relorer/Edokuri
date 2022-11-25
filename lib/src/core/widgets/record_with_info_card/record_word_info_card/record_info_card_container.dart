@@ -14,7 +14,7 @@ class RecordInfoCardContainer extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(
           top: defaultMargin,
-          bottom: doubleDefaultMargin + 55,
+          bottom: doubleDefaultMargin,
           left: doubleDefaultMargin - 1,
           right: doubleDefaultMargin - 1),
       decoration: BoxDecoration(

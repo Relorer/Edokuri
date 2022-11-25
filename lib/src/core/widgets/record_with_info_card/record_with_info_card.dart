@@ -13,9 +13,11 @@ import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class RecordWithInfoCard extends StatefulWidget {
+  final double bottomPadding;
   final Widget body;
 
-  const RecordWithInfoCard({super.key, required this.body});
+  const RecordWithInfoCard(
+      {super.key, required this.body, this.bottomPadding = 55});
 
   @override
   State<RecordWithInfoCard> createState() => _RecordWithInfoCardState();
@@ -108,16 +110,19 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
             panelCloseHandler: _panelCloseHandler,
             blockBody: _blockBody,
             body: widget.body,
-            panelBuilder: (ScrollController sc) => RecordInfoCardContainer(
-                scrollController: sc,
-                child: AnimatedSwitcher(
-                  switchInCurve: Curves.easeInCubic,
-                  switchOutCurve: Curves.easeOutCubic,
-                  duration: const Duration(milliseconds: 200),
-                  child: _record == null
-                      ? const RecordInfoCardSkeleton()
-                      : RecordInfoCardContent(record: _record!),
-                )),
+            panelBuilder: (ScrollController sc) => Padding(
+              padding: EdgeInsets.only(bottom: widget.bottomPadding),
+              child: RecordInfoCardContainer(
+                  scrollController: sc,
+                  child: AnimatedSwitcher(
+                    switchInCurve: Curves.easeInCubic,
+                    switchOutCurve: Curves.easeOutCubic,
+                    duration: const Duration(milliseconds: 200),
+                    child: _record == null
+                        ? const RecordInfoCardSkeleton()
+                        : RecordInfoCardContent(record: _record!),
+                  )),
+            ),
           )),
     );
   }
