@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freader/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:freader/src/controllers/common/translator_controller/translator_controller.dart';
-import 'package:freader/src/core/widgets/text_form_field_default.dart';
+import 'package:freader/src/core/widgets/text_form_fields/text_form_field_default.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';

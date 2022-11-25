@@ -7,14 +7,14 @@ import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
 class SectionHeader extends StatelessWidget {
-  final String leftText;
+  final Widget leftChild;
   final List<Widget>? menuDialogChildren;
 
   const SectionHeader(
-      {Key? key, required this.leftText, this.menuDialogChildren})
+      {Key? key, required this.leftChild, this.menuDialogChildren})
       : super(key: key);
 
-  void menuButtonHandler(BuildContext context) {
+  void _menuButtonHandler(BuildContext context) {
     showGeneralDialog(
       context: context,
       pageBuilder: (BuildContext _, Animation<double> animation,
@@ -31,10 +31,7 @@ class SectionHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            leftText,
-            style: Theme.of(context).sectorTitleStye,
-          ),
+          leftChild,
           menuDialogChildren != null
               ? IconButton(
                   padding: EdgeInsets.zero,
@@ -43,7 +40,7 @@ class SectionHeader extends StatelessWidget {
                     menuSvg,
                     color: Theme.of(context).paleElementColor,
                   ),
-                  onPressed: () => menuButtonHandler(context),
+                  onPressed: () => _menuButtonHandler(context),
                 )
               : Container(),
         ],
