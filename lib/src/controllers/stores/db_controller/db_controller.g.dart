@@ -66,6 +66,28 @@ mixin _$DBController on DBControllerBase, Store {
   }
 
   @override
+  void putSet(SetRecords set) {
+    final _$actionInfo = _$DBControllerBaseActionController.startAction(
+        name: 'DBControllerBase.putSet');
+    try {
+      return super.putSet(set);
+    } finally {
+      _$DBControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeSet(SetRecords set) {
+    final _$actionInfo = _$DBControllerBaseActionController.startAction(
+        name: 'DBControllerBase.removeSet');
+    try {
+      return super.removeSet(set);
+    } finally {
+      _$DBControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 readingTimeForTodayInMinutes: ${readingTimeForTodayInMinutes}

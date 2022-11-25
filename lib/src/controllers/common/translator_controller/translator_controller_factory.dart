@@ -5,15 +5,15 @@ class TranslatorControllerFactory {
   loadLanguageMonel(
       OnDeviceTranslatorModelManager manager, String model) async {
     if (!await manager.isModelDownloaded(model)) {
-      await manager.downloadModel(model);
+      await manager.downloadModel(model, isWifiRequired: false);
     }
   }
 
   Future<TranslatorController> getTranslatorController() async {
     final modelManager = OnDeviceTranslatorModelManager();
 
-    await loadLanguageMonel(modelManager, TranslateLanguage.english.bcpCode);
-    await loadLanguageMonel(modelManager, TranslateLanguage.russian.bcpCode);
+    loadLanguageMonel(modelManager, TranslateLanguage.english.bcpCode);
+    loadLanguageMonel(modelManager, TranslateLanguage.russian.bcpCode);
 
     final translator = OnDeviceTranslator(
         sourceLanguage: TranslateLanguage.english,

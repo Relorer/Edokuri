@@ -12,16 +12,17 @@ class RecordInfoCardContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-          vertical: doubleDefaultMargin * 2,
-          horizontal: doubleDefaultMargin - 1),
+      margin: const EdgeInsets.only(
+          bottom: doubleDefaultMargin + 55,
+          left: doubleDefaultMargin - 1,
+          right: doubleDefaultMargin - 1),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(defaultRadius)),
           boxShadow: [
             BoxShadow(
               blurRadius: defaultMargin,
-              color: Theme.of(context).paleElementColor.withOpacity(0.2),
+              color: Theme.of(context).paleElementColor.withOpacity(0.3),
             ),
           ]),
       child: SingleChildScrollView(
