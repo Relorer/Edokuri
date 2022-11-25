@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
-import 'package:freader/src/controllers/stores/library_sort_controller/library_sort_controller.dart';
+import 'package:freader/src/controllers/stores/sort_controllers/library_sort_controller/library_sort_controller.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';

@@ -4,9 +4,9 @@ import 'package:freader/src/controllers/common/translator_controller/translator_
 import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/controllers/stores/db_controller/db_controller_factory.dart';
-import 'package:freader/src/controllers/stores/library_sort_controller/library_sort_controller.dart';
+import 'package:freader/src/controllers/stores/sort_controllers/library_sort_controller/library_sort_controller.dart';
 import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
-import 'package:freader/src/controllers/stores/records_sort_controller/record_sort_controller.dart';
+import 'package:freader/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:get_it/get_it.dart';
 

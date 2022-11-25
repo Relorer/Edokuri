@@ -17,7 +17,7 @@ class SectionHeader extends StatelessWidget {
   void menuButtonHandler(BuildContext context) {
     showGeneralDialog(
       context: context,
-      pageBuilder: (BuildContext context, Animation<double> animation,
+      pageBuilder: (BuildContext _, Animation<double> animation,
           Animation<double> secondaryAnimation) {
         return SectionDialog(menuDialogChildren!);
       },
