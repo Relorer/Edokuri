@@ -31,7 +31,7 @@ class RecordCard extends StatelessWidget {
       barrierColor: Colors.transparent,
       backgroundColor: Colors.transparent,
       context: context,
-      builder: (context) => RecordCardDialog(
+      builder: (_) => RecordCardDialog(
         openRecord: () {
           Navigator.pop(context);
           _openRecordInfo(context);
