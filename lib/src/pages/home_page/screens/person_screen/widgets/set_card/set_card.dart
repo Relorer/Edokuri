@@ -23,6 +23,7 @@ class SetCard extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => SetPage(
           records: set.records,
+          set: set,
         ),
       ),
     );
