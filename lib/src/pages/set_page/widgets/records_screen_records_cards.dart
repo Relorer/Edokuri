@@ -3,16 +3,16 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RecordsScreenRecordsCards extends StatefulWidget {
-  final List<Record> records;
-
-  const RecordsScreenRecordsCards(this.records, {super.key});
+  const RecordsScreenRecordsCards({super.key});
 
   @override
   State<RecordsScreenRecordsCards> createState() =>
@@ -23,7 +23,7 @@ class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
   late List<Record> _records;
   @override
   void initState() {
-    _records = widget.records.toList()..shuffle();
+    _records = context.read<SetController>().records.toList()..shuffle();
     super.initState();
   }
 

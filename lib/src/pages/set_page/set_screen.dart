@@ -10,6 +10,7 @@ import 'package:freader/src/pages/set_page/widgets/records_app_bar.dart';
 import 'package:freader/src/pages/set_page/widgets/studying_cards_list.dart';
 import 'package:freader/src/pages/set_page/widgets/studying_section_header.dart';
 import 'package:freader/src/pages/home_page/utils/app_bar.dart';
+import 'package:provider/provider.dart';
 
 class SetScreen extends StatefulWidget {
   final List<Record> records;
@@ -29,24 +30,28 @@ class _SetScreenState extends State<SetScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: BouncingCustomScrollView(
-        controller: controller,
-        slivers: [
-          RecordsAppBar(
-            records: widget.records,
-            appBarHeight: getAppBarHeight(context),
-            resetScrollClick: () => controller.animateTo(0,
-                duration: const Duration(seconds: 1),
-                curve: Curves.fastLinearToSlowEaseIn),
-          ),
-          const StudyingSectionHeader(),
-          const StudyingCardsList(),
-          const CardsSectionHeader(),
-          RecordCardsList(widget.records),
-        ],
-      )),
+    return MultiProvider(
+      providers: [
+        Provider<SetController>(create: (_) => setController),
+      ],
+      child: Scaffold(
+        body: SafeArea(
+            child: BouncingCustomScrollView(
+          controller: controller,
+          slivers: [
+            RecordsAppBar(
+              appBarHeight: getAppBarHeight(context),
+              resetScrollClick: () => controller.animateTo(0,
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.fastLinearToSlowEaseIn),
+            ),
+            const StudyingSectionHeader(),
+            const StudyingCardsList(),
+            const CardsSectionHeader(),
+            const RecordCardsList(),
+          ],
+        )),
+      ),
     );
   }
 }

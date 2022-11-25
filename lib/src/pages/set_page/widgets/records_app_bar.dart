@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/app_bar_space_with_exp_coll.dart';
-import 'package:freader/src/models/record.dart';
 import 'package:freader/src/pages/set_page/widgets/records_screen_records_cards.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
@@ -8,13 +7,12 @@ import 'package:freader/src/theme/theme_consts.dart';
 class RecordsAppBar extends StatelessWidget {
   final double appBarHeight;
   final VoidCallback? resetScrollClick;
-  final List<Record> records;
 
-  const RecordsAppBar(
-      {super.key,
-      required this.appBarHeight,
-      this.resetScrollClick,
-      required this.records});
+  const RecordsAppBar({
+    super.key,
+    required this.appBarHeight,
+    this.resetScrollClick,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +60,7 @@ class RecordsAppBar extends StatelessWidget {
             child: Container(
                 height: appBarHeight,
                 color: Theme.of(context).secondBackgroundColor,
-                child: RecordsScreenRecordsCards(records)),
+                child: const RecordsScreenRecordsCards()),
           ),
         ));
   }
