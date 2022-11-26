@@ -9,10 +9,10 @@ class Record {
   final translations = ToMany<Translation>();
   final meanings = ToMany<Meaning>();
   final examples = ToMany<Example>();
+  final sentences = ToMany<Example>();
   final List<String> synonyms;
   final String original;
   final String transcription;
-  final List<String> sentences;
   final DateTime creationDate;
 
   bool known;
@@ -27,7 +27,6 @@ class Record {
       required this.original,
       required this.transcription,
       required this.synonyms,
-      required this.sentences,
       required this.known,
       required this.creationDate});
 }

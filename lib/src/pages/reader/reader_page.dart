@@ -108,6 +108,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
       child: Scaffold(
           body: RecordWithInfoCard(
         bottomPadding: 0,
+        showTranslationSourceSentences: false,
         body: SafeArea(
           child: Container(
             color: Theme.of(context).colorScheme.background,

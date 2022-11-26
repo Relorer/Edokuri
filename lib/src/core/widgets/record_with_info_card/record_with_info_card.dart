@@ -13,11 +13,15 @@ import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class RecordWithInfoCard extends StatefulWidget {
+  final bool showTranslationSourceSentences;
   final double bottomPadding;
   final Widget body;
 
   const RecordWithInfoCard(
-      {super.key, required this.body, this.bottomPadding = 55});
+      {super.key,
+      required this.body,
+      this.bottomPadding = 55,
+      this.showTranslationSourceSentences = true});
 
   @override
   State<RecordWithInfoCard> createState() => _RecordWithInfoCardState();
@@ -56,8 +60,13 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
 
       if (_record != null &&
           sentence.isNotEmpty &&
-          !_record!.sentences.contains(sentence)) {
-        _record!.sentences.add(sentence);
+          _record!.sentences
+              .where((element) =>
+                  element.text.toLowerCase().trim() ==
+                  sentence.toLowerCase().trim())
+              .isEmpty) {
+        _record!.sentences.add(
+            Example(sentence, await _translator.translateSentence(sentence)));
       }
     }));
 
@@ -120,7 +129,11 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
                     duration: const Duration(milliseconds: 200),
                     child: _record == null
                         ? const RecordInfoCardSkeleton()
-                        : RecordInfoCardContent(record: _record!),
+                        : RecordInfoCardContent(
+                            record: _record!,
+                            showTranslationSourceSentences:
+                                widget.showTranslationSourceSentences,
+                          ),
                   )),
             ),
           )),

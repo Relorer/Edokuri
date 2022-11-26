@@ -120,7 +120,6 @@ abstract class ReaderControllerBase with Store {
             original: element.content.toLowerCase(),
             transcription: "",
             synonyms: [],
-            sentences: [],
             known: true,
             creationDate: DateTime.now()));
       }
@@ -204,7 +203,7 @@ abstract class ReaderControllerBase with Store {
 
     return chapterContent
         .substring(
-            startSentence > -1 ? startSentence : indexInSentenceInChapter,
+            startSentence > -1 ? startSentence + 1 : indexInSentenceInChapter,
             endSentence > -1 ? endSentence + 1 : indexInSentenceInChapter)
         .trim();
   }

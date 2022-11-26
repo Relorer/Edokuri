@@ -17,9 +17,7 @@ class TranslatorController {
   TranslatorController(this._translator);
 
   Future<Record> translate(String content) async {
-    final connectivityResult = await (Connectivity().checkConnectivity());
-    final hasInterner = connectivityResult == ConnectivityResult.wifi ||
-        connectivityResult == ConnectivityResult.mobile;
+    final hasInternet = await _hasInternet();
 
     content = content.trim();
 
@@ -39,7 +37,7 @@ class TranslatorController {
             (element) => element.toLowerCase() == contentLowerCase);
       });
 
-      var yaResult = hasInterner
+      var yaResult = hasInternet
           ? yaDicService.lookup(contentLowerCase).then((value) {
               translations = value.translations;
               examples = value.examples;
@@ -52,7 +50,7 @@ class TranslatorController {
 
     if (translations.isEmpty) {
       final googleTranslate =
-          hasInterner ? await gService.translate(content) : "";
+          hasInternet ? await gService.translate(content) : "";
 
       translations.add(googleTranslate.isNotEmpty
           ? Translation(googleTranslate, source: googleSource)
@@ -64,11 +62,29 @@ class TranslatorController {
         original: content,
         transcription: transcription,
         synonyms: synonyms,
-        sentences: [],
         known: false,
         creationDate: DateTime.now())
       ..meanings.addAll(meanings)
       ..examples.addAll(examples)
       ..translations.addAll(translations);
+  }
+
+  Future<String> translateSentence(String sentence) async {
+    final hasInternet = await _hasInternet();
+
+    sentence = sentence.trim();
+
+    final googleTranslate =
+        hasInternet ? await gService.translate(sentence) : "";
+
+    return googleTranslate.isNotEmpty
+        ? googleTranslate
+        : await _translator.translateText(sentence);
+  }
+
+  Future<bool> _hasInternet() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    return connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.mobile;
   }
 }

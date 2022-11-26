@@ -6,7 +6,7 @@ class DBControllerFactory {
   Future<DBController> getDBController() async {
     final dir = await getApplicationDocumentsDirectory();
     final store =
-        Store(getObjectBoxModel(), directory: "${dir.path}/objectbox2");
+        Store(getObjectBoxModel(), directory: "${dir.path}/objectbox3");
 
     return DBController(store);
   }
