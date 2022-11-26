@@ -1,4 +1,5 @@
 import 'package:freader/src/models/record.dart';
+import 'package:freader/src/models/set.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -7,7 +8,9 @@ class User {
 
   @Backlink('user')
   final records = ToMany<Record>();
-  final sets = ToMany<Record>();
+
+  @Backlink('user')
+  final sets = ToMany<SetRecords>();
 
   User({
     this.id = 0,

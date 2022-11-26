@@ -44,7 +44,6 @@ abstract class DBControllerBase with Store {
     _recordBox = store.box<Record>();
     _setBox = store.box<SetRecords>();
     books.addAll(_bookBox.query().build().find());
-    sets.addAll(_setBox.query().build().find());
 
     final temp = _userBox.getAll();
     if (temp.isEmpty) {
@@ -55,6 +54,7 @@ abstract class DBControllerBase with Store {
     }
 
     records.addAll(_user.records);
+    sets.addAll(_user.sets);
   }
 
   Record? getRecord(String original) {
@@ -116,6 +116,7 @@ abstract class DBControllerBase with Store {
 
   @action
   void putSet(SetRecords set) {
+    set.user.target = _user;
     set.id = _setBox.put(set);
     if (sets.contains(set)) {
       sets.remove(set);
