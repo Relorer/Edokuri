@@ -7,6 +7,9 @@ class User {
   int id;
 
   @Backlink('user')
+  final books = ToMany<Record>();
+
+  @Backlink('user')
   final records = ToMany<Record>();
 
   @Backlink('user')

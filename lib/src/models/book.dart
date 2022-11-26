@@ -1,11 +1,15 @@
 import 'dart:typed_data';
 
 import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class Book {
   int id;
+
+  final user = ToOne<User>();
+
   String? title;
   String? author;
   int currentChapter;

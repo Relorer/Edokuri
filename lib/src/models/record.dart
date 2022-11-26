@@ -1,3 +1,4 @@
+import 'package:freader/src/models/set.dart';
 import 'package:freader/src/models/user.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -6,12 +7,16 @@ class Record {
   int id;
   final user = ToOne<User>();
 
+  @Backlink("records")
+  final sets = ToMany<SetRecords>();
+
   final translations = ToMany<Translation>();
   final meanings = ToMany<Meaning>();
   final examples = ToMany<Example>();
   final sentences = ToMany<Example>();
   final List<String> synonyms;
   final String original;
+  final String originalLowerCase;
   final String transcription;
   final DateTime creationDate;
 
@@ -25,6 +30,7 @@ class Record {
   Record(
       {this.id = 0,
       required this.original,
+      required this.originalLowerCase,
       required this.transcription,
       required this.synonyms,
       required this.known,

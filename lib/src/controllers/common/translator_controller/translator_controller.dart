@@ -60,6 +60,7 @@ class TranslatorController {
 
     return Record(
         original: content,
+        originalLowerCase: content.toLowerCase(),
         transcription: transcription,
         synonyms: synonyms,
         known: false,
