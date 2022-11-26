@@ -16,6 +16,7 @@ class Record {
   final sentences = ToMany<Example>();
   final List<String> synonyms;
   final String original;
+  @Unique()
   final String originalLowerCase;
   final String transcription;
   final DateTime creationDate;

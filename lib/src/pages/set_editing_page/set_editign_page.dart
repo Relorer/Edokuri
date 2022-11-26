@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/set_repository/set_repository.dart';
 import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:freader/src/core/widgets/sliver_single_child.dart';
 import 'package:freader/src/core/widgets/text_form_fields/text_form_field_default.dart';
@@ -20,16 +20,10 @@ class SetEditingPage extends StatefulWidget {
 }
 
 class SetEditingPageState extends State<SetEditingPage> {
-  late DBController _db;
   final TextEditingController controller = TextEditingController();
 
-  @override
-  initState() {
-    _db = context.read<DBController>();
-  }
-
-  void _saveHandler() {
-    _db.putSet(SetRecords(name: controller.text));
+  void _saveHandler(BuildContext context) {
+    context.read<SetRepository>().putSet(SetRecords(name: controller.text));
     Navigator.pop(context);
   }
 
@@ -48,7 +42,7 @@ class SetEditingPageState extends State<SetEditingPage> {
               IconButton(
                 icon: const Icon(Icons.check),
                 tooltip: 'Save set',
-                onPressed: _saveHandler,
+                onPressed: (() => _saveHandler(context)),
               ),
             ],
           ),

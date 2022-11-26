@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/set_repository/set_repository.dart';
 import 'package:freader/src/core/utils/records_list_extensions.dart';
 import 'package:freader/src/core/widgets/ellipsis_text.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
@@ -30,7 +30,7 @@ class SetCard extends StatelessWidget {
   }
 
   void _removeSet(BuildContext context) {
-    context.read<DBController>().removeSet(set);
+    context.read<SetRepository>().removeSet(set);
     Navigator.pop(context);
   }
 

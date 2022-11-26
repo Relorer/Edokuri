@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
 import 'package:freader/src/models/record.dart';
@@ -22,7 +22,7 @@ class RecordCard extends StatelessWidget {
   }
 
   void _removeRecord(BuildContext context) {
-    context.read<DBController>().removeRecord(record);
+    context.read<RecordRepository>().removeRecord(record);
     Navigator.pop(context);
   }
 

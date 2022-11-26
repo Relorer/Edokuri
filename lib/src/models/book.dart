@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/models/models.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -34,11 +33,6 @@ class Book {
     required this.words,
     this.cover,
   });
-
-  int newWords(DBController db) {
-    return 100 -
-        (db.getRecordsByBook(this).length / words.length * 100).toInt();
-  }
 
   int get readingTimeInMinutes => readTimes.isNotEmpty
       ? readTimes

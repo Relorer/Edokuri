@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/utils/datetime_extensions.dart';
 import 'package:freader/src/core/utils/random_utils.dart';
 import 'package:freader/src/models/graph.dart';
@@ -68,17 +68,17 @@ class _StatsGraphState extends State<StatsGraph> {
                   onTapUp: ((details) => _setPressedPosition(null)),
                   onTapCancel: (() => _setPressedPosition(null)),
                   child: Observer(builder: (_) {
-                    final db = context.read<DBController>();
+                    final recordRepository = context.read<RecordRepository>();
                     final graphData = GraphData([
                       ...Iterable<int>.generate(7)
                           .map((e) {
                             final date =
                                 DateTime.now().subtract(Duration(days: e));
                             return GraphDayData(date,
-                                newKnownRecords:
-                                    _getNewKnownRecords(db.records, date),
-                                newSavedRecords:
-                                    _getNewSavedRecords(db.records, date));
+                                newKnownRecords: _getNewKnownRecords(
+                                    recordRepository.records, date),
+                                newSavedRecords: _getNewSavedRecords(
+                                    recordRepository.records, date));
                           })
                           .toList()
                           .reversed

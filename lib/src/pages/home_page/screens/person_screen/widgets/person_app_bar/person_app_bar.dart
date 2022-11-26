@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/widgets/app_bar_space_with_exp_coll.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
 import 'package:freader/src/pages/settings_page/settings_page.dart';
@@ -18,7 +19,7 @@ class PersonAppBar extends StatelessWidget {
   void _openSettings(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SettingsPage(),
+        builder: (context) => const SettingsPage(),
       ),
     );
   }
@@ -89,24 +90,29 @@ class PersonAppBar extends StatelessWidget {
                         ),
                       ),
                       Observer(builder: (_) {
-                        final db = context.read<DBController>();
-                        final readingTime = db.books
-                                .map((element) => element.readingTimeInMinutes)
-                                .reduce((t1, t2) => t1 + t2) /
-                            60;
+                        final recordRepository =
+                            context.read<RecordRepository>();
+
+                        final readingTimes = context
+                            .read<BookRepository>()
+                            .books
+                            .map((element) => element.readingTimeInMinutes);
+                        final readingTime = readingTimes.isNotEmpty
+                            ? readingTimes.reduce((t1, t2) => t1 + t2) / 60
+                            : 0;
 
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             PersonAppBarLine(
                                 "Records:",
-                                db.records
+                                recordRepository.records
                                     .where((element) => !element.known)
                                     .length
                                     .toString()),
                             PersonAppBarLine(
                                 "Known words:",
-                                db.records
+                                recordRepository.records
                                     .where((element) => element.known)
                                     .length
                                     .toString()),

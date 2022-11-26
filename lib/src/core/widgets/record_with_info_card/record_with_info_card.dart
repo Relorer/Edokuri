@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:freader/src/controllers/common/translator_controller/translator_controller.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/reader_page_sliding_up_panel.dart';
@@ -28,7 +28,7 @@ class RecordWithInfoCard extends StatefulWidget {
 }
 
 class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
-  late DBController _db;
+  late RecordRepository _recordRepository;
   late TranslatorController _translator;
 
   Record? _record;
@@ -38,7 +38,7 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
   @override
   initState() {
     super.initState();
-    _db = context.read<DBController>();
+    _recordRepository = context.read<RecordRepository>();
     _translator = getIt<TranslatorController>();
   }
 
@@ -53,7 +53,7 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
     final getting = Future.delayed(
         Duration(milliseconds: _panelController.isPanelClosed ? 0 : 200),
         (() async {
-      final temp = _db.getRecord(word);
+      final temp = _recordRepository.getRecord(word);
       _record = temp != null && temp.translations.isNotEmpty
           ? temp
           : await _translator.translate(word);
@@ -89,9 +89,9 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
       _record!.translations.removeWhere(
           (element) => element.source == userSource && !element.selected);
       _record!.known = false;
-      _db.putRecord(_record!);
+      _recordRepository.putRecord(_record!);
     } else if (!_record!.known && _record!.id > 0) {
-      _db.removeRecord(_record!);
+      _recordRepository.removeRecord(_record!);
     }
   }
 

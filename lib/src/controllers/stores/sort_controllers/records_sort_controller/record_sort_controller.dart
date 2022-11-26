@@ -1,4 +1,4 @@
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/controllers/stores/sort_controllers/base_sort_controller.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:mobx/mobx.dart';
@@ -11,13 +11,13 @@ class RecordsSortController = RecordsSortControllerBase
 
 abstract class RecordsSortControllerBase
     extends BaseSortController<RecordsSortTypes, Record> with Store {
-  final DBController db;
+  final RecordRepository recordRepository;
 
   @override
   @observable
   RecordsSortTypes sortType = RecordsSortTypes.alphabetically;
 
-  RecordsSortControllerBase(this.db);
+  RecordsSortControllerBase(this.recordRepository);
 
   @override
   @computed

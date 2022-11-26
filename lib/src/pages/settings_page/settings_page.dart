@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:freader/src/core/widgets/sliver_single_child.dart';
 import 'package:freader/src/theme/theme.dart';
@@ -18,13 +17,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class SettingsPageState extends State<SettingsPage> {
-  late DBController _db;
   final TextEditingController controller = TextEditingController();
-
-  @override
-  initState() {
-    _db = context.read<DBController>();
-  }
 
   @override
   Widget build(BuildContext context) {

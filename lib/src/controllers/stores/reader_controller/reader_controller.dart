@@ -1,7 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/utils/string_utils.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/models/record.dart';
@@ -19,10 +20,11 @@ class _PositionInBook {
 }
 
 abstract class ReaderControllerBase with Store {
-  final DBController db;
+  final RecordRepository recordRepository;
+  final BookRepository bookRepository;
   final Book book;
 
-  ReaderControllerBase(this.db, this.book);
+  ReaderControllerBase(this.recordRepository, this.bookRepository, this.book);
 
   @observable
   int pageCount = 1;
@@ -112,11 +114,12 @@ abstract class ReaderControllerBase with Store {
           )
           .where(
             (element) =>
-                element.isWord && db.getRecord(element.content) == null,
+                element.isWord &&
+                recordRepository.getRecord(element.content) == null,
           );
 
       for (var element in words) {
-        db.putRecord(Record(
+        recordRepository.putRecord(Record(
             original: element.content.toLowerCase(),
             originalLowerCase: element.content.toLowerCase(),
             transcription: "",
@@ -167,7 +170,7 @@ abstract class ReaderControllerBase with Store {
     book.currentCompletedChapter = currentCompletedChapter;
     book.currentCompletedPositionInChapter =
         getCurrentCompletedPositionInChapter();
-    db.putBook(book);
+    bookRepository.putBook(book);
   }
 
   int _getPageIndexByChapterAndPosition(

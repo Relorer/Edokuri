@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/utils/records_list_extensions.dart';
 import 'package:freader/src/pages/set_page/set_screen.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +19,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       return SetScreen(
-        records: context.read<DBController>().records.saved,
+        records: context.read<RecordRepository>().records.saved,
       );
     });
   }

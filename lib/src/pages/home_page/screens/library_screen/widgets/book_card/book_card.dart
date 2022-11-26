@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/generated/locale.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_content.dart';
@@ -28,7 +29,7 @@ class BookCard extends StatelessWidget {
   }
 
   void _removeBook(BuildContext context) {
-    context.read<DBController>().removeBook(book);
+    context.read<BookRepository>().removeBook(book);
     Navigator.pop(context);
   }
 
@@ -37,7 +38,7 @@ class BookCard extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => SetPage(
-          records: context.read<DBController>().getSavedRecordsByBook(book),
+          records: context.read<RecordRepository>().getSavedRecordsByBook(book),
         ),
       ),
     );
@@ -71,9 +72,12 @@ class BookCard extends StatelessWidget {
             chaptersCount: book.chapters.length,
             currentCompletedChapter: book.currentCompletedChapter,
             title: book.title ?? LocaleKeys.no_title.tr(),
-            recordsCount:
-                context.read<DBController>().getSavedRecordsByBook(book).length,
-            newWordsPersent: book.newWords(context.read<DBController>()),
+            recordsCount: context
+                .read<RecordRepository>()
+                .getSavedRecordsByBook(book)
+                .length,
+            newWordsPersent:
+                context.read<RecordRepository>().newWordsInBook(book),
           );
         })
       ]),

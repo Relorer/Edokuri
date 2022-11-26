@@ -1,5 +1,5 @@
 import 'package:freader/generated/locale.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/controllers/stores/sort_controllers/base_sort_controller.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:mobx/mobx.dart';
@@ -13,13 +13,13 @@ class LibrarySortController = LibrarySortControllerBase
 
 abstract class LibrarySortControllerBase
     extends BaseSortController<BooksSortTypes, Book> with Store {
-  final DBController db;
+  final RecordRepository _recordRepository;
 
   @override
   @observable
   BooksSortTypes sortType = BooksSortTypes.recent;
 
-  LibrarySortControllerBase(this.db);
+  LibrarySortControllerBase(this._recordRepository);
 
   @override
   @computed
@@ -50,7 +50,9 @@ abstract class LibrarySortControllerBase
     switch (sortType) {
       case BooksSortTypes.amountNewWords:
         return books.toList()
-          ..sort((b1, b2) => b1.newWords(db).compareTo(b2.newWords(db)));
+          ..sort((b1, b2) => _recordRepository
+              .newWordsInBook(b1)
+              .compareTo(_recordRepository.newWordsInBook(b2)));
       case BooksSortTypes.name:
         return books.toList()
           ..sort((b1, b2) =>

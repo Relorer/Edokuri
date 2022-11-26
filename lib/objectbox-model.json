@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7555383519736908052",
-      "lastPropertyId": "11:1996409624628438534",
+      "lastPropertyId": "12:1171507266951576340",
       "name": "Book",
       "properties": [
         {
@@ -53,6 +53,14 @@
           "id": "11:1996409624628438534",
           "name": "words",
           "type": 30
+        },
+        {
+          "id": "12:1171507266951576340",
+          "name": "userId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "6:6219956172005489847",
+          "relationTarget": "User"
         }
       ],
       "relations": [
@@ -89,7 +97,7 @@
     },
     {
       "id": "5:3361953551612294549",
-      "lastPropertyId": "12:126668975601255262",
+      "lastPropertyId": "13:8811379332479399981",
       "name": "Record",
       "properties": [
         {
@@ -130,6 +138,13 @@
           "id": "12:126668975601255262",
           "name": "transcription",
           "type": 9
+        },
+        {
+          "id": "13:8811379332479399981",
+          "name": "originalLowerCase",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "7:1282999678806998692"
         }
       ],
       "relations": [
@@ -320,7 +335,7 @@
     }
   ],
   "lastEntityId": "13:2900817027165657191",
-  "lastIndexId": "5:7767716216631473181",
+  "lastIndexId": "7:1282999678806998692",
   "lastRelationId": "15:424998221173663380",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

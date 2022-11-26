@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/db_controller/db_controller.dart';
 import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/utils/string_utils.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/models/record.dart';
@@ -69,7 +69,7 @@ class ReaderContentViewPage extends StatelessWidget {
             ? WidgetSpan(
                 child: Observer(
                 builder: (context) => getWord(
-                    context.read<DBController>().getRecord(piece.content),
+                    context.read<RecordRepository>().getRecord(piece.content),
                     piece,
                     () => _translate(context, piece, tempCurrentIndex)),
               ))
