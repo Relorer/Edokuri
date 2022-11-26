@@ -25,7 +25,7 @@ Future<void> setupLocator() async {
   getIt.registerFactoryParam<ReadingTimerController, Book, void>(
       (book, _) => ReadingTimerController(getIt<DBController>(), book));
 
-  getIt.registerFactoryParam<SetController, List<Record>, SetRecords>(
+  getIt.registerFactoryParam<SetController, List<Record>, SetRecords?>(
       (records, set) =>
           SetController(getIt<DBController>(), records, set: set));
 
