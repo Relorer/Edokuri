@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/set_repository/set_repository.dart';
 import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/core/utils/records_list_extensions.dart';
@@ -23,9 +24,11 @@ class SetCard extends StatelessWidget {
   void _openSet(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => Observer(builder: (_) {
+        builder: (_) => Observer(builder: (_) {
           return SetPage(
-            setController: SetData(set.records, set: set),
+            setData: SetData(
+                context.read<RecordRepository>().getRecordsBySet(set),
+                set: set),
           );
         }),
       ),

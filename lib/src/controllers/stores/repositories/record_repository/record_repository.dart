@@ -39,6 +39,12 @@ abstract class RecordRepositoryBase with Store {
         .toList();
   }
 
+  List<Record> getRecordsBySet(SetRecords set) {
+    return records
+        .where((element) => element.sets.any((element) => element.id == set.id))
+        .toList();
+  }
+
   List<Record> getSavedRecordsByBook(Book book) {
     return getRecordsByBook(book)
         .where((element) => book.words.any((word) => !element.known))
@@ -71,9 +77,16 @@ abstract class RecordRepositoryBase with Store {
     store.box<Meaning>().putMany(record.meanings);
     store.box<Example>().putMany(record.examples);
     store.box<Example>().putMany(record.sentences);
+    store.box<SetRecords>().putMany(record.sets);
   }
 
-  void removeRecord(Record record) {
-    store.box<Record>().remove(record.id);
+  void removeRecord(Record record, {SetRecords? set}) {
+    if (set != null) {
+      record.sets.removeWhere((element) => element.id == set.id);
+      store.box<Record>().put(record);
+      store.box<SetRecords>().put(set);
+    } else {
+      store.box<Record>().remove(record.id);
+    }
   }
 }

@@ -3,7 +3,7 @@ import 'package:freader/src/controllers/common/translator_controller/translate_s
 import 'package:freader/src/controllers/common/translator_controller/translator_controller.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/service_locator.dart';
-import 'package:freader/src/models/record.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/reader_page_sliding_up_panel.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_container.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_content.dart';
@@ -16,11 +16,13 @@ class RecordWithInfoCard extends StatefulWidget {
   final bool showTranslationSourceSentences;
   final double bottomPadding;
   final Widget body;
+  final SetRecords? set;
 
   const RecordWithInfoCard(
       {super.key,
       required this.body,
       this.bottomPadding = 55,
+      this.set,
       this.showTranslationSourceSentences = true});
 
   @override
@@ -89,9 +91,9 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
       _record!.translations.removeWhere(
           (element) => element.source == userSource && !element.selected);
       _record!.known = false;
-      _recordRepository.putRecord(_record!);
+      _recordRepository.putRecord(_record!, set: widget.set);
     } else if (!_record!.known && _record!.id > 0) {
-      _recordRepository.removeRecord(_record!);
+      _recordRepository.removeRecord(_record!, set: widget.set);
     }
   }
 

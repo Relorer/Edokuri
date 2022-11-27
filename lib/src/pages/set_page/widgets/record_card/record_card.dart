@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
 import 'package:freader/src/models/record.dart';
@@ -13,16 +14,17 @@ import 'package:freader/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';
 
 class RecordCard extends StatelessWidget {
+  final SetData setData;
   final Record record;
 
-  const RecordCard(this.record, {super.key});
+  const RecordCard(this.record, {super.key, required this.setData});
 
   void _openRecordInfo(BuildContext context) {
     TapOnWordHandlerProvider.of(context).tapOnWordHandler(record.original, "");
   }
 
   void _removeRecord(BuildContext context) {
-    context.read<RecordRepository>().removeRecord(record);
+    context.read<RecordRepository>().removeRecord(record, set: setData.set);
     Navigator.pop(context);
   }
 

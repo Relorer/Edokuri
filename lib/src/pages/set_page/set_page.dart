@@ -4,15 +4,17 @@ import 'package:freader/src/core/widgets/record_with_info_card/record_with_info_
 import 'package:freader/src/pages/set_page/set_screen.dart';
 
 class SetPage extends StatelessWidget {
-  final SetData setController;
+  final SetData setData;
 
-  const SetPage({Key? key, required this.setController}) : super(key: key);
+  const SetPage({Key? key, required this.setData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RecordWithInfoCard(
+        bottomPadding: 0,
+        set: setData.set,
         body: SetScreen(
-      setData: setController,
-    ));
+          setData: setData,
+        ));
   }
 }

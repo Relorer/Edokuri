@@ -8,6 +8,7 @@ class SetRecords {
   final user = ToOne<User>();
 
   String name;
+
   final records = ToMany<Record>();
 
   SetRecords({this.id = 0, required this.name});

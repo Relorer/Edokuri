@@ -21,7 +21,10 @@ class RecordCardsList extends StatelessWidget {
             (context, index) => Padding(
                   padding: const EdgeInsets.fromLTRB(
                       defaultMargin, 0, defaultMargin, defaultMargin),
-                  child: RecordCard(soretedRecords[index]),
+                  child: RecordCard(
+                    soretedRecords[index],
+                    setData: setData,
+                  ),
                 ),
             childCount: soretedRecords.length),
       );

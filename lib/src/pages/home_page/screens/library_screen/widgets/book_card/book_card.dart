@@ -40,7 +40,7 @@ class BookCard extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => Observer(builder: (_) {
           return SetPage(
-            setController: SetData(
+            setData: SetData(
                 context.read<RecordRepository>().getSavedRecordsByBook(book)),
           );
         }),
