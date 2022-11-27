@@ -20,10 +20,20 @@ class SetEditingPage extends StatefulWidget {
 }
 
 class SetEditingPageState extends State<SetEditingPage> {
-  final TextEditingController controller = TextEditingController();
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    controller = TextEditingController(text: widget.set?.name);
+    super.initState();
+  }
 
   void _saveHandler(BuildContext context) {
-    context.read<SetRepository>().putSet(SetRecords(name: controller.text));
+    final SetRecords setForSave =
+        widget.set == null ? SetRecords(name: controller.text) : widget.set!;
+    setForSave.name = controller.text;
+
+    context.read<SetRepository>().putSet(setForSave);
     Navigator.pop(context);
   }
 
