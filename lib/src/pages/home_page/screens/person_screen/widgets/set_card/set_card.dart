@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/stores/repositories/set_repository/set_repository.dart';
+import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/core/utils/records_list_extensions.dart';
 import 'package:freader/src/core/widgets/ellipsis_text.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
@@ -21,10 +23,11 @@ class SetCard extends StatelessWidget {
   void _openSet(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SetPage(
-          records: set.records,
-          set: set,
-        ),
+        builder: (context) => Observer(builder: (_) {
+          return SetPage(
+            setController: SetData(set.records, set: set),
+          );
+        }),
       ),
     );
   }

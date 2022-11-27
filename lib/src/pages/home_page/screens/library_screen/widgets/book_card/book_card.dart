@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/generated/locale.dart';
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_content.dart';
@@ -37,9 +38,12 @@ class BookCard extends StatelessWidget {
     Navigator.pop(context);
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SetPage(
-          records: context.read<RecordRepository>().getSavedRecordsByBook(book),
-        ),
+        builder: (context) => Observer(builder: (_) {
+          return SetPage(
+            setController: SetData(
+                context.read<RecordRepository>().getSavedRecordsByBook(book)),
+          );
+        }),
       ),
     );
   }

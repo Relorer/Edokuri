@@ -14,10 +14,13 @@ abstract class SetRepositoryBase with Store {
   ObservableList<SetRecords> sets = ObservableList<SetRecords>.of([]);
 
   SetRepositoryBase(this.store, this.userRepository) {
-    getSets(store).forEach((setsNewList) {
-      sets.clear();
-      sets.addAll(setsNewList);
-    });
+    getSets(store).forEach(setNewList);
+  }
+
+  @action
+  void setNewList(List<SetRecords> newSets) {
+    sets.clear();
+    sets.addAll(newSets);
   }
 
   Stream<List<SetRecords>> getSets(box.Store store) {

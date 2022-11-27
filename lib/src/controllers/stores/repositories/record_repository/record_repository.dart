@@ -14,10 +14,13 @@ abstract class RecordRepositoryBase with Store {
   ObservableList<Record> records = ObservableList<Record>.of([]);
 
   RecordRepositoryBase(this.store, this.userRepository) {
-    _getRecords(store).forEach((recordsNewList) {
-      records.clear();
-      records.addAll(recordsNewList);
-    });
+    _getRecords(store).forEach(setNewList);
+  }
+
+  @action
+  void setNewList(List<Record> newRecords) {
+    records.clear();
+    records.addAll(newRecords);
   }
 
   Stream<List<Record>> _getRecords(box.Store store) {

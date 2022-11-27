@@ -7,14 +7,15 @@ import 'package:freader/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';
 
 class RecordCardsList extends StatelessWidget {
-  const RecordCardsList({super.key});
+  final SetData setData;
+
+  const RecordCardsList({super.key, required this.setData});
 
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      final soretedRecords = context
-          .read<RecordsSortController>()
-          .sort(context.read<SetController>().records);
+      final soretedRecords =
+          context.read<RecordsSortController>().sort(setData.records);
       return SliverList(
         delegate: SliverChildBuilderDelegate(
             (context, index) => Padding(

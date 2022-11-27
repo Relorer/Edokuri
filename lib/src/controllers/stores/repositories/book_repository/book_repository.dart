@@ -15,10 +15,13 @@ abstract class BookRepositoryBase with Store {
   ObservableList<Book> books = ObservableList<Book>.of([]);
 
   BookRepositoryBase(this.store, this.userRepository) {
-    getBooks(store).forEach((booksNewList) {
-      books.clear();
-      books.addAll(booksNewList);
-    });
+    getBooks(store).forEach(setNewList);
+  }
+
+  @action
+  void setNewList(List<Book> newBooks) {
+    books.clear();
+    books.addAll(newBooks);
   }
 
   Stream<List<Book>> getBooks(box.Store store) {

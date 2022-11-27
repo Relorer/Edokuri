@@ -8,11 +8,12 @@ import 'package:freader/src/models/record.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
-import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RecordsScreenRecordsCards extends StatefulWidget {
-  const RecordsScreenRecordsCards({super.key});
+  final SetData setData;
+
+  const RecordsScreenRecordsCards({super.key, required this.setData});
 
   @override
   State<RecordsScreenRecordsCards> createState() =>
@@ -23,7 +24,7 @@ class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
   late List<Record> _records;
   @override
   void initState() {
-    _records = context.read<SetController>().records.toList()..shuffle();
+    _records = widget.setData.records.toList()..shuffle();
     super.initState();
   }
 
