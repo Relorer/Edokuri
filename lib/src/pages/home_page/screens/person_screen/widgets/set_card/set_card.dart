@@ -8,7 +8,9 @@ import 'package:freader/src/core/widgets/ellipsis_text.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
 import 'package:freader/src/models/set.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/widgets/set_card/set_card_dialog.dart';
+import 'package:freader/src/pages/set_editing_page/set_editign_page.dart';
 import 'package:freader/src/pages/set_page/set_page.dart';
+import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +42,16 @@ class SetCard extends StatelessWidget {
     Navigator.pop(context);
   }
 
-  void _openEditingSet(BuildContext context) {}
+  void _openEditingSet(BuildContext context) {
+    Navigator.pop(context);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SetEditingPage(
+          set: set,
+        ),
+      ),
+    );
+  }
 
   void _longPressHandler(BuildContext context) {
     showModalBottomSheet<void>(

@@ -15,7 +15,7 @@ abstract class RecordsSortControllerBase
 
   @override
   @observable
-  RecordsSortTypes sortType = RecordsSortTypes.alphabetically;
+  RecordsSortTypes sortType = RecordsSortTypes.recent;
 
   RecordsSortControllerBase(this.recordRepository);
 

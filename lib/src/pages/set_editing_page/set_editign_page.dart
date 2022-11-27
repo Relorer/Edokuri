@@ -9,9 +9,9 @@ import 'package:freader/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';
 
 class SetEditingPage extends StatefulWidget {
-  const SetEditingPage({
-    Key? key,
-  }) : super(key: key);
+  final SetRecords? set;
+
+  const SetEditingPage({Key? key, this.set}) : super(key: key);
 
   @override
   SetEditingPageState createState() {
@@ -36,7 +36,9 @@ class SetEditingPageState extends State<SetEditingPage> {
         slivers: [
           SliverAppBar(
             backgroundColor: Theme.of(context).secondBackgroundColor,
-            title: const Text("Create set"),
+            title: widget.set == null
+                ? const Text("Create set")
+                : const Text("Edit set"),
             floating: true,
             actions: [
               IconButton(
