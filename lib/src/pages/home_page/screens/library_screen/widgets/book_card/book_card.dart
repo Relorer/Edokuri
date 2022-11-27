@@ -25,8 +25,7 @@ class BookCard extends StatelessWidget {
             builder: (context) => ReaderPage(book: book),
           ),
         )
-        .then((value) => Future.delayed(const Duration(milliseconds: 100),
-            () => setUpBarDefaultStyles(context)));
+        .then((value) => setUpBarDefaultStyles(context));
   }
 
   void _removeBook(BuildContext context) {

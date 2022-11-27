@@ -125,7 +125,9 @@ abstract class ReaderControllerBase with Store {
             transcription: "",
             synonyms: [],
             known: true,
-            creationDate: DateTime.now()));
+            creationDate: DateTime.now(),
+            lastReview: DateTime(0),
+            timeToNextReview: 0));
       }
     });
   }

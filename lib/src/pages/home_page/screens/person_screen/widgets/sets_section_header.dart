@@ -16,8 +16,7 @@ class SetsSectionHeader extends StatelessWidget {
             builder: (context) => const SetEditingPage(),
           ),
         )
-        .then((value) => Future.delayed(const Duration(milliseconds: 100),
-            () => setUpBarDefaultStyles(context)));
+        .then((value) => setUpBarDefaultStyles(context));
   }
 
   @override

@@ -53,6 +53,7 @@ abstract class RecordRepositoryBase with Store {
 
   int newWordsInBook(Book book) {
     final wordsInBook = getRecordsByBook(book).toList();
+    if (book.words.isEmpty || wordsInBook.isEmpty) return 100;
     return 100 - (wordsInBook.length / book.words.length * 100).toInt();
   }
 

@@ -64,7 +64,9 @@ class TranslatorController {
         transcription: transcription,
         synonyms: synonyms,
         known: false,
-        creationDate: DateTime.now())
+        creationDate: DateTime.now(),
+        lastReview: DateTime(0),
+        timeToNextReview: 0)
       ..meanings.addAll(meanings)
       ..examples.addAll(examples)
       ..translations.addAll(translations);

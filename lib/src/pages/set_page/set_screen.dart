@@ -30,7 +30,9 @@ class SetScreen extends StatelessWidget {
                 curve: Curves.fastLinearToSlowEaseIn),
           ),
           const StudyingSectionHeader(),
-          const StudyingCardsList(),
+          StudyingCardsList(
+            setData: setData,
+          ),
           const CardsSectionHeader(),
           RecordCardsList(
             setData: setData,
