@@ -107,29 +107,29 @@ abstract class ReaderControllerBase with Store {
   }
 
   void _completePage(int chapter, int page) {
-    Future.delayed(const Duration(seconds: 2), () {
-      final words = getParagraphs(chaptersContent[chapter][page])
-          .expand(
-            (element) => element.pieces,
-          )
-          .where(
-            (element) =>
-                element.isWord &&
-                recordRepository.getRecord(element.content) == null,
-          );
+    final words = getParagraphs(chaptersContent[chapter][page])
+        .expand(
+          (element) => element.pieces,
+        )
+        .where(
+          (element) =>
+              element.isWord &&
+              recordRepository.getRecord(element.content) == null,
+        )
+        .toList();
 
-      for (var element in words) {
-        recordRepository.putRecord(Record(
+    final creationDate = DateTime.now();
+    Future.forEach<Piece>(
+        words,
+        (element) => Future(() => recordRepository.putRecord(Record(
             original: element.content.toLowerCase(),
             originalLowerCase: element.content.toLowerCase(),
             transcription: "",
             synonyms: [],
             known: true,
-            creationDate: DateTime.now(),
+            creationDate: creationDate,
             lastReview: DateTime(0),
-            timeToNextReview: 0));
-      }
-    });
+            timeToNextReview: 0))));
   }
 
   @action

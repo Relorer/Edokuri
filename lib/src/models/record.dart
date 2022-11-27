@@ -16,7 +16,7 @@ class Record {
   final sentences = ToMany<Example>();
   final List<String> synonyms;
   final String original;
-  @Unique()
+  @Unique(onConflict: ConflictStrategy.replace)
   final String originalLowerCase;
   final String transcription;
   final DateTime creationDate;
