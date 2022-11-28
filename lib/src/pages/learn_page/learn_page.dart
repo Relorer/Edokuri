@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/models/models.dart';
@@ -74,6 +75,7 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
             ),
             Expanded(
               child: SwipableStack(
+                swipeAnchor: SwipeAnchor.top,
                 dragStartCurve: Curves.linear,
                 rewindAnimationCurve: Curves.fastOutSlowIn,
                 cancelAnimationCurve: Curves.fastOutSlowIn,
@@ -103,11 +105,11 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
                                 "Know",
                                 style: TextStyle(
                                     fontSize: 32,
-                                    color: Colors.white,
+                                    color: const Color(0xff14B220),
                                     fontWeight: FontWeight.bold),
                               )),
                               decoration: BoxDecoration(
-                                  color: const Color(0xff14B220),
+                                  color: Colors.white,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(defaultRadius)),
                                   boxShadow: [
@@ -127,11 +129,11 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
                                 "Still learning",
                                 style: TextStyle(
                                     fontSize: 32,
-                                    color: Colors.white,
+                                    color: savedWord,
                                     fontWeight: FontWeight.bold),
                               )),
                               decoration: BoxDecoration(
-                                  color: savedWord,
+                                  color: Colors.white,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(defaultRadius)),
                                   boxShadow: [
@@ -171,9 +173,46 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
                                     offset: const Offset(0, 5),
                                   ),
                                 ]),
-                            child: Center(
-                                child:
-                                    Text(widget.records[itemIndex].original)),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: Column(children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(
+                                        doubleDefaultMargin),
+                                    child: Center(
+                                      child: AutoSizeText(
+                                        widget.records[itemIndex].original,
+                                        style: TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: IconButton(
+                                        icon: const Icon(Icons.keyboard),
+                                        onPressed: () {
+                                          print("test");
+                                        },
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: IconButton(
+                                        icon: const Icon(Icons.remove_red_eye),
+                                        onPressed: () {},
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: doubleDefaultMargin,
+                                )
+                              ]),
+                            ),
                           ),
                         )
                       ],
