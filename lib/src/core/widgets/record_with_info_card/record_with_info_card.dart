@@ -4,7 +4,7 @@ import 'package:freader/src/controllers/common/translator_controller/translator_
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/models/models.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/reader_page_sliding_up_panel.dart';
+import 'package:freader/src/core/widgets/provider_sliding_up_panel.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_container.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_content.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_skeleton.dart';
@@ -116,7 +116,7 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
     return Material(
       child: TapOnWordHandlerProvider(
           tapOnWordHandler: _tapOnWordHandler,
-          child: ReaderPageSlidingUpPanel(
+          child: ProviderSlidingUpPanel(
             controller: _panelController,
             panelCloseHandler: _panelCloseHandler,
             blockBody: _blockBody,

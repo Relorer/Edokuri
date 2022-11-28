@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class ReaderPageSlidingUpPanel extends StatelessWidget {
+class ProviderSlidingUpPanel extends StatelessWidget {
   final PanelController controller;
   final Widget body;
   final Widget Function(ScrollController)? panelBuilder;
@@ -10,7 +10,7 @@ class ReaderPageSlidingUpPanel extends StatelessWidget {
   final VoidCallback? panelCloseHandler;
   final VoidCallback? panelOpenHandler;
 
-  const ReaderPageSlidingUpPanel(
+  const ProviderSlidingUpPanel(
       {super.key,
       required this.body,
       required this.panelBuilder,

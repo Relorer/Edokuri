@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/theme/theme.dart';
+import 'package:freader/src/core/widgets/default_card_container.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
 class RecordInfoCardContainer extends StatelessWidget {
@@ -17,24 +17,15 @@ class RecordInfoCardContainer extends StatelessWidget {
           bottom: doubleDefaultMargin,
           left: doubleDefaultMargin - 1,
           right: doubleDefaultMargin - 1),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(defaultRadius)),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: defaultMargin,
-              color: Theme.of(context).paleElementColor.withOpacity(0.4),
-              spreadRadius: 0.0,
-              offset: const Offset(0, 5),
-            ),
-          ]),
-      child: SingleChildScrollView(
-        controller: scrollController,
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: doubleDefaultMargin, vertical: doubleDefaultMargin),
-          child: child,
+      child: DefaultCardContainer(
+        SingleChildScrollView(
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: doubleDefaultMargin, vertical: doubleDefaultMargin),
+            child: child,
+          ),
         ),
       ),
     );
