@@ -42,11 +42,7 @@ class ReaderTextSelectionControls extends MaterialTextSelectionControls {
           canSelectAll(delegate) ? () => handleSelectAll(delegate) : null,
       handleTranslate: canTranslate(selectedText)
           ? () async {
-              var cdata = await Clipboard.getData(Clipboard.kTextPlain);
-              var prevClipboardValue = cdata?.text;
-              handleCopy(delegate);
               handleTranslate(selectedText);
-              await Clipboard.setData(ClipboardData(text: prevClipboardValue));
             }
           : null,
       handleSearch: canTranslate(selectedText)
