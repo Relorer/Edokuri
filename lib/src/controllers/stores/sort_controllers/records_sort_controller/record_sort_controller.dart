@@ -40,14 +40,14 @@ abstract class RecordsSortControllerBase
   }
 
   @override
-  List<Record> sort(List<Record> records) {
+  List<Record> sort(List<Record> types) {
     switch (sortType) {
       case RecordsSortTypes.alphabetically:
-        return records.toList()
+        return types.toList()
           ..sort((b1, b2) =>
               b1.original.toLowerCase().compareTo(b2.original.toLowerCase()));
       case RecordsSortTypes.recent:
-        return records.toList()
+        return types.toList()
           ..sort((b1, b2) => b2.creationDate.compareTo(b1.creationDate));
     }
   }

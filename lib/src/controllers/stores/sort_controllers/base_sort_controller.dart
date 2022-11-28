@@ -7,5 +7,5 @@ abstract class BaseSortController<Types extends Enum, ItemType> {
 
   void setSortType(Types? type);
 
-  List<ItemType> sort(List<ItemType> records);
+  List<ItemType> sort(List<ItemType> types);
 }

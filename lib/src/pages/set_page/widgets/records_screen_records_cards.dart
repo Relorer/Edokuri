@@ -1,11 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/models/record.dart';
-import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -65,7 +63,7 @@ class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
             padding: const EdgeInsets.only(
                 top: doubleDefaultMargin, bottom: doubleDefaultMargin),
             child: FlipCard(
-              speed: 300,
+              speed: 350,
               fill: Fill.fillBack,
               direction: FlipDirection.VERTICAL,
               front: Container(
@@ -86,22 +84,6 @@ class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
                               .copyWith(color: Colors.black87),
                           maxLines: 8,
                         )),
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: IconButton(
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(),
-                            icon: SvgPicture.asset(
-                              cropSvg,
-                              height: doubleDefaultMargin * 0.8,
-                              color: Theme.of(context)
-                                  .paleElementColor
-                                  .withOpacity(0.7),
-                            ),
-                            onPressed: () {},
-                          ),
-                        )
                       ],
                     )),
               ),
@@ -128,22 +110,6 @@ class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
                               .copyWith(color: Colors.black87),
                           maxLines: 8,
                         )),
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: IconButton(
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(),
-                            icon: SvgPicture.asset(
-                              cropSvg,
-                              height: doubleDefaultMargin * 0.8,
-                              color: Theme.of(context)
-                                  .paleElementColor
-                                  .withOpacity(0.7),
-                            ),
-                            onPressed: () {},
-                          ),
-                        )
                       ],
                     )),
               ),

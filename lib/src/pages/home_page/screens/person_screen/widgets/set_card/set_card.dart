@@ -10,7 +10,6 @@ import 'package:freader/src/models/set.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/widgets/set_card/set_card_dialog.dart';
 import 'package:freader/src/pages/set_editing_page/set_editign_page.dart';
 import 'package:freader/src/pages/set_page/set_page.dart';
-import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';

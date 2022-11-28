@@ -2,9 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
-import 'package:freader/src/core/widgets/sliver_single_child.dart';
 import 'package:freader/src/models/models.dart';
+import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:swipable_stack/swipable_stack.dart';
@@ -20,10 +19,18 @@ class LearnPage extends StatefulWidget {
   }
 }
 
-class LearnPageState extends State<LearnPage> {
+class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
   late final SwipableStackController _controller;
 
   void _listenController() => setState(() {});
+
+  @override
+  void didChangeMetrics() {
+    if (mounted) {
+      setUpBarReaderStyles(context);
+    }
+    super.didChangeMetrics();
+  }
 
   @override
   void initState() {
@@ -41,49 +48,140 @@ class LearnPageState extends State<LearnPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        top: false,
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: SwipableStack(
-                  detectableSwipeDirections: const {
-                    SwipeDirection.right,
-                    SwipeDirection.left,
-                  },
-                  controller: _controller,
-                  stackClipBehaviour: Clip.none,
-                  onSwipeCompleted: (index, direction) {
-                    if (kDebugMode) {
-                      print('$index, $direction');
-                    }
-                  },
-                  horizontalSwipeThreshold: 0.8,
-                  verticalSwipeThreshold: 0.8,
-                  builder: (context, properties) {
-                    final itemIndex = properties.index % widget.records.length;
+    setUpBarReaderStyles(context);
 
-                    return Stack(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 0,
+        foregroundColor: Theme.of(context).secondBackgroundColor,
+        title: Center(child: Text("1/2")),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: SafeArea(
+        child: Column(
+          children: [
+            LinearProgressIndicator(
+              value: 0.1,
+              backgroundColor:
+                  Theme.of(context).paleElementColor.withOpacity(0.3),
+            ),
+            Expanded(
+              child: SwipableStack(
+                dragStartCurve: Curves.linear,
+                rewindAnimationCurve: Curves.fastOutSlowIn,
+                cancelAnimationCurve: Curves.fastOutSlowIn,
+                detectableSwipeDirections: const {
+                  SwipeDirection.right,
+                  SwipeDirection.left,
+                },
+                controller: _controller,
+                stackClipBehaviour: Clip.hardEdge,
+                onSwipeCompleted: (index, direction) {
+                  if (kDebugMode) {
+                    print('$index, $direction');
+                  }
+                },
+                horizontalSwipeThreshold: 0.7,
+                verticalSwipeThreshold: 0.7,
+                overlayBuilder: (context, properties) {
+                  final opacity = min(properties.swipeProgress, 1.0);
+                  return Padding(
+                    padding: const EdgeInsets.all(doubleDefaultMargin),
+                    child: Opacity(
+                      opacity: opacity,
+                      child: properties.direction == SwipeDirection.right
+                          ? Container(
+                              child: const Center(
+                                  child: Text(
+                                "Know",
+                                style: TextStyle(
+                                    fontSize: 32,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                              decoration: BoxDecoration(
+                                  color: const Color(0xff14B220),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(defaultRadius)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: defaultMargin,
+                                      color: Theme.of(context)
+                                          .paleElementColor
+                                          .withOpacity(0.4),
+                                      spreadRadius: 0.0,
+                                      offset: const Offset(0, 5),
+                                    ),
+                                  ]),
+                            )
+                          : Container(
+                              child: const Center(
+                                  child: Text(
+                                "Still learning",
+                                style: TextStyle(
+                                    fontSize: 32,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                              decoration: BoxDecoration(
+                                  color: savedWord,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(defaultRadius)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: defaultMargin,
+                                      color: Theme.of(context)
+                                          .paleElementColor
+                                          .withOpacity(0.4),
+                                      spreadRadius: 0.0,
+                                      offset: const Offset(0, 5),
+                                    ),
+                                  ]),
+                            ),
+                    ),
+                  );
+                },
+                builder: (context, properties) {
+                  final itemIndex = properties.index % widget.records.length;
+
+                  return Padding(
+                    padding: const EdgeInsets.all(doubleDefaultMargin),
+                    child: Stack(
                       children: [
-                        Container(
-                          child: Text("Sample No.${itemIndex + 1}"),
+                        Positioned.fill(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(defaultRadius)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: defaultMargin,
+                                    color: Theme.of(context)
+                                        .paleElementColor
+                                        .withOpacity(0.4),
+                                    spreadRadius: 0.0,
+                                    offset: const Offset(0, 5),
+                                  ),
+                                ]),
+                            child: Center(
+                                child:
+                                    Text(widget.records[itemIndex].original)),
+                          ),
                         )
                       ],
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
-            // BottomButtonsRow(
-            //   onSwipe: (direction) {
-            //     _controller.next(swipeDirection: direction);
-            //   },
-            //   onRewindTap: _controller.rewind,
-            //   canRewind: _controller.canRewind,
-            // ),
           ],
         ),
       ),

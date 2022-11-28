@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/pages/learn_page/learn_page.dart';
 import 'package:freader/src/pages/set_page/widgets/studying_card/studying_card.dart';
 import 'package:freader/src/theme/svgs.dart';
+import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
 class StudyingCardsList extends StatelessWidget {
@@ -19,13 +19,15 @@ class StudyingCardsList extends StatelessWidget {
         subTitile: 'Focus your studying with a path',
         svg: learnSvg,
         onTap: (() {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => LearnPage(
-                records: setData.records,
-              ),
-            ),
-          );
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => LearnPage(
+                    records: setData.records,
+                  ),
+                ),
+              )
+              .then((value) => setUpBarDefaultStyles(context));
         }),
       ),
       StudyingCard(

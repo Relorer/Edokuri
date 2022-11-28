@@ -8,7 +8,6 @@ import 'package:freader/src/controllers/stores/repositories/record_repository/re
 import 'package:freader/src/controllers/stores/repositories/set_repository/set_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/store_factory.dart';
 import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/controllers/stores/sort_controllers/library_sort_controller/library_sort_controller.dart';
 import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:freader/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
