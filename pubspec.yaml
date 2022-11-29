@@ -35,7 +35,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^6.0.4
-  epubx: any
+  epubx:
+    git: https://github.com/Relorer/epubx.dart
   file_picker: ^5.2.2
   html: ^0.15.1
   path: ^1.8.1
@@ -73,7 +74,6 @@ dependencies:
     git: https://github.com/Relorer/smooth_page_indicator.git
   text_to_speech: ^0.2.3
   swipable_stack: ^2.0.0
-  flutter_native_splash: ^2.2.0+1
   
 dev_dependencies:
   flutter_test:
@@ -81,34 +81,30 @@ dev_dependencies:
   build_runner: ^2.3.2
   objectbox_generator: ^1.6.2
   flutter_launcher_icons: ^0.11.0
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_native_splash: ^2.2.14
 
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/logo.png"
+  image_path: "assets/images/app-icon.png"
   adaptive_icon_background: "#292F40"
-  adaptive_icon_foreground: "assets/images/logo-f.png"
+  adaptive_icon_foreground: "assets/images/app-icon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/logo.png"
+    image_path: "assets/images/app-icon.png"
     background_color: "#292F40"
     theme_color: "#292F40"
   windows:
     generate: true
-    image_path: "assets/images/logo.png"
+    image_path: "assets/images/app-icon.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/images/logo.png"
-
+    image_path: "assets/images/app-icon.png"
+    
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen
   # with background color and splash image.
@@ -161,7 +157,7 @@ flutter_native_splash:
     # 640 pixels in diameter.
     # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
     # 768 pixels in diameter.
-    image: assets/images/logo-without_back.png
+    image: assets/images/logo.png
 
     # Splash screen background color.
     color: "#292F40"
@@ -247,6 +243,7 @@ flutter_native_splash:
   #info_plist_files:
   #  - 'ios/Runner/Info-Debug.plist'
   #  - 'ios/Runner/Info-Release.plist'
+
 
 # The following section is specific to Flutter packages.
 flutter:
