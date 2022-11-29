@@ -14,7 +14,7 @@ class RecordCardsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      final soretedRecords =
+      final sortedRecords =
           context.read<RecordsSortController>().sort(setData.records);
       return SliverList(
         delegate: SliverChildBuilderDelegate(
@@ -22,11 +22,11 @@ class RecordCardsList extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(
                       defaultMargin, 0, defaultMargin, defaultMargin),
                   child: RecordCard(
-                    soretedRecords[index],
+                    sortedRecords[index],
                     setData: setData,
                   ),
                 ),
-            childCount: soretedRecords.length),
+            childCount: sortedRecords.length),
       );
     });
   }

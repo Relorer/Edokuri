@@ -8,27 +8,16 @@ import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class RecordsScreenRecordsCards extends StatefulWidget {
+class RecordsScreenRecordsCards extends StatelessWidget {
   final SetData setData;
 
   const RecordsScreenRecordsCards({super.key, required this.setData});
 
   @override
-  State<RecordsScreenRecordsCards> createState() =>
-      _RecordsScreenRecordsCardsState();
-}
-
-class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
-  late List<Record> _records;
-  @override
-  void initState() {
-    _records = widget.setData.records.toList()..shuffle();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (_records.isEmpty) {
+    final records = setData.records.toList()..shuffle();
+
+    if (records.isEmpty) {
       return Container();
     }
 
@@ -46,7 +35,7 @@ class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
             child: SizedBox(
               child: SmoothPageIndicator(
                   controller: config.pageController!,
-                  count: _records.length,
+                  count: records.length,
                   effect: ScrollingDotsEffect(
                       fixedCenter: true,
                       outlinedCenter: false,
@@ -77,7 +66,7 @@ class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
                       children: [
                         Center(
                             child: AutoSizeText(
-                          _records[index].original.toUpperCase(),
+                          records[index].original.toUpperCase(),
                           style: Theme.of(context)
                               .textTheme
                               .displayLarge!
@@ -98,7 +87,7 @@ class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
                       children: [
                         Center(
                             child: AutoSizeText(
-                          _records[index]
+                          records[index]
                               .translations
                               .where((element) => element.selected)
                               .map((e) => e.text)
@@ -116,7 +105,7 @@ class _RecordsScreenRecordsCardsState extends State<RecordsScreenRecordsCards> {
             ),
           );
         },
-        itemCount: _records.length,
+        itemCount: records.length,
       ),
     );
   }

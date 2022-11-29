@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:freader/src/theme/theme.dart';
 
 const _setSystemUIOverlayStyleTag = "setSystemUIOverlayStyleTag";
-const _timeStampBetween = 10;
+const _timeStampBetween = 200;
 
 void setUpBarDefaultStyles(BuildContext context) {
   EasyDebounce.debounce(_setSystemUIOverlayStyleTag,
@@ -20,7 +20,7 @@ void setUpBarDefaultStyles(BuildContext context) {
 void setUpBarDarkedStyles(BuildContext context) {
   EasyDebounce.debounce(_setSystemUIOverlayStyleTag,
       const Duration(milliseconds: _timeStampBetween), () {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Color(0xffc2c2c2),
       statusBarIconBrightness: Brightness.dark,
     ));
