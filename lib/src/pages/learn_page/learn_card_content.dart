@@ -13,44 +13,42 @@ class LearnCardContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(doubleDefaultMargin),
-      child: Positioned.fill(
-        child: DefaultCardContainer(
-          Material(
-            color: Colors.transparent,
-            child: Column(children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(doubleDefaultMargin),
-                  child: Center(
-                    child: AutoSizeText(
-                      record.original,
-                      style: const TextStyle(
-                          fontSize: 32, fontWeight: FontWeight.bold),
-                    ),
+      child: DefaultCardContainer(
+        Material(
+          color: Colors.transparent,
+          child: Column(children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(doubleDefaultMargin),
+                child: Center(
+                  child: AutoSizeText(
+                    record.original,
+                    style: const TextStyle(
+                        fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: IconButton(
-                      icon: const Icon(Icons.keyboard),
-                      onPressed: () {},
-                    ),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: IconButton(
+                    icon: const Icon(Icons.keyboard),
+                    onPressed: () {},
                   ),
-                  Expanded(
-                    child: IconButton(
-                      icon: const Icon(Icons.remove_red_eye),
-                      onPressed: () {},
-                    ),
+                ),
+                Expanded(
+                  child: IconButton(
+                    icon: const Icon(Icons.remove_red_eye),
+                    onPressed: () {},
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: doubleDefaultMargin,
-              )
-            ]),
-          ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: doubleDefaultMargin,
+            )
+          ]),
         ),
       ),
     );
