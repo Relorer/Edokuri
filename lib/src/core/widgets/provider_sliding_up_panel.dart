@@ -17,7 +17,7 @@ class ProviderSlidingUpPanel extends StatelessWidget {
       required this.body,
       required this.panelBuilder,
       required this.controller,
-      this.backdropOpacity = 0.5,
+      this.backdropOpacity = 0,
       this.panelCloseHandler,
       this.panelOpenHandler,
       this.height});
