@@ -18,23 +18,25 @@ class StudyingCardsList extends StatelessWidget {
         title: 'Learn',
         subTitile: 'Focus your studying with a path',
         svg: learnSvg,
-        onTap: (() {
-          Navigator.of(context)
-              .push(
-                MaterialPageRoute(
-                  builder: (context) => LearnPage(
-                    records: setData.records,
-                  ),
-                ),
-              )
-              .then((value) => setUpBarDefaultStyles(context));
-        }),
+        onTap: setData.records.isEmpty
+            ? null
+            : (() {
+                Navigator.of(context)
+                    .push(
+                      MaterialPageRoute(
+                        builder: (context) => LearnPage(
+                          records: setData.records,
+                        ),
+                      ),
+                    )
+                    .then((value) => setUpBarDefaultStyles(context));
+              }),
       ),
       StudyingCard(
         title: 'Test',
         subTitile: 'Take a practice test',
         svg: testSvg,
-        onTap: (() {}),
+        onTap: setData.records.isEmpty ? null : (() {}),
       )
     ];
 

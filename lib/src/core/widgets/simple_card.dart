@@ -14,12 +14,15 @@ class SimpleCard extends StatelessWidget {
       shadowColor: Colors.transparent,
       clipBehavior: Clip.hardEdge,
       margin: const EdgeInsets.all(0),
-      child: InkWell(
-        highlightColor: Theme.of(context).secondBackgroundColor.withAlpha(40),
-        splashColor: Theme.of(context).secondBackgroundColor.withAlpha(30),
-        onTap: onTap,
-        onLongPress: onLongPress,
-        child: child,
+      child: Opacity(
+        opacity: onTap == null ? 0.66 : 1,
+        child: InkWell(
+          highlightColor: Theme.of(context).secondBackgroundColor.withAlpha(40),
+          splashColor: Theme.of(context).secondBackgroundColor.withAlpha(30),
+          onTap: onTap,
+          onLongPress: onLongPress,
+          child: child,
+        ),
       ),
     );
   }
