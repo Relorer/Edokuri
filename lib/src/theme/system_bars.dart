@@ -11,18 +11,6 @@ void setUpBarDefaultStyles(BuildContext context) {
       const Duration(milliseconds: _timeStampBetween), () {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Theme.of(context).secondBackgroundColor,
-      statusBarColor: Theme.of(context).secondBackgroundColor,
-      statusBarIconBrightness: Brightness.light,
-    ));
-  });
-}
-
-void setUpBarDarkedStyles(BuildContext context) {
-  EasyDebounce.debounce(_setSystemUIOverlayStyleTag,
-      const Duration(milliseconds: _timeStampBetween), () {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Color(0xffc2c2c2),
-      statusBarIconBrightness: Brightness.dark,
     ));
   });
 }
@@ -32,8 +20,6 @@ void setUpBarReaderStyles(BuildContext context) {
       const Duration(milliseconds: _timeStampBetween), () {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Theme.of(context).colorScheme.background,
-      statusBarColor: Theme.of(context).colorScheme.background,
-      statusBarIconBrightness: Brightness.dark,
     ));
   });
 }

@@ -16,6 +16,7 @@ class SectionHeader extends StatelessWidget {
 
   void _menuButtonHandler(BuildContext context) {
     showGeneralDialog(
+      barrierColor: Colors.transparent,
       context: context,
       pageBuilder: (BuildContext _, Animation<double> animation,
           Animation<double> secondaryAnimation) {

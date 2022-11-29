@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_with_info_card.dart';
+import 'package:freader/src/core/widgets/second_background_empty_app_bar.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/library_screen.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/person_screen.dart';
 import 'package:freader/src/pages/home_page/screens/records_screen/records_screen.dart';
 import 'package:freader/src/theme/system_bars.dart';
+import 'package:freader/src/theme/theme.dart';
 import 'widget/home_page_navigation.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,6 +38,7 @@ class _HomePageState extends State<HomePage> {
           }
         },
         child: Scaffold(
+            appBar: secondBackgroundEmptyAppBar(context),
             backgroundColor: Theme.of(context).colorScheme.background,
             bottomNavigationBar: HomePageNavigation(
               currentIndex: _currentIndex,

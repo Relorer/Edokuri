@@ -106,25 +106,30 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
         Provider<ReaderController>(create: (_) => reader),
       ],
       child: Scaffold(
-          body: RecordWithInfoCard(
-        bottomPadding: 0,
-        showTranslationSourceSentences: false,
-        body: SafeArea(
-          child: Container(
-            color: Theme.of(context).colorScheme.background,
-            child: Column(
-              children: [
-                const ReaderHeadPanel(),
-                Expanded(
-                  key: _containerKey,
-                  child: const ReaderContentView(),
-                ),
-                const ReaderFooterPanel(),
-              ],
-            ),
+          appBar: AppBar(
+            toolbarHeight: 0,
+            backgroundColor: Theme.of(context).colorScheme.background,
+            elevation: 0,
           ),
-        ),
-      )),
+          body: RecordWithInfoCard(
+            bottomPadding: 0,
+            showTranslationSourceSentences: false,
+            body: SafeArea(
+              child: Container(
+                color: Theme.of(context).colorScheme.background,
+                child: Column(
+                  children: [
+                    const ReaderHeadPanel(),
+                    Expanded(
+                      key: _containerKey,
+                      child: const ReaderContentView(),
+                    ),
+                    const ReaderFooterPanel(),
+                  ],
+                ),
+              ),
+            ),
+          )),
     );
   }
 }

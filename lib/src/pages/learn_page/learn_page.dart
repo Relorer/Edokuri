@@ -57,8 +57,6 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
     return Material(
       child: ProviderSlidingUpPanel(
         backdropOpacity: 0.2,
-        panelOpenHandler: (() => setUpBarDarkedStyles(context)),
-        panelCloseHandler: (() => setUpBarReaderStyles(context)),
         controller: _panelController,
         panelBuilder: (ScrollController sc) => ClipRRect(
           borderRadius: const BorderRadius.only(

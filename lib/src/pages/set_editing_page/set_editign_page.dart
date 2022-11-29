@@ -3,6 +3,7 @@ import 'package:freader/src/controllers/stores/repositories/set_repository/set_r
 import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:freader/src/core/widgets/sliver_single_child.dart';
 import 'package:freader/src/core/widgets/text_form_fields/text_form_field_default.dart';
+import 'package:freader/src/core/widgets/second_background_empty_app_bar.dart';
 import 'package:freader/src/models/set.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
@@ -40,6 +41,7 @@ class SetEditingPageState extends State<SetEditingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: secondBackgroundEmptyAppBar(context),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
           child: BouncingCustomScrollView(

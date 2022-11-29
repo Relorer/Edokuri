@@ -10,14 +10,17 @@ class ProviderSlidingUpPanel extends StatelessWidget {
   final VoidCallback? panelOpenHandler;
   final double backdropOpacity;
 
+  final double? height;
+
   const ProviderSlidingUpPanel(
       {super.key,
       required this.body,
       required this.panelBuilder,
       required this.controller,
-      this.backdropOpacity = 0,
+      this.backdropOpacity = 0.5,
       this.panelCloseHandler,
-      this.panelOpenHandler});
+      this.panelOpenHandler,
+      this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class ProviderSlidingUpPanel extends StatelessWidget {
         onPanelOpened: panelOpenHandler,
         controller: controller,
         minHeight: 0,
-        maxHeight: MediaQuery.of(context).size.height * 0.75,
+        maxHeight: height ?? MediaQuery.of(context).size.height * 0.75,
         renderPanelSheet: false,
         boxShadow: const [
           BoxShadow(

@@ -30,7 +30,7 @@ class RecordCard extends StatelessWidget {
 
   void _longPressHandler(BuildContext context) {
     showModalBottomSheet<void>(
-      barrierColor: Colors.transparent,
+      barrierColor: Colors.black26,
       backgroundColor: Colors.transparent,
       context: context,
       builder: (_) => RecordCardDialog(

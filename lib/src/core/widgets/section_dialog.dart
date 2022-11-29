@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:freader/src/core/widgets/sliver_single_child.dart';
+import 'package:freader/src/core/widgets/second_background_empty_app_bar.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
@@ -12,6 +13,7 @@ class SectionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: secondBackgroundEmptyAppBar(context),
       body: SafeArea(
           child: Container(
         color: Theme.of(context).secondBackgroundColor,
