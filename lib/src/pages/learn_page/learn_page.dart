@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freader/objectbox.g.dart';
 import 'package:freader/src/core/widgets/default_card_container.dart';
 import 'package:freader/src/core/widgets/provider_sliding_up_panel.dart';
 import 'package:freader/src/models/models.dart';
@@ -55,8 +56,27 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
 
     return ProviderSlidingUpPanel(
       controller: _panelController,
-      panelBuilder: (ScrollController sc) => Container(color: Colors.white),
-      blockBody: false,
+      panelBuilder: (ScrollController sc) => ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(defaultRadius),
+          topRight: Radius.circular(defaultRadius),
+        ),
+        child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                Container(
+                  height: 4,
+                  width: 30,
+                  padding: EdgeInsets.all(defaultMargin),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).paleElementColor,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(defaultRadius))),
+                )
+              ],
+            )),
+      ),
       body: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.background,

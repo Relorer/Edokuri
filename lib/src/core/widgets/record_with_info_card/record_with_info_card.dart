@@ -35,7 +35,6 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
 
   Record? _record;
   final PanelController _panelController = PanelController();
-  bool _blockBody = false;
 
   @override
   initState() {
@@ -49,7 +48,6 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
 
     await _panelController.close().then((value) => setState(() {
           FocusScope.of(context).unfocus();
-          _blockBody = true;
         }));
 
     final getting = Future.delayed(
@@ -75,13 +73,13 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
     await Future.delayed(const Duration(milliseconds: 300));
 
     if (_record != null) {
-      setState(() {});
+      if (mounted) setState(() {});
       _panelController.open();
     } else {
       _panelController.open();
       await getting;
       await Future.delayed(const Duration(milliseconds: 200));
-      setState(() {});
+      if (mounted) setState(() {});
     }
   }
 
@@ -101,7 +99,6 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
     _saveCurrentRecord();
     setState(() {
       _record = null;
-      _blockBody = false;
     });
   }
 
@@ -119,7 +116,6 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
           child: ProviderSlidingUpPanel(
             controller: _panelController,
             panelCloseHandler: _panelCloseHandler,
-            blockBody: _blockBody,
             body: widget.body,
             panelBuilder: (ScrollController sc) => Padding(
               padding: EdgeInsets.only(bottom: widget.bottomPadding),
