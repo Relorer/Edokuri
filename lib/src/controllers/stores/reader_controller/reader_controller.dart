@@ -107,6 +107,7 @@ abstract class ReaderControllerBase with Store {
   }
 
   void _completePage(int chapter, int page) {
+    final creationDate = DateTime.now();
     final words = getParagraphs(chaptersContent[chapter][page])
         .expand(
           (element) => element.pieces,
@@ -115,10 +116,7 @@ abstract class ReaderControllerBase with Store {
           (element) =>
               element.isWord &&
               recordRepository.getRecord(element.content) == null,
-        )
-        .toList();
-
-    final creationDate = DateTime.now();
+        );
     Future.forEach<Piece>(
         words,
         (element) => Future(() => recordRepository.putRecord(Record(
