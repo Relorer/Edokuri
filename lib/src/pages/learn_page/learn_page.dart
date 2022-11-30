@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/default_card_container.dart';
-import 'package:freader/src/core/widgets/group_buttons.dart';
+import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
+import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/provider_sliding_up_panel.dart';
 import 'package:freader/src/models/models.dart';
-import 'package:freader/src/pages/learn_page/learn_card_content.dart';
-import 'package:freader/src/pages/learn_page/learn_swipable_stack.dart';
+import 'package:freader/src/pages/learn_page/learn_page_settings.dart';
 import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:swipable_stack/swipable_stack.dart';
+
+import 'learn_page_card_swiper.dart';
 
 class LearnPage extends StatefulWidget {
   final List<Record> records;
@@ -23,10 +23,8 @@ class LearnPage extends StatefulWidget {
 }
 
 class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
-  late final SwipableStackController _controller;
   final PanelController _panelController = PanelController();
-
-  void _listenController() => setState(() {});
+  late LearnController _learnController;
 
   @override
   void didChangeMetrics() {
@@ -39,15 +37,7 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    _controller = SwipableStackController()..addListener(_listenController);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller
-      ..removeListener(_listenController)
-      ..dispose();
+    _learnController = getIt<LearnController>(param1: widget.records);
   }
 
   @override
@@ -55,139 +45,30 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
     setUpBarReaderStyles(context);
 
     return Material(
-      child: ProviderSlidingUpPanel(
-        height: 180,
-        backdropOpacity: 0.2,
-        controller: _panelController,
-        panelBuilder: (ScrollController sc) => ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(defaultRadius),
-            topRight: Radius.circular(defaultRadius),
-          ),
-          child: Container(
-              color: Theme.of(context).colorScheme.background,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: doubleDefaultMargin),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      height: defaultMargin,
-                    ),
-                    Container(
-                      height: 4,
-                      width: 30,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context)
-                              .paleElementColor
-                              .withOpacity(0.3),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(defaultRadius))),
-                    ),
-                    Expanded(
-                      child: SizedBox(),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Auto pronouncing",
-                          style: Theme.of(context).cardSubtitleStyle,
-                        ),
-                        SizedBox(
-                          width: 40,
-                          height: 25,
-                          child: Switch(
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            value: true,
-                            activeColor: Theme.of(context)
-                                .unknownWordColor
-                                .withOpacity(0.7),
-                            onChanged: (bool value) {},
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: doubleDefaultMargin,
-                    ),
-                    SizedBox(
-                        width: double.maxFinite,
-                        child: Text(
-                          "Front",
-                          style: const TextStyle(
-                              fontSize: 16,
-                              color: paleElement,
-                              fontWeight: FontWeight.bold),
-                        )),
-                    SizedBox(
-                      height: defaultMargin,
-                    ),
-                    GroupButtons(
-                      buttonsText: ["Term", "Definition"],
-                      states: [false, true],
-                    ),
-                    SizedBox(
-                      height: doubleDefaultMargin,
-                    ),
-                  ],
-                ),
-              )),
-        ),
-        body: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.background,
-            elevation: 0,
-            foregroundColor: Theme.of(context).secondBackgroundColor,
-            title: Center(child: Text("1/2")),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () => _panelController.open(),
-              ),
-            ],
-          ),
-          backgroundColor: Theme.of(context).colorScheme.background,
-          body: SafeArea(
-            child: Column(
-              children: [
-                LinearProgressIndicator(
-                  value: 0.1,
-                  backgroundColor:
-                      Theme.of(context).paleElementColor.withOpacity(0.3),
-                ),
-                Expanded(
-                  child: LearnSwipableStack(
-                    builder: (context, properties) => LearnCardContent(
-                      record: widget
-                          .records[properties.index % widget.records.length],
-                    ),
-                    right: const DefaultCardContainer(
-                      Center(
-                          child: Text(
-                        "Know",
-                        style: TextStyle(
-                            fontSize: 32,
-                            color: Color(0xff14B220),
-                            fontWeight: FontWeight.bold),
-                      )),
-                    ),
-                    left: const DefaultCardContainer(
-                      Center(
-                          child: Text(
-                        "Still learning",
-                        style: TextStyle(
-                            fontSize: 32,
-                            color: savedWord,
-                            fontWeight: FontWeight.bold),
-                      )),
-                    ),
-                  ),
+      child: MultiProvider(
+        providers: [
+          Provider<LearnController>(create: (_) => _learnController),
+        ],
+        child: ProviderSlidingUpPanel(
+          height: 180,
+          backdropOpacity: 0.2,
+          controller: _panelController,
+          panelBuilder: (ScrollController sc) => const LearnPageSettings(),
+          body: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).colorScheme.background,
+              elevation: 0,
+              foregroundColor: Theme.of(context).secondBackgroundColor,
+              title: const Center(child: Text("1/2")),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () => _panelController.open(),
                 ),
               ],
             ),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            body: const LearnPageCardSwiper(),
           ),
         ),
       ),

@@ -3,7 +3,7 @@ import 'package:freader/src/theme/theme_consts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ProviderSlidingUpPanel extends StatelessWidget {
-  final PanelController controller;
+  final PanelController? controller;
   final Widget body;
   final Widget Function(ScrollController)? panelBuilder;
   final VoidCallback? panelCloseHandler;
@@ -16,7 +16,7 @@ class ProviderSlidingUpPanel extends StatelessWidget {
       {super.key,
       required this.body,
       required this.panelBuilder,
-      required this.controller,
+      this.controller,
       this.backdropOpacity = 0,
       this.panelCloseHandler,
       this.panelOpenHandler,
