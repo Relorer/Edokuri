@@ -13,7 +13,7 @@ class SectionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: secondBackgroundEmptyAppBar(context),
+      appBar: SecondBackgroundEmptyAppBar(),
       body: SafeArea(
           child: Container(
         color: Theme.of(context).secondBackgroundColor,

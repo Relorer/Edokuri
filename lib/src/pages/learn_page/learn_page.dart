@@ -3,9 +3,9 @@ import 'package:freader/src/controllers/stores/learn_controller/learn_controller
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/provider_sliding_up_panel.dart';
 import 'package:freader/src/models/models.dart';
+import 'package:freader/src/pages/learn_page/learn_page_app_bar.dart';
 import 'package:freader/src/pages/learn_page/learn_page_settings.dart';
 import 'package:freader/src/theme/system_bars.dart';
-import 'package:freader/src/theme/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -55,19 +55,9 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
           controller: _panelController,
           panelBuilder: (ScrollController sc) => const LearnPageSettings(),
           body: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Theme.of(context).colorScheme.background,
-              elevation: 0,
-              foregroundColor: Theme.of(context).secondBackgroundColor,
-              title: const Center(child: Text("1/2")),
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.settings),
-                  onPressed: () => _panelController.open(),
-                ),
-              ],
-            ),
             backgroundColor: Theme.of(context).colorScheme.background,
+            appBar:
+                LearnPageAppBar(settingsClick: () => _panelController.open()),
             body: const LearnPageCardSwiper(),
           ),
         ),
