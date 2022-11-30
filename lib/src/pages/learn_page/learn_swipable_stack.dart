@@ -7,6 +7,7 @@ import 'package:swipable_stack/swipable_stack.dart';
 class LearnSwipableStack extends StatelessWidget {
   final SwipableStackController? controller;
   final SwipableStackItemBuilder builder;
+  final SwipeCompletionCallback? onSwipeCompleted;
   final Widget right;
   final Widget left;
 
@@ -15,11 +16,13 @@ class LearnSwipableStack extends StatelessWidget {
       required this.builder,
       required this.left,
       required this.right,
+      this.onSwipeCompleted,
       this.controller});
 
   @override
   Widget build(BuildContext context) {
     return SwipableStack(
+      onSwipeCompleted: onSwipeCompleted,
       swipeAnchor: SwipeAnchor.top,
       dragStartCurve: Curves.linear,
       rewindAnimationCurve: Curves.fastOutSlowIn,

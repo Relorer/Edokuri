@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
@@ -17,13 +18,19 @@ class LearnPageCardSwiper extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
-          LinearProgressIndicator(
-            value: 0.1,
-            backgroundColor:
-                Theme.of(context).paleElementColor.withOpacity(0.3),
-          ),
+          Observer(builder: (_) {
+            final learn = context.read<LearnController>();
+            return LinearProgressIndicator(
+              value: learn.currentRecord / learn.records.length,
+              backgroundColor:
+                  Theme.of(context).paleElementColor.withOpacity(0.3),
+            );
+          }),
           Expanded(
             child: LearnSwipableStack(
+              onSwipeCompleted: (index, direction) {
+                context.read<LearnController>().setCurrentRecord(index + 1);
+              },
               builder: (context, properties) => LearnCardContent(
                 record: learnController
                     .records[properties.index % learnController.records.length],

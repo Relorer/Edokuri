@@ -14,4 +14,9 @@ abstract class LearnControllerBase with Store {
 
   @observable
   int currentRecord = 0;
+
+  @action
+  void setCurrentRecord(int index) {
+    currentRecord = index;
+  }
 }
