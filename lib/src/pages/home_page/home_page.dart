@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           }
         },
         child: Scaffold(
-            appBar: SecondBackgroundEmptyAppBar(),
+            appBar: PhantomAppBar(),
             backgroundColor: Theme.of(context).colorScheme.background,
             bottomNavigationBar: HomePageNavigation(
               currentIndex: _currentIndex,

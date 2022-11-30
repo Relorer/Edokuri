@@ -22,7 +22,7 @@ class SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SecondBackgroundEmptyAppBar(),
+      appBar: PhantomAppBar(),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
           child: BouncingCustomScrollView(

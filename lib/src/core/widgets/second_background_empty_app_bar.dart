@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/theme/theme.dart';
 
-class SecondBackgroundEmptyAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
-  const SecondBackgroundEmptyAppBar({
+class PhantomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final Color? color;
+
+  const PhantomAppBar({
     Key? key,
+    this.color,
   })  : preferredSize = const Size.fromHeight(0),
         super(key: key);
 
@@ -13,8 +15,9 @@ class SecondBackgroundEmptyAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).secondBackgroundColor,
+    return AppBar(
+      backgroundColor: color ?? Theme.of(context).secondBackgroundColor,
+      elevation: 0,
     );
   }
 }
