@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
+import 'package:freader/src/pages/learn_page/learn_page_card_stack.dart';
 import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
-import 'package:freader/src/core/widgets/default_card_container.dart';
-import 'package:freader/src/pages/learn_page/learn_card_content.dart';
-import 'package:freader/src/pages/learn_page/learn_swipable_stack.dart';
 import 'package:provider/provider.dart';
 
 class LearnPageCardSwiper extends StatelessWidget {
@@ -13,8 +10,6 @@ class LearnPageCardSwiper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final learnController = context.read<LearnController>();
-
     return SafeArea(
       child: Column(
         children: [
@@ -26,36 +21,8 @@ class LearnPageCardSwiper extends StatelessWidget {
                   Theme.of(context).paleElementColor.withOpacity(0.3),
             );
           }),
-          Expanded(
-            child: LearnSwipableStack(
-              onSwipeCompleted: (index, direction) {
-                context.read<LearnController>().setCurrentRecord(index + 1);
-              },
-              builder: (context, properties) => LearnCardContent(
-                record: learnController
-                    .records[properties.index % learnController.records.length],
-              ),
-              right: const DefaultCardContainer(
-                Center(
-                    child: Text(
-                  "Know",
-                  style: TextStyle(
-                      fontSize: 32,
-                      color: Color(0xff14B220),
-                      fontWeight: FontWeight.bold),
-                )),
-              ),
-              left: const DefaultCardContainer(
-                Center(
-                    child: Text(
-                  "Still learning",
-                  style: TextStyle(
-                      fontSize: 32,
-                      color: savedWord,
-                      fontWeight: FontWeight.bold),
-                )),
-              ),
-            ),
+          const Expanded(
+            child: LearnPageCardStack(),
           ),
         ],
       ),

@@ -5,7 +5,7 @@ class SecondBackgroundEmptyAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   const SecondBackgroundEmptyAppBar({
     Key? key,
-  })  : preferredSize = const Size.fromHeight(kToolbarHeight),
+  })  : preferredSize = const Size.fromHeight(0),
         super(key: key);
 
   @override
@@ -13,10 +13,8 @@ class SecondBackgroundEmptyAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      toolbarHeight: 0,
-      backgroundColor: Theme.of(context).secondBackgroundColor,
-      elevation: 0,
+    return Container(
+      color: Theme.of(context).secondBackgroundColor,
     );
   }
 }

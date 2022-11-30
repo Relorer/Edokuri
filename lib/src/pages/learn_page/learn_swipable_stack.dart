@@ -8,6 +8,7 @@ class LearnSwipableStack extends StatelessWidget {
   final SwipableStackController? controller;
   final SwipableStackItemBuilder builder;
   final SwipeCompletionCallback? onSwipeCompleted;
+  final int? itemCount;
   final Widget right;
   final Widget left;
 
@@ -16,12 +17,14 @@ class LearnSwipableStack extends StatelessWidget {
       required this.builder,
       required this.left,
       required this.right,
+      this.itemCount,
       this.onSwipeCompleted,
       this.controller});
 
   @override
   Widget build(BuildContext context) {
     return SwipableStack(
+      itemCount: itemCount,
       onSwipeCompleted: onSwipeCompleted,
       swipeAnchor: SwipeAnchor.top,
       dragStartCurve: Curves.linear,

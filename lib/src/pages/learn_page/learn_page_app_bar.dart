@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
@@ -23,7 +25,8 @@ class LearnPageAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Observer(builder: (_) {
         final learn = context.read<LearnController>();
         return Center(
-            child: Text("${learn.currentRecord + 1}/${learn.records.length}"));
+            child: Text(
+                "${min(learn.currentRecord + 1, learn.records.length)}/${learn.records.length}"));
       }),
       actions: [
         IconButton(
