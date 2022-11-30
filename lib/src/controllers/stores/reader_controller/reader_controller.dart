@@ -106,17 +106,19 @@ abstract class ReaderControllerBase with Store {
     }
   }
 
-  void _completePage(int chapter, int page) {
+  void _completePage(int chapter, int page) async {
     final creationDate = DateTime.now();
-    final words = getParagraphs(chaptersContent[chapter][page])
-        .expand(
-          (element) => element.pieces,
-        )
-        .where(
-          (element) =>
-              element.isWord &&
-              recordRepository.getRecord(element.content) == null,
-        );
+    await Future.delayed(const Duration(seconds: 1));
+    final words =
+        await Future(() => getParagraphs(chaptersContent[chapter][page])
+            .expand(
+              (element) => element.pieces,
+            )
+            .where(
+              (element) =>
+                  element.isWord &&
+                  recordRepository.getRecord(element.content) == null,
+            ));
     Future.forEach<Piece>(
         words,
         (element) => Future(() => recordRepository.putRecord(Record(
