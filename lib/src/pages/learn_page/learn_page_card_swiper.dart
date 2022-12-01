@@ -16,13 +16,16 @@ class LearnPageCardSwiper extends StatelessWidget {
           Observer(builder: (_) {
             final learn = context.read<LearnController>();
             return LinearProgressIndicator(
-              value: learn.currentRecord / learn.records.length,
+              value: learn.currentRecord / learn.total,
               backgroundColor:
                   Theme.of(context).paleElementColor.withOpacity(0.3),
             );
           }),
-          const Expanded(
-            child: LearnPageCardStack(),
+          Expanded(
+            child: Observer(builder: (_) {
+              final learn = context.read<LearnController>();
+              return const LearnPageCardStack();
+            }),
           ),
         ],
       ),

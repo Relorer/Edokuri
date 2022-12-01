@@ -5,6 +5,7 @@ import 'package:freader/src/core/widgets/default_card_container.dart';
 import 'package:freader/src/pages/learn_page/learn_card_content.dart';
 import 'package:freader/src/pages/learn_page/learn_swipable_stack.dart';
 import 'package:provider/provider.dart';
+import 'package:swipable_stack/swipable_stack.dart';
 
 class LearnPageCardStack extends StatelessWidget {
   const LearnPageCardStack({super.key});
@@ -14,13 +15,13 @@ class LearnPageCardStack extends StatelessWidget {
     final learnController = context.read<LearnController>();
 
     return LearnSwipableStack(
-      itemCount: context.read<LearnController>().records.length,
       onSwipeCompleted: (index, direction) {
-        context.read<LearnController>().setCurrentRecord(index + 1);
+        context
+            .read<LearnController>()
+            .answerHandler(index, direction == SwipeDirection.right);
       },
       builder: (context, properties) => LearnCardContent(
-        record: learnController
-            .records[properties.index % learnController.records.length],
+        record: learnController.getRecordByIndex(properties.index),
       ),
       right: const DefaultCardContainer(
         Center(

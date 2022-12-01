@@ -20,8 +20,9 @@ class Record {
   final String originalLowerCase;
   final String transcription;
   final DateTime creationDate;
-  final DateTime lastReview;
-  final int timeToNextReview;
+
+  DateTime lastReview;
+  int reviewNumber;
 
   bool known;
 
@@ -39,7 +40,7 @@ class Record {
       required this.known,
       required this.creationDate,
       required this.lastReview,
-      required this.timeToNextReview});
+      required this.reviewNumber});
 }
 
 @Entity()

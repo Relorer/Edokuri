@@ -66,7 +66,7 @@ class TranslatorController {
         known: false,
         creationDate: DateTime.now(),
         lastReview: DateTime(0),
-        timeToNextReview: 0)
+        reviewNumber: 0)
       ..meanings.addAll(meanings)
       ..examples.addAll(examples)
       ..translations.addAll(translations);

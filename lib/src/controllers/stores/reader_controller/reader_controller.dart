@@ -129,7 +129,7 @@ abstract class ReaderControllerBase with Store {
             known: true,
             creationDate: creationDate,
             lastReview: DateTime(0),
-            timeToNextReview: 0))));
+            reviewNumber: 0))));
   }
 
   @action

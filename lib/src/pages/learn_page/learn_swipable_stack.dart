@@ -30,6 +30,7 @@ class LearnSwipableStack extends StatelessWidget {
       dragStartCurve: Curves.linear,
       rewindAnimationCurve: Curves.fastOutSlowIn,
       cancelAnimationCurve: Curves.fastOutSlowIn,
+      swipeAssistDuration: const Duration(milliseconds: 100),
       detectableSwipeDirections: const {
         SwipeDirection.right,
         SwipeDirection.left,
