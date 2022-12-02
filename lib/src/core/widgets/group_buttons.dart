@@ -6,8 +6,13 @@ class GroupButtons extends StatelessWidget {
   final List<String> buttonsText;
   final List<bool> states;
 
+  final Function(int, bool)? onSelected;
+
   const GroupButtons(
-      {super.key, required this.buttonsText, required this.states});
+      {super.key,
+      required this.buttonsText,
+      required this.states,
+      this.onSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,11 @@ class GroupButtons extends StatelessWidget {
       if (i % 2 == 0) {
         final index = i ~/ 2;
         buttons.add(Expanded(
-            child: _ButtonOfGroupButtons(buttonsText[index], states[index])));
+            child: _ButtonOfGroupButtons(
+          buttonsText[index],
+          states[index],
+          onSelected: (p0) => onSelected?.call(index, p0),
+        )));
       } else {
         buttons.add(const SizedBox(
           width: defaultMargin,
@@ -37,8 +46,10 @@ class GroupButtons extends StatelessWidget {
 class _ButtonOfGroupButtons extends StatelessWidget {
   final bool isSelected;
   final String text;
+  final Function(bool)? onSelected;
 
-  const _ButtonOfGroupButtons(this.text, this.isSelected, {super.key});
+  const _ButtonOfGroupButtons(this.text, this.isSelected,
+      {super.key, this.onSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +57,7 @@ class _ButtonOfGroupButtons extends StatelessWidget {
       customBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(defaultRadius / 2),
       ),
-      onTap: () => {},
+      onTap: () => {onSelected?.call(!isSelected)},
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context)

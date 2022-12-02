@@ -1,11 +1,10 @@
-import 'package:direct_select/direct_select.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:freader/src/core/widgets/group_buttons.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:group_button/group_button.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
 const packSizes = [5, 10, 15, 20, 25, 30];
@@ -111,13 +110,18 @@ class LearnPageSettings extends StatelessWidget {
                     SizedBox(
                       width: 40,
                       height: 25,
-                      child: Switch(
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        value: true,
-                        activeColor:
-                            Theme.of(context).unknownWordColor.withOpacity(0.7),
-                        onChanged: (bool value) {},
-                      ),
+                      child: Observer(builder: (_) {
+                        final learn = context.read<LearnController>();
+                        return Switch(
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          value: learn.autoPronouncing,
+                          activeColor: Theme.of(context)
+                              .unknownWordColor
+                              .withOpacity(0.7),
+                          onChanged: learn.setAutoPronouncing,
+                        );
+                      }),
                     )
                   ],
                 ),
@@ -136,10 +140,22 @@ class LearnPageSettings extends StatelessWidget {
                 const SizedBox(
                   height: defaultMargin,
                 ),
-                const GroupButtons(
-                  buttonsText: ["Term", "Definition"],
-                  states: [false, true],
-                ),
+                Observer(builder: (_) {
+                  return GroupButtons(
+                    buttonsText: const ["Term", "Definition"],
+                    states: [
+                      context.read<LearnController>().termOn,
+                      context.read<LearnController>().definitionOn
+                    ],
+                    onSelected: (p0, p1) {
+                      if (p0 == 0) {
+                        context.read<LearnController>().setTermOn(p1);
+                      } else {
+                        context.read<LearnController>().setDefinitionOn(p1);
+                      }
+                    },
+                  );
+                }),
                 const SizedBox(
                   height: doubleDefaultMargin,
                 ),

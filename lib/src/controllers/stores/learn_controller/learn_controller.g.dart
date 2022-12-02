@@ -48,6 +48,54 @@ mixin _$LearnController on LearnControllerBase, Store {
     });
   }
 
+  late final _$autoPronouncingAtom =
+      Atom(name: 'LearnControllerBase.autoPronouncing', context: context);
+
+  @override
+  bool get autoPronouncing {
+    _$autoPronouncingAtom.reportRead();
+    return super.autoPronouncing;
+  }
+
+  @override
+  set autoPronouncing(bool value) {
+    _$autoPronouncingAtom.reportWrite(value, super.autoPronouncing, () {
+      super.autoPronouncing = value;
+    });
+  }
+
+  late final _$definitionOnAtom =
+      Atom(name: 'LearnControllerBase.definitionOn', context: context);
+
+  @override
+  bool get definitionOn {
+    _$definitionOnAtom.reportRead();
+    return super.definitionOn;
+  }
+
+  @override
+  set definitionOn(bool value) {
+    _$definitionOnAtom.reportWrite(value, super.definitionOn, () {
+      super.definitionOn = value;
+    });
+  }
+
+  late final _$termOnAtom =
+      Atom(name: 'LearnControllerBase.termOn', context: context);
+
+  @override
+  bool get termOn {
+    _$termOnAtom.reportRead();
+    return super.termOn;
+  }
+
+  @override
+  set termOn(bool value) {
+    _$termOnAtom.reportWrite(value, super.termOn, () {
+      super.termOn = value;
+    });
+  }
+
   late final _$LearnControllerBaseActionController =
       ActionController(name: 'LearnControllerBase', context: context);
 
@@ -57,6 +105,39 @@ mixin _$LearnController on LearnControllerBase, Store {
         name: 'LearnControllerBase.setBunchSize');
     try {
       return super.setBunchSize(size);
+    } finally {
+      _$LearnControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setAutoPronouncing(bool value) {
+    final _$actionInfo = _$LearnControllerBaseActionController.startAction(
+        name: 'LearnControllerBase.setAutoPronouncing');
+    try {
+      return super.setAutoPronouncing(value);
+    } finally {
+      _$LearnControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setDefinitionOn(bool value) {
+    final _$actionInfo = _$LearnControllerBaseActionController.startAction(
+        name: 'LearnControllerBase.setDefinitionOn');
+    try {
+      return super.setDefinitionOn(value);
+    } finally {
+      _$LearnControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setTermOn(bool value) {
+    final _$actionInfo = _$LearnControllerBaseActionController.startAction(
+        name: 'LearnControllerBase.setTermOn');
+    try {
+      return super.setTermOn(value);
     } finally {
       _$LearnControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -78,6 +159,9 @@ mixin _$LearnController on LearnControllerBase, Store {
     return '''
 currentRecord: ${currentRecord},
 bunchSize: ${bunchSize},
+autoPronouncing: ${autoPronouncing},
+definitionOn: ${definitionOn},
+termOn: ${termOn},
 total: ${total}
     ''';
   }

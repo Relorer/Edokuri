@@ -45,6 +45,15 @@ abstract class LearnControllerBase with Store {
   @observable
   late int bunchSize = _settingsController.packSize;
 
+  @observable
+  late bool autoPronouncing = _settingsController.autoPronouncingInLearnPage;
+
+  @observable
+  late bool definitionOn = _settingsController.frontCardInLearnPageDefinition;
+
+  @observable
+  late bool termOn = _settingsController.frontCardInLearnPageTerm;
+
   @computed
   int get total => min(bunchSize, _records.length);
 
@@ -52,6 +61,24 @@ abstract class LearnControllerBase with Store {
   void setBunchSize(int size) {
     bunchSize = size;
     _settingsController.setPackSize(size);
+  }
+
+  @action
+  void setAutoPronouncing(bool value) {
+    autoPronouncing = value;
+    _settingsController.setAutoPronouncingInLearnPage(value);
+  }
+
+  @action
+  void setDefinitionOn(bool value) {
+    definitionOn = value;
+    _settingsController.setFrontCardInLearnPageDefinition(value);
+  }
+
+  @action
+  void setTermOn(bool value) {
+    termOn = value;
+    _settingsController.setFrontCardInLearnPageTerm(value);
   }
 
   @action
