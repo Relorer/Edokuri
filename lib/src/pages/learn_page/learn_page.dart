@@ -50,7 +50,7 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
           Provider<LearnController>(create: (_) => _learnController),
         ],
         child: ProviderSlidingUpPanel(
-          height: 180,
+          height: 250,
           backdropOpacity: 0.2,
           controller: _panelController,
           panelBuilder: (ScrollController sc) => const LearnPageSettings(),

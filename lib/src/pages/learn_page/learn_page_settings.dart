@@ -1,7 +1,9 @@
+import 'package:direct_select/direct_select.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/group_buttons.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class LearnPageSettings extends StatelessWidget {
   const LearnPageSettings({super.key});
@@ -21,7 +23,7 @@ class LearnPageSettings extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: defaultMargin,
                 ),
                 Container(
@@ -30,12 +32,27 @@ class LearnPageSettings extends StatelessWidget {
                   decoration: BoxDecoration(
                       color:
                           Theme.of(context).paleElementColor.withOpacity(0.3),
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(defaultRadius))),
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(defaultRadius))),
                 ),
-                Expanded(
+                const Expanded(
                   child: SizedBox(),
                 ),
+                const SizedBox(
+                    width: double.maxFinite,
+                    child: Text(
+                      "Pack size",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: paleElement,
+                          fontWeight: FontWeight.bold),
+                    )),
+                DirectSelect(
+                    itemExtent: 35.0,
+                    selectedIndex: 1,
+                    child: Text("test"),
+                    onSelectedItemChanged: (index) {},
+                    items: [5, 10, 15].map((e) => Text(e.toString())).toList()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -56,26 +73,26 @@ class LearnPageSettings extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: doubleDefaultMargin,
                 ),
-                SizedBox(
+                const SizedBox(
                     width: double.maxFinite,
                     child: Text(
                       "Front",
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 16,
                           color: paleElement,
                           fontWeight: FontWeight.bold),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: defaultMargin,
                 ),
-                GroupButtons(
+                const GroupButtons(
                   buttonsText: ["Term", "Definition"],
                   states: [false, true],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: doubleDefaultMargin,
                 ),
               ],
