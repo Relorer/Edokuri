@@ -21,11 +21,8 @@ class LearnPageCardSwiper extends StatelessWidget {
                   Theme.of(context).paleElementColor.withOpacity(0.3),
             );
           }),
-          Expanded(
-            child: Observer(builder: (_) {
-              final learn = context.read<LearnController>();
-              return const LearnPageCardStack();
-            }),
+          const Expanded(
+            child: LearnPageCardStack(),
           ),
         ],
       ),

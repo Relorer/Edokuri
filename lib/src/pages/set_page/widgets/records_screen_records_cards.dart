@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
@@ -49,7 +50,7 @@ class RecordsScreenRecordsCards extends StatelessWidget {
             ),
           );
         }),
-        itemBuilder: (BuildContext context, int index) {
+        itemBuilder: (BuildContext _, int index) {
           return Padding(
             padding: const EdgeInsets.only(
                 top: doubleDefaultMargin, bottom: doubleDefaultMargin),
@@ -59,7 +60,7 @@ class RecordsScreenRecordsCards extends StatelessWidget {
               direction: FlipDirection.VERTICAL,
               front: GestureDetector(
                 onLongPress: () {
-                  context.read<TTSController>().speak(records[index].original);
+                  getIt<TTSController>().speak(records[index].original);
                 },
                 child: Container(
                   decoration: BoxDecoration(

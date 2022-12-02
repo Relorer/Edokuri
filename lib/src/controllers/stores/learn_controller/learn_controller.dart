@@ -22,23 +22,6 @@ abstract class LearnControllerBase with Store {
   LearnControllerBase(
       this._recordRepository, this._settingsController, this._records);
 
-  Record getRecordByIndex(int index) {
-    final next = _currentBunch[_random.nextInt(_currentBunch.length)];
-
-    if (buffer.length <= index) {
-      buffer.add(next);
-    } else if (!_currentBunch.contains(buffer[index])) {
-      buffer[index] = next;
-    }
-
-    if (index > 0 && buffer[index] == buffer[index - 1]) {
-      buffer[index] = (_currentBunch.toList()..shuffle())
-          .firstWhere((element) => element != buffer[index]);
-    }
-
-    return buffer[index];
-  }
-
   @observable
   int currentRecord = 0;
 
@@ -57,10 +40,35 @@ abstract class LearnControllerBase with Store {
   @computed
   int get total => min(bunchSize, _records.length);
 
+  Record getRecordByIndex(int index) {
+    final next = _currentBunch[_random.nextInt(_currentBunch.length)];
+
+    if (buffer.length <= index) {
+      buffer.add(next);
+    } else if (!_currentBunch.contains(buffer[index])) {
+      buffer[index] = next;
+    }
+
+    if (buffer.length - 1 == index) {
+      if (index > 0 &&
+          buffer[index] == buffer[index - 1] &&
+          _currentBunch.length > 1) {
+        buffer[index] = (_currentBunch.toList()..shuffle())
+            .firstWhere((element) => element != buffer[index]);
+      }
+    }
+
+    return buffer[index];
+  }
+
   @action
   void setBunchSize(int size) {
-    bunchSize = size;
-    _settingsController.setPackSize(size);
+    if (bunchSize != size) {
+      bunchSize = size;
+      _settingsController.setPackSize(size);
+      currentRecord = 0;
+      _currentBunch = _getNextBunch();
+    }
   }
 
   @action
@@ -111,7 +119,7 @@ abstract class LearnControllerBase with Store {
   List<Record> _getNextBunch() {
     final now = DateTime.now().millisecondsSinceEpoch;
     final sorted = _records.toList()
-      ..sort((a, b) => (now -
+      ..sort((b, a) => (now -
               getNextReviewTime(a.reviewNumber) +
               a.lastReview.millisecondsSinceEpoch)
           .compareTo((now -
