@@ -72,13 +72,28 @@ class RecordsScreenRecordsCards extends StatelessWidget {
                       child: Stack(
                         children: [
                           Center(
-                              child: AutoSizeText(
-                            records[index].original.toUpperCase(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .copyWith(color: Colors.black87),
-                            maxLines: 8,
+                              child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              AutoSizeText(
+                                records[index].original.toUpperCase(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .copyWith(color: Colors.black87),
+                                maxLines: 8,
+                              ),
+                              records[index].transcription.isEmpty
+                                  ? Container()
+                                  : AutoSizeText(
+                                      records[index]
+                                          .transcription
+                                          .toUpperCase(),
+                                      style:
+                                          Theme.of(context).cardSubtitleStyle,
+                                      maxLines: 8,
+                                    )
+                            ],
                           )),
                         ],
                       )),

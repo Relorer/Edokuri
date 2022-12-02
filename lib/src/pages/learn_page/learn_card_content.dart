@@ -25,11 +25,23 @@ class LearnCardContent extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(doubleDefaultMargin),
                   child: Center(
-                    child: AutoSizeText(
-                      record.original,
-                      style: const TextStyle(
-                          fontSize: 32, fontWeight: FontWeight.bold),
-                    ),
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      AutoSizeText(
+                        record.original,
+                        style: const TextStyle(
+                            fontSize: 32, fontWeight: FontWeight.bold),
+                      ),
+                      record.transcription.isEmpty
+                          ? Container()
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 0),
+                              child: AutoSizeText(
+                                record.transcription,
+                                style: const TextStyle(
+                                    fontSize: 18, color: paleElement),
+                              ),
+                            )
+                    ]),
                   ),
                 ),
               ),
