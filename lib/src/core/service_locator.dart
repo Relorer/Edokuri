@@ -1,6 +1,7 @@
 import 'package:freader/objectbox.g.dart';
 import 'package:freader/src/controllers/common/file_controller/file_controller.dart';
 import 'package:freader/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
+import 'package:freader/src/controllers/common/settings_controller/settings_controller.dart';
 import 'package:freader/src/controllers/common/translator_controller/translator_controller_factory.dart';
 import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
@@ -28,13 +29,17 @@ Future<void> setupLocator() async {
           getIt<RecordRepository>(), getIt<BookRepository>(), book));
 
   getIt.registerFactoryParam<LearnController, List<Record>, void>(
-      (records, _) => LearnController(getIt<RecordRepository>(), records));
+      (records, _) => LearnController(
+          getIt<RecordRepository>(), getIt<SettingsController>(), records));
 
   getIt.registerFactoryParam<ReadingTimerController, Book, void>(
       (book, _) => ReadingTimerController(getIt<BookRepository>(), book));
 
   getIt.registerSingletonAsync(
       () => TranslatorControllerFactory().getTranslatorController());
+
+  getIt.registerSingletonAsync<SettingsController>(
+      () => SrttingsControllerFactory().getSettingsController());
 
   //repositories
   getIt.registerSingletonAsync<Store>(() => StoreFactory().getDBController());

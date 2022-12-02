@@ -52,6 +52,17 @@ mixin _$LearnController on LearnControllerBase, Store {
       ActionController(name: 'LearnControllerBase', context: context);
 
   @override
+  void setBunchSize(int size) {
+    final _$actionInfo = _$LearnControllerBaseActionController.startAction(
+        name: 'LearnControllerBase.setBunchSize');
+    try {
+      return super.setBunchSize(size);
+    } finally {
+      _$LearnControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void answerHandler(int index, bool know) {
     final _$actionInfo = _$LearnControllerBaseActionController.startAction(
         name: 'LearnControllerBase.answerHandler');

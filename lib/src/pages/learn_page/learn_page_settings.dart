@@ -1,10 +1,14 @@
 import 'package:direct_select/direct_select.dart';
 import 'package:flutter/material.dart';
+import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:freader/src/core/widgets/group_buttons.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:provider/provider.dart';
+
+const packSizes = [5, 10, 15, 20, 25, 30];
 
 class LearnPageSettings extends StatelessWidget {
   const LearnPageSettings({super.key});
@@ -52,6 +56,9 @@ class LearnPageSettings extends StatelessWidget {
                   height: defaultMargin,
                 ),
                 GroupButton(
+                  controller: GroupButtonController()
+                    ..selectIndex(packSizes
+                        .indexOf(context.read<LearnController>().bunchSize)),
                   buttonBuilder: (selected, value, context) => Container(
                     width: (MediaQuery.of(context).size.width -
                                 doubleDefaultMargin * 2 +
@@ -68,7 +75,7 @@ class LearnPageSettings extends StatelessWidget {
                     ),
                     child: Center(
                         child: Text(
-                      value as String,
+                      (value as int).toString(),
                       style: const TextStyle(
                           fontSize: 16,
                           color: darkGray,
@@ -76,8 +83,10 @@ class LearnPageSettings extends StatelessWidget {
                           height: 1.5),
                     )),
                   ),
-                  onSelected: (value, index, isSelected) {},
-                  buttons: ["5", "10", "15", "20", "25", "30"],
+                  onSelected: (value, index, isSelected) {
+                    context.read<LearnController>().setBunchSize(value as int);
+                  },
+                  buttons: packSizes,
                   options: const GroupButtonOptions(
                     runSpacing: defaultMargin,
                     spacing: defaultMargin,

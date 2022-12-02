@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:freader/src/controllers/common/settings_controller/settings_controller.dart';
 import 'package:freader/src/controllers/stores/learn_controller/review_intervals.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/models/models.dart';
@@ -12,12 +13,14 @@ class LearnController = LearnControllerBase with _$LearnController;
 abstract class LearnControllerBase with Store {
   final _random = Random();
   final RecordRepository _recordRepository;
+  final SettingsController _settingsController;
   final List<Record> _records;
   final List<Record> buffer = [];
 
   late List<Record> _currentBunch = _getNextBunch();
 
-  LearnControllerBase(this._recordRepository, this._records);
+  LearnControllerBase(
+      this._recordRepository, this._settingsController, this._records);
 
   Record getRecordByIndex(int index) {
     final next = _currentBunch[_random.nextInt(_currentBunch.length)];
@@ -40,10 +43,16 @@ abstract class LearnControllerBase with Store {
   int currentRecord = 0;
 
   @observable
-  int bunchSize = 10;
+  late int bunchSize = _settingsController.packSize;
 
   @computed
   int get total => min(bunchSize, _records.length);
+
+  @action
+  void setBunchSize(int size) {
+    bunchSize = size;
+    _settingsController.setPackSize(size);
+  }
 
   @action
   void answerHandler(int index, bool know) {
