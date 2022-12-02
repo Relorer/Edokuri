@@ -76,6 +76,7 @@ dependencies:
   swipable_stack: ^2.0.0
   numberpicker: ^2.1.1
   direct_select: ^2.0.0
+  group_button: ^5.2.2
   
 dev_dependencies:
   flutter_test:

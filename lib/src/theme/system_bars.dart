@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:freader/src/theme/theme.dart';
 
 const _setSystemUIOverlayStyleTag = "setSystemUIOverlayStyleTag";
-const _timeStampBetween = 200;
+const _timeStampBetween = 300;
 
 void setUpBarDefaultStyles(BuildContext context) {
   EasyDebounce.debounce(_setSystemUIOverlayStyleTag,

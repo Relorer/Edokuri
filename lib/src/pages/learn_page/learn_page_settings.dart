@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/group_buttons.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
+import 'package:group_button/group_button.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class LearnPageSettings extends StatelessWidget {
@@ -47,12 +48,50 @@ class LearnPageSettings extends StatelessWidget {
                           color: paleElement,
                           fontWeight: FontWeight.bold),
                     )),
-                DirectSelect(
-                    itemExtent: 35.0,
-                    selectedIndex: 1,
-                    child: Text("test"),
-                    onSelectedItemChanged: (index) {},
-                    items: [5, 10, 15].map((e) => Text(e.toString())).toList()),
+                const SizedBox(
+                  height: defaultMargin,
+                ),
+                GroupButton(
+                  buttonBuilder: (selected, value, context) => Container(
+                    width: (MediaQuery.of(context).size.width -
+                                doubleDefaultMargin * 2 +
+                                defaultMargin) /
+                            4 -
+                        defaultMargin,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: defaultMargin),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultRadius),
+                      color: Theme.of(context)
+                          .unknownWordColor
+                          .withOpacity(selected ? 0.7 : 0.3),
+                    ),
+                    child: Center(
+                        child: Text(
+                      value as String,
+                      style: const TextStyle(
+                          fontSize: 16,
+                          color: darkGray,
+                          fontWeight: FontWeight.w500,
+                          height: 1.5),
+                    )),
+                  ),
+                  onSelected: (value, index, isSelected) {},
+                  buttons: ["5", "10", "15", "20", "25", "30"],
+                  options: const GroupButtonOptions(
+                    runSpacing: defaultMargin,
+                    spacing: defaultMargin,
+                    groupingType: GroupingType.wrap,
+                    mainGroupAlignment: MainGroupAlignment.center,
+                    textAlign: TextAlign.center,
+                    textPadding: EdgeInsets.zero,
+                    alignment: Alignment.center,
+                    elevation: 0,
+                  ),
+                ),
+                const SizedBox(
+                  height: defaultMargin,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -74,7 +113,7 @@ class LearnPageSettings extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: doubleDefaultMargin,
+                  height: defaultMargin,
                 ),
                 const SizedBox(
                     width: double.maxFinite,
