@@ -93,57 +93,102 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
             child: Stack(
               children: [
                 Observer(builder: (_) {
-                  final num = _learnController.currentRecord.reviewNumber;
+                  final int num = _learnController.currentRecord.reviewNumber;
                   final value = 0.15 + 0.85 * (1 - (1 - (7 - min(num, 7)) / 7));
-                  return AnimatedContainer(
-                    curve: Curves.fastLinearToSlowEaseIn,
-                    duration: const Duration(seconds: 1),
-                    height: MediaQuery.of(context).size.height * value,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          key: ValueKey(_learnController.currentRecord.id),
-                          child: WaveWidget(
-                            wavePhase: 100 * value,
-                            backgroundColor: Theme.of(context).unknownWordColor,
-                            config: CustomConfig(
-                              colors: [
-                                Theme.of(context)
-                                    .savedWordColor
-                                    .withOpacity(0.3),
-                                Theme.of(context)
-                                    .savedWordColor
-                                    .withOpacity(0.6),
-                                Theme.of(context).colorScheme.background,
-                              ],
-                              durations: [
-                                10000,
-                                20000,
-                                30000,
-                              ],
-                              heightPercentages: [
-                                0.2,
-                                0.5,
-                                0.7,
-                              ],
+                  return Stack(
+                    children: [
+                      AnimatedContainer(
+                        color: Theme.of(context).unknownWordColor,
+                        curve: Curves.fastLinearToSlowEaseIn,
+                        duration: const Duration(seconds: 1),
+                        height: MediaQuery.of(context).size.height * value,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            WaveWidget(
+                              config: CustomConfig(
+                                gradients: [
+                                  [
+                                    Theme.of(context)
+                                        .savedWordColor
+                                        .withOpacity(0.1),
+                                    Theme.of(context)
+                                        .savedWordColor
+                                        .withOpacity(0.6),
+                                  ],
+                                  [
+                                    Theme.of(context)
+                                        .savedWordColor
+                                        .withOpacity(0.1),
+                                    Theme.of(context)
+                                        .savedWordColor
+                                        .withOpacity(0.6),
+                                  ],
+                                ],
+                                gradientBegin: Alignment.topCenter,
+                                gradientEnd: Alignment.bottomCenter,
+                                durations: [
+                                  10000,
+                                  20000,
+                                ],
+                                heightPercentages: [
+                                  0.2,
+                                  0.2,
+                                ],
+                              ),
+                              size:
+                                  const Size(double.infinity, double.infinity),
+                              waveAmplitude: 4,
                             ),
-                            size: const Size(double.infinity, double.infinity),
-                            waveAmplitude: 4,
-                          ),
+                            Positioned(
+                              bottom: -2,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                color: Theme.of(context).colorScheme.background,
+                                alignment: Alignment.bottomCenter,
+                                height: 4,
+                              ),
+                            )
+                          ],
                         ),
-                        Positioned(
-                          bottom: -4,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            color: Theme.of(context).colorScheme.background,
-                            alignment: Alignment.bottomCenter,
-                            height: 8,
-                          ),
-                        )
-                      ],
-                    ),
+                      ),
+                      AnimatedContainer(
+                        curve: Curves.fastLinearToSlowEaseIn,
+                        duration: const Duration(seconds: 1),
+                        alignment: Alignment.bottomCenter,
+                        padding: EdgeInsets.only(
+                            top:
+                                MediaQuery.of(context).size.height * value / 2),
+                        height: MediaQuery.of(context).size.height * value,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            WaveWidget(
+                              config: CustomConfig(
+                                gradients: [
+                                  [
+                                    Theme.of(context).savedWordColor,
+                                    Theme.of(context).colorScheme.background,
+                                  ],
+                                ],
+                                gradientBegin: Alignment.topCenter,
+                                gradientEnd: Alignment.bottomCenter,
+                                durations: [
+                                  36000,
+                                ],
+                                heightPercentages: [
+                                  0.5,
+                                ],
+                              ),
+                              size:
+                                  const Size(double.infinity, double.infinity),
+                              waveAmplitude: 4,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   );
                 }),
                 Scaffold(
