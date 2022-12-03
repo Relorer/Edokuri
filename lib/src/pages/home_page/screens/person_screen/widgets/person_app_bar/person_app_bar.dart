@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:freader/src/core/widgets/app_bar_space_with_exp_coll.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
 import 'package:freader/src/pages/settings_page/settings_page.dart';
@@ -118,8 +119,10 @@ class PersonAppBar extends StatelessWidget {
                                     .toString()),
                             PersonAppBarLine("reading:",
                                 "${readingTime.toStringAsFixed(1)}H"),
-                            const PersonAppBarLine("training:", "0H"),
-                            const PersonAppBarLine("current streak:", "2-days"),
+                            PersonAppBarLine("training:",
+                                "${(context.read<UserRepository>().learningTimeForTodayInMinutes() / 60).toStringAsFixed(1)}H"),
+                            PersonAppBarLine("current streak:",
+                                "${context.read<UserRepository>().getStreak()}-days"),
                           ],
                         );
                       })

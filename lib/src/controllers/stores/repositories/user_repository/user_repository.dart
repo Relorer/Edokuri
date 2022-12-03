@@ -40,4 +40,31 @@ abstract class UserRepositoryBase with Store {
 
     return learningTimeForToday / 1000 ~/ 60;
   }
+
+  void addTimeMarkForToday() {
+    DateTime date = DateTime.now();
+    if (currentUser.streak.isEmpty ||
+        !currentUser.streak.last.dateTime.isSameDate(date)) {
+      currentUser.streak.add(TimeMark(dateTime: date));
+      updateUserInfo();
+    }
+  }
+
+  int getStreak() {
+    if (currentUser.streak.isEmpty) return 0;
+
+    DateTime date = DateTime.now();
+    int result = currentUser.streak.last.dateTime.isSameDate(date) ? 1 : 0;
+
+    for (var element in currentUser.streak.reversed.skip(1)) {
+      if (element.dateTime.isSameDate(date)) {
+        result++;
+      } else {
+        break;
+      }
+      date.subtract(const Duration(days: 1));
+    }
+
+    return result;
+  }
 }

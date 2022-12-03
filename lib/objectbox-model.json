@@ -289,6 +289,11 @@
           "id": "18:5777787510501748827",
           "name": "learnTimes",
           "targetId": "14:5347176358837407655"
+        },
+        {
+          "id": "19:5566532879927156723",
+          "name": "streak",
+          "targetId": "15:789584990658208201"
         }
       ]
     },
@@ -348,11 +353,30 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "15:789584990658208201",
+      "lastPropertyId": "2:313529976099527795",
+      "name": "TimeMark",
+      "properties": [
+        {
+          "id": "1:3081675725408830243",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:313529976099527795",
+          "name": "dateTime",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "14:5347176358837407655",
+  "lastEntityId": "15:789584990658208201",
   "lastIndexId": "8:5900638259964740847",
-  "lastRelationId": "18:5777787510501748827",
+  "lastRelationId": "19:5566532879927156723",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

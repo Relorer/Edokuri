@@ -33,8 +33,9 @@ Future<void> setupLocator() async {
       (records, _) => LearnController(
           getIt<RecordRepository>(), getIt<SettingsController>(), records));
 
-  getIt.registerFactoryParam<ReadingTimerController, Book, void>(
-      (book, _) => ReadingTimerController(getIt<BookRepository>(), book));
+  getIt.registerFactoryParam<ReadingTimerController, Book, void>((book, _) =>
+      ReadingTimerController(
+          getIt<BookRepository>(), getIt<UserRepository>(), book));
 
   getIt.registerFactory<LearningTimerController>(
       () => LearningTimerController(getIt<UserRepository>()));

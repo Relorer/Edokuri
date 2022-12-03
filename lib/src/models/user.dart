@@ -17,7 +17,18 @@ class User {
 
   final learnTimes = ToMany<ActivityTime>();
 
-  User({
+  final streak = ToMany<TimeMark>();
+
+  User({this.id = 0});
+}
+
+@Entity()
+class TimeMark {
+  int id;
+  DateTime dateTime;
+
+  TimeMark({
     this.id = 0,
+    required this.dateTime,
   });
 }

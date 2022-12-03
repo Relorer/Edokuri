@@ -18,6 +18,7 @@ class LearningTimerController {
           .add(ActivityTime(_startReading!, DateTime.now()));
       userRepository.updateUserInfo();
       _startReading = null;
+      userRepository.addTimeMarkForToday();
     }
   }
 }
