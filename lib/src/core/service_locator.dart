@@ -1,5 +1,6 @@
 import 'package:freader/objectbox.g.dart';
 import 'package:freader/src/controllers/common/file_controller/file_controller.dart';
+import 'package:freader/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:freader/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
 import 'package:freader/src/controllers/common/settings_controller/settings_controller.dart';
 import 'package:freader/src/controllers/common/translator_controller/translator_controller_factory.dart';
@@ -34,6 +35,9 @@ Future<void> setupLocator() async {
 
   getIt.registerFactoryParam<ReadingTimerController, Book, void>(
       (book, _) => ReadingTimerController(getIt<BookRepository>(), book));
+
+  getIt.registerFactory<LearningTimerController>(
+      () => LearningTimerController(getIt<UserRepository>()));
 
   getIt.registerSingletonAsync(
       () => TranslatorControllerFactory().getTranslatorController());

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freader/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/provider_sliding_up_panel.dart';
@@ -25,6 +26,7 @@ class LearnPage extends StatefulWidget {
 class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
   final PanelController _panelController = PanelController();
   late LearnController _learnController;
+  late LearningTimerController learningTimer;
 
   @override
   void didChangeMetrics() {
@@ -36,8 +38,32 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    super.initState();
+    learningTimer = getIt<LearningTimerController>();
     _learnController = getIt<LearnController>(param1: widget.records);
+
+    learningTimer.startReadingTimer();
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.detached:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+        learningTimer.stopReadingTimer();
+        break;
+      case AppLifecycleState.resumed:
+        learningTimer.startReadingTimer();
+        break;
+    }
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
+  void dispose() {
+    learningTimer.stopReadingTimer();
+    super.dispose();
   }
 
   @override

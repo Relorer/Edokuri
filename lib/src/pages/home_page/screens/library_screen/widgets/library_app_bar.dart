@@ -2,6 +2,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/app_bar_title.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
@@ -40,8 +41,11 @@ class LibraryAppBar extends StatelessWidget {
                         leftText: LocaleKeys.today.tr(),
                         rightText: LocaleKeys.short_min.tr(namedArgs: {
                           "count": (context
-                                  .read<BookRepository>()
-                                  .readingTimeForTodayInMinutes())
+                                      .read<BookRepository>()
+                                      .readingTimeForTodayInMinutes() +
+                                  context
+                                      .read<UserRepository>()
+                                      .learningTimeForTodayInMinutes())
                               .toString()
                         }),
                       );

@@ -41,16 +41,6 @@ class LearnCardContent extends StatelessWidget {
                                     fontSize: 18, color: paleElement),
                               ),
                             ),
-                      AutoSizeText(
-                        record.reviewNumber.toString(),
-                        style:
-                            const TextStyle(fontSize: 18, color: paleElement),
-                      ),
-                      AutoSizeText(
-                        record.lastReview.toString(),
-                        style:
-                            const TextStyle(fontSize: 18, color: paleElement),
-                      ),
                     ]),
                   ),
                 ),

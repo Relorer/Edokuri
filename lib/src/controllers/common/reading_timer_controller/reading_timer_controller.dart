@@ -1,4 +1,5 @@
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:freader/src/models/activity_time.dart';
 import 'package:freader/src/models/book.dart';
 
 class ReadingTimerController {
@@ -15,7 +16,7 @@ class ReadingTimerController {
 
   stopReadingTimer() {
     if (_startReading != null) {
-      book.readTimes.add(ReadTime(_startReading!, DateTime.now()));
+      book.readTimes.add(ActivityTime(_startReading!, DateTime.now()));
       bookRepository.putBook(book);
       _startReading = null;
     }

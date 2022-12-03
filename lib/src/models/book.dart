@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:freader/src/models/activity_time.dart';
 import 'package:freader/src/models/models.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -20,7 +21,7 @@ class Book {
   Uint8List? cover;
 
   final chapters = ToMany<Chapter>();
-  final readTimes = ToMany<ReadTime>();
+  final readTimes = ToMany<ActivityTime>();
 
   Book({
     this.id = 0,
@@ -49,21 +50,6 @@ class Chapter {
   String content;
 
   Chapter({this.id = 0, required this.content});
-}
-
-@Entity()
-class ReadTime {
-  int id;
-  final DateTime start;
-  final DateTime end;
-
-  int get timespan => end.millisecondsSinceEpoch - start.millisecondsSinceEpoch;
-
-  ReadTime(
-    this.start,
-    this.end, {
-    this.id = 0,
-  });
 }
 
 class Paragraph {

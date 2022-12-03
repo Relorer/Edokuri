@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/set_repository/set_repository.dart';
+import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:freader/src/controllers/stores/sort_controllers/library_sort_controller/library_sort_controller.dart';
 import 'package:freader/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
@@ -22,6 +23,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final UserRepository _userRepository = getIt<UserRepository>();
   final BookRepository _bookRepository = getIt<BookRepository>();
   final RecordRepository _recordRepository = getIt<RecordRepository>();
   final SetRepository _setRepository = getIt<SetRepository>();
@@ -57,6 +59,7 @@ class _AppState extends State<App> {
     return MultiProvider(
         providers: [
           Provider<BookRepository>(create: (_) => _bookRepository),
+          Provider<UserRepository>(create: (_) => _userRepository),
           Provider<RecordRepository>(create: (_) => _recordRepository),
           Provider<SetRepository>(create: (_) => _setRepository),
           Provider<LibrarySortController>(
