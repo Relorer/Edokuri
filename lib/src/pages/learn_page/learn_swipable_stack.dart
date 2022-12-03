@@ -36,7 +36,7 @@ class LearnSwipableStack extends StatelessWidget {
         SwipeDirection.left,
       },
       controller: controller,
-      stackClipBehaviour: Clip.hardEdge,
+      stackClipBehaviour: Clip.none,
       horizontalSwipeThreshold: 0.7,
       verticalSwipeThreshold: 0.7,
       overlayBuilder: (context, properties) {

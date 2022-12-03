@@ -78,6 +78,7 @@ dependencies:
   direct_select: ^2.0.0
   group_button: ^5.2.2
   shared_preferences: ^2.0.15
+  wave: ^0.2.2
   
 dev_dependencies:
   flutter_test:

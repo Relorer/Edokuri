@@ -16,17 +16,33 @@ mixin _$LearnController on LearnControllerBase, Store {
           Computed<int>(() => super.total, name: 'LearnControllerBase.total'))
       .value;
 
+  late final _$currentRecordIndexAtom =
+      Atom(name: 'LearnControllerBase.currentRecordIndex', context: context);
+
+  @override
+  int get currentRecordIndex {
+    _$currentRecordIndexAtom.reportRead();
+    return super.currentRecordIndex;
+  }
+
+  @override
+  set currentRecordIndex(int value) {
+    _$currentRecordIndexAtom.reportWrite(value, super.currentRecordIndex, () {
+      super.currentRecordIndex = value;
+    });
+  }
+
   late final _$currentRecordAtom =
       Atom(name: 'LearnControllerBase.currentRecord', context: context);
 
   @override
-  int get currentRecord {
+  Record get currentRecord {
     _$currentRecordAtom.reportRead();
     return super.currentRecord;
   }
 
   @override
-  set currentRecord(int value) {
+  set currentRecord(Record value) {
     _$currentRecordAtom.reportWrite(value, super.currentRecord, () {
       super.currentRecord = value;
     });
@@ -100,6 +116,17 @@ mixin _$LearnController on LearnControllerBase, Store {
       ActionController(name: 'LearnControllerBase', context: context);
 
   @override
+  void setCurrentRecord(Record record) {
+    final _$actionInfo = _$LearnControllerBaseActionController.startAction(
+        name: 'LearnControllerBase.setCurrentRecord');
+    try {
+      return super.setCurrentRecord(record);
+    } finally {
+      _$LearnControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setBunchSize(int size) {
     final _$actionInfo = _$LearnControllerBaseActionController.startAction(
         name: 'LearnControllerBase.setBunchSize');
@@ -157,6 +184,7 @@ mixin _$LearnController on LearnControllerBase, Store {
   @override
   String toString() {
     return '''
+currentRecordIndex: ${currentRecordIndex},
 currentRecord: ${currentRecord},
 bunchSize: ${bunchSize},
 autoPronouncing: ${autoPronouncing},

@@ -23,7 +23,10 @@ abstract class LearnControllerBase with Store {
       this._recordRepository, this._settingsController, this._records);
 
   @observable
-  int currentRecord = 0;
+  int currentRecordIndex = 0;
+
+  @observable
+  late Record currentRecord = _records.first;
 
   @observable
   late int bunchSize = _settingsController.packSize;
@@ -62,11 +65,16 @@ abstract class LearnControllerBase with Store {
   }
 
   @action
+  void setCurrentRecord(Record record) {
+    currentRecord = record;
+  }
+
+  @action
   void setBunchSize(int size) {
     if (bunchSize != size) {
       bunchSize = size;
       _settingsController.setPackSize(size);
-      currentRecord = 0;
+      currentRecordIndex = 0;
       _currentBunch = _getNextBunch();
     }
   }
@@ -100,13 +108,13 @@ abstract class LearnControllerBase with Store {
       }
 
       _currentBunch.remove(rec);
-      currentRecord++;
+      currentRecordIndex++;
     } else {
       rec.reviewNumber = max(rec.reviewNumber - 1, 0);
       _recordRepository.putRecord(rec);
     }
-    if (currentRecord == total) {
-      currentRecord = 0;
+    if (currentRecordIndex == total) {
+      currentRecordIndex = 0;
       _currentBunch = _getNextBunch();
     }
   }

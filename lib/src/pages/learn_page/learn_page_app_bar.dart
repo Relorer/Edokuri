@@ -19,14 +19,15 @@ class LearnPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      foregroundColor: Theme.of(context).secondBackgroundColor,
+      backgroundColor:
+          true ? Colors.transparent : Theme.of(context).colorScheme.background,
+      // foregroundColor: Theme.of(context).secondBackgroundColor,
       elevation: 0,
       title: Observer(builder: (_) {
         final learn = context.read<LearnController>();
         return Center(
             child: Text(
-                "${min(learn.currentRecord + 1, learn.total)}/${learn.total}"));
+                "${min(learn.currentRecordIndex + 1, learn.total)}/${learn.total}"));
       }),
       actions: [
         IconButton(

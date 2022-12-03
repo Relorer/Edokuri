@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
@@ -25,6 +24,7 @@ class LearnPageCardStack extends StatelessWidget {
           getIt<TTSController>()
               .speak(learn.getRecordByIndex(index + 1).original);
         }
+        learn.setCurrentRecord(learn.getRecordByIndex(index + 1));
       },
       builder: (context, properties) => LearnCardContent(
         record: learnController.getRecordByIndex(properties.index),
