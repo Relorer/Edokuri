@@ -1,3 +1,5 @@
+import 'package:freader/src/models/models.dart';
+
 int getNextReviewTime(int reviewNumber) {
   switch (reviewNumber) {
     case 0:
@@ -17,4 +19,11 @@ int getNextReviewTime(int reviewNumber) {
     default:
       return reviewNumber * getNextReviewTime(6);
   }
+}
+
+bool timeForReviewHasCome(Record record) {
+  return DateTime.now().millisecondsSinceEpoch -
+          getNextReviewTime(record.reviewNumber) -
+          record.lastReview.millisecondsSinceEpoch >
+      0;
 }

@@ -50,6 +50,14 @@ class _StatsGraphState extends State<StatsGraph> {
         .length;
   }
 
+  int _getReviewedRecords(Iterable<Record> records, DateTime day) {
+    return records
+        .where((element) =>
+            (element.lastReview.isSameDate(day)) &&
+            !element.known)
+        .length;
+  }
+
   void _setPressedPosition(Offset? offset) {
     setState(() {
       pressedPosition = offset;
@@ -78,6 +86,8 @@ class _StatsGraphState extends State<StatsGraph> {
                                 newKnownRecords: _getNewKnownRecords(
                                     recordRepository.records, date),
                                 newSavedRecords: _getNewSavedRecords(
+                                    recordRepository.records, date),
+                                reviewedWords: _getReviewedRecords(
                                     recordRepository.records, date));
                           })
                           .toList()

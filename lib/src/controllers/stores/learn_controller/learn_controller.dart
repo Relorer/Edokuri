@@ -93,12 +93,7 @@ abstract class LearnControllerBase with Store {
   void answerHandler(int index, bool know) {
     final rec = getRecordByIndex(index);
     if (know) {
-      final now = DateTime.now().millisecondsSinceEpoch;
-      if (rec.lastReview.year == 0 ||
-          (now -
-                  getNextReviewTime(rec.reviewNumber) +
-                  rec.lastReview.millisecondsSinceEpoch) >
-              0) {
+      if (rec.lastReview.year == 0 || timeForReviewHasCome(rec)) {
         rec.lastReview = DateTime.now();
         rec.reviewNumber++;
         _recordRepository.putRecord(rec);
@@ -107,7 +102,7 @@ abstract class LearnControllerBase with Store {
       _currentBunch.remove(rec);
       currentRecord++;
     } else {
-      rec.reviewNumber--;
+      rec.reviewNumber = max(rec.reviewNumber - 1, 0);
       _recordRepository.putRecord(rec);
     }
     if (currentRecord == total) {
@@ -119,12 +114,14 @@ abstract class LearnControllerBase with Store {
   List<Record> _getNextBunch() {
     final now = DateTime.now().millisecondsSinceEpoch;
     final sorted = _records.toList()
-      ..sort((b, a) => (now -
+      ..sort((a, b) => (now -
               getNextReviewTime(a.reviewNumber) +
               a.lastReview.millisecondsSinceEpoch)
           .compareTo((now -
               getNextReviewTime(b.reviewNumber) +
               b.lastReview.millisecondsSinceEpoch)));
-    return sorted.take(bunchSize).toList()..shuffle();
+    return timeForReviewHasCome(sorted.first)
+        ? (sorted.take(bunchSize).toList()..shuffle())
+        : (_records.toList()..shuffle()).take(bunchSize).toList();
   }
 }
