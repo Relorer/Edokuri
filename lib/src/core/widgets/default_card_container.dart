@@ -4,13 +4,14 @@ import 'package:freader/src/theme/theme_consts.dart';
 
 class DefaultCardContainer extends StatelessWidget {
   final Widget? child;
-  const DefaultCardContainer(this.child, {super.key});
+  final Color? color;
+  const DefaultCardContainer(this.child, {super.key, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: color ?? Colors.white,
             borderRadius:
                 const BorderRadius.all(Radius.circular(defaultRadius)),
             boxShadow: [

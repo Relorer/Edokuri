@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:freader/src/controllers/common/settings_controller/settings_controller.dart';
+import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:freader/src/controllers/stores/learn_controller/review_intervals.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/models/models.dart';
 import 'package:mobx/mobx.dart';
 
@@ -64,6 +66,18 @@ abstract class LearnControllerBase with Store {
     return buffer[index];
   }
 
+  List<Record> needSpeak = [];
+
+  void autoSpeak(int index) {
+    final r = getRecordByIndex(index);
+    if (needSpeak.contains(r)) {
+      needSpeak.remove(r);
+      if (autoPronouncing) {
+        getIt<TTSController>().speak(r.original);
+      }
+    }
+  }
+
   @action
   void setCurrentRecord(Record record) {
     currentRecord = record;
@@ -88,13 +102,17 @@ abstract class LearnControllerBase with Store {
   @action
   void setDefinitionOn(bool value) {
     definitionOn = value;
-    _settingsController.setFrontCardInLearnPageDefinition(value);
+    if (!definitionOn) termOn = true;
+    _settingsController.setFrontCardInLearnPageDefinition(definitionOn);
+    _settingsController.setFrontCardInLearnPageTerm(termOn);
   }
 
   @action
   void setTermOn(bool value) {
     termOn = value;
-    _settingsController.setFrontCardInLearnPageTerm(value);
+    if (!termOn) definitionOn = true;
+    _settingsController.setFrontCardInLearnPageDefinition(definitionOn);
+    _settingsController.setFrontCardInLearnPageTerm(termOn);
   }
 
   @action

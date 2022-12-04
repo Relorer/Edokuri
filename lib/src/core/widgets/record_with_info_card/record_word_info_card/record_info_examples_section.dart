@@ -6,8 +6,10 @@ import 'package:freader/src/theme/theme_consts.dart';
 
 class RecordInfoExamplesSection extends StatelessWidget {
   final List<Example> examples;
+  final bool showTranslation;
 
-  const RecordInfoExamplesSection({super.key, required this.examples});
+  const RecordInfoExamplesSection(
+      {super.key, required this.examples, this.showTranslation = true});
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +25,13 @@ class RecordInfoExamplesSection extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 14,
                         ))),
-                SizedBox(
-                    width: double.maxFinite,
-                    child: Text(element.tr,
-                        style:
-                            const TextStyle(fontSize: 14, color: paleElement))),
+                showTranslation
+                    ? SizedBox(
+                        width: double.maxFinite,
+                        child: Text(element.tr,
+                            style: const TextStyle(
+                                fontSize: 14, color: paleElement)))
+                    : Container(),
                 SizedBox(
                   height: examples.indexOf(element) == examples.length - 1
                       ? 0

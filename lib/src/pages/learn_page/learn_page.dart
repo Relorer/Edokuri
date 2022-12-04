@@ -8,6 +8,7 @@ import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/provider_sliding_up_panel.dart';
 import 'package:freader/src/models/models.dart';
 import 'package:freader/src/pages/learn_page/learn_page_app_bar.dart';
+import 'package:freader/src/pages/learn_page/learn_page_card_stack.dart';
 import 'package:freader/src/pages/learn_page/learn_page_settings.dart';
 import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme.dart';
@@ -16,8 +17,6 @@ import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
-
-import 'learn_page_card_swiper.dart';
 
 class LearnPage extends StatefulWidget {
   final List<Record> records;
@@ -198,7 +197,7 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 80 + doubleDefaultMargin),
-                  child: LearnPageCardSwiper(),
+                  child: LearnPageCardStack(),
                 )
               ],
             ),

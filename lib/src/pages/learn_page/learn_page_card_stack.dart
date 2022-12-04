@@ -20,10 +20,7 @@ class LearnPageCardStack extends StatelessWidget {
       onSwipeCompleted: (index, direction) {
         final learn = context.read<LearnController>();
         learn.answerHandler(index, direction == SwipeDirection.right);
-        if (learn.autoPronouncing) {
-          getIt<TTSController>()
-              .speak(learn.getRecordByIndex(index + 1).original);
-        }
+        learn.autoSpeak(index + 1);
         learn.setCurrentRecord(learn.getRecordByIndex(index + 1));
       },
       builder: (context, properties) => LearnCardContent(
