@@ -31,6 +31,7 @@ class LearnCardTerm extends StatelessWidget {
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
                     AutoSizeText(
                       record.original,
+                      maxLines: record.original.contains(" ") ? null : 1,
                       style: const TextStyle(
                           fontSize: 32, fontWeight: FontWeight.bold),
                     ),

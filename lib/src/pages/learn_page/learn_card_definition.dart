@@ -20,10 +20,13 @@ class LearnCardDefinition extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(doubleDefaultMargin),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  AutoSizeText(
-                    record.translation,
-                    style: const TextStyle(
-                        fontSize: 32, fontWeight: FontWeight.bold),
+                  SizedBox(
+                    child: AutoSizeText(
+                      record.translation,
+                      maxLines: record.translation.contains(" ") ? null : 1,
+                      style: const TextStyle(
+                          fontSize: 32, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ]),
               ),
