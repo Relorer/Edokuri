@@ -31,15 +31,23 @@ class _LearnCardContentState extends State<LearnCardContent> {
   late List<Widget> cardStates = [
     LearnCardDefinition(
       record: widget.record,
+      fullOpen: _fullOpen,
     ),
     LearnCardTerm(
       record: widget.record,
+      fullOpen: _fullOpen,
     ),
     LearnCardFull(
       record: widget.record,
     ),
     LearnCardType(record: widget.record),
   ];
+
+  void _fullOpen() {
+    setState(() {
+      currentState = 2;
+    });
+  }
 
   int getStartState() {
     int result = 0;

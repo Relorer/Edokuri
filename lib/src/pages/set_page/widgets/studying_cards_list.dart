@@ -32,12 +32,12 @@ class StudyingCardsList extends StatelessWidget {
                     .then((value) => setUpBarDefaultStyles(context));
               }),
       ),
-      StudyingCard(
-        title: 'Test',
-        subTitile: 'Take a practice test',
-        svg: testSvg,
-        onTap: setData.records.isEmpty ? null : (() {}),
-      )
+      // StudyingCard(
+      //   title: 'Test',
+      //   subTitile: 'Take a practice test',
+      //   svg: testSvg,
+      //   onTap: setData.records.isEmpty ? null : (() {}),
+      // )
     ];
 
     return SliverList(

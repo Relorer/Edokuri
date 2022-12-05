@@ -6,8 +6,10 @@ import 'package:freader/src/theme/theme_consts.dart';
 
 class RecordInfoSynonymsSection extends StatelessWidget {
   final List<String> synonyms;
+  final bool pressable;
 
-  const RecordInfoSynonymsSection({super.key, required this.synonyms});
+  const RecordInfoSynonymsSection(
+      {super.key, required this.synonyms, this.pressable = true});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,10 @@ class RecordInfoSynonymsSection extends StatelessWidget {
             (int index) {
               return ActionChip(
                 pressElevation: 3,
-                onPressed: (() => TapOnWordHandlerProvider.of(context)
-                    .tapOnWordHandler(synonyms[index].toLowerCase(), "")),
+                onPressed: pressable
+                    ? (() => TapOnWordHandlerProvider.of(context)
+                        .tapOnWordHandler(synonyms[index].toLowerCase(), ""))
+                    : () => {},
                 backgroundColor:
                     Theme.of(context).paleElementColor.withOpacity(0.1),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

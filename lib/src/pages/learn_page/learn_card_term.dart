@@ -9,8 +9,11 @@ import 'package:freader/src/theme/theme_consts.dart';
 
 class LearnCardTerm extends StatelessWidget {
   final Record record;
+  final VoidCallback? typeOpen;
+  final VoidCallback? fullOpen;
 
-  const LearnCardTerm({super.key, required this.record});
+  const LearnCardTerm(
+      {super.key, required this.record, this.fullOpen, this.typeOpen});
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +75,13 @@ class LearnCardTerm extends StatelessWidget {
               Expanded(
                 child: IconButton(
                   icon: const Icon(Icons.keyboard),
-                  onPressed: () {},
+                  onPressed: typeOpen,
                 ),
               ),
               Expanded(
                 child: IconButton(
                   icon: const Icon(Icons.remove_red_eye),
-                  onPressed: () {},
+                  onPressed: fullOpen,
                 ),
               ),
             ],

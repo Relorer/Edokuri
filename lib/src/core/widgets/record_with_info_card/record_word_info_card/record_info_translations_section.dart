@@ -10,8 +10,10 @@ import 'package:freader/src/theme/theme_consts.dart';
 
 class RecordInfoTranslationsSection extends StatefulWidget {
   final List<Translation> translations;
+  final bool changeable;
 
-  const RecordInfoTranslationsSection({super.key, required this.translations});
+  const RecordInfoTranslationsSection(
+      {super.key, required this.translations, this.changeable = true});
 
   @override
   State<RecordInfoTranslationsSection> createState() =>
@@ -77,14 +79,16 @@ class _RecordInfoTranslationsSectionState
                   maxLines: 10000,
                 ),
                 selected: translations[index].selected,
-                onSelected: (bool selected) {
-                  setState(() {
-                    translations[index].selected =
-                        !translations[index].selected;
-                    translations[index].selectionDate =
-                        selected ? DateTime.now() : null;
-                  });
-                },
+                onSelected: widget.changeable
+                    ? (bool selected) {
+                        setState(() {
+                          translations[index].selected =
+                              !translations[index].selected;
+                          translations[index].selectionDate =
+                              selected ? DateTime.now() : null;
+                        });
+                      }
+                    : (_) => {},
               );
             },
           ).toList(),
@@ -97,13 +101,15 @@ class _RecordInfoTranslationsSectionState
                 ),
               )
             : Container(),
-        Padding(
-            padding: const EdgeInsets.only(top: defaultMargin),
-            child: TextFormFieldDefault(
-              controller: _textEditingController,
-              onFieldSubmitted: _fieldSubmittedHandler,
-              labelText: 'Enter your translate',
-            ))
+        widget.changeable
+            ? Padding(
+                padding: const EdgeInsets.only(top: defaultMargin),
+                child: TextFormFieldDefault(
+                  controller: _textEditingController,
+                  onFieldSubmitted: _fieldSubmittedHandler,
+                  labelText: 'Enter your translate',
+                ))
+            : Container()
       ],
     );
   }

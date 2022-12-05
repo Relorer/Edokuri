@@ -86,12 +86,9 @@ class RecordsScreenRecordsCards extends StatelessWidget {
                               records[index].transcription.isEmpty
                                   ? Container()
                                   : AutoSizeText(
-                                      records[index]
-                                          .transcription
-                                          .toUpperCase(),
+                                      records[index].transcription,
                                       style:
                                           Theme.of(context).cardSubtitleStyle,
-                                      maxLines: 8,
                                     )
                             ],
                           )),
