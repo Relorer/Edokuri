@@ -51,11 +51,15 @@ class _LearnCardContentState extends State<LearnCardContent> {
       record: widget.record,
     ),
     LearnCardType(
+      submitted: _fullOpen,
       source: widget.record.original,
-      translations:
-          widget.record.translations.map((element) => element.text).toList(),
+      translations: widget.record.translations
+          .where((element) => element.selected)
+          .map((element) => element.text)
+          .toList(),
     ),
     LearnCardType(
+      submitted: _fullOpen,
       source: widget.record.translation,
       translations: [widget.record.original],
     ),
