@@ -27,71 +27,67 @@ class LearnCardFull extends StatelessWidget {
           borderRadius: BorderRadius.circular(defaultRadius),
         ),
         onTap: () => getIt<TTSController>().speak(record.original),
-        child: Column(children: [
-          Expanded(
-            child: Center(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.all(doubleDefaultMargin),
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    AutoSizeText(
-                      record.original,
-                      maxLines: record.original.contains(" ") ? null : 1,
-                      style: const TextStyle(
-                          fontSize: 32, fontWeight: FontWeight.bold),
-                    ),
-                    record.transcription.isEmpty
-                        ? Container()
-                        : Padding(
-                            padding: const EdgeInsets.only(top: 0),
-                            child: AutoSizeText(
-                              record.transcription,
-                              style: const TextStyle(
-                                  fontSize: 18, color: paleElement),
-                            ),
-                          ),
-                    SizedBox(
-                      height: defaultMargin,
-                    ),
-                    RecordInfoTranslationsSection(
-                      translations: record.translations,
-                      changeable: false,
-                    ),
-                    record.examples.isNotEmpty || record.sentences.isNotEmpty
-                        ? const SizedBox(
-                            height: doubleDefaultMargin,
-                          )
-                        : Container(),
-                    record.synonyms.isNotEmpty
-                        ? RecordInfoSynonymsSection(
-                            synonyms: record.synonyms,
-                            pressable: false,
-                          )
-                        : Container(),
-                    record.examples.isNotEmpty
-                        ? RecordInfoExamplesSection(
-                            examples: record.examples,
-                            showTranslation: true,
-                          )
-                        : Container(),
-                    record.sentences.isNotEmpty
-                        ? RecordInfoSentencesSection(
-                            sentences: record.sentences,
-                            showTranslation: true,
-                          )
-                        : Container(),
-                    record.meanings.isNotEmpty
-                        ? RecordInfoMeaningsSection(
-                            meanings: record.meanings,
-                          )
-                        : Container(),
-                  ]),
+        child: Center(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(doubleDefaultMargin),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                AutoSizeText(
+                  record.original,
+                  maxLines: record.original.contains(" ") ? null : 1,
+                  style: const TextStyle(
+                      fontSize: 32, fontWeight: FontWeight.bold),
                 ),
-              ),
+                record.transcription.isEmpty
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 0),
+                        child: AutoSizeText(
+                          record.transcription,
+                          style:
+                              const TextStyle(fontSize: 18, color: paleElement),
+                        ),
+                      ),
+                SizedBox(
+                  height: defaultMargin,
+                ),
+                RecordInfoTranslationsSection(
+                  translations: record.translations,
+                  changeable: false,
+                ),
+                record.examples.isNotEmpty || record.sentences.isNotEmpty
+                    ? const SizedBox(
+                        height: doubleDefaultMargin,
+                      )
+                    : Container(),
+                record.synonyms.isNotEmpty
+                    ? RecordInfoSynonymsSection(
+                        synonyms: record.synonyms,
+                        pressable: false,
+                      )
+                    : Container(),
+                record.examples.isNotEmpty
+                    ? RecordInfoExamplesSection(
+                        examples: record.examples,
+                        showTranslation: true,
+                      )
+                    : Container(),
+                record.sentences.isNotEmpty
+                    ? RecordInfoSentencesSection(
+                        sentences: record.sentences,
+                        showTranslation: true,
+                      )
+                    : Container(),
+                record.meanings.isNotEmpty
+                    ? RecordInfoMeaningsSection(
+                        meanings: record.meanings,
+                      )
+                    : Container(),
+              ]),
             ),
           ),
-        ]),
+        ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:freader/src/pages/learn_page/learn_page.dart';
 import 'package:freader/src/pages/set_page/widgets/studying_card/studying_card.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/system_bars.dart';
+import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 
 class StudyingCardsList extends StatelessWidget {
@@ -29,7 +30,8 @@ class StudyingCardsList extends StatelessWidget {
                         ),
                       ),
                     )
-                    .then((value) => setUpBarDefaultStyles(context));
+                    .then((value) => setUpBarDefaultStyles(
+                        Theme.of(context).secondBackgroundColor));
               }),
       ),
       // StudyingCard(

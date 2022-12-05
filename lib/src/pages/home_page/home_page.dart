@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    setUpBarDefaultStyles(context);
+    setUpBarDefaultStyles(Theme.of(context).secondBackgroundColor);
 
     return RecordWithInfoCard(
       body: GestureDetector(

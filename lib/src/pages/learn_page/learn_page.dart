@@ -37,7 +37,7 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     if (mounted) {
-      setUpBarReaderStyles(context);
+      setUpBarDefaultStyles(Theme.of(context).colorScheme.background);
     }
     super.didChangeMetrics();
   }
@@ -75,7 +75,7 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
   final Random random = Random();
   @override
   Widget build(BuildContext context) {
-    setUpBarReaderStyles(context);
+    setUpBarDefaultStyles(Theme.of(context).colorScheme.background);
 
     return Material(
       child: MultiProvider(

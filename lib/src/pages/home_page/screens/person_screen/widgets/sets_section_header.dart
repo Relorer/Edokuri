@@ -4,6 +4,7 @@ import 'package:freader/src/core/widgets/section_headers/section_header_text.dar
 import 'package:freader/src/pages/set_editing_page/set_editign_page.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/system_bars.dart';
+import 'package:freader/src/theme/theme.dart';
 
 class SetsSectionHeader extends StatelessWidget {
   const SetsSectionHeader({super.key});
@@ -16,7 +17,8 @@ class SetsSectionHeader extends StatelessWidget {
             builder: (context) => const SetEditingPage(),
           ),
         )
-        .then((value) => setUpBarDefaultStyles(context));
+        .then((value) =>
+            setUpBarDefaultStyles(Theme.of(context).secondBackgroundColor));
   }
 
   @override

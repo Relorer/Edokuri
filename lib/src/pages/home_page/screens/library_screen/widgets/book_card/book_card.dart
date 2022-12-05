@@ -12,6 +12,7 @@ import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_
 import 'package:freader/src/pages/reader/reader_page.dart';
 import 'package:freader/src/pages/set_page/set_page.dart';
 import 'package:freader/src/theme/system_bars.dart';
+import 'package:freader/src/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class BookCard extends StatelessWidget {
@@ -25,7 +26,8 @@ class BookCard extends StatelessWidget {
             builder: (context) => ReaderPage(book: book),
           ),
         )
-        .then((value) => setUpBarDefaultStyles(context));
+        .then((value) =>
+            setUpBarDefaultStyles(Theme.of(context).secondBackgroundColor));
   }
 
   void _removeBook(BuildContext context) {

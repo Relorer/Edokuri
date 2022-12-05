@@ -71,7 +71,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   void didChangeMetrics() {
     EasyDebounce.debounce('load-content', const Duration(seconds: 1), () {
       if (mounted) {
-        setUpBarReaderStyles(context);
+        setUpBarDefaultStyles(Theme.of(context).colorScheme.background);
         final newOrientation = MediaQuery.of(context).orientation;
         if (_currentOrientation != newOrientation) {
           _loadContent(context);
@@ -99,7 +99,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    setUpBarReaderStyles(context);
+    setUpBarDefaultStyles(Theme.of(context).colorScheme.background);
 
     return MultiProvider(
       providers: [

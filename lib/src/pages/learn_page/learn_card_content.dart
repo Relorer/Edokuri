@@ -32,15 +32,33 @@ class _LearnCardContentState extends State<LearnCardContent> {
     LearnCardDefinition(
       record: widget.record,
       fullOpen: _fullOpen,
+      typeOpen: () {
+        setState(() {
+          currentState = 4;
+        });
+      },
     ),
     LearnCardTerm(
       record: widget.record,
       fullOpen: _fullOpen,
+      typeOpen: () {
+        setState(() {
+          currentState = 3;
+        });
+      },
     ),
     LearnCardFull(
       record: widget.record,
     ),
-    LearnCardType(record: widget.record),
+    LearnCardType(
+      source: widget.record.original,
+      translations:
+          widget.record.translations.map((element) => element.text).toList(),
+    ),
+    LearnCardType(
+      source: widget.record.translation,
+      translations: [widget.record.original],
+    ),
   ];
 
   void _fullOpen() {
