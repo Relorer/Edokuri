@@ -1,0 +1,21 @@
+{
+    "close": "Close",
+    "amount_of_new_words": "Amount of new words",
+    "name": "Name",
+    "progress": "Progress",
+    "recent": "Recent",
+    "no_author": "no author",
+    "no_title": "no title",
+    "records": "Records: {count}",
+    "new_words": "{persent}% New words",
+    "cover": "cover",
+    "continue_reading": "Continue reading",
+    "go_to_set": "Go to Set",
+    "delete": "Delete",
+    "upload_new_book": "Upload new book",
+    "sort_by": "Sort by:",
+    "today": "today",
+    "short_min": "{count}m",
+    "library": "Library",
+    "part_of": "Part {currentPart} of {partCount}"
+}
