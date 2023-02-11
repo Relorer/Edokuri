@@ -49,3 +49,4 @@ app.*.map.json
 lib/objectbox.g.dart
 
 *.env
+*.g.dart
