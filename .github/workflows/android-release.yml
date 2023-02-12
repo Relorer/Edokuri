@@ -8,6 +8,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  YANDEX_DICTIONARY_KEY: ${{ vars.YANDEX_DICTIONARY_KEY }}
+  
 jobs:
   build:
     runs-on: ubuntu-latest
