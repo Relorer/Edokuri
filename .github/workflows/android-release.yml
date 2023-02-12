@@ -7,9 +7,6 @@ on:
     branches: [ "dev" ]
 
   workflow_dispatch:
-
-env:
-  YANDEX_DICTIONARY_KEY: ${{ vars.YANDEX_DICTIONARY_KEY }}
   
 jobs:
   build:
@@ -29,13 +26,18 @@ jobs:
       - run: flutter --version
       - name: Get dependencies
         run: flutter pub get
-
+        
       - name: Build the generated files
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Generate localization files
         run: flutter pub run easy_localization:generate -S "assets/translations"
-      - run: flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart -S "assets/translations"
+      - name: Generate localization files
+        run: flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart -S "assets/translations"
+
+      - name: 'Create env file'
+        run:
+          echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: Start release build
         run: flutter build appbundle
