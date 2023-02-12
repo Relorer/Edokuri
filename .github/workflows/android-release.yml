@@ -93,7 +93,7 @@ jobs:
         run: flutter build appbundle
     
       - name: Upload Android Release (abb)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: android-release-aab
           path: build/app/outputs/bundle/release/app-release.aab
@@ -102,7 +102,7 @@ jobs:
         run: flutter build apk --split-per-abi
         
       - name: Upload Android Release (apk)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: android-release-apk
           path:  |
