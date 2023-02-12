@@ -1,4 +1,4 @@
-package com.example.freader
+package com.example.edokuri
 
 import io.flutter.embedding.android.FlutterActivity
 
