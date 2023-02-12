@@ -87,7 +87,7 @@ jobs:
 
       - name: 'Create env file'
         run:
-          echo "${{ secrets.ENV_FILE }}" > .env
+          echo "YANDEX_DICTIONARY_KEY:${{ secrets.YANDEX_DICTIONARY_KEY }}" > .env
 
       - name: Start release build (abb)
         run: flutter build appbundle
