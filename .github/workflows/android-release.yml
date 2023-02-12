@@ -1,0 +1,111 @@
+name: Android Release
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+  workflow_dispatch:
+  
+jobs:
+  version:
+      name: Create version number
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - run: git fetch --unshallow --all
+        - name: Install GitVersion
+          uses: gittools/actions/gitversion/setup@v0.9.15
+          with:
+            versionSpec: "5.x"
+        - name: Use GitVersion
+          id: gitversion
+          uses: gittools/actions/gitversion/execute@v0.9.15
+        - name: Create version.txt with nuGetVersion
+          run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
+        - name: Upload version.txt
+          uses: actions/upload-artifact@v3
+          with:
+            name: gitversion
+            path: version.txt
+            
+  build:
+    name: Create Android Build
+    needs: version
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get version.txt
+        uses: actions/download-artifact@v3
+        with:
+          name: gitversion
+      - name: Create new file without newline char from version.txt
+        run: tr -d '\n' < version.txt > version1.txt
+      - name: Read version
+        id: version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: version1.txt
+      - name: Update version in YAML
+        run: sed -i 's/99.99.99+99/${{ steps.version.outputs.content }}+${{ github.run_number }}/g' pubspec.yaml
+      - name: Download Android keystore
+        id: android_keystore
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'upload-keystore.jks'
+          encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      
+      - name: Create key.properties
+        run: |
+          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: "12.x"
+          cache: 'gradle'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'beta'
+          cache: true
+      - run: flutter --version
+      - name: Get dependencies
+        run: flutter pub get
+        
+      - name: Build the generated files
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Generate localization files
+        run: flutter pub run easy_localization:generate -S "assets/translations"
+      - name: Generate localization files
+        run: flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart -S "assets/translations"
+
+      - name: 'Create env file'
+        run:
+          echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: Start release build (abb)
+        run: flutter build appbundle
+    
+      - name: Upload Android Release (abb)
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-release-aab
+          path: build/app/outputs/bundle/release/app-release.aab
+          
+      - name: Start release build (apk)
+        run: flutter build apk --split-per-abi
+        
+      - name: Upload Android Release (apk)
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-release-apk
+          path:  |
+            build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+            build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+            build/app/outputs/flutter-apk/app-x86_64-release.apk
