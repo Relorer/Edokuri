@@ -1,4 +1,4 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:freader/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:freader/src/models/record.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +23,7 @@ class YandexDictionaryService {
     List<Example> examples = [];
 
     var ur = Uri.parse(
-        "https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${dotenv.env['YANDEX_DICTIONARY_KEY']}&lang=en-ru&text=$word");
+        "https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${FlutterConfig.get('YANDEX_DICTIONARY_KEY')}&lang=en-ru&text=$word");
     final result = await http.get(ur);
 
     if (result.statusCode == 200) {
