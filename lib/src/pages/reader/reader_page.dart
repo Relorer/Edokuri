@@ -105,15 +105,15 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
       providers: [
         Provider<ReaderController>(create: (_) => reader),
       ],
-      child: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 0,
-            backgroundColor: Theme.of(context).colorScheme.background,
-            elevation: 0,
-          ),
-          body: RecordWithInfoCard(
-            bottomPadding: 0,
-            showTranslationSourceSentences: false,
+      child: RecordWithInfoCard(
+        bottomPadding: 0,
+        showTranslationSourceSentences: false,
+        body: Scaffold(
+            appBar: AppBar(
+              toolbarHeight: 0,
+              backgroundColor: Theme.of(context).colorScheme.background,
+              elevation: 0,
+            ),
             body: SafeArea(
               child: Container(
                 color: Theme.of(context).colorScheme.background,
@@ -128,8 +128,8 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                   ],
                 ),
               ),
-            ),
-          )),
+            )),
+      ),
     );
   }
 }
