@@ -12,16 +12,23 @@ class ReaderFooterPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final reader = context.read<ReaderController>();
+    const double bottomMargin = 40;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: doubleDefaultMargin, vertical: defaultMargin),
+      padding: const EdgeInsets.only(
+          top: doubleDefaultMargin,
+          bottom: bottomMargin,
+          left: defaultMargin,
+          right: defaultMargin),
       child: Observer(builder: (_) {
+        int partCount = reader.chaptersContent.length;
         return Text(
-          LocaleKeys.part_of.tr(namedArgs: {
-            "currentPart": (reader.currentChapter + 1).toString(),
-            "partCount": (reader.chaptersContent.length).toString()
-          }),
+          partCount > 0
+              ? LocaleKeys.part_of.tr(namedArgs: {
+                  "currentPart": (reader.currentChapter + 1).toString(),
+                  "partCount": (partCount).toString()
+                })
+              : "",
           style: Theme.of(context).readerFooterPanelTextStyle,
         );
       }),
