@@ -69,7 +69,6 @@ dependencies:
   card_swiper: ^2.0.4
   auto_size_text: ^3.0.0
   flip_card: ^0.6.0
-  flutter_page_indicator: ^0.0.3
   smooth_page_indicator:
     git: https://github.com/Relorer/smooth_page_indicator.git
   text_to_speech: ^0.2.3
