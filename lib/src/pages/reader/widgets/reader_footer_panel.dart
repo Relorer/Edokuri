@@ -12,14 +12,10 @@ class ReaderFooterPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final reader = context.read<ReaderController>();
-    const double bottomMargin = 40;
 
     return Padding(
-      padding: const EdgeInsets.only(
-          top: doubleDefaultMargin,
-          bottom: bottomMargin,
-          left: defaultMargin,
-          right: defaultMargin),
+      padding: const EdgeInsets.symmetric(
+          horizontal: doubleDefaultMargin, vertical: defaultMargin),
       child: Observer(builder: (_) {
         int partCount = reader.chaptersContent.length;
         return Text(
