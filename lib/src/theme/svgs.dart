@@ -15,6 +15,8 @@ const learnSvg = "assets/icons/learn.svg";
 const testSvg = "assets/icons/test.svg";
 const editSvg = "assets/icons/edit.svg";
 const bookSvg = "assets/icons/book.svg";
+const githubMarkWhiteSvg = "assets/icons/github-mark-white.svg";
+const googleLogoSvg = "assets/icons/google_logo.svg";
 
 const translatedByGoogleSvg = "assets/images/translated_by_google.svg";
 const waveSvg = "assets/images/wave.svg";

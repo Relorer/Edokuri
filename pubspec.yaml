@@ -80,6 +80,7 @@ dependencies:
   wave: ^0.2.2
   appwrite: ^8.2.0
   flutter_config: ^2.0.0
+  blur: ^3.1.0
   
 dev_dependencies:
   flutter_test:

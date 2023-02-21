@@ -10,6 +10,7 @@ import 'package:freader/src/controllers/stores/sort_controllers/library_sort_con
 import 'package:freader/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:freader/src/pages/auth_page/auth_page.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/home_page/home_page.dart';
@@ -75,7 +76,7 @@ class _AppState extends State<App> {
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
           routes: {
-            '/': (context) => const HomePage(),
+            '/': (context) => const AuthPage(),
           },
         ));
   }
