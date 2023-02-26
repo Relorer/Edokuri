@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:freader/src/controllers/stores/appwrite/appwrite_controller.dart';
+import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/pages/auth_page/auth_page_button.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme_consts.dart';
@@ -8,24 +10,31 @@ class AuthPageLoginButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appwrite = getIt<AppwriteController>();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        const AuthPageButton(svg: googleLogoSvg, text: "Sign in with Google"),
+        AuthPageButton(
+          svg: googleLogoSvg,
+          text: "Sign in with Google",
+          onTap: appwrite.googleAuth,
+        ),
         const SizedBox(
           height: doubleDefaultMargin,
         ),
-        const AuthPageButton(
+        AuthPageButton(
           svg: githubMarkWhiteSvg,
           text: "Sign in with GitHub",
-          bg: Color(0xFF444444),
+          bg: const Color(0xFF444444),
           textColor: Colors.white,
+          onTap: appwrite.githubAuth,
         ),
         const SizedBox(
           height: doubleDefaultMargin,
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: appwrite.skipAuth,
           child: const Text(
             "Skip",
             style: TextStyle(color: Colors.white),
@@ -35,11 +44,3 @@ class AuthPageLoginButtons extends StatelessWidget {
     );
   }
 }
-
-//  TextButton(
-//                 onPressed: () {
-//                   var a = getIt<Appwrite>();
-//                   final account = Account(a.client);
-//                   account.createOAuth2Session(provider: 'google');
-//                 },
-//                 child: Text("test"))

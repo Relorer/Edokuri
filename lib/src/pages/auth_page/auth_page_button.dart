@@ -10,11 +10,13 @@ class AuthPageButton extends StatelessWidget {
   final String text;
   final Color bg;
   final Color textColor;
+  final void Function()? onTap;
 
   const AuthPageButton(
       {super.key,
       required this.svg,
       required this.text,
+      this.onTap,
       this.bg = Colors.white,
       this.textColor = Colors.black});
 
@@ -22,7 +24,7 @@ class AuthPageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleCard(
       color: bg,
-      onTap: () => {},
+      onTap: onTap,
       child: Padding(
           padding: const EdgeInsets.symmetric(
               horizontal: doubleDefaultMargin, vertical: defaultMargin),
