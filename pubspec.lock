@@ -1028,14 +1028,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-  sprung:
-    dependency: transitive
-    description:
-      name: sprung
-      sha256: "54322638f5e393d2b808175f7eadbaa4836a4425456e98d93c3d676dc56ebdf1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   stack_trace:
     dependency: transitive
     description:
@@ -1068,14 +1060,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  swipable_stack:
-    dependency: "direct main"
-    description:
-      name: swipable_stack
-      sha256: b04eef070455e868b68fdd5ae98f6718e561c877348acd017c07805f1439ef19
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   syncfusion_flutter_core:
     dependency: transitive
     description:
@@ -1252,14 +1236,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
-  wave:
-    dependency: "direct main"
-    description:
-      name: wave
-      sha256: "01ebccb4caa9b150cbe4763aa2a23501bb582843a1f96281868bbb23cb4db1f9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.2"
   web_socket_channel:
     dependency: transitive
     description:
@@ -1301,5 +1277,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.18.0 <4.0.0"
+  dart: ">=2.18.0 <3.0.0"
   flutter: ">=3.0.0"
