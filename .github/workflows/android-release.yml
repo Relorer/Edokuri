@@ -86,7 +86,7 @@ jobs:
         run: flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart -S "assets/translations"
 
       - name: 'Create env file'
-        run:
+        run:  |
           echo "YANDEX_DICTIONARY_KEY=${{ secrets.YANDEX_DICTIONARY_KEY }}" > .env
           echo "APPWRITE_PROJECT_ID=${{ secrets.APPWRITE_PROJECT_ID }}" > .env
           echo "APPWRITE_API_ENDPOINT=${{ secrets.APPWRITE_API_ENDPOINT }}" > .env
