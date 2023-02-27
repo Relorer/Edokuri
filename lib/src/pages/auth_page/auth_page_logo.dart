@@ -7,6 +7,7 @@ class AuthPageLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
         child: Image(
+      gaplessPlayback: true,
       image: AssetImage("assets/images/logo.png"),
       height: 280,
     ));

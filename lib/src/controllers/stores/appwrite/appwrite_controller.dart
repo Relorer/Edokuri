@@ -27,47 +27,39 @@ abstract class AppwriteControllerBase with Store {
 
   @action
   Future googleAuth() async {
-    try {
-      await account.createOAuth2Session(provider: 'google');
-    } on AppwriteException catch (e) {
-      log(e.toString());
-    } finally {
-      await updateStatus();
-    }
+    await _runWithUpdate(
+      () async {
+        await account.createOAuth2Session(provider: 'google');
+      },
+    );
   }
 
   @action
   Future githubAuth() async {
-    try {
-      await account.createOAuth2Session(provider: 'github');
-    } on AppwriteException catch (e) {
-      log(e.toString());
-    } finally {
-      await updateStatus();
-    }
+    await _runWithUpdate(
+      () async {
+        await account.createOAuth2Session(provider: 'github');
+      },
+    );
   }
 
   @action
   Future skipAuth() async {
-    try {
-      await account.createAnonymousSession();
-    } on AppwriteException catch (e) {
-      log(e.toString());
-    } finally {
-      await updateStatus();
-    }
+    await _runWithUpdate(
+      () async {
+        await account.createAnonymousSession();
+      },
+    );
   }
 
   @action
   Future logout() async {
-    try {
-      var session = await account.getSession(sessionId: current);
-      await account.deleteSession(sessionId: session.$id);
-    } on AppwriteException catch (e) {
-      log(e.toString());
-    } finally {
-      await updateStatus();
-    }
+    await _runWithUpdate(
+      () async {
+        var session = await account.getSession(sessionId: current);
+        await account.deleteSession(sessionId: session.$id);
+      },
+    );
   }
 
   @action
@@ -78,6 +70,16 @@ abstract class AppwriteControllerBase with Store {
     } on AppwriteException catch (e) {
       log(e.toString());
       isAuthorized = false;
+    }
+  }
+
+  Future _runWithUpdate(Future<void> Function() f) async {
+    try {
+      await f();
+    } on AppwriteException catch (e) {
+      log(e.toString());
+    } finally {
+      await updateStatus();
     }
   }
 }
