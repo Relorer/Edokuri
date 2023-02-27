@@ -17,11 +17,14 @@ class ReaderFooterPanel extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
           horizontal: doubleDefaultMargin, vertical: defaultMargin),
       child: Observer(builder: (_) {
+        int partCount = reader.chaptersContent.length;
         return Text(
-          LocaleKeys.part_of.tr(namedArgs: {
-            "currentPart": (reader.currentChapter + 1).toString(),
-            "partCount": (reader.chaptersContent.length).toString()
-          }),
+          partCount > 0
+              ? LocaleKeys.part_of.tr(namedArgs: {
+                  "currentPart": (reader.currentChapter + 1).toString(),
+                  "partCount": (partCount).toString()
+                })
+              : "",
           style: Theme.of(context).readerFooterPanelTextStyle,
         );
       }),
