@@ -18,8 +18,8 @@ abstract class AppwriteControllerBase with Store {
   bool isAuthorized = false;
 
   AppwriteControllerBase() {
-    var endpoint = FlutterConfig.get('APPWRITE_API_ENDPOINT')!;
-    var project = FlutterConfig.get('APPWRITE_PROJECT_ID')!;
+    var endpoint = FlutterConfig.get('APPWRITE_API_ENDPOINT');
+    var project = FlutterConfig.get('APPWRITE_PROJECT_ID');
     client.setEndpoint(endpoint).setProject(
         project); // For self signed certificates, only use for development
     updateStatus();
