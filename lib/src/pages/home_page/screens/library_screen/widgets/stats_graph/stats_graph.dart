@@ -52,9 +52,8 @@ class _StatsGraphState extends State<StatsGraph> {
 
   int _getReviewedRecords(Iterable<Record> records, DateTime day) {
     return records
-        .where((element) =>
-            (element.lastReview.isSameDate(day)) &&
-            !element.known)
+        .where(
+            (element) => (element.lastReview.isSameDate(day)) && !element.known)
         .length;
   }
 
