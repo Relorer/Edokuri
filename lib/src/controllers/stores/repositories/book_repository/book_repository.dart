@@ -3,6 +3,7 @@ import 'package:freader/objectbox.g.dart' as box;
 import 'package:freader/src/core/utils/datetime_extensions.dart';
 import 'package:freader/src/models/models.dart';
 import 'package:mobx/mobx.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 part 'book_repository.g.dart';
 
@@ -36,10 +37,22 @@ abstract class BookRepositoryBase with Store {
   void putBook(Book book) {
     book.user.target = userRepository.currentUser;
     store.box<Book>().put(book);
+    Fluttertoast.showToast(
+      msg: "Book is added",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      fontSize: 15.0
+    );
   }
 
   void removeBook(Book book) {
     store.box<Book>().remove(book.id);
+    Fluttertoast.showToast(
+      msg: "Book is removed",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      fontSize: 15.0
+    );
   }
 
   int readingTimeForTodayInMinutes() {
