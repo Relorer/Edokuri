@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/generated/locale.dart';
+import 'package:freader/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
 import 'package:freader/src/models/book.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_content.dart';
@@ -32,6 +34,7 @@ class BookCard extends StatelessWidget {
 
   void _removeBook(BuildContext context) {
     context.read<BookRepository>().removeBook(book);
+    getIt<ToastController>().showDefaultTost("Book is removed");
     Navigator.pop(context);
   }
 

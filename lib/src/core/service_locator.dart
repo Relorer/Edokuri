@@ -22,7 +22,7 @@ import '../models/models.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
-  getIt.registerFactory(() => FileController(getIt<BookRepository>()));
+  getIt.registerFactory(() => FileController(getIt<BookRepository>(), getIt<ToastController>()));
   getIt.registerFactory(() => TTSController());
   getIt.registerFactory(() => LibrarySortController(getIt<RecordRepository>()));
   getIt.registerFactory(() => RecordsSortController(getIt<RecordRepository>()));
