@@ -8,7 +8,6 @@ class FileController {
   final EpubService _epubService = EpubService();
   final FilePickerService _filePickerService = FilePickerService();
   final ToastController _toastController;
-
   final BookRepository _bookRepository;
 
   FileController(this._bookRepository, this._toastController);
