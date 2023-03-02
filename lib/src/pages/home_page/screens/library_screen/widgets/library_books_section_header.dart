@@ -1,6 +1,5 @@
 import 'package:freader/generated/locale.dart';
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:freader/src/controllers/stores/sort_controllers/library_sort_controller/library_sort_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/controllers/common/file_controller/file_controller.dart';
@@ -17,7 +16,6 @@ class LibraryBooksSectionHeader extends StatelessWidget {
 
   _upload(BuildContext context) {
     getIt<FileController>().getBookFromUser();
-    getIt<ToastController>().showDefaultTost("Book is added");
     Navigator.pop(context);
   }
 

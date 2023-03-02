@@ -7,11 +7,11 @@ import 'services/file_picker_service.dart';
 class FileController {
   final EpubService _epubService = EpubService();
   final FilePickerService _filePickerService = FilePickerService();
-  final ToastController _toastController = ToastController();
+  final ToastController _toastController;
 
-  final BookRepository bookRepository;
+  final BookRepository _bookRepository;
 
-  FileController(this.bookRepository);
+  FileController(this._bookRepository, this._toastController);
 
   Future getBookFromUser() async {
     var files = await _filePickerService.getFiles(allowedExtensions: ["epub"]);
@@ -20,7 +20,8 @@ class FileController {
       if (book.words.isEmpty) {
         return _toastController.showDefaultTost("The book can't be empty");
       }
-      bookRepository.putBook(book);
+      _bookRepository.putBook(book);
+      _toastController.showDefaultTost("Book is added");
     }
   }
 }
