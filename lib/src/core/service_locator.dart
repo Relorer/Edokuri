@@ -3,6 +3,7 @@ import 'package:freader/src/controllers/common/file_controller/file_controller.d
 import 'package:freader/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:freader/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
 import 'package:freader/src/controllers/common/settings_controller/settings_controller.dart';
+import 'package:freader/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:freader/src/controllers/common/translator_controller/translator_controller_factory.dart';
 import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
@@ -25,6 +26,7 @@ Future<void> setupLocator() async {
   getIt.registerFactory(() => TTSController());
   getIt.registerFactory(() => LibrarySortController(getIt<RecordRepository>()));
   getIt.registerFactory(() => RecordsSortController(getIt<RecordRepository>()));
+  getIt.registerFactory(() => ToastController());
   getIt.registerFactoryParam<ReaderController, Book, void>((book, _) =>
       ReaderController(
           getIt<RecordRepository>(), getIt<BookRepository>(), book));

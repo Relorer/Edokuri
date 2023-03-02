@@ -1,6 +1,6 @@
 import 'package:fluttertoast/fluttertoast.dart';
 
-class ToastService {
+class ToastController {
   void showDefaultTost(String message) {
     Fluttertoast.showToast(
         msg: message,
