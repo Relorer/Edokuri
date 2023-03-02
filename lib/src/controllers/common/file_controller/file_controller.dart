@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
 
 import 'services/epub_service.dart';
@@ -14,7 +15,7 @@ class FileController {
   Future getBookFromUser() async {
     var files = await _filePickerService.getFiles(allowedExtensions: ["epub"]);
     for (var file in files) {
-      var book = await _epubService.readBook(file);
+      var book = await compute(_epubService.readBook, file);
       bookRepository.putBook(book);
     }
   }
