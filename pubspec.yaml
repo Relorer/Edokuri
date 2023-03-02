@@ -72,7 +72,6 @@ dependencies:
   smooth_page_indicator:
     git: https://github.com/Relorer/smooth_page_indicator.git
   text_to_speech: ^0.2.3
-  swipable_stack: ^2.0.0
   numberpicker: ^2.1.1
   direct_select: ^2.0.0
   group_button: ^5.2.2
