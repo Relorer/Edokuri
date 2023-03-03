@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/appwrite/appwrite_controller.dart';
+import 'package:freader/src/controllers/stores/supabase/supabase_controller.dart';
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/set_repository/set_repository.dart';
@@ -74,15 +74,15 @@ class _AppState extends State<App> {
         ],
         child: Observer(
           builder: (BuildContext context) {
-            var appwrite = getIt<AppwriteController>();
-            log(appwrite.isAuthorized.toString());
+            var supabase = getIt<SupabaseController>();
+            log(supabase.isAuthorized.toString());
             return MaterialApp(
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
               locale: context.locale,
               theme: basicTheme(),
               debugShowCheckedModeBanner: false,
-              home: appwrite.isAuthorized ? const HomePage() : const AuthPage(),
+              home: supabase.isAuthorized ? const HomePage() : const AuthPage(),
             );
           },
         ));

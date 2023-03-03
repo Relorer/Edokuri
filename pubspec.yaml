@@ -75,9 +75,9 @@ dependencies:
   direct_select: ^2.0.0
   group_button: ^5.2.2
   shared_preferences: ^2.0.15
-  appwrite: ^8.2.0
   flutter_config: ^2.0.0
   blur: ^3.1.0
+  supabase_flutter: ^1.4.1
   
 dev_dependencies:
   flutter_test:

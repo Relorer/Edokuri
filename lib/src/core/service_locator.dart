@@ -5,7 +5,8 @@ import 'package:freader/src/controllers/common/reading_timer_controller/reading_
 import 'package:freader/src/controllers/common/settings_controller/settings_controller.dart';
 import 'package:freader/src/controllers/common/translator_controller/translator_controller_factory.dart';
 import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
-import 'package:freader/src/controllers/stores/appwrite/appwrite_controller.dart';
+import 'package:freader/src/controllers/stores/supabase/supabase_controller.dart';
+import 'package:freader/src/controllers/stores/supabase/supabase_factory.dart';
 import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
@@ -61,5 +62,6 @@ Future<void> setupLocator() async {
       () => RecordRepository(getIt<Store>(), getIt<UserRepository>()),
       dependsOn: [Store]);
 
-  getIt.registerSingleton<AppwriteController>(AppwriteController());
+  getIt.registerSingletonAsync<SupabaseController>(
+      () => SupabaseFactory().getSupabaseController());
 }

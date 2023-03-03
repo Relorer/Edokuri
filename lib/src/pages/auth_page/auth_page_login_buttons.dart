@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/appwrite/appwrite_controller.dart';
+import 'package:freader/src/controllers/stores/supabase/supabase_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/pages/auth_page/auth_page_button.dart';
 import 'package:freader/src/theme/svgs.dart';
@@ -10,7 +10,7 @@ class AuthPageLoginButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appwrite = getIt<AppwriteController>();
+    var supabase = getIt<SupabaseController>();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -18,7 +18,7 @@ class AuthPageLoginButtons extends StatelessWidget {
         AuthPageButton(
           svg: googleLogoSvg,
           text: "Sign in with Google",
-          onTap: appwrite.googleAuth,
+          onTap: supabase.googleAuth,
         ),
         const SizedBox(
           height: doubleDefaultMargin,
@@ -28,13 +28,13 @@ class AuthPageLoginButtons extends StatelessWidget {
           text: "Sign in with GitHub",
           bg: const Color(0xFF444444),
           textColor: Colors.white,
-          onTap: appwrite.githubAuth,
+          onTap: supabase.githubAuth,
         ),
         const SizedBox(
           height: doubleDefaultMargin,
         ),
         TextButton(
-          onPressed: appwrite.skipAuth,
+          onPressed: supabase.skipAuth,
           child: const Text(
             "Skip",
             style: TextStyle(color: Colors.white),
