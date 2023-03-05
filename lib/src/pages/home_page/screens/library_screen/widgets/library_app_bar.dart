@@ -40,13 +40,14 @@ class LibraryAppBar extends StatelessWidget {
                       return AppBarTitle(
                         leftText: LocaleKeys.today.tr(),
                         rightText: LocaleKeys.short_min.tr(namedArgs: {
-                          "count": (context
-                                      .read<BookRepository>()
-                                      .readingTimeForTodayInMinutes() +
-                                  context
-                                      .read<UserRepository>()
-                                      .learningTimeForTodayInMinutes())
-                              .toString()
+                          "count": "0"
+                          // (context
+                          //             .read<BookRepository>()
+                          //             .readingTimeForTodayInMinutes() +
+                          //         context
+                          //             .read<UserRepository>()
+                          //             .learningTimeForTodayInMinutes())
+                          //     .toString()
                         }),
                       );
                     }),

@@ -122,14 +122,13 @@ abstract class ReaderControllerBase with Store {
     Future.forEach<Piece>(
         words,
         (element) => Future(() => recordRepository.putRecord(Record(
-            original: element.content.toLowerCase(),
-            originalLowerCase: element.content.toLowerCase(),
-            transcription: "",
-            synonyms: [],
-            known: true,
-            creationDate: creationDate,
-            lastReview: DateTime(0),
-            reviewNumber: 0))));
+              original: element.content.toLowerCase(),
+              originalLowerCase: element.content.toLowerCase(),
+              transcription: "",
+              synonyms: [],
+              known: true,
+              creationDate: creationDate,
+            ))));
   }
 
   @action
@@ -137,7 +136,7 @@ abstract class ReaderControllerBase with Store {
     chaptersContent = [];
     final List<List<String>> temp = [];
     for (var element in book.chapters) {
-      temp.add(await _paginate(pageSize, element.content, style));
+      temp.add(await _paginate(pageSize, element, style));
     }
     currentPageIndex = currentPageIndex < 0
         ? _getPageIndexByChapterAndPosition(
@@ -195,7 +194,7 @@ abstract class ReaderControllerBase with Store {
   }
 
   String getSentence(int indexInSentence) {
-    final chapterContent = book.chapters[currentChapter].content;
+    final chapterContent = book.chapters[currentChapter];
 
     final indexInSentenceInChapter =
         indexInSentence + getCurrentPositionInChapter();

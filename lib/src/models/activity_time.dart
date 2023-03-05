@@ -1,8 +1,4 @@
-import 'package:objectbox/objectbox.dart';
-
-@Entity()
 class ActivityTime {
-  int id;
   final DateTime start;
   final DateTime end;
 
@@ -10,7 +6,17 @@ class ActivityTime {
 
   ActivityTime(
     this.start,
-    this.end, {
-    this.id = 0,
-  });
+    this.end,
+  );
+
+  Map<String, Object?> toJson() {
+    return {
+      'start': start,
+      'end': end,
+    };
+  }
+
+  static ActivityTime fromJson(Map<String, Object> json) {
+    return ActivityTime(json['start'] as DateTime, json['end'] as DateTime);
+  }
 }

@@ -18,10 +18,10 @@ class ReadingTimerController {
 
   stopReadingTimer() {
     if (_startReading != null) {
-      book.readTimes.add(ActivityTime(_startReading!, DateTime.now()));
-      bookRepository.putBook(book);
-      _startReading = null;
-      userRepository.addTimeMarkForToday();
+      // book.readTimes.add(ActivityTime(_startReading!, DateTime.now()));
+      // bookRepository.putBook(book);
+      // _startReading = null;
+      // userRepository.addTimeMarkForToday();
     }
   }
 }

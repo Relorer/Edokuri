@@ -97,7 +97,8 @@ class PersonAppBar extends StatelessWidget {
                         final readingTimes = context
                             .read<BookRepository>()
                             .books
-                            .map((element) => element.readingTimeInMinutes);
+                            .map((element) =>
+                                1); //element.readingTimeInMinutes);
                         final readingTime = readingTimes.isNotEmpty
                             ? readingTimes.reduce((t1, t2) => t1 + t2) / 60
                             : 0;
@@ -119,10 +120,10 @@ class PersonAppBar extends StatelessWidget {
                                     .toString()),
                             PersonAppBarLine("reading:",
                                 "${readingTime.toStringAsFixed(1)}H"),
-                            PersonAppBarLine("training:",
-                                "${(context.read<UserRepository>().learningTimeForTodayInMinutes() / 60).toStringAsFixed(1)}H"),
-                            PersonAppBarLine("current streak:",
-                                "${context.read<UserRepository>().getStreak()}-days"),
+                            // PersonAppBarLine("training:",
+                            //     "${(context.read<UserRepository>().learningTimeForTodayInMinutes() / 60).toStringAsFixed(1)}H"),
+                            // PersonAppBarLine("current streak:",
+                            //     "${context.read<UserRepository>().getStreak()}-days"),
                           ],
                         );
                       })

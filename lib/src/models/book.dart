@@ -1,15 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:freader/src/models/activity_time.dart';
-import 'package:freader/src/models/models.dart';
-import 'package:objectbox/objectbox.dart';
-
-@Entity()
 class Book {
-  int id;
-
-  final user = ToOne<User>();
-
   String? title;
   String? author;
   int currentChapter;
@@ -17,39 +8,49 @@ class Book {
   int currentCompletedChapter;
   int currentCompletedPositionInChapter;
   List<String> words;
-
+  String? fileId;
   Uint8List? cover;
 
-  final chapters = ToMany<Chapter>();
-  final readTimes = ToMany<ActivityTime>();
+  List<String> chapters = [];
 
-  Book({
-    this.id = 0,
-    required this.title,
-    required this.author,
-    required this.currentChapter,
-    required this.currentCompletedChapter,
-    required this.currentCompletedPositionInChapter,
-    required this.currentPositionInChapter,
-    required this.words,
-    this.cover,
-  });
+  Book(
+      {required this.title,
+      required this.author,
+      required this.currentChapter,
+      required this.currentCompletedChapter,
+      required this.currentCompletedPositionInChapter,
+      required this.currentPositionInChapter,
+      required this.words,
+      this.cover,
+      this.fileId});
 
-  int get readingTimeInMinutes => readTimes.isNotEmpty
-      ? readTimes
-              .map((element) => element.timespan)
-              .reduce((t1, t2) => t1 + t2) /
-          1000 ~/
-          60
-      : 0;
-}
+  Map<String, Object?> toJson() {
+    return {
+      'title': title,
+      'author': author,
+      'currentChapter': currentChapter,
+      'currentCompletedChapter': currentCompletedChapter,
+      'currentCompletedPositionInChapter': currentCompletedPositionInChapter,
+      'words': words,
+      'cover': cover?.map((e) => e).toList(),
+      'fileId': fileId
+    };
+  }
 
-@Entity()
-class Chapter {
-  int id;
-  String content;
-
-  Chapter({this.id = 0, required this.content});
+  static Book fromJson(Map<String, Object> json) {
+    return Book(
+      title: json['title'] as String,
+      author: json['author'] as String,
+      currentChapter: json['currentChapter'] as int,
+      currentCompletedChapter: json['currentCompletedChapter'] as int,
+      currentCompletedPositionInChapter:
+          json['currentCompletedPositionInChapter'] as int,
+      currentPositionInChapter: json['currentPositionInChapter'] as int,
+      words: json['words'] as List<String>,
+      cover: json['cover'] as Uint8List,
+      fileId: json['fileId'] as String,
+    );
+  }
 }
 
 class Paragraph {

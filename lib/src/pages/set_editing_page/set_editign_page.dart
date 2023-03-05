@@ -4,7 +4,7 @@ import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:freader/src/core/widgets/sliver_single_child.dart';
 import 'package:freader/src/core/widgets/text_form_fields/text_form_field_default.dart';
 import 'package:freader/src/core/widgets/second_background_empty_app_bar.dart';
-import 'package:freader/src/models/set.dart';
+import 'package:freader/src/models/set_records.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +31,7 @@ class SetEditingPageState extends State<SetEditingPage> {
 
   void _saveHandler(BuildContext context) {
     final SetRecords setForSave =
-        widget.set == null ? SetRecords(name: controller.text) : widget.set!;
+        widget.set == null ? SetRecords(controller.text) : widget.set!;
     setForSave.name = controller.text;
 
     context.read<SetRepository>().putSet(setForSave);

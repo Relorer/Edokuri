@@ -1,6 +1,9 @@
+import 'dart:developer';
+
+import 'package:freader/src/controllers/stores/appwrite/appwrite_controller.dart';
 import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/objectbox.g.dart' as box;
 import 'package:freader/src/models/models.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:mobx/mobx.dart';
 
 part 'set_repository.g.dart';
@@ -8,13 +11,16 @@ part 'set_repository.g.dart';
 class SetRepository = SetRepositoryBase with _$SetRepository;
 
 abstract class SetRepositoryBase with Store {
-  final box.Store store;
+  final String collectionId =
+      FlutterConfig.get('APPWRITE_COLLECTION_SETRECORDS');
+
+  final AppwriteController appwrite;
   final UserRepository userRepository;
 
   ObservableList<SetRecords> sets = ObservableList<SetRecords>.of([]);
 
-  SetRepositoryBase(this.store, this.userRepository) {
-    getSets(store).forEach(setNewList);
+  SetRepositoryBase(this.appwrite, this.userRepository) {
+    getSets();
   }
 
   @action
@@ -23,21 +29,21 @@ abstract class SetRepositoryBase with Store {
     sets.addAll(newSets);
   }
 
-  Stream<List<SetRecords>> getSets(box.Store store) {
-    final query = store
-        .box<SetRecords>()
-        .query(box.SetRecords_.user.equals(userRepository.currentUser.id));
-    return query
-        .watch(triggerImmediately: true)
-        .map<List<SetRecords>>((query) => query.find());
+  void getSets() {
+    appwrite.realtime
+        .subscribe(["collections.[$collectionId]"])
+        .stream
+        .listen((event) {
+          log(event.payload.toString());
+        });
   }
 
   void putSet(SetRecords set) {
-    set.user.target = userRepository.currentUser;
-    store.box<SetRecords>().put(set);
+    // set.user.target = userRepository.currentUser;
+    // store.box<SetRecords>().put(set);
   }
 
   void removeSet(SetRecords set) {
-    store.box<SetRecords>().remove(set.id);
+    // store.box<SetRecords>().remove(set.id);
   }
 }

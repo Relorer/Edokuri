@@ -38,7 +38,7 @@ class EpubService {
       var content = _stripHtmlIfNeeded(doc.body!.innerHtml).trim();
       if (content.isNotEmpty) {
         words.addAll(getAllWords(content));
-        book.chapters.add(Chapter(content: content));
+        book.chapters.add(content);
       }
     }
 

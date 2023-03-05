@@ -6,7 +6,7 @@ import 'package:freader/src/controllers/stores/set_controller/set_controller.dar
 import 'package:freader/src/core/utils/records_list_extensions.dart';
 import 'package:freader/src/core/widgets/ellipsis_text.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
-import 'package:freader/src/models/set.dart';
+import 'package:freader/src/models/set_records.dart';
 import 'package:freader/src/pages/home_page/screens/person_screen/widgets/set_card/set_card_dialog.dart';
 import 'package:freader/src/pages/set_editing_page/set_editign_page.dart';
 import 'package:freader/src/pages/set_page/set_page.dart';

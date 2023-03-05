@@ -9,16 +9,16 @@ class LearningTimerController {
   LearningTimerController(this.userRepository);
 
   startReadingTimer() {
-    _startReading = DateTime.now();
+    // _startReading = DateTime.now();
   }
 
   stopReadingTimer() {
-    if (_startReading != null) {
-      userRepository.currentUser.learnTimes
-          .add(ActivityTime(_startReading!, DateTime.now()));
-      userRepository.updateUserInfo();
-      _startReading = null;
-      userRepository.addTimeMarkForToday();
-    }
+    // if (_startReading != null) {
+    //   userRepository.currentUser.learnTimes
+    //       .add(ActivityTime(_startReading!, DateTime.now()));
+    //   userRepository.updateUserInfo();
+    //   _startReading = null;
+    //   userRepository.addTimeMarkForToday();
+    // }
   }
 }
