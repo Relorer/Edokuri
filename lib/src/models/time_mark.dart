@@ -1,10 +1,12 @@
 class TimeMark {
+  String id;
   DateTime mark;
 
-  TimeMark(this.mark);
+  TimeMark(this.mark, {this.id = ''});
 
   Map<String, Object?> toJson() {
     return {
+      'id': id,
       'mark': mark,
     };
   }
@@ -12,6 +14,7 @@ class TimeMark {
   static TimeMark fromJson(Map<String, Object> json) {
     return TimeMark(
       json['mark'] as DateTime,
+      id: json['id'] as String,
     );
   }
 }

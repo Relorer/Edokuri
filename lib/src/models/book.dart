@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 class Book {
+  String id;
   String? title;
   String? author;
   int currentChapter;
@@ -22,10 +23,12 @@ class Book {
       required this.currentPositionInChapter,
       required this.words,
       this.cover,
-      this.fileId});
+      this.fileId,
+      this.id = ''});
 
   Map<String, Object?> toJson() {
     return {
+      'id': id,
       'title': title,
       'author': author,
       'currentChapter': currentChapter,
@@ -49,6 +52,7 @@ class Book {
       words: json['words'] as List<String>,
       cover: json['cover'] as Uint8List,
       fileId: json['fileId'] as String,
+      id: json['id'] as String,
     );
   }
 }
