@@ -16,7 +16,7 @@ class SetRecords {
     };
   }
 
-  static SetRecords fromJson(Map<String, Object> json) {
+  static SetRecords fromJson(Map<String, dynamic> json) {
     return SetRecords(json['name'] as String,
         recordIds: json['name'] as List<String>, id: json['id'] as String);
   }

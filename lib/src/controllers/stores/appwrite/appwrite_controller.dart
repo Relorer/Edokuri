@@ -31,52 +31,6 @@ abstract class AppwriteControllerBase with Store {
     updateStatus();
   }
 
-  Future<awModels.Document> createDocument(
-      {required String collectionId,
-      required String documentId,
-      required Map data,
-      List<String>? permissions}) async {
-    return databases.createDocument(
-        databaseId: databaseId,
-        collectionId: collectionId,
-        documentId: documentId,
-        data: data);
-  }
-
-  Future<awModels.Document> updateDocument(
-      {required String collectionId,
-      required String documentId,
-      required Map data,
-      List<String>? permissions}) async {
-    return databases.updateDocument(
-        databaseId: databaseId,
-        collectionId: collectionId,
-        documentId: documentId,
-        data: data);
-  }
-
-  Future<awModels.Document> getDocument(
-      {required String collectionId,
-      required String documentId,
-      required Map data,
-      List<String>? permissions}) async {
-    return databases.getDocument(
-        databaseId: databaseId,
-        collectionId: collectionId,
-        documentId: documentId);
-  }
-
-  Future<dynamic> deleteDocument(
-      {required String collectionId,
-      required String documentId,
-      required Map data,
-      List<String>? permissions}) async {
-    return databases.deleteDocument(
-        databaseId: databaseId,
-        collectionId: collectionId,
-        documentId: documentId);
-  }
-
   @action
   Future googleAuth() async {
     await _runWithUpdate(

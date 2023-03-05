@@ -11,7 +11,7 @@ class TimeMark {
     };
   }
 
-  static TimeMark fromJson(Map<String, Object> json) {
+  static TimeMark fromJson(Map<String, dynamic> json) {
     return TimeMark(
       json['mark'] as DateTime,
       id: json['id'] as String,

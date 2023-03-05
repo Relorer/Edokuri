@@ -1,3 +1,11 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_config/flutter_config.dart';
+import 'package:freader/src/controllers/common/cache_controller/cache_controller.dart';
 import 'package:freader/src/controllers/stores/appwrite/appwrite_controller.dart';
 import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:freader/src/core/utils/datetime_extensions.dart';
@@ -9,13 +17,17 @@ part 'book_repository.g.dart';
 class BookRepository = BookRepositoryBase with _$BookRepository;
 
 abstract class BookRepositoryBase with Store {
+  final String collectionId = FlutterConfig.get('APPWRITE_COLLECTION_BOOKS');
+  final String storageId = FlutterConfig.get('APPWRITE_STORAGE_BOOKS');
+
   final UserRepository userRepository;
   final AppwriteController appwrite;
+  final CacheController cache;
 
   ObservableList<Book> books = ObservableList<Book>.of([]);
 
-  BookRepositoryBase(this.appwrite, this.userRepository) {
-    // getBooks(store).forEach(setNewList);
+  BookRepositoryBase(this.appwrite, this.userRepository, this.cache) {
+    getBooks();
   }
 
   @action
@@ -24,22 +36,63 @@ abstract class BookRepositoryBase with Store {
     books.addAll(newBooks);
   }
 
-  // Stream<List<Book>> getBooks() {
-  // final query = store
-  //     .box<Book>()
-  //     .query(box.Book_.user.equals(userRepository.currentUser.id));
-  // return query
-  //     .watch(triggerImmediately: true)
-  //     .map<List<Book>>((query) => query.find());
-  // }
+  void getBooks() async {
+    books.addAll((await appwrite.databases.listDocuments(
+            databaseId: appwrite.databaseId, collectionId: collectionId))
+        .documents
+        .map((e) => Book.fromJson(e.data)));
 
-  void putBook(Book book) {
-    // book.user.target = userRepository.currentUser;
-    // store.box<Book>().put(book);
+    log(books.length.toString());
+
+    appwrite.realtime
+        .subscribe([
+          "databases.${appwrite.databaseId}.collections.$collectionId.documents"
+        ])
+        .stream
+        .listen((event) {
+          log("test");
+        });
   }
 
-  void removeBook(Book book) {
-    // store.box<Book>().remove(book.id);
+  void putBook(Book book) async {
+    Document? res;
+    try {
+      book.id = ID.unique();
+      book.fileId = ID.unique();
+
+      res = await appwrite.databases.createDocument(
+          databaseId: appwrite.databaseId,
+          collectionId: collectionId,
+          documentId: book.id,
+          data: book.toJson());
+
+      List<int> byteArray = json.encode(book.chapters).codeUnits;
+
+      final file = InputFile(
+          filename: book.title, contentType: "book", bytes: byteArray);
+
+      await appwrite.storage
+          .createFile(bucketId: storageId, fileId: book.fileId!, file: file);
+
+      await cache.putFile(byteArray, book.fileId!);
+
+      log(res.$id);
+    } catch (e) {
+      log(e.toString());
+      if (res != null) {
+        removeBook(book);
+      }
+    }
+  }
+
+  void removeBook(Book book) async {
+    await appwrite.databases.deleteDocument(
+        databaseId: appwrite.databaseId,
+        collectionId: collectionId,
+        documentId: book.id);
+    await appwrite.storage
+        .deleteFile(bucketId: storageId, fileId: book.fileId!);
+    cache.removeFile(book.fileId!);
   }
 
   int readingTimeForTodayInMinutes() {

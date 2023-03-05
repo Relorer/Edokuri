@@ -48,7 +48,7 @@ class Record {
     };
   }
 
-  static Record fromJson(Map<String, Object> jsonMap) {
+  static Record fromJson(Map<String, dynamic> jsonMap) {
     return Record(
       id: jsonMap['id'] as String,
       original: jsonMap['original'] as String,

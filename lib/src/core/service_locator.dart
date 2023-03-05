@@ -1,3 +1,4 @@
+import 'package:freader/src/controllers/common/cache_controller/cache_controller.dart';
 import 'package:freader/src/controllers/common/file_controller/file_controller.dart';
 import 'package:freader/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:freader/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
@@ -42,11 +43,12 @@ Future<void> setupLocator() async {
 
   //repositories
 
+  getIt.registerSingleton<CacheController>(CacheController());
   getIt.registerSingleton<AppwriteController>(AppwriteController());
 
   getIt.registerSingleton(UserRepository(getIt<AppwriteController>()));
-  getIt.registerSingleton(
-      BookRepository(getIt<AppwriteController>(), getIt<UserRepository>()));
+  getIt.registerSingleton(BookRepository(getIt<AppwriteController>(),
+      getIt<UserRepository>(), getIt<CacheController>()));
   getIt.registerSingleton(
       SetRepository(getIt<AppwriteController>(), getIt<UserRepository>()));
   getIt.registerSingleton(

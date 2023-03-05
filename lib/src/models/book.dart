@@ -40,7 +40,7 @@ class Book {
     };
   }
 
-  static Book fromJson(Map<String, Object> json) {
+  static Book fromJson(Map<String, dynamic> json) {
     return Book(
       title: json['title'] as String,
       author: json['author'] as String,
