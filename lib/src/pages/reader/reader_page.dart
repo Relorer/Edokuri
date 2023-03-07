@@ -1,6 +1,7 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:freader/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
@@ -9,7 +10,6 @@ import 'package:freader/src/models/book.dart';
 import 'package:freader/src/pages/reader/widgets/reader_content_view.dart';
 import 'package:freader/src/pages/reader/widgets/reader_footer_panel.dart';
 import 'package:freader/src/pages/reader/widgets/reader_head_panel.dart';
-import 'package:freader/src/theme/system_bars.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -71,7 +71,6 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   void didChangeMetrics() {
     EasyDebounce.debounce('load-content', const Duration(seconds: 1), () {
       if (mounted) {
-        setUpBarDefaultStyles(Theme.of(context).colorScheme.background);
         final newOrientation = MediaQuery.of(context).orientation;
         if (_currentOrientation != newOrientation) {
           _loadContent(context);
@@ -99,8 +98,6 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    setUpBarDefaultStyles(Theme.of(context).colorScheme.background);
-
     return MultiProvider(
       providers: [
         Provider<ReaderController>(create: (_) => reader),
@@ -108,27 +105,32 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
       child: RecordWithInfoCard(
         bottomPadding: 0,
         showTranslationSourceSentences: false,
-        body: Scaffold(
-            appBar: AppBar(
-              toolbarHeight: 0,
-              backgroundColor: Theme.of(context).colorScheme.background,
-              elevation: 0,
-            ),
-            body: SafeArea(
-              child: Container(
-                color: Theme.of(context).colorScheme.background,
-                child: Column(
-                  children: [
-                    const ReaderHeadPanel(),
-                    Expanded(
-                      key: _containerKey,
-                      child: const ReaderContentView(),
-                    ),
-                    const ReaderFooterPanel(),
-                  ],
-                ),
+        body: AnnotatedRegion(
+          value: SystemUiOverlayStyle(
+              systemNavigationBarColor:
+                  Theme.of(context).colorScheme.background),
+          child: Scaffold(
+              appBar: AppBar(
+                toolbarHeight: 0,
+                backgroundColor: Theme.of(context).colorScheme.background,
+                elevation: 0,
               ),
-            )),
+              body: SafeArea(
+                child: Container(
+                  color: Theme.of(context).colorScheme.background,
+                  child: Column(
+                    children: [
+                      const ReaderHeadPanel(),
+                      Expanded(
+                        key: _containerKey,
+                        child: const ReaderContentView(),
+                      ),
+                      const ReaderFooterPanel(),
+                    ],
+                  ),
+                ),
+              )),
+        ),
       ),
     );
   }
