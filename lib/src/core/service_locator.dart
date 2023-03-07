@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freader/objectbox.g.dart';
 import 'package:freader/src/controllers/common/file_controller/file_controller.dart';
 import 'package:freader/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
@@ -6,7 +7,7 @@ import 'package:freader/src/controllers/common/settings_controller/settings_cont
 import 'package:freader/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:freader/src/controllers/common/translator_controller/translator_controller_factory.dart';
 import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
-import 'package:freader/src/controllers/stores/appwrite/appwrite_controller.dart';
+import 'package:freader/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:freader/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
@@ -23,7 +24,8 @@ import '../models/models.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
-  getIt.registerFactory(() => FileController(getIt<BookRepository>(), getIt<ToastController>()));
+  getIt.registerFactory(
+      () => FileController(getIt<BookRepository>(), getIt<ToastController>()));
   getIt.registerFactory(() => TTSController());
   getIt.registerFactory(() => LibrarySortController(getIt<RecordRepository>()));
   getIt.registerFactory(() => RecordsSortController(getIt<RecordRepository>()));
@@ -47,7 +49,7 @@ Future<void> setupLocator() async {
       () => TranslatorControllerFactory().getTranslatorController());
 
   getIt.registerSingletonAsync<SettingsController>(
-      () => SrttingsControllerFactory().getSettingsController());
+      () => SettingsControllerFactory().getSettingsController());
 
   //repositories
   getIt.registerSingletonAsync<Store>(() => StoreFactory().getDBController());
@@ -63,5 +65,7 @@ Future<void> setupLocator() async {
       () => RecordRepository(getIt<Store>(), getIt<UserRepository>()),
       dependsOn: [Store]);
 
-  getIt.registerSingleton<AppwriteController>(AppwriteController());
+  getIt.registerSingleton(const FlutterSecureStorage());
+
+  getIt.registerSingleton<PocketbaseController>(PocketbaseController());
 }

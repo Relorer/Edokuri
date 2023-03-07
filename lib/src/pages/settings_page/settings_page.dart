@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/appwrite/appwrite_controller.dart';
+import 'package:freader/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:freader/src/core/widgets/button_with_icon.dart';
@@ -40,7 +40,7 @@ class SettingsPageState extends State<SettingsPage> {
               ButtonWithIcon(
                 text: "Sign out",
                 onTap: () async {
-                  await getIt<AppwriteController>().logout();
+                  await getIt<PocketbaseController>().logout();
                   if (context.mounted) {
                     Navigator.pop(context);
                   }

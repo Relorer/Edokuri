@@ -52,8 +52,6 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-
-        manifestPlaceholders.appwriteCallback = "appwrite-callback-" + project.env.get("APPWRITE_PROJECT_ID")
     }
 
     buildTypes {
