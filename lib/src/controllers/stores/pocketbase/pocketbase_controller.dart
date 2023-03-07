@@ -52,12 +52,12 @@ abstract class PocketbaseControllerBase with Store {
 
   @action
   Future googleAuth() async {
-    _authWithProvider("google");
+    await _authWithProvider("google");
   }
 
   @action
   Future githubAuth() async {
-    _authWithProvider("github");
+    await _authWithProvider("github");
   }
 
   @action
