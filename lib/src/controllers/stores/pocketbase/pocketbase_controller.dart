@@ -13,12 +13,14 @@ part 'pocketbase_controller.g.dart';
 class PocketbaseController = PocketbaseControllerBase
     with _$PocketbaseController;
 
-final redirectUri = FlutterConfig.get("POCKETBASE_OAUTH2_REDIRECT_URL");
-const callbackUrlScheme = "com.example.edokuri";
+final pocketbaseUrl = FlutterConfig.get("POCKETBASE_URL");
+final redirectUri = "$pocketbaseUrl/auth-redirect";
+const callbackUrlScheme = "https";
+const authTokenKey = "auth_token_key";
 
 abstract class PocketbaseControllerBase with Store {
   final secureStorage = getIt<FlutterSecureStorage>();
-  final pb = PocketBase(FlutterConfig.get("POCKETBASE_URL"));
+  final pb = PocketBase(pocketbaseUrl);
 
   @observable
   bool isAuthorized = false;
@@ -32,12 +34,12 @@ abstract class PocketbaseControllerBase with Store {
         "model": e.model,
       });
 
-      secureStorage.write(key: "pb_auth", value: encoded);
+      secureStorage.write(key: authTokenKey, value: encoded);
     });
   }
 
   Future load() async {
-    final String? raw = await secureStorage.read(key: "pb_auth");
+    final String? raw = await secureStorage.read(key: authTokenKey);
     if (raw != null && raw.isNotEmpty) {
       final decoded = jsonDecode(raw);
       final token = (decoded as Map<String, dynamic>)["token"] as String? ?? "";
@@ -50,23 +52,13 @@ abstract class PocketbaseControllerBase with Store {
 
   @action
   Future googleAuth() async {
-    final authMethods = await pb.collection("users").listAuthMethods();
-    final google = authMethods.authProviders
-        .where((am) => am.name.toLowerCase() == "google")
-        .first;
-    final responseUrl = await FlutterWebAuth.authenticate(
-        url: "${google.authUrl}$redirectUri",
-        callbackUrlScheme: callbackUrlScheme);
-
-    final parsedUri = Uri.parse(responseUrl);
-    final code = parsedUri.queryParameters['code']!;
-    await pb
-        .collection("users")
-        .authWithOAuth2("google", code, google.codeVerifier, redirectUri);
+    _authWithProvider("google");
   }
 
   @action
-  Future githubAuth() async {}
+  Future githubAuth() async {
+    _authWithProvider("github");
+  }
 
   @action
   Future skipAuth() async {}
@@ -74,5 +66,23 @@ abstract class PocketbaseControllerBase with Store {
   @action
   Future logout() async {
     pb.authStore.clear();
+  }
+
+  Future _authWithProvider(String providerName) async {
+    try {
+      final authMethods = await pb.collection("users").listAuthMethods();
+      final provider = authMethods.authProviders
+          .where((am) => am.name.toLowerCase() == providerName)
+          .first;
+      final responseUrl = await FlutterWebAuth.authenticate(
+          url: "${provider.authUrl}$redirectUri",
+          callbackUrlScheme: callbackUrlScheme);
+      final parsedUri = Uri.parse(responseUrl);
+      final code = parsedUri.queryParameters['code']!;
+      await pb.collection("users").authWithOAuth2(
+          providerName, code, provider.codeVerifier, redirectUri);
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }
