@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:freader/src/core/widgets/section_dialog.dart';
-import 'package:freader/src/core/widgets/sliver_single_child.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/core/widgets/section_dialog.dart';
+import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class SectionHeader extends StatelessWidget {
   final Widget leftChild;

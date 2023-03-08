@@ -1,9 +1,9 @@
-import 'package:freader/generated/locale.dart';
+import 'package:edokuri/generated/locale.dart';
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/ellipsis_text.dart';
-import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_progress_bar.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/core/widgets/ellipsis_text.dart';
+import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_progress_bar.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class BookCardContent extends StatelessWidget {
   final String title;

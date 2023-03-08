@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/sort_controllers/base_sort_controller.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/controllers/stores/sort_controllers/base_sort_controller.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';
 
 class SortTypesList<Types extends Enum, ItemType,

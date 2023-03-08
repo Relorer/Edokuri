@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ProviderSlidingUpPanel extends StatelessWidget {

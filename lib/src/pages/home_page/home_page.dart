@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_with_info_card.dart';
-import 'package:freader/src/core/widgets/second_background_empty_app_bar.dart';
-import 'package:freader/src/pages/home_page/screens/library_screen/library_screen.dart';
-import 'package:freader/src/pages/home_page/screens/person_screen/person_screen.dart';
-import 'package:freader/src/pages/home_page/screens/records_screen/records_screen.dart';
-import 'package:freader/src/theme/theme.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_with_info_card.dart';
+import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
+import 'package:edokuri/src/pages/home_page/screens/library_screen/library_screen.dart';
+import 'package:edokuri/src/pages/home_page/screens/person_screen/person_screen.dart';
+import 'package:edokuri/src/pages/home_page/screens/records_screen/records_screen.dart';
+import 'package:edokuri/src/theme/theme.dart';
 import 'widget/home_page_navigation.dart';
 
 class HomePage extends StatefulWidget {

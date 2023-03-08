@@ -1,9 +1,9 @@
-import 'package:freader/src/core/utils/iterable_extensions.dart';
-import 'package:freader/src/models/models.dart';
+import 'package:edokuri/src/core/utils/iterable_extensions.dart';
+import 'package:edokuri/src/models/models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoMeaningsSection extends StatelessWidget {
   final List<Meaning> meanings;

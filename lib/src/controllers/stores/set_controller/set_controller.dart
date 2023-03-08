@@ -1,4 +1,4 @@
-import 'package:freader/src/models/models.dart';
+import 'package:edokuri/src/models/models.dart';
 
 class SetData {
   final SetRecords? set;

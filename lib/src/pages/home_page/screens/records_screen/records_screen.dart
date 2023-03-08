@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
-import 'package:freader/src/core/utils/records_list_extensions.dart';
-import 'package:freader/src/pages/set_page/set_screen.dart';
+import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:edokuri/src/core/utils/records_list_extensions.dart';
+import 'package:edokuri/src/pages/set_page/set_screen.dart';
 import 'package:provider/provider.dart';
 
 class RecordsScreen extends StatefulWidget {

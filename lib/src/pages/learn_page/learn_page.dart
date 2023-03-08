@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/models/models.dart';
-import 'package:freader/src/theme/theme.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class LearnPage extends StatefulWidget {
   final List<Record> records;

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:freader/src/models/models.dart';
+import 'package:edokuri/src/models/models.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 part 'book.g.dart';

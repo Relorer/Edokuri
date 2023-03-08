@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_with_info_card.dart';
-import 'package:freader/src/core/widgets/second_background_empty_app_bar.dart';
-import 'package:freader/src/pages/auth_page/auth_page_content.dart';
-import 'package:freader/src/theme/theme.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_with_info_card.dart';
+import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
+import 'package:edokuri/src/pages/auth_page/auth_page_content.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({Key? key}) : super(key: key);

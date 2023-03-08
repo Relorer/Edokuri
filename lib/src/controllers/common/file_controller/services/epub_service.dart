@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:epubx/epubx.dart';
-import 'package:freader/src/core/utils/string_utils.dart';
-import 'package:freader/src/models/models.dart';
+import 'package:edokuri/src/core/utils/string_utils.dart';
+import 'package:edokuri/src/models/models.dart';
 import 'package:html/parser.dart';
 import 'package:image/image.dart';
 

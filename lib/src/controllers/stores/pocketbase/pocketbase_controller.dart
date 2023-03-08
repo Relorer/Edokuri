@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
-import 'package:freader/src/core/service_locator.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pocketbase/pocketbase.dart';
 

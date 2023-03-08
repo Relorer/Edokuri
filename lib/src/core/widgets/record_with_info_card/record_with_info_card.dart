@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/common/translator_controller/translate_source.dart';
-import 'package:freader/src/controllers/common/translator_controller/translator_controller.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/core/service_locator.dart';
-import 'package:freader/src/models/models.dart';
-import 'package:freader/src/core/widgets/provider_sliding_up_panel.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_container.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_content.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_skeleton.dart';
-import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/core/widgets/provider_sliding_up_panel.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_container.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_content.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_skeleton.dart';
+import 'package:edokuri/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 

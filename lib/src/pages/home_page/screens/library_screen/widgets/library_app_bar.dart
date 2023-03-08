@@ -1,11 +1,11 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/generated/locale.dart';
+import 'package:edokuri/generated/locale.dart';
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/src/pages/home_page/screens/library_screen/widgets/app_bar_title.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
+import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/app_bar_title.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';
 
 import 'stats_graph/stats_graph.dart';

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/generated/locale.dart';
-import 'package:freader/src/controllers/common/toast_controller/toast_controller.dart';
-import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
-import 'package:freader/src/core/service_locator.dart';
-import 'package:freader/src/core/widgets/simple_card.dart';
-import 'package:freader/src/models/models.dart';
-import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_content.dart';
-import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_cover.dart';
-import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_dialog.dart';
-import 'package:freader/src/pages/reader/reader_page.dart';
-import 'package:freader/src/pages/set_page/set_page.dart';
+import 'package:edokuri/generated/locale.dart';
+import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/widgets/simple_card.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_content.dart';
+import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_cover.dart';
+import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_dialog.dart';
+import 'package:edokuri/src/pages/reader/reader_page.dart';
+import 'package:edokuri/src/pages/set_page/set_page.dart';
 import 'package:provider/provider.dart';
 
 class BookCard extends StatelessWidget {

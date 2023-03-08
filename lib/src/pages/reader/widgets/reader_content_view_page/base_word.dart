@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/models/models.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class BaseWord extends StatelessWidget {
   final Color color;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/section_headers/section_header_text.dart';
+import 'package:edokuri/src/core/widgets/section_headers/section_header_text.dart';
 
 class StudyingSectionHeader extends StatelessWidget {
   const StudyingSectionHeader({super.key});

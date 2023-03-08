@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme.dart';
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class HomePageNavigation extends StatelessWidget {
   final int currentIndex;

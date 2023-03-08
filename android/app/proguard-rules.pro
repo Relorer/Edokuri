@@ -1,1 +1,1 @@
--keep class com.example.edokuri.BuildConfig { *; }
+-keep class com.relorer.edokuri.BuildConfig { *; }

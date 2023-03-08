@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
-import 'package:freader/src/core/service_locator.dart';
+import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 
 class RecordInfoHeader extends StatelessWidget {
   final String title;

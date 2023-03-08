@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:freader/src/core/widgets/ellipsis_text.dart';
-import 'package:freader/src/core/widgets/simple_card.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/core/widgets/ellipsis_text.dart';
+import 'package:edokuri/src/core/widgets/simple_card.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class AuthPageButton extends StatelessWidget {
   final String svg;

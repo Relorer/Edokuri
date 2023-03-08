@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/pocketbase/pocketbase_controller.dart';
-import 'package:freader/src/core/service_locator.dart';
-import 'package:freader/src/pages/auth_page/auth_page_button.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/pages/auth_page/auth_page_button.dart';
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class AuthPageLoginButtons extends StatelessWidget {
   const AuthPageLoginButtons({super.key});

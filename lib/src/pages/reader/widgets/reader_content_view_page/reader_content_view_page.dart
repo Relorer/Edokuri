@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/core/utils/string_utils.dart';
-import 'package:freader/src/models/models.dart';
-import 'package:freader/src/models/models.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page/known_word.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page/reader_text_selection_controls.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page/saved_word.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page/unknown_word.dart';
-import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
-import 'package:freader/src/theme/theme.dart';
+import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/core/utils/string_utils.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/known_word.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/reader_text_selection_controls.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/saved_word.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/unknown_word.dart';
+import 'package:edokuri/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
+import 'package:edokuri/src/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class ReaderContentViewPage extends StatelessWidget {

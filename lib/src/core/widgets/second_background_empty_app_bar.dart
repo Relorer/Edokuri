@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class PhantomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color? color;

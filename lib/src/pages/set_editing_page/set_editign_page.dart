@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/repositories/set_repository/set_repository.dart';
-import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
-import 'package:freader/src/core/widgets/sliver_single_child.dart';
-import 'package:freader/src/core/widgets/text_form_fields/text_form_field_default.dart';
-import 'package:freader/src/core/widgets/second_background_empty_app_bar.dart';
-import 'package:freader/src/models/models.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/controllers/stores/repositories/set_repository/set_repository.dart';
+import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
+import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
+import 'package:edokuri/src/core/widgets/text_form_fields/text_form_field_default.dart';
+import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';
 
 class SetEditingPage extends StatefulWidget {

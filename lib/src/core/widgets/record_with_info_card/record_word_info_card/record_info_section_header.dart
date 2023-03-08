@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoSectionHeader extends StatelessWidget {
   final String title;

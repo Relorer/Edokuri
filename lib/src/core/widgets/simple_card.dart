@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class SimpleCard extends StatelessWidget {
   final Widget? child;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/models/models.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page/base_word.dart';
-import 'package:freader/src/theme/theme.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/base_word.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class UnknownWord extends StatelessWidget {
   final Piece word;

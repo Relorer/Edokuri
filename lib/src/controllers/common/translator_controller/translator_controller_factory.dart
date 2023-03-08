@@ -1,4 +1,4 @@
-import 'package:freader/src/controllers/common/translator_controller/translator_controller.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 
 class TranslatorControllerFactory {

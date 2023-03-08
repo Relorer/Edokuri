@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:freader/src/core/widgets/skeleton.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/core/widgets/skeleton.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoCardSkeleton extends StatelessWidget {
   const RecordInfoCardSkeleton({super.key});

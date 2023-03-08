@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/src/core/widgets/app_bar_space_with_exp_coll.dart';
-import 'package:freader/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
-import 'package:freader/src/pages/settings_page/settings_page.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
+import 'package:edokuri/src/core/widgets/app_bar_space_with_exp_coll.dart';
+import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page.dart';
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';
 
 class PersonAppBar extends StatelessWidget {

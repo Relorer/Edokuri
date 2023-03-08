@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/default_card_container.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/core/widgets/default_card_container.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoCardContainer extends StatelessWidget {
   final ScrollController scrollController;

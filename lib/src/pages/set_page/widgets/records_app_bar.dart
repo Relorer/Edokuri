@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
-import 'package:freader/src/core/widgets/app_bar_space_with_exp_coll.dart';
-import 'package:freader/src/pages/set_page/widgets/records_screen_records_cards.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:edokuri/src/core/widgets/app_bar_space_with_exp_coll.dart';
+import 'package:edokuri/src/pages/set_page/widgets/records_screen_records_cards.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordsAppBar extends StatelessWidget {
   final double appBarHeight;

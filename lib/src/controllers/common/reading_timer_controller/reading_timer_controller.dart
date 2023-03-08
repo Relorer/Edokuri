@@ -1,6 +1,6 @@
-import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/src/models/models.dart';
+import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
+import 'package:edokuri/src/models/models.dart';
 
 class ReadingTimerController {
   final BookRepository bookRepository;

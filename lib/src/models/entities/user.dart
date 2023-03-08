@@ -1,4 +1,4 @@
-import 'package:freader/src/models/models.dart';
+import 'package:edokuri/src/models/models.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:json_annotation/json_annotation.dart';
 

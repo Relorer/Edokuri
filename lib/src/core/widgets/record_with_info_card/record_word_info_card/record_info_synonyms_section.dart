@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
-import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
+import 'package:edokuri/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoSynonymsSection extends StatelessWidget {
   final List<String> synonyms;
