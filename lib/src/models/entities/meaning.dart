@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -7,6 +8,7 @@ part 'meaning.g.dart';
 class Meaning {
   String id;
   String pos;
+  String user;
 
   String description;
 
@@ -18,13 +20,8 @@ class Meaning {
 
   bool hasExamples() => examples.isNotEmpty;
 
-  Meaning(
-    this.pos,
-    this.description,
-    this.meanings,
-    this.examples, {
-    this.id = "",
-  });
+  Meaning(this.pos, this.description, this.meanings, this.examples,
+      {this.id = "", this.user = ""});
 
   factory Meaning.fromRecord(RecordModel record) =>
       Meaning.fromJson(record.toJson());

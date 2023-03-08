@@ -1,10 +1,13 @@
+// Package imports:
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
+
+// Project imports:
 import 'package:edokuri/src/controllers/common/translator_controller/services/google_translator_service.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/services/msa_dictionary_service.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/services/yandex_dictionary_service.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/models/models.dart';
-import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 
 const maxPhraseLength = 30;
 

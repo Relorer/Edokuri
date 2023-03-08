@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:edokuri/src/theme/theme_consts.dart';
+
+// Package imports:
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+// Project imports:
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class ProviderSlidingUpPanel extends StatelessWidget {
   final PanelController? controller;

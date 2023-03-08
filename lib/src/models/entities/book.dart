@@ -1,8 +1,12 @@
+// Dart imports:
 import 'dart:typed_data';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
-import 'package:edokuri/src/models/models.dart';
 import 'package:pocketbase/pocketbase.dart';
+
+// Project imports:
+import 'package:edokuri/src/models/models.dart';
 
 part 'book.g.dart';
 
@@ -10,7 +14,7 @@ part 'book.g.dart';
 class Book {
   String id;
 
-  User? user;
+  String user;
 
   String? title;
   String? author;
@@ -36,7 +40,7 @@ class Book {
     required this.currentPositionInChapter,
     required this.words,
     this.cover,
-    this.user,
+    this.user = "",
     this.readTimes = const [],
   });
 

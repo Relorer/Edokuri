@@ -1,5 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+
+// Project imports:
 import 'package:edokuri/generated/locale_keys.g.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_chapter_progress_bar.dart';
 import 'package:edokuri/src/theme/theme.dart';

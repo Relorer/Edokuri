@@ -1,9 +1,13 @@
+// Dart imports:
 import 'dart:developer';
 
-import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
-import 'package:edokuri/src/models/models.dart';
+// Package imports:
 import 'package:mobx/mobx.dart';
+
+// Project imports:
+import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
+import 'package:edokuri/src/models/models.dart';
 
 part 'set_repository.g.dart';
 

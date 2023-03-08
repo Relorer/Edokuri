@@ -1,8 +1,11 @@
-import 'package:edokuri/src/core/utils/iterable_extensions.dart';
-import 'package:edokuri/src/models/models.dart';
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:edokuri/src/core/utils/iterable_extensions.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
+import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoMeaningsSection extends StatelessWidget {

@@ -1,8 +1,14 @@
+// Dart imports:
+import 'dart:developer';
+
+// Package imports:
+import 'package:mobx/mobx.dart';
+
+// Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:edokuri/src/core/utils/datetime_extensions.dart';
 import 'package:edokuri/src/models/models.dart';
-import 'package:mobx/mobx.dart';
 
 part 'book_repository.g.dart';
 
@@ -16,17 +22,16 @@ abstract class BookRepositoryBase with Store {
 
   BookRepositoryBase(this.pb, this.userRepository) {}
 
-  @action
-  void setNewList(List<Book> newBooks) {
-    books.clear();
-    books.addAll(newBooks);
+  void putBook(Book book) {
+    try {
+      final body = book.toJson()..["user"] = pb.user?.id;
+      if (book.id.isEmpty) {
+        pb.client.collection("book").create(body: body);
+      } else {}
+    } catch (e) {
+      log(e.toString());
+    }
   }
-
-  Stream<List<Book>> getBooks() {
-    return Stream.empty();
-  }
-
-  void putBook(Book book) {}
 
   void removeBook(Book book) {}
 

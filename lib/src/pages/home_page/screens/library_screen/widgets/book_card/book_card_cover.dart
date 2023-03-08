@@ -1,7 +1,13 @@
+// Dart imports:
 import 'dart:typed_data';
 
-import 'package:flutter_svg/flutter_svg.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_svg/flutter_svg.dart';
+
+// Project imports:
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme.dart';
 

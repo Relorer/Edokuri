@@ -1,6 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:edokuri/src/theme/theme_consts.dart';
 
+// Project imports:
+import 'package:edokuri/src/theme/theme_consts.dart';
 import 'reader_content_view_page/reader_content_view_page.dart';
 
 class BouncingPageView extends StatelessWidget {

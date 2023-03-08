@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:edokuri/src/core/widgets/section_headers/section_header_text.dart';
 
 class StudyingSectionHeader extends StatelessWidget {

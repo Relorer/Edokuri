@@ -1,11 +1,13 @@
-import 'package:pocketbase/pocketbase.dart';
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pocketbase/pocketbase.dart';
 
 part 'translation.g.dart';
 
 @JsonSerializable()
 class Translation {
   String id;
+  String user;
 
   final String text;
   final String source;
@@ -16,7 +18,8 @@ class Translation {
       {this.id = "",
       this.selected = false,
       required this.source,
-      this.selectionDate});
+      this.selectionDate,
+      this.user = ""});
 
   factory Translation.fromRecord(RecordModel record) =>
       Translation.fromJson(record.toJson());

@@ -1,5 +1,8 @@
-import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
+// Package imports:
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
+
+// Project imports:
+import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
 
 class TranslatorControllerFactory {
   loadLanguageMonel(

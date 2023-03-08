@@ -1,11 +1,17 @@
+// Dart imports:
 import 'dart:ui';
 
+// Flutter imports:
 import 'package:flutter/widgets.dart';
+
+// Package imports:
+import 'package:mobx/mobx.dart';
+
+// Project imports:
 import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
-import 'package:mobx/mobx.dart';
 
 part 'reader_controller.g.dart';
 

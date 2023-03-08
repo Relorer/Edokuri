@@ -1,13 +1,16 @@
-import 'package:edokuri/src/models/models.dart';
-import 'package:pocketbase/pocketbase.dart';
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pocketbase/pocketbase.dart';
+
+// Project imports:
+import 'package:edokuri/src/models/models.dart';
 
 part 'record.g.dart';
 
 @JsonSerializable()
 class Record {
   String id;
-  User? user;
+  String user;
 
   final List<SetRecords> sets;
 
@@ -41,7 +44,7 @@ class Record {
       this.sentences = const [],
       this.sets = const [],
       this.translations = const [],
-      this.user});
+      this.user = ""});
 
   factory Record.fromRecord(RecordModel record) =>
       Record.fromJson(record.toJson());

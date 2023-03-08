@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:edokuri/src/core/widgets/default_card_container.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 

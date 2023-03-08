@@ -1,5 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/controllers/stores/repositories/set_repository/set_repository.dart';
 import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
@@ -12,7 +18,6 @@ import 'package:edokuri/src/pages/set_editing_page/set_editign_page.dart';
 import 'package:edokuri/src/pages/set_page/set_page.dart';
 import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
-import 'package:provider/provider.dart';
 
 class SetCard extends StatelessWidget {
   final SetRecords set;

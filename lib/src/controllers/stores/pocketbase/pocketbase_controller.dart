@@ -1,13 +1,17 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:edokuri/src/models/models.dart';
+// Package imports:
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
-import 'package:edokuri/src/core/service_locator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pocketbase/pocketbase.dart';
+
+// Project imports:
+import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/models/models.dart';
 
 part 'pocketbase_controller.g.dart';
 

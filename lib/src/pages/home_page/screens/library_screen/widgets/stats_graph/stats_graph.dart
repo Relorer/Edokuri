@@ -1,15 +1,20 @@
+// Dart imports:
 import 'dart:math';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/core/utils/datetime_extensions.dart';
 import 'package:edokuri/src/core/utils/random_utils.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/stats_graph/stats_graph_painter.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
-
-import 'package:provider/provider.dart';
 
 class StatsGraph extends StatefulWidget {
   const StatsGraph({Key? key}) : super(key: key);

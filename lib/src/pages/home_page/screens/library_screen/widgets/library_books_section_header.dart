@@ -1,8 +1,11 @@
-import 'package:edokuri/generated/locale.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:edokuri/generated/locale.dart';
+import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/stores/sort_controllers/library_sort_controller/library_sort_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
-import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/core/widgets/button_with_icon.dart';
 import 'package:edokuri/src/core/widgets/section_headers/section_header_text.dart';
 import 'package:edokuri/src/models/models.dart';

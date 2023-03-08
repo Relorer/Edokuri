@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/widgets.dart';
+
+// Project imports:
 import 'package:edokuri/src/core/widgets/skeleton.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 

@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar.dart';
 import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/set_cards_list.dart';

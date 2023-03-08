@@ -1,5 +1,8 @@
-import 'package:edokuri/generated/locale.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:edokuri/generated/locale.dart';
 import 'package:edokuri/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
 import 'package:edokuri/src/core/widgets/section_headers/section_header.dart';
 import 'package:edokuri/src/core/widgets/text_form_fields/text_form_field_without_paddings.dart';

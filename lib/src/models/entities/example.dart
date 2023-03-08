@@ -1,16 +1,18 @@
-import 'package:pocketbase/pocketbase.dart';
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pocketbase/pocketbase.dart';
 
 part 'example.g.dart';
 
 @JsonSerializable()
 class Example {
+  String user;
   String id;
 
   final String text;
   final String tr;
 
-  Example(this.text, this.tr, {this.id = ""});
+  Example(this.text, this.tr, {this.id = "", this.user = ""});
 
   factory Example.fromRecord(RecordModel record) =>
       Example.fromJson(record.toJson());

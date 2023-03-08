@@ -1,6 +1,10 @@
+// Dart imports:
 import 'dart:math';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:edokuri/src/theme/theme.dart';
 
 class AppBarSpaceWithCollapsedAndExpandedParts extends StatelessWidget {

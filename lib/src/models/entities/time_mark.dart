@@ -1,5 +1,6 @@
-import 'package:pocketbase/pocketbase.dart';
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pocketbase/pocketbase.dart';
 
 part 'time_mark.g.dart';
 
@@ -7,11 +8,9 @@ part 'time_mark.g.dart';
 class TimeMark {
   String id;
   DateTime dateTime;
+  String user;
 
-  TimeMark({
-    this.id = "",
-    required this.dateTime,
-  });
+  TimeMark({this.id = "", required this.dateTime, this.user = ""});
 
   factory TimeMark.fromRecord(RecordModel record) =>
       TimeMark.fromJson(record.toJson());

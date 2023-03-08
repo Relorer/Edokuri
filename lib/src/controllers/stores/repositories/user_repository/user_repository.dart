@@ -1,7 +1,10 @@
+// Package imports:
+import 'package:mobx/mobx.dart';
+
+// Project imports:
+import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/core/utils/datetime_extensions.dart';
 import 'package:edokuri/src/models/models.dart';
-import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
-import 'package:mobx/mobx.dart';
 
 part 'user_repository.g.dart';
 

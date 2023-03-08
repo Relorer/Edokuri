@@ -1,11 +1,17 @@
+// Dart imports:
 import 'dart:math';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
-import 'package:provider/provider.dart';
 
 class ReaderChapterProgressBar extends StatelessWidget {
   const ReaderChapterProgressBar({super.key});

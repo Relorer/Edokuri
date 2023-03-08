@@ -1,5 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:edokuri/generated/locale.dart';
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
@@ -13,7 +19,6 @@ import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_
 import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_dialog.dart';
 import 'package:edokuri/src/pages/reader/reader_page.dart';
 import 'package:edokuri/src/pages/set_page/set_page.dart';
-import 'package:provider/provider.dart';
 
 class BookCard extends StatelessWidget {
   final Book book;
