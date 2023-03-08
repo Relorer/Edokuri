@@ -56,7 +56,8 @@ class PersonAppBar extends StatelessWidget {
                     constraints: const BoxConstraints(),
                     icon: SvgPicture.asset(
                       settingsSvg,
-                      color: Theme.of(context).paleElementColor,
+                      colorFilter: ColorFilter.mode(
+                          Colors.white.withOpacity(0.8), BlendMode.srcIn),
                     ),
                     onPressed: () => _openSettings(context),
                   ),
@@ -92,7 +93,8 @@ class PersonAppBar extends StatelessWidget {
                         child: SvgPicture.asset(
                           waveSvg,
                           fit: BoxFit.fill,
-                          color: Theme.of(context).paleElementColor,
+                          colorFilter: ColorFilter.mode(
+                              Colors.white.withOpacity(0.8), BlendMode.srcIn),
                         ),
                       ),
                       Observer(builder: (_) {

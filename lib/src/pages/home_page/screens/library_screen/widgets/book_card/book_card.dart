@@ -76,10 +76,10 @@ class BookCard extends StatelessWidget {
         ),
         Observer(builder: (_) {
           return BookCardContent(
-            author: book.author ?? LocaleKeys.no_author.tr(),
+            author: book.author ?? LocaleKeys.noAuthor.tr(),
             chaptersCount: book.chapters.length,
             currentCompletedChapter: book.currentCompletedChapter,
-            title: book.title ?? LocaleKeys.no_title.tr(),
+            title: book.title ?? LocaleKeys.noTitle.tr(),
             recordsCount: context
                 .read<RecordRepository>()
                 .getSavedRecordsByBook(book)

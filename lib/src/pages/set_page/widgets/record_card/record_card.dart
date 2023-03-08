@@ -99,7 +99,8 @@ class RecordCard extends StatelessWidget {
                       getIt<TTSController>().speak(record.original),
                   icon: SvgPicture.asset(
                     speakerSvg,
-                    color: darkGray,
+                    colorFilter:
+                        const ColorFilter.mode(darkGray, BlendMode.srcIn),
                   )),
             ],
           )),

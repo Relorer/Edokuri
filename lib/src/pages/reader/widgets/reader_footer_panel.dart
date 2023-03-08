@@ -25,7 +25,7 @@ class ReaderFooterPanel extends StatelessWidget {
         int partCount = reader.chaptersContent.length;
         return Text(
           partCount > 0
-              ? LocaleKeys.part_of.tr(namedArgs: {
+              ? LocaleKeys.partOf.tr(namedArgs: {
                   "currentPart": (reader.currentChapter + 1).toString(),
                   "partCount": (partCount).toString()
                 })

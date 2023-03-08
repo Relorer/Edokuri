@@ -46,7 +46,7 @@ class SetEditingPageState extends State<SetEditingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PhantomAppBar(),
+      appBar: const PhantomAppBar(),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
           child: BouncingCustomScrollView(

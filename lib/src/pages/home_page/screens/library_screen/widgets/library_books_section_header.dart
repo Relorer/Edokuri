@@ -28,7 +28,7 @@ class LibraryBooksSectionHeader extends StatelessWidget {
       leftText: LocaleKeys.library.tr(),
       menuDialogChildren: [
         ButtonWithIcon(
-          text: LocaleKeys.upload_new_book.tr(),
+          text: LocaleKeys.uploadNewBook.tr(),
           onTap: () => _upload(context),
           svg: uploadSvg,
         ),
@@ -36,7 +36,7 @@ class LibraryBooksSectionHeader extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
               vertical: defaultMargin, horizontal: doubleDefaultMargin),
           child: Text(
-            LocaleKeys.sort_by.tr(),
+            LocaleKeys.sortBy.tr(),
             style: Theme.of(context).dialogTextStylePale,
           ),
         ),

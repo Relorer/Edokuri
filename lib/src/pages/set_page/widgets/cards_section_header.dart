@@ -43,7 +43,7 @@ class _CardsSectionHeaderState extends State<CardsSectionHeader> {
           padding: const EdgeInsets.symmetric(
               vertical: defaultMargin, horizontal: doubleDefaultMargin),
           child: Text(
-            LocaleKeys.sort_by.tr(),
+            LocaleKeys.sortBy.tr(),
             style: Theme.of(context).dialogTextStylePale,
           ),
         ),

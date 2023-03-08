@@ -16,16 +16,12 @@ abstract class RecordRepositoryBase with Store {
 
   ObservableList<Record> records = ObservableList<Record>.of([]);
 
-  RecordRepositoryBase(this.pb, this.userRepository) {}
+  RecordRepositoryBase(this.pb, this.userRepository);
 
   @action
   void setNewList(List<Record> newRecords) {
     records.clear();
     records.addAll(newRecords);
-  }
-
-  Stream<List<Record>> _getRecords() {
-    return Stream.empty();
   }
 
   List<Record> getRecordsByBook(Book book) {

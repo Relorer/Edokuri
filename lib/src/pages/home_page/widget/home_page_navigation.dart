@@ -34,9 +34,11 @@ class HomePageNavigation extends StatelessWidget {
                     label: '',
                     icon: SvgPicture.asset(
                       e,
-                      color: currentIndex == items.indexOf(e)
-                          ? Theme.of(context).brightElementColor
-                          : Theme.of(context).paleElementColor,
+                      colorFilter: ColorFilter.mode(
+                          currentIndex == items.indexOf(e)
+                              ? Theme.of(context).brightElementColor
+                              : Theme.of(context).paleElementColor,
+                          BlendMode.srcIn),
                     ),
                   ))
               .toList(),

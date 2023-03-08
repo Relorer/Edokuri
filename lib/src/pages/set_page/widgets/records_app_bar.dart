@@ -1,10 +1,4 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_mobx/flutter_mobx.dart';
-
-// Project imports:
 import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:edokuri/src/core/widgets/app_bar_space_with_exp_coll.dart';
 import 'package:edokuri/src/pages/set_page/widgets/records_screen_records_cards.dart';

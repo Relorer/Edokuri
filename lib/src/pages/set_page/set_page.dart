@@ -18,7 +18,7 @@ class SetPage extends StatelessWidget {
         bottomPadding: 0,
         set: setData.set,
         body: Scaffold(
-          appBar: PhantomAppBar(),
+          appBar: const PhantomAppBar(),
           body: SetScreen(
             setData: setData,
           ),

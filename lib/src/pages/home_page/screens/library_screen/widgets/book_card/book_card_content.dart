@@ -60,7 +60,7 @@ class BookCardContent extends StatelessWidget {
                   style: Theme.of(context).bookSubInfoStyle,
                 ),
                 EllipsisText(
-                  LocaleKeys.new_words
+                  LocaleKeys.newWords
                       .tr(namedArgs: {"persent": newWordsPersent.toString()}),
                   style: Theme.of(context).bookSubInfoStyle,
                 )

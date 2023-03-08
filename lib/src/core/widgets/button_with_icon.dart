@@ -42,7 +42,8 @@ class ButtonWithIcon extends StatelessWidget {
               child: Center(
                 child: SvgPicture.asset(
                   svg,
-                  color: Theme.of(context).paleElementColor,
+                  colorFilter: ColorFilter.mode(
+                      Theme.of(context).paleElementColor, BlendMode.srcIn),
                 ),
               ),
             ),

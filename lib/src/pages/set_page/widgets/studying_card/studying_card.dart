@@ -33,7 +33,11 @@ class StudyingCard extends StatelessWidget {
           child: Row(
             children: [
               Center(
-                child: SvgPicture.asset(svg, color: savedWord),
+                child: SvgPicture.asset(
+                  svg,
+                  colorFilter:
+                      const ColorFilter.mode(savedWord, BlendMode.srcIn),
+                ),
               ),
               const SizedBox(
                 width: doubleDefaultMargin,

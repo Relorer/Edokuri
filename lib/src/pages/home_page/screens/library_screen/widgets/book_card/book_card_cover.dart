@@ -31,7 +31,8 @@ class BookCardCover extends StatelessWidget {
             child: Center(
                 child: SvgPicture.asset(
               imageSvg,
-              color: Colors.white.withOpacity(0.8),
+              colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.8), BlendMode.srcIn),
             )),
           );
   }

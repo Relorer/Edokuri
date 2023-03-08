@@ -19,12 +19,12 @@ class BookCardDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultBottomSheet(children: [
       ButtonWithIcon(
-        text: LocaleKeys.continue_reading.tr(),
+        text: LocaleKeys.continueReading.tr(),
         onTap: openBook,
         svg: readingSvg,
       ),
       ButtonWithIcon(
-        text: LocaleKeys.go_to_set.tr(),
+        text: LocaleKeys.goToSet.tr(),
         svg: goToSetSvg,
         onTap: openBookSet,
       ),

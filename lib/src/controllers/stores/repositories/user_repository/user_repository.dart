@@ -3,7 +3,6 @@ import 'package:mobx/mobx.dart';
 
 // Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
-import 'package:edokuri/src/core/utils/datetime_extensions.dart';
 import 'package:edokuri/src/models/models.dart';
 
 part 'user_repository.g.dart';
@@ -14,7 +13,7 @@ abstract class UserRepositoryBase with Store {
   final PocketbaseController pb;
   late User currentUser;
 
-  UserRepositoryBase(this.pb) {}
+  UserRepositoryBase(this.pb);
 
   void updateUserInfo() {}
 

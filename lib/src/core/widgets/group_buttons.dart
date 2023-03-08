@@ -51,8 +51,7 @@ class _ButtonOfGroupButtons extends StatelessWidget {
   final String text;
   final Function(bool)? onSelected;
 
-  const _ButtonOfGroupButtons(this.text, this.isSelected,
-      {super.key, this.onSelected});
+  const _ButtonOfGroupButtons(this.text, this.isSelected, {this.onSelected});
 
   @override
   Widget build(BuildContext context) {

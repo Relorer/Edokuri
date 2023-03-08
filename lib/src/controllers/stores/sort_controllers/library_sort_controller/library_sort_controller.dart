@@ -32,7 +32,7 @@ abstract class LibrarySortControllerBase
   String getSortTypeName(BooksSortTypes type) {
     switch (type) {
       case BooksSortTypes.amountNewWords:
-        return LocaleKeys.amount_of_new_words.tr();
+        return LocaleKeys.amountOfNewWords.tr();
       case BooksSortTypes.name:
         return LocaleKeys.name.tr();
       case BooksSortTypes.progress:

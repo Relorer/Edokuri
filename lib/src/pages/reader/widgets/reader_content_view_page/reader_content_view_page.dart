@@ -10,7 +10,6 @@ import 'package:edokuri/src/controllers/stores/reader_controller/reader_controll
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
-import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/known_word.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/reader_text_selection_controls.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/saved_word.dart';

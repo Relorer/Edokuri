@@ -43,7 +43,7 @@ class LibraryAppBar extends StatelessWidget {
                     child: Observer(builder: (_) {
                       return AppBarTitle(
                         leftText: LocaleKeys.today.tr(),
-                        rightText: LocaleKeys.short_min.tr(namedArgs: {
+                        rightText: LocaleKeys.shortMin.tr(namedArgs: {
                           "count": (context
                                       .read<BookRepository>()
                                       .readingTimeForTodayInMinutes() +

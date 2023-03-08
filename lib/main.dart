@@ -7,7 +7,6 @@ import 'package:flutter_config/flutter_config.dart';
 
 // Project imports:
 import 'package:edokuri/generated/codegen_loader.g.dart';
-import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'src/app.dart';
 
