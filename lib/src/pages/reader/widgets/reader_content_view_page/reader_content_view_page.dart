@@ -35,7 +35,7 @@ class ReaderContentViewPage extends StatelessWidget {
     return SavedWord(
       word: word,
       onTap: onTap,
-      reviewNumber: record.reviewNumber,
+      reviewNumber: 0, //TODO
     );
   }
 

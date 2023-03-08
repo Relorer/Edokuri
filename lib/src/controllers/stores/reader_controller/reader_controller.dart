@@ -122,14 +122,13 @@ abstract class ReaderControllerBase with Store {
     Future.forEach<Piece>(
         words,
         (element) => Future(() => recordRepository.putRecord(Record(
-            original: element.content.toLowerCase(),
-            originalLowerCase: element.content.toLowerCase(),
-            transcription: "",
-            synonyms: [],
-            known: true,
-            creationDate: creationDate,
-            lastReview: DateTime(0),
-            reviewNumber: 0))));
+              original: element.content.toLowerCase(),
+              originalLowerCase: element.content.toLowerCase(),
+              transcription: "",
+              synonyms: [],
+              known: true,
+              creationDate: creationDate,
+            ))));
   }
 
   @action

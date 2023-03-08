@@ -21,9 +21,6 @@ class Record {
   final String transcription;
   final DateTime creationDate;
 
-  DateTime lastReview;
-  int reviewNumber;
-
   bool known;
 
   String get translation => translations
@@ -38,9 +35,7 @@ class Record {
       required this.transcription,
       required this.synonyms,
       required this.known,
-      required this.creationDate,
-      required this.lastReview,
-      required this.reviewNumber});
+      required this.creationDate});
 }
 
 @Entity()

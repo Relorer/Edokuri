@@ -47,6 +47,7 @@ abstract class PocketbaseControllerBase with Store {
           RecordModel.fromJson(decoded["model"] as Map<String, dynamic>? ?? {});
 
       pb.authStore.save(token, model);
+      pb.collection("users").authRefresh();
     }
   }
 
