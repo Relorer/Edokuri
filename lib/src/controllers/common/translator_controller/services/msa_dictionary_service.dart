@@ -1,8 +1,8 @@
-// Package imports:
+// 📦 Package imports:
 import 'package:dictionaryx/dictentry.dart';
 import 'package:dictionaryx/dictionary_msa_json_flutter.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/models/models.dart';
 
 class MSAPartOfRecord {

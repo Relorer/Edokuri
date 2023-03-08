@@ -1,13 +1,13 @@
-// Dart imports:
+// 🎯 Dart imports:
 import 'dart:typed_data';
 
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme.dart';
 

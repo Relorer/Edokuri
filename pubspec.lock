@@ -477,7 +477,7 @@ packages:
     source: hosted
     version: "2.0.6+5"
   flutter_native_splash:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_native_splash
       sha256: "6777a3abb974021a39b5fdd2d46a03ca390e03903b6351f21d10e7ecc969f12d"
@@ -697,10 +697,11 @@ packages:
   import_sorter:
     dependency: "direct dev"
     description:
-      name: import_sorter
-      sha256: eb15738ccead84e62c31e0208ea4e3104415efcd4972b86906ca64a1187d0836
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "8d42f75899a0d4ed81a46e8383a92259bc49ba52"
+      url: "https://github.com/Relorer/import_sorter_with_export_main"
+    source: git
     version: "4.6.0"
   infinite_listview:
     dependency: transitive

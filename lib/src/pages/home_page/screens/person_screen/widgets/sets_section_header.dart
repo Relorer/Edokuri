@@ -1,7 +1,7 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/core/widgets/button_with_icon.dart';
 import 'package:edokuri/src/core/widgets/section_headers/section_header_text.dart';
 import 'package:edokuri/src/pages/set_editing_page/set_editign_page.dart';

@@ -1,8 +1,8 @@
-// Package imports:
+// 📦 Package imports:
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:edokuri/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';

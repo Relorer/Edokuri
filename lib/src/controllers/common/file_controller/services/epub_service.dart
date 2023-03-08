@@ -1,13 +1,13 @@
-// Dart imports:
+// 🎯 Dart imports:
 import 'dart:async';
 import 'dart:typed_data';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:epubx/epubx.dart';
 import 'package:html/parser.dart';
 import 'package:image/image.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
 

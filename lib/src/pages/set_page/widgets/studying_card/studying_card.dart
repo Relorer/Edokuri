@@ -1,10 +1,10 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/core/widgets/ellipsis_text.dart';
 import 'package:edokuri/src/core/widgets/simple_card.dart';
 import 'package:edokuri/src/theme/theme.dart';

@@ -47,7 +47,7 @@ dependencies:
   flutter_config: ^2.0.0
   flutter_displaymode: ^0.5.0
   flutter_mobx: ^2.0.6+5
-  flutter_native_splash: ^2.2.19
+  flutter_native_splash: ^2.2.14
   flutter_secure_storage: ^8.0.0
   flutter_svg: ^2.0.2
   flutter_swiper_null_safety: ^1.0.2
@@ -58,13 +58,13 @@ dependencies:
   group_button: ^5.2.2
   html: ^0.15.2
   http: ^0.13.5
-  image: ^4.0.15
+  image: ^3.0.2
   json_annotation: ^4.8.0
   mobx: ^2.1.4
   mobx_codegen: ^2.1.1
   need_resume: ^1.0.7+1
   numberpicker: ^2.1.1
-  path: ^1.8.3
+  path: ^1.8.2
   path_drawing: ^1.0.1
   path_provider: ^2.0.13
   pocketbase: ^0.7.3
@@ -87,7 +87,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   git_hooks: ^1.0.0
-  import_sorter: ^4.6.0
+  import_sorter: 
+    git: https://github.com/Relorer/import_sorter_with_export_main
   json_serializable: ^6.6.1
 
 import_sorter:
@@ -99,11 +100,7 @@ dart_pre_commit:
     level: major
   analyze:
     error-level: warning
-  import_sorter:
-    - repo: https://github.com/fluttercommunity/import_sorter
-      rev: "master"
-      hooks:
-        - id: dart-import-sorter # use `flutter-import-sorter` for a Flutter project
+  pull-up-dependencies: false
 
 flutter_icons:
   android: "launcher_icon"

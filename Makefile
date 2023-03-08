@@ -16,4 +16,8 @@ localization:
 	flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart -S "assets/translations"
 
 format:
+	make import
 	dart format .
+
+import:
+	pub run import_sorter:main

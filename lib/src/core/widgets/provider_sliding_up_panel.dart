@@ -1,10 +1,10 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/theme/theme_consts.dart';
 
 class ProviderSlidingUpPanel extends StatelessWidget {

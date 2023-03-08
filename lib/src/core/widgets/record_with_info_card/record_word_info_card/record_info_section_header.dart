@@ -1,7 +1,7 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/widgets.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoSectionHeader extends StatelessWidget {

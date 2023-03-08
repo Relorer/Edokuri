@@ -1,15 +1,15 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';

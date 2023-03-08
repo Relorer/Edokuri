@@ -1,13 +1,13 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:provider/provider.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';

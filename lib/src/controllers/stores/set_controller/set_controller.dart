@@ -1,4 +1,4 @@
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/models/models.dart';
 
 class SetData {

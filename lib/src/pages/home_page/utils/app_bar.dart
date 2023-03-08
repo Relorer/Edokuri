@@ -1,7 +1,7 @@
-// Dart imports:
+// 🎯 Dart imports:
 import 'dart:math';
 
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 double getAppBarHeight(BuildContext context) =>

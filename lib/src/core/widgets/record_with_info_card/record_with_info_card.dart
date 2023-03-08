@@ -1,11 +1,11 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';

@@ -1,8 +1,8 @@
-// Package imports:
+// 📦 Package imports:
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/models/models.dart';
 
 part 'record.g.dart';

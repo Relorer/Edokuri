@@ -1,11 +1,11 @@
-// Dart imports:
+// 🎯 Dart imports:
 import 'dart:convert';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:flutter_config/flutter_config.dart';
 import 'package:http/http.dart' as http;
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/models/models.dart';
 

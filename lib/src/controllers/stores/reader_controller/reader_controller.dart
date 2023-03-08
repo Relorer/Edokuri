@@ -1,13 +1,13 @@
-// Dart imports:
+// 🎯 Dart imports:
 import 'dart:ui';
 
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/widgets.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:mobx/mobx.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/core/utils/string_utils.dart';

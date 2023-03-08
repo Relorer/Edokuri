@@ -1,7 +1,7 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/generated/locale.dart';
 import 'package:edokuri/src/core/widgets/ellipsis_text.dart';
 import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_progress_bar.dart';

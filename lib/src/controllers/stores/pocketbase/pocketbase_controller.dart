@@ -1,15 +1,15 @@
-// Dart imports:
+// 🎯 Dart imports:
 import 'dart:convert';
 import 'dart:developer';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/models/models.dart';
 
