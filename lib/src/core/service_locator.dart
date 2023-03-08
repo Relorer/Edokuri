@@ -1,3 +1,4 @@
+import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_factory.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
@@ -46,14 +47,22 @@ Future<void> setupLocator() async {
 
   getIt.registerSingleton(const FlutterSecureStorage());
 
-  getIt.registerSingleton<PocketbaseController>(PocketbaseController());
+  getIt.registerSingletonAsync<PocketbaseController>(PocketBaseFactory().getPB);
 
   //repositories
-  getIt.registerSingleton(UserRepository(getIt<PocketbaseController>()));
-  getIt.registerSingleton(
-      BookRepository(getIt<PocketbaseController>(), getIt<UserRepository>()));
-  getIt.registerSingleton(
-      SetRepository(getIt<PocketbaseController>(), getIt<UserRepository>()));
-  getIt.registerSingleton(
-      RecordRepository(getIt<PocketbaseController>(), getIt<UserRepository>()));
+  getIt.registerSingletonWithDependencies(
+      () => UserRepository(getIt<PocketbaseController>()),
+      dependsOn: [PocketbaseController]);
+  getIt.registerSingletonWithDependencies(
+      () => BookRepository(
+          getIt<PocketbaseController>(), getIt<UserRepository>()),
+      dependsOn: [PocketbaseController]);
+  getIt.registerSingletonWithDependencies(
+      () =>
+          SetRepository(getIt<PocketbaseController>(), getIt<UserRepository>()),
+      dependsOn: [PocketbaseController]);
+  getIt.registerSingletonWithDependencies(
+      () => RecordRepository(
+          getIt<PocketbaseController>(), getIt<UserRepository>()),
+      dependsOn: [PocketbaseController]);
 }

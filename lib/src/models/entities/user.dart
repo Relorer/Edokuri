@@ -8,6 +8,7 @@ part 'user.g.dart';
 class User {
   String id;
 
+  String name;
   List<Book> books;
   List<Record> records;
   List<SetRecords> sets;
@@ -15,6 +16,7 @@ class User {
   List<TimeMark> streak;
 
   User({
+    this.name = "",
     this.id = "",
     this.books = const [],
     this.learnTimes = const [],

@@ -75,7 +75,6 @@ class _AppState extends State<App> {
         child: Observer(
           builder: (BuildContext context) {
             var pocketbase = getIt<PocketbaseController>();
-            log(pocketbase.isAuthorized.toString());
             return MaterialApp(
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,

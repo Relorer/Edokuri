@@ -13,7 +13,6 @@ void main() async {
   await FlutterConfig.loadEnvVariables();
   await setupLocator();
   await getIt.allReady();
-  await getIt<PocketbaseController>().load();
 
   runApp(
     EasyLocalization(

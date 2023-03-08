@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:edokuri/src/models/models.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
@@ -20,19 +21,22 @@ const authTokenKey = "auth_token_key";
 
 abstract class PocketbaseControllerBase with Store {
   final secureStorage = getIt<FlutterSecureStorage>();
-  final pb = PocketBase(pocketbaseUrl);
+  final client = PocketBase(pocketbaseUrl);
+  User? user;
 
   @observable
   bool isAuthorized = false;
 
   PocketbaseControllerBase() {
-    pb.authStore.onChange.listen((e) {
-      isAuthorized = pb.authStore.token.isNotEmpty;
+    client.authStore.onChange.listen((e) {
+      isAuthorized = client.authStore.token.isNotEmpty;
 
       final encoded = jsonEncode(<String, dynamic>{
         "token": e.token,
         "model": e.model,
       });
+
+      user = User.fromRecord(client.authStore.model);
 
       secureStorage.write(key: authTokenKey, value: encoded);
     });
@@ -46,8 +50,9 @@ abstract class PocketbaseControllerBase with Store {
       final model =
           RecordModel.fromJson(decoded["model"] as Map<String, dynamic>? ?? {});
 
-      pb.authStore.save(token, model);
-      pb.collection("users").authRefresh();
+      client.authStore.save(token, model);
+      await client.collection("users").authRefresh();
+      user = User.fromRecord(client.authStore.model);
     }
   }
 
@@ -66,12 +71,12 @@ abstract class PocketbaseControllerBase with Store {
 
   @action
   Future logout() async {
-    pb.authStore.clear();
+    client.authStore.clear();
   }
 
   Future _authWithProvider(String providerName) async {
     try {
-      final authMethods = await pb.collection("users").listAuthMethods();
+      final authMethods = await client.collection("users").listAuthMethods();
       final provider = authMethods.authProviders
           .where((am) => am.name.toLowerCase() == providerName)
           .first;
@@ -80,7 +85,7 @@ abstract class PocketbaseControllerBase with Store {
           callbackUrlScheme: callbackUrlScheme);
       final parsedUri = Uri.parse(responseUrl);
       final code = parsedUri.queryParameters['code']!;
-      await pb.collection("users").authWithOAuth2(
+      await client.collection("users").authWithOAuth2(
           providerName, code, provider.codeVerifier, redirectUri);
     } catch (e) {
       log(e.toString());

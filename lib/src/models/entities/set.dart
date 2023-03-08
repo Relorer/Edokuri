@@ -7,14 +7,17 @@ part 'set.g.dart';
 @JsonSerializable()
 class SetRecords {
   String id;
-  User? user;
+  String user;
 
   String name;
 
   List<Record> records;
 
   SetRecords(
-      {this.id = "", required this.name, this.records = const [], this.user});
+      {this.id = "",
+      required this.name,
+      this.records = const [],
+      this.user = ""});
 
   factory SetRecords.fromRecord(RecordModel record) =>
       SetRecords.fromJson(record.toJson());
