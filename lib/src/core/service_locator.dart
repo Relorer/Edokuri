@@ -1,5 +1,4 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:freader/objectbox.g.dart';
 import 'package:freader/src/controllers/common/file_controller/file_controller.dart';
 import 'package:freader/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:freader/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
@@ -11,7 +10,6 @@ import 'package:freader/src/controllers/stores/pocketbase/pocketbase_controller.
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/set_repository/set_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/store_factory.dart';
 import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:freader/src/controllers/stores/sort_controllers/library_sort_controller/library_sort_controller.dart';
 import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
@@ -46,21 +44,16 @@ Future<void> setupLocator() async {
   getIt.registerSingletonAsync<SettingsController>(
       () => SettingsControllerFactory().getSettingsController());
 
-  //repositories
-  getIt.registerSingletonAsync<Store>(() => StoreFactory().getDBController());
-  getIt.registerSingletonWithDependencies(() => UserRepository(getIt<Store>()),
-      dependsOn: [Store]);
-  getIt.registerSingletonWithDependencies(
-      () => BookRepository(getIt<Store>(), getIt<UserRepository>()),
-      dependsOn: [Store]);
-  getIt.registerSingletonWithDependencies(
-      () => SetRepository(getIt<Store>(), getIt<UserRepository>()),
-      dependsOn: [Store]);
-  getIt.registerSingletonWithDependencies(
-      () => RecordRepository(getIt<Store>(), getIt<UserRepository>()),
-      dependsOn: [Store]);
-
   getIt.registerSingleton(const FlutterSecureStorage());
 
   getIt.registerSingleton<PocketbaseController>(PocketbaseController());
+
+  //repositories
+  getIt.registerSingleton(UserRepository(getIt<PocketbaseController>()));
+  getIt.registerSingleton(
+      BookRepository(getIt<PocketbaseController>(), getIt<UserRepository>()));
+  getIt.registerSingleton(
+      SetRepository(getIt<PocketbaseController>(), getIt<UserRepository>()));
+  getIt.registerSingleton(
+      RecordRepository(getIt<PocketbaseController>(), getIt<UserRepository>()));
 }

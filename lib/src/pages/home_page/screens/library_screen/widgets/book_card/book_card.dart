@@ -7,7 +7,7 @@ import 'package:freader/src/controllers/stores/repositories/record_repository/re
 import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
-import 'package:freader/src/models/book.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_content.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_cover.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_dialog.dart';

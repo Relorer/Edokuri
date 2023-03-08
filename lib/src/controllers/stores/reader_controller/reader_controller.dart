@@ -4,8 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/utils/string_utils.dart';
-import 'package:freader/src/models/book.dart';
-import 'package:freader/src/models/record.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:mobx/mobx.dart';
 
 part 'reader_controller.g.dart';
@@ -136,7 +135,7 @@ abstract class ReaderControllerBase with Store {
     chaptersContent = [];
     final List<List<String>> temp = [];
     for (var element in book.chapters) {
-      temp.add(await _paginate(pageSize, element.content, style));
+      temp.add(await _paginate(pageSize, element, style));
     }
     currentPageIndex = currentPageIndex < 0
         ? _getPageIndexByChapterAndPosition(
@@ -194,7 +193,7 @@ abstract class ReaderControllerBase with Store {
   }
 
   String getSentence(int indexInSentence) {
-    final chapterContent = book.chapters[currentChapter].content;
+    final chapterContent = book.chapters[currentChapter];
 
     final indexInSentenceInChapter =
         indexInSentence + getCurrentPositionInChapter();

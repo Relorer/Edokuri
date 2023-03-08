@@ -5,8 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/core/utils/datetime_extensions.dart';
 import 'package:freader/src/core/utils/random_utils.dart';
-import 'package:freader/src/models/graph.dart';
-import 'package:freader/src/models/record.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/stats_graph/stats_graph_painter.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 

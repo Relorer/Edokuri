@@ -1,5 +1,5 @@
 import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/src/models/activity_time.dart';
+import 'package:freader/src/models/models.dart';
 
 class LearningTimerController {
   final UserRepository userRepository;

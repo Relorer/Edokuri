@@ -90,7 +90,7 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
           (element) => element.source == userSource && !element.selected);
       _record!.known = false;
       _recordRepository.putRecord(_record!, set: widget.set);
-    } else if (!_record!.known && _record!.id > 0) {
+    } else if (!_record!.known && _record!.id.isNotEmpty) {
       _recordRepository.removeRecord(_record!, set: widget.set);
     }
   }

@@ -5,7 +5,7 @@ import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
-import 'package:freader/src/models/record.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 import 'package:provider/provider.dart';

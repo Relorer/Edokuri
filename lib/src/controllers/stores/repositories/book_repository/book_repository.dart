@@ -1,5 +1,5 @@
+import 'package:freader/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/objectbox.g.dart' as box;
 import 'package:freader/src/core/utils/datetime_extensions.dart';
 import 'package:freader/src/models/models.dart';
 import 'package:mobx/mobx.dart';
@@ -9,14 +9,12 @@ part 'book_repository.g.dart';
 class BookRepository = BookRepositoryBase with _$BookRepository;
 
 abstract class BookRepositoryBase with Store {
-  final box.Store store;
+  final PocketbaseController pb;
   final UserRepository userRepository;
 
   ObservableList<Book> books = ObservableList<Book>.of([]);
 
-  BookRepositoryBase(this.store, this.userRepository) {
-    getBooks(store).forEach(setNewList);
-  }
+  BookRepositoryBase(this.pb, this.userRepository) {}
 
   @action
   void setNewList(List<Book> newBooks) {
@@ -24,23 +22,13 @@ abstract class BookRepositoryBase with Store {
     books.addAll(newBooks);
   }
 
-  Stream<List<Book>> getBooks(box.Store store) {
-    final query = store
-        .box<Book>()
-        .query(box.Book_.user.equals(userRepository.currentUser.id));
-    return query
-        .watch(triggerImmediately: true)
-        .map<List<Book>>((query) => query.find());
+  Stream<List<Book>> getBooks() {
+    return Stream.empty();
   }
 
-  void putBook(Book book) {
-    book.user.target = userRepository.currentUser;
-    store.box<Book>().put(book);
-  }
+  void putBook(Book book) {}
 
-  void removeBook(Book book) {
-    store.box<Book>().remove(book.id);
-  }
+  void removeBook(Book book) {}
 
   int readingTimeForTodayInMinutes() {
     final today = DateTime.now();

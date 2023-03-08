@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:freader/src/models/book.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:freader/src/pages/reader/widgets/reader_content_view_page/base_word.dart';
 import 'package:freader/src/theme/theme.dart';
 

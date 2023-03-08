@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freader/src/models/book.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:freader/src/theme/theme.dart';
 import 'package:freader/src/theme/theme_consts.dart';
 

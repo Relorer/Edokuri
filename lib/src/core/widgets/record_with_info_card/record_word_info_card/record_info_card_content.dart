@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_sentences_section.dart';
-import 'package:freader/src/models/record.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_examples_section.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_header.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_meanings_section.dart';

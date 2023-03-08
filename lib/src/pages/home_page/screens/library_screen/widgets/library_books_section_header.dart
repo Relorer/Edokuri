@@ -5,7 +5,7 @@ import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/controllers/common/file_controller/file_controller.dart';
 import 'package:freader/src/core/widgets/button_with_icon.dart';
 import 'package:freader/src/core/widgets/section_headers/section_header_text.dart';
-import 'package:freader/src/models/book.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:freader/src/pages/home_page/screens/library_screen/widgets/sort_types_list.dart';
 import 'package:freader/src/theme/svgs.dart';
 import 'package:freader/src/theme/theme.dart';

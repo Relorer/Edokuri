@@ -1,6 +1,6 @@
 import 'package:freader/src/core/utils/datetime_extensions.dart';
 import 'package:freader/src/models/models.dart';
-import 'package:freader/objectbox.g.dart' as box;
+import 'package:freader/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:mobx/mobx.dart';
 
 part 'user_repository.g.dart';
@@ -8,24 +8,12 @@ part 'user_repository.g.dart';
 class UserRepository = UserRepositoryBase with _$UserRepository;
 
 abstract class UserRepositoryBase with Store {
-  final box.Store store;
+  final PocketbaseController pb;
   late User currentUser;
 
-  UserRepositoryBase(this.store) {
-    final userBox = store.box<User>();
+  UserRepositoryBase(this.pb) {}
 
-    final temp = userBox.getAll();
-    if (temp.isEmpty) {
-      currentUser = User();
-      currentUser.id = userBox.put(currentUser);
-    } else {
-      currentUser = temp.first;
-    }
-  }
-
-  void updateUserInfo() {
-    store.box<User>().put(currentUser);
-  }
+  void updateUserInfo() {}
 
   int learningTimeForTodayInMinutes() {
     final today = DateTime.now();

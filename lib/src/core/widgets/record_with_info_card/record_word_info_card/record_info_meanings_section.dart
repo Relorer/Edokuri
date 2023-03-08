@@ -1,5 +1,5 @@
 import 'package:freader/src/core/utils/iterable_extensions.dart';
-import 'package:freader/src/models/record.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';

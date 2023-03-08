@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:freader/src/models/record.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
 import 'package:freader/src/theme/svgs.dart';

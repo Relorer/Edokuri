@@ -1,7 +1,7 @@
 import 'package:freader/generated/locale.dart';
 import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:freader/src/controllers/stores/sort_controllers/base_sort_controller.dart';
-import 'package:freader/src/models/book.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:mobx/mobx.dart';
 
 part 'library_sort_controller.g.dart';

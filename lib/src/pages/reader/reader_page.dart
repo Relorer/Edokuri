@@ -6,7 +6,7 @@ import 'package:freader/src/controllers/stores/reader_controller/reader_controll
 import 'package:freader/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/record_with_info_card/record_with_info_card.dart';
-import 'package:freader/src/models/book.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:freader/src/pages/reader/widgets/reader_content_view.dart';
 import 'package:freader/src/pages/reader/widgets/reader_footer_panel.dart';
 import 'package:freader/src/pages/reader/widgets/reader_head_panel.dart';

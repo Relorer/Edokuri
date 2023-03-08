@@ -1,4 +1,4 @@
-import 'package:freader/src/models/record.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:mobx/mobx.dart';
 
 extension RecordsObservableListExtensions on ObservableList<Record> {

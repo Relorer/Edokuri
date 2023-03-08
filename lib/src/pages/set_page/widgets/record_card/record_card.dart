@@ -5,7 +5,7 @@ import 'package:freader/src/controllers/stores/repositories/record_repository/re
 import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:freader/src/core/service_locator.dart';
 import 'package:freader/src/core/widgets/simple_card.dart';
-import 'package:freader/src/models/record.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
 import 'package:freader/src/pages/set_page/widgets/record_card/record_card_dialog.dart';
 import 'package:freader/src/theme/svgs.dart';

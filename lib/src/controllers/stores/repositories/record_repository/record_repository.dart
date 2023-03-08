@@ -1,6 +1,6 @@
+import 'package:freader/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:freader/src/models/models.dart';
-import 'package:freader/objectbox.g.dart' as box;
 import 'package:mobx/mobx.dart';
 
 part 'record_repository.g.dart';
@@ -8,14 +8,12 @@ part 'record_repository.g.dart';
 class RecordRepository = RecordRepositoryBase with _$RecordRepository;
 
 abstract class RecordRepositoryBase with Store {
-  final box.Store store;
+  final PocketbaseController pb;
   final UserRepository userRepository;
 
   ObservableList<Record> records = ObservableList<Record>.of([]);
 
-  RecordRepositoryBase(this.store, this.userRepository) {
-    _getRecords(store).forEach(setNewList);
-  }
+  RecordRepositoryBase(this.pb, this.userRepository) {}
 
   @action
   void setNewList(List<Record> newRecords) {
@@ -23,13 +21,8 @@ abstract class RecordRepositoryBase with Store {
     records.addAll(newRecords);
   }
 
-  Stream<List<Record>> _getRecords(box.Store store) {
-    final query = store
-        .box<Record>()
-        .query(box.Record_.user.equals(userRepository.currentUser.id));
-    return query
-        .watch(triggerImmediately: true)
-        .map<List<Record>>((query) => query.find());
+  Stream<List<Record>> _getRecords() {
+    return Stream.empty();
   }
 
   List<Record> getRecordsByBook(Book book) {
@@ -58,36 +51,10 @@ abstract class RecordRepositoryBase with Store {
   }
 
   Record? getRecord(String original) {
-    final fromCache = records.where((element) =>
-        element.originalLowerCase == original.toLowerCase().trim());
-
-    if (fromCache.isNotEmpty) {
-      return fromCache.first;
-    }
     return null;
   }
 
-  void putRecord(Record record, {SetRecords? set}) {
-    if (set != null) {
-      record.sets.add(set);
-    }
+  void putRecord(Record record, {SetRecords? set}) {}
 
-    record.user.target = userRepository.currentUser;
-    store.box<Record>().put(record);
-    store.box<Translation>().putMany(record.translations);
-    store.box<Meaning>().putMany(record.meanings);
-    store.box<Example>().putMany(record.examples);
-    store.box<Example>().putMany(record.sentences);
-    store.box<SetRecords>().putMany(record.sets);
-  }
-
-  void removeRecord(Record record, {SetRecords? set}) {
-    if (set != null) {
-      record.sets.removeWhere((element) => element.id == set.id);
-      store.box<Record>().put(record);
-      store.box<SetRecords>().put(set);
-    } else {
-      store.box<Record>().remove(record.id);
-    }
-  }
+  void removeRecord(Record record, {SetRecords? set}) {}
 }

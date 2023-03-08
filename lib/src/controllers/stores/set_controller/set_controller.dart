@@ -1,5 +1,4 @@
-import 'package:freader/src/models/record.dart';
-import 'package:freader/src/models/set.dart';
+import 'package:freader/src/models/models.dart';
 
 class SetData {
   final SetRecords? set;

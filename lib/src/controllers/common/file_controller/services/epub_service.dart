@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:epubx/epubx.dart';
 import 'package:freader/src/core/utils/string_utils.dart';
-import 'package:freader/src/models/book.dart';
+import 'package:freader/src/models/models.dart';
 import 'package:html/parser.dart';
 import 'package:image/image.dart';
 
@@ -38,7 +38,7 @@ class EpubService {
       var content = _stripHtmlIfNeeded(doc.body!.innerHtml).trim();
       if (content.isNotEmpty) {
         words.addAll(getAllWords(content));
-        book.chapters.add(Chapter(content: content));
+        book.chapters.add(content);
       }
     }
 

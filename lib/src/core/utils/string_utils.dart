@@ -1,4 +1,4 @@
-import 'package:freader/src/models/book.dart';
+import 'package:freader/src/models/models.dart';
 
 final RegExp _pieceOfLineExp =
     RegExp(r"(([a-zA-Z]|('|-|’)[a-zA-Z])+(?=([^a-zA-Z]|$))|[^a-zA-Z]+)");
