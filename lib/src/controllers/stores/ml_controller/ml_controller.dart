@@ -17,11 +17,8 @@ abstract class MLControllerBase with Store {
 
   @action
   Future<void> loadMLState() async {
-    isLoaded = await checkModelDownloaded(TranslateLanguage.english.bcpCode) &&
-        await checkModelDownloaded(TranslateLanguage.russian.bcpCode);
+    isLoaded = await modelManager.isModelDownloaded(TranslateLanguage.english.bcpCode) &&
+        await modelManager.isModelDownloaded(TranslateLanguage.russian.bcpCode);
   }
 
-  Future<bool> checkModelDownloaded(String model) async {
-    return modelManager.isModelDownloaded(model);
-  }
 }
