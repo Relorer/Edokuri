@@ -19,8 +19,6 @@ abstract class LearnControllerBase with Store {
   final List<Record> _records;
   final List<Record> buffer = [];
 
-  late List<Record> _currentBunch = _getNextBunch();
-
   LearnControllerBase(
       this._recordRepository, this._settingsController, this._records);
 
@@ -84,16 +82,6 @@ abstract class LearnControllerBase with Store {
   }
 
   @action
-  void setBunchSize(int size) {
-    if (bunchSize != size) {
-      bunchSize = size;
-      _settingsController.setPackSize(size);
-      currentRecordIndex = 0;
-      _currentBunch = _getNextBunch();
-    }
-  }
-
-  @action
   void setAutoPronouncing(bool value) {
     autoPronouncing = value;
     _settingsController.setAutoPronouncingInLearnPage(value);
@@ -115,39 +103,4 @@ abstract class LearnControllerBase with Store {
     _settingsController.setFrontCardInLearnPageTerm(termOn);
   }
 
-  @action
-  void answerHandler(int index, bool know) {
-    final rec = getRecordByIndex(index);
-    if (know) {
-      if (rec.lastReview.year == 0 || timeForReviewHasCome(rec)) {
-        rec.lastReview = DateTime.now();
-        rec.reviewNumber++;
-        _recordRepository.putRecord(rec);
-      }
-
-      _currentBunch.remove(rec);
-      currentRecordIndex++;
-    } else {
-      rec.reviewNumber = max(rec.reviewNumber - 1, 0);
-      _recordRepository.putRecord(rec);
-    }
-    if (currentRecordIndex == total) {
-      currentRecordIndex = 0;
-      _currentBunch = _getNextBunch();
-    }
-  }
-
-  List<Record> _getNextBunch() {
-    final now = DateTime.now().millisecondsSinceEpoch;
-    final sorted = _records.toList()
-      ..sort((a, b) => (now -
-              getNextReviewTime(a.reviewNumber) +
-              a.lastReview.millisecondsSinceEpoch)
-          .compareTo((now -
-              getNextReviewTime(b.reviewNumber) +
-              b.lastReview.millisecondsSinceEpoch)));
-    return timeForReviewHasCome(sorted.first)
-        ? (sorted.take(bunchSize).toList()..shuffle())
-        : (_records.toList()..shuffle()).take(bunchSize).toList();
-  }
 }

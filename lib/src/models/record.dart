@@ -1,3 +1,4 @@
+import 'package:freader/src/controllers/stores/learn_controller/review_intervals.dart';
 import 'package:freader/src/models/set.dart';
 import 'package:freader/src/models/user.dart';
 import 'package:objectbox/objectbox.dart';
@@ -22,9 +23,12 @@ class Record {
   final DateTime creationDate;
 
   DateTime lastReview;
-  int reviewNumber;
+  double interval;
 
   bool known;
+
+  RecordState state = RecordState.recent;
+  RecordStep step = FirstStep();
 
   String get translation => translations
       .where((element) => element.selected)
@@ -40,7 +44,7 @@ class Record {
       required this.known,
       required this.creationDate,
       required this.lastReview,
-      required this.reviewNumber});
+      required this.interval});
 }
 
 @Entity()
@@ -91,4 +95,141 @@ class Meaning {
     this.examples, {
     this.id = 0,
   });
+}
+
+enum RecordState{
+  recent,
+  studied,
+  repeatable,
+}
+
+abstract class RecordStep{
+  void getEasy(Record record);
+  void getGood(Record record);
+  void getHard(Record record);
+  void getAgain(Record record);
+}
+
+class FirstStep extends RecordStep{
+  @override
+  void getAgain(Record record) {
+    record.interval = getNextReviewTime(0) as double;
+    record.state = RecordState.studied;
+    record.lastReview = DateTime.now();
+  }
+
+  @override
+  void getEasy(Record record) {
+    record.interval = getNextReviewTime(6) as double;
+    record.state = RecordState.repeatable;
+    record.lastReview = DateTime.now();
+    record.step = FoursStep();
+  }
+
+  @override
+  void getGood(Record record) {
+    record.interval = getNextReviewTime(2) as double;
+    record.state = RecordState.studied;
+    record.lastReview = DateTime.now();
+    record.step = SecondStep();
+  }
+
+  @override
+  void getHard(Record record) {
+    record.interval = getNextReviewTime(1) as double;
+    record.state = RecordState.studied;
+    record.lastReview = DateTime.now();
+  }
+}
+
+class SecondStep extends RecordStep{
+  @override
+  void getAgain(Record record) {
+    record.interval = getNextReviewTime(0) as double;
+    record.lastReview = DateTime.now();
+    record.step = FirstStep();
+  }
+
+  @override
+  void getEasy(Record record) {
+    record.interval = getNextReviewTime(6) as double;
+    record.state = RecordState.repeatable;
+    record.lastReview = DateTime.now();
+    record.step = FoursStep();
+  }
+
+  @override
+  void getGood(Record record) {
+    record.interval = getNextReviewTime(3) as double;
+    record.lastReview = DateTime.now();
+    record.step = ThirdStep();
+  }
+
+  @override
+  void getHard(Record record) {
+    record.interval = getNextReviewTime(2) as double;
+    record.lastReview = DateTime.now();
+    record.step = FirstStep();
+  }
+}
+
+class ThirdStep extends RecordStep{
+  @override
+  void getAgain(Record record) {
+    record.interval = getNextReviewTime(2) as double;
+    record.lastReview = DateTime.now();
+    record.step = FirstStep();
+  }
+
+  @override
+  void getEasy(Record record) {
+    record.interval = getNextReviewTime(6) as double;
+    record.state = RecordState.repeatable;
+    record.lastReview = DateTime.now();
+    record.step = FoursStep();
+  }
+
+  @override
+  void getGood(Record record) {
+    record.interval = getNextReviewTime(5) as double;
+    record.state = RecordState.repeatable;
+    record.lastReview = DateTime.now();
+    record.step = FoursStep();
+  }
+
+  @override
+  void getHard(Record record) {
+    record.interval = getNextReviewTime(4) as double;
+    record.lastReview = DateTime.now();
+    record.step = FirstStep();
+  }
+}
+
+class FoursStep extends RecordStep{
+  @override
+  void getAgain(Record record) {
+    record.interval = getNextReviewTime(2) as double;
+    record.state = RecordState.studied;
+    record.lastReview = DateTime.now();
+    record.step = FirstStep();
+  }
+
+  @override
+  void getEasy(Record record) {
+    record.interval = record.interval * getIntervalMultiplier(2) * getIntervalMultiplier(1);
+    record.lastReview = DateTime.now();
+  }
+
+  @override
+  void getGood(Record record) {
+    record.interval = record.interval * getIntervalMultiplier(2);
+    record.lastReview = DateTime.now();
+  }
+
+  @override
+  void getHard(Record record) {
+    record.interval = record.interval * getIntervalMultiplier(0);
+    record.lastReview = DateTime.now();
+  }
+
 }

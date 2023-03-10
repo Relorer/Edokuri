@@ -7,17 +7,17 @@ import 'package:freader/src/theme/theme.dart';
 
 class SavedWord extends StatelessWidget {
   final Piece word;
-  final int reviewNumber;
+  final double interval;
   final GestureTapCallback? onTap;
   const SavedWord(
-      {super.key, required this.word, required this.reviewNumber, this.onTap});
+      {super.key, required this.word, required this.interval, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return BaseWord(
       color: Theme.of(context)
           .savedWordColor
-          .withOpacity(0.4 * ((7 - min(reviewNumber, 7)) / 7)),
+          .withOpacity(0.4 * ((7 - min(interval, 7)) / 7)), // TODO разобраться с цветами
       word: word,
       onTap: onTap,
     );

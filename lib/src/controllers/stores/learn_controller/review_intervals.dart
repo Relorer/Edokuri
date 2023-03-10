@@ -3,27 +3,40 @@ import 'package:freader/src/models/models.dart';
 int getNextReviewTime(int reviewNumber) {
   switch (reviewNumber) {
     case 0:
-      return 20 * 60 * 1000; // 20 min
+      return 60 * 1000; // 1 min
     case 1:
-      return 1 * 60 * 60 * 1000; // 1 h
+      return 6 * 60 *  1000; // 6 min
     case 2:
-      return 9 * 60 * 60 * 1000; // 9 h
+      return 10 * 60 * 1000; // 10 min
     case 3:
       return 1 * 24 * 60 * 60 * 1000; // 1 d
     case 4:
       return 2 * 24 * 60 * 60 * 1000; // 2 d
     case 5:
-      return 6 * 24 * 60 * 60 * 1000; // 6 d
+      return 3 * 24 * 60 * 60 * 1000; // 3 d
     case 6:
-      return 31 * 24 * 60 * 60 * 1000; // 31 d
+      return 4 * 24 * 60 * 60 * 1000; // 4 d
     default:
-      return reviewNumber * getNextReviewTime(6);
+      return reviewNumber;
+  }
+}
+
+double getIntervalMultiplier(int multiplierNumber){
+  switch (multiplierNumber) {
+    case 0:
+      return 1.2;
+    case 1:
+      return 1.3;
+    case 2:
+      return 2.5;
+    default:
+      return multiplierNumber as double;
   }
 }
 
 bool timeForReviewHasCome(Record record) {
   return DateTime.now().millisecondsSinceEpoch -
-          getNextReviewTime(record.reviewNumber) -
+          record.interval -
           record.lastReview.millisecondsSinceEpoch >
       0;
 }
