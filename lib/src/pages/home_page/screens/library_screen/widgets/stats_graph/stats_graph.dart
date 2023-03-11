@@ -55,7 +55,7 @@ class _StatsGraphState extends State<StatsGraph> {
   }
 
   int _getReviewedRecords(Iterable<Record> records, DateTime day) {
-    return 0; //TODO
+    return 1; //TODO
   }
 
   void _setPressedPosition(Offset? offset) {

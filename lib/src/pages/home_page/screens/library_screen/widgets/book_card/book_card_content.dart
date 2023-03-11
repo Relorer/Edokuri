@@ -13,7 +13,7 @@ class BookCardContent extends StatelessWidget {
   final String author;
   final int currentCompletedChapter;
   final int chaptersCount;
-  final int newWordsPersent;
+  final int newWordsPercent;
   final int recordsCount;
 
   const BookCardContent(
@@ -22,7 +22,7 @@ class BookCardContent extends StatelessWidget {
       required this.chaptersCount,
       required this.currentCompletedChapter,
       required this.title,
-      required this.newWordsPersent,
+      required this.newWordsPercent,
       required this.recordsCount});
 
   @override
@@ -61,7 +61,7 @@ class BookCardContent extends StatelessWidget {
                 ),
                 EllipsisText(
                   LocaleKeys.newWords
-                      .tr(namedArgs: {"persent": newWordsPersent.toString()}),
+                      .tr(namedArgs: {"persent": newWordsPercent.toString()}),
                   style: Theme.of(context).bookSubInfoStyle,
                 )
               ],

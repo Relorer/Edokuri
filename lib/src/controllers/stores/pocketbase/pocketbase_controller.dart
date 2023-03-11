@@ -6,10 +6,12 @@ import 'dart:developer';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/cache_controller/cache_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/models/models.dart';
 
@@ -25,6 +27,7 @@ const authTokenKey = "auth_token_key";
 
 abstract class PocketbaseControllerBase with Store {
   final secureStorage = getIt<FlutterSecureStorage>();
+  final CacheController cacheController = CacheController();
   final client = PocketBase(pocketbaseUrl);
   User? user;
 
@@ -78,6 +81,35 @@ abstract class PocketbaseControllerBase with Store {
     client.authStore.clear();
   }
 
+  Uri getFileUrl(RecordModel record, String field) {
+    final fileName = record.getListValue<String>(field)[0];
+    return client.getFileUrl(record, fileName);
+  }
+
+  Future<List<int>> getFile(RecordModel record, String field) async {
+    try {
+      final fileUrl = getFileUrl(record, field);
+      final cache = await cacheController.getFile(fileUrl.toString());
+      if (cache == null) {
+        final file = await http.readBytes(fileUrl.normalizePath());
+        await cacheController.putFile(file, fileUrl.toString());
+        return file;
+      }
+      return cache;
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+    return "[\"file not found\"]".codeUnits;
+  }
+
+  Future putFile(RecordModel record, String field, List<int> bytes) async {
+    try {
+      cacheController.putFile(bytes, getFileUrl(record, field).toString());
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
   Future _authWithProvider(String providerName) async {
     try {
       final authMethods = await client.collection("users").listAuthMethods();
@@ -91,8 +123,8 @@ abstract class PocketbaseControllerBase with Store {
       final code = parsedUri.queryParameters['code']!;
       await client.collection("users").authWithOAuth2(
           providerName, code, provider.codeVerifier, redirectUri);
-    } catch (e) {
-      log(e.toString());
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
     }
   }
 }

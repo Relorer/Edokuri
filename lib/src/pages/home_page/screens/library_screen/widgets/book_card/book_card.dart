@@ -84,7 +84,7 @@ class BookCard extends StatelessWidget {
                 .read<RecordRepository>()
                 .getSavedRecordsByBook(book)
                 .length,
-            newWordsPersent:
+            newWordsPercent:
                 context.read<RecordRepository>().newWordsInBook(book),
           );
         })

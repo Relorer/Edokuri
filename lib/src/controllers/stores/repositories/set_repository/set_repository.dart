@@ -32,8 +32,8 @@ abstract class SetRepositoryBase with Store {
         if (e.action == "update" || e.action == "create") {
           sets.add(record);
         }
-      } catch (e) {
-        log(e.toString());
+      } catch (e, stacktrace) {
+        log("${e.toString()}\n${stacktrace.toString()}");
       }
     });
   }
@@ -46,16 +46,16 @@ abstract class SetRepositoryBase with Store {
       } else {
         await pb.client.collection(_setRecords).update(set.id, body: body);
       }
-    } catch (e) {
-      log(e.toString());
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
     }
   }
 
   void removeSet(SetRecords set) async {
     try {
-      await pb.client.collection("setRecords").delete(set.id);
-    } catch (e) {
-      log(e.toString());
+      await pb.client.collection(_setRecords).delete(set.id);
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
     }
   }
 }

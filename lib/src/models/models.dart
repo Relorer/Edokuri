@@ -6,6 +6,6 @@ export './entities/example.dart';
 export './entities/activity_time.dart';
 export './entities/meaning.dart';
 export './entities/record.dart';
-export './entities/set.dart';
+export './entities/set_records.dart';
 export './entities/translation.dart';
 export './entities/time_mark.dart';

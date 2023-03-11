@@ -5,7 +5,7 @@ import 'package:pocketbase/pocketbase.dart';
 // 🌎 Project imports:
 import 'package:edokuri/src/models/models.dart';
 
-part 'set.g.dart';
+part 'set_records.g.dart';
 
 @JsonSerializable()
 class SetRecords {

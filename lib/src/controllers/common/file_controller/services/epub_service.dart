@@ -27,14 +27,13 @@ class EpubService {
     }
 
     var book = Book(
-        author: epub.Author,
+        author: epub.AuthorList?.where((element) => element != null).join(", "),
         title: epub.Title,
         cover: cover,
         currentChapter: 0,
         currentCompletedChapter: 0,
         currentPositionInChapter: 0,
-        currentCompletedPositionInChapter: 0,
-        words: []);
+        currentCompletedPositionInChapter: 0);
 
     List<String> words = [];
 

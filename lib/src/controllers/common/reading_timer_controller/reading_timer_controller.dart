@@ -13,15 +13,15 @@ class ReadingTimerController {
   ReadingTimerController(this.bookRepository, this.userRepository, this.book);
 
   startReadingTimer() {
-    _startReading = DateTime.now();
+    // _startReading = DateTime.now(); // TODO
   }
 
   stopReadingTimer() {
     if (_startReading != null) {
-      book.readTimes.add(ActivityTime(_startReading!, DateTime.now()));
-      bookRepository.putBook(book);
-      _startReading = null;
-      userRepository.addTimeMarkForToday();
+      // book.readTimes.add(ActivityTime(_startReading!, DateTime.now()));
+      // bookRepository.putBook(book);
+      // _startReading = null;
+      // userRepository.addTimeMarkForToday();
     }
   }
 }

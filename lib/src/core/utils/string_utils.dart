@@ -1,3 +1,6 @@
+// 🎯 Dart imports:
+import 'dart:convert';
+
 // 🌎 Project imports:
 import 'package:edokuri/src/models/models.dart';
 
@@ -30,4 +33,12 @@ List<String> getAllWords(String content) {
 
 bool containsWord(String content) {
   return _wordExp.hasMatch(content);
+}
+
+List<int> encodeFile(List<String> content) {
+  return utf8.encode(json.encode(content));
+}
+
+List<String> decodeFile(List<int> bytes) {
+  return List<String>.from(json.decode(utf8.decode(bytes)));
 }

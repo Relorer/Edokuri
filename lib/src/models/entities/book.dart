@@ -5,9 +5,6 @@ import 'dart:typed_data';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-// 🌎 Project imports:
-import 'package:edokuri/src/models/models.dart';
-
 part 'book.g.dart';
 
 @JsonSerializable()
@@ -22,13 +19,17 @@ class Book {
   int currentPositionInChapter;
   int currentCompletedChapter;
   int currentCompletedPositionInChapter;
-  List<String> words;
+
+  List<String> readTimes;
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   Uint8List? cover;
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final words = <String>[];
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
   final chapters = <String>[];
-  List<ActivityTime> readTimes;
 
   Book({
     this.id = "",
@@ -38,7 +39,6 @@ class Book {
     required this.currentCompletedChapter,
     required this.currentCompletedPositionInChapter,
     required this.currentPositionInChapter,
-    required this.words,
     this.cover,
     this.user = "",
     this.readTimes = const [],
@@ -46,7 +46,7 @@ class Book {
 
   int get readingTimeInMinutes => readTimes.isNotEmpty
       ? readTimes
-              .map((element) => element.timespan)
+              .map((element) => 1) // element.timespan TODO
               .reduce((t1, t2) => t1 + t2) /
           1000 ~/
           60

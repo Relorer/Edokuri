@@ -65,12 +65,12 @@ abstract class LibrarySortControllerBase
           ..sort((b1, b2) => (b2.currentCompletedChapter / b2.chapters.length)
               .compareTo(b1.currentCompletedChapter / b1.chapters.length));
       case BooksSortTypes.recent:
-        return types.toList()
-          ..sort((b1, b2) =>
-              (b2.readTimes.isNotEmpty ? b2.readTimes.last.end : DateTime(0))
-                  .compareTo(b1.readTimes.isNotEmpty
-                      ? b1.readTimes.last.end
-                      : DateTime(0)));
+        return types.toList();
+      // ..sort((b1, b2) =>
+      //     (b2.readTimes.isNotEmpty ? b2.readTimes.last.end : DateTime(0))
+      //         .compareTo(b1.readTimes.isNotEmpty
+      //             ? b1.readTimes.last.end
+      //             : DateTime(0))); TODO
     }
   }
 }
