@@ -17,6 +17,7 @@ import 'package:freader/src/controllers/stores/reader_controller/reader_controll
 import 'package:freader/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
 import 'package:get_it/get_it.dart';
 
+import '../controllers/stores/ml_controller/ml_controller.dart';
 import '../models/models.dart';
 
 final getIt = GetIt.instance;
@@ -47,6 +48,8 @@ Future<void> setupLocator() async {
 
   getIt.registerSingletonAsync<SettingsController>(
       () => SrttingsControllerFactory().getSettingsController());
+
+  getIt.registerSingleton(MLController());
 
   //repositories
   getIt.registerSingletonAsync<Store>(() => StoreFactory().getDBController());
