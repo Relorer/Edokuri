@@ -15,10 +15,24 @@ abstract class MLControllerBase with Store {
   @observable
   bool isLoaded = false;
 
+  @observable
+  bool isLoading = false;
+
   @action
   Future<void> loadMLState() async {
-    isLoaded = await modelManager.isModelDownloaded(TranslateLanguage.english.bcpCode) &&
+    isLoaded = await modelManager
+            .isModelDownloaded(TranslateLanguage.english.bcpCode) &&
         await modelManager.isModelDownloaded(TranslateLanguage.russian.bcpCode);
   }
 
+  @action
+  Future<void> downloadModels() async {
+    isLoading = true;
+    await modelManager.downloadModel(
+        isWifiRequired: false, TranslateLanguage.english.bcpCode);
+    await modelManager.downloadModel(
+        isWifiRequired: false, TranslateLanguage.russian.bcpCode);
+    isLoading = false;
+    loadMLState();
+  }
 }

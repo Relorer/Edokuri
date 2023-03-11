@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:freader/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:freader/src/controllers/common/translator_controller/translator_controller_factory.dart';
 import 'package:freader/src/controllers/stores/ml_controller/ml_controller.dart';
 import 'package:freader/src/core/widgets/bouncing_custom_scroll_view.dart';
@@ -26,6 +27,14 @@ class SettingsPageState extends State<SettingsPage> {
   final TextEditingController controller = TextEditingController();
   final OnDeviceTranslatorModelManager manager =
       OnDeviceTranslatorModelManager();
+  final ToastController toastController = ToastController();
+
+  void checkStateDownloadModel() async {
+    if (!getIt<MLController>().isLoaded) {
+      await getIt<MLController>().downloadModels();
+      toastController.showDefaultTost("Language model is downloaded");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +55,17 @@ class SettingsPageState extends State<SettingsPage> {
               child: Observer(
                 builder: (_) => Column(
                   children: [
-                    TextButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.black38, // foreground
-                        ),
-                        onPressed: () => {
-                              if (getIt<MLController>().isLoaded)
-                                {
-                                  manager.deleteModel(
-                                      TranslateLanguage.english.bcpCode),
-                                  manager.deleteModel(
-                                      TranslateLanguage.russian.bcpCode)
-                                }
-                              else
-                                {
-                                  manager.downloadModel(
-                                      TranslateLanguage.english.bcpCode),
-                                  manager.downloadModel(
-                                      TranslateLanguage.russian.bcpCode)
-                                }
-                            },
-                        child: Text(getIt<MLController>().isLoaded
-                            ? "Delete"
-                            : "Download"))
+                    getIt<MLController>().isLoaded
+                        ? const Text("Language model is loaded")
+                        : TextButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.black38, // foreground
+                            ),
+                            onPressed: !getIt<MLController>().isLoading
+                                ? () => checkStateDownloadModel()
+                                : null,
+                            child: const Text("Download"))
                   ],
                 ),
               ),
