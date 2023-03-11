@@ -10,6 +10,7 @@ import 'package:edokuri/src/controllers/common/settings_controller/settings_cont
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator_controller_factory.dart';
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
+import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_factory.dart';
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
@@ -19,13 +20,15 @@ import 'package:edokuri/src/controllers/stores/repositories/set_repository/set_r
 import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:edokuri/src/controllers/stores/sort_controllers/library_sort_controller/library_sort_controller.dart';
 import 'package:edokuri/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
-import '../models/models.dart';
+import 'package:edokuri/src/models/models.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
   getIt.registerFactory(() => TTSController());
   getIt.registerFactory(() => ToastController());
+
+  getIt.registerSingleton(MLController());
 
   getIt.registerSingletonAsync(
       () => TranslatorControllerFactory().getTranslatorController());

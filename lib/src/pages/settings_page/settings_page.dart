@@ -1,7 +1,12 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
+
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
+import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
@@ -24,6 +29,16 @@ class SettingsPage extends StatefulWidget {
 
 class SettingsPageState extends State<SettingsPage> {
   final TextEditingController controller = TextEditingController();
+  final OnDeviceTranslatorModelManager manager =
+      OnDeviceTranslatorModelManager();
+  final ToastController toastController = ToastController();
+
+  void checkStateDownloadModel() async {
+    if (!getIt<MLController>().isLoaded) {
+      await getIt<MLController>().downloadModels();
+      toastController.showDefaultTost("Language model is downloaded");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +55,17 @@ class SettingsPageState extends State<SettingsPage> {
           ),
           SliverSingleChild(Column(
             children: [
+              getIt<MLController>().isLoaded
+                  ? const Text("Language model is loaded")
+                  : TextButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.black38, // foreground
+                      ),
+                      onPressed: !getIt<MLController>().isLoading
+                          ? () => checkStateDownloadModel()
+                          : null,
+                      child: const Text("Download")),
               ButtonWithIcon(
                 text: "Sign out",
                 onTap: () async {
