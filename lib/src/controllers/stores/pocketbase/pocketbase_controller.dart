@@ -60,9 +60,10 @@ abstract class PocketbaseControllerBase with Store {
       final token = (decoded as Map<String, dynamic>)["token"] as String? ?? "";
       final model =
           RecordModel.fromJson(decoded["model"] as Map<String, dynamic>? ?? {});
-
-      client.authStore.save(token, model);
-      await client.collection("users").authRefresh();
+      if (token.isNotEmpty) {
+        client.authStore.save(token, model);
+        await client.collection("users").authRefresh();
+      }
     }
   }
 
