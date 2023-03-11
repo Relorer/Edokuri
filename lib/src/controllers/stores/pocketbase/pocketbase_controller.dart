@@ -44,11 +44,11 @@ abstract class PocketbaseControllerBase with Store {
       if (client.authStore.model != null) {
         user = User.fromRecord(client.authStore.model);
         await setupRepositoryScope(user!.id);
-        isAuthorized = client.authStore.token.isNotEmpty;
       } else {
         user = null;
       }
 
+      isAuthorized = client.authStore.token.isNotEmpty;
       secureStorage.write(key: authTokenKey, value: encoded);
     });
   }
