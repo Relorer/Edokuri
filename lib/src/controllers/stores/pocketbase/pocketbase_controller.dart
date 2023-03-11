@@ -35,9 +35,7 @@ abstract class PocketbaseControllerBase with Store {
   bool isAuthorized = false;
 
   PocketbaseControllerBase() {
-    client.authStore.onChange.listen((e) {
-      isAuthorized = client.authStore.token.isNotEmpty;
-
+    client.authStore.onChange.listen((e) async {
       final encoded = jsonEncode(<String, dynamic>{
         "token": e.token,
         "model": e.model,
@@ -45,7 +43,8 @@ abstract class PocketbaseControllerBase with Store {
 
       if (client.authStore.model != null) {
         user = User.fromRecord(client.authStore.model);
-        setupRepositoryScope(user!.id);
+        await setupRepositoryScope(user!.id);
+        isAuthorized = client.authStore.token.isNotEmpty;
       } else {
         user = null;
       }
@@ -64,7 +63,6 @@ abstract class PocketbaseControllerBase with Store {
 
       client.authStore.save(token, model);
       await client.collection("users").authRefresh();
-      user = User.fromRecord(client.authStore.model);
     }
   }
 
