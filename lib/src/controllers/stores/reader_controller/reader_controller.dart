@@ -130,9 +130,13 @@ abstract class ReaderControllerBase with Store {
               original: element.content.toLowerCase(),
               originalLowerCase: element.content.toLowerCase(),
               transcription: "",
-              synonyms: [],
               known: true,
               creationDate: creationDate,
+              sentences: [],
+              examples: [],
+              meanings: [],
+              synonyms: [],
+              translations: [],
             ))));
   }
 

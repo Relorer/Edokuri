@@ -10,9 +10,7 @@ part 'record.g.dart';
 @JsonSerializable()
 class Record {
   String id;
-  String user;
-
-  final List<SetRecords> sets;
+  String userId;
 
   final List<Translation> translations;
   final List<Meaning> meanings;
@@ -31,20 +29,20 @@ class Record {
       .map((element) => element.text)
       .join(", ");
 
-  Record(
-      {this.id = "",
-      required this.original,
-      required this.originalLowerCase,
-      required this.transcription,
-      required this.synonyms,
-      required this.known,
-      required this.creationDate,
-      this.examples = const [],
-      this.meanings = const [],
-      this.sentences = const [],
-      this.sets = const [],
-      this.translations = const [],
-      this.user = ""});
+  Record({
+    this.id = "",
+    required this.original,
+    required this.originalLowerCase,
+    required this.transcription,
+    required this.known,
+    required this.creationDate,
+    required this.examples,
+    required this.meanings,
+    required this.synonyms,
+    required this.sentences,
+    required this.translations,
+    this.userId = "",
+  });
 
   factory Record.fromRecord(RecordModel record) =>
       Record.fromJson(record.toJson());

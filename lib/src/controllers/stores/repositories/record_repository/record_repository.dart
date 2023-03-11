@@ -1,4 +1,6 @@
 // 📦 Package imports:
+import 'dart:developer';
+
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
@@ -10,18 +12,29 @@ part 'record_repository.g.dart';
 
 class RecordRepository = RecordRepositoryBase with _$RecordRepository;
 
+const _record = "record";
+
 abstract class RecordRepositoryBase with Store {
   final PocketbaseController pb;
   final UserRepository userRepository;
 
   ObservableList<Record> records = ObservableList<Record>.of([]);
 
-  RecordRepositoryBase(this.pb, this.userRepository);
-
-  @action
-  void setNewList(List<Record> newRecords) {
-    records.clear();
-    records.addAll(newRecords);
+  RecordRepositoryBase(this.pb, this.userRepository) {
+    pb.client.collection(_record).getFullList().then(
+        (value) => records.addAll(value.map((e) => Record.fromRecord(e))));
+    pb.client.collection(_record).subscribe("*", (e) {
+      try {
+        if (e.record == null) return;
+        final record = Record.fromRecord(e.record!);
+        records.removeWhere((element) => element.id == record.id);
+        if (e.action == "update" || e.action == "create") {
+          records.add(record);
+        }
+      } catch (e, stacktrace) {
+        log("${e.toString()}\n${stacktrace.toString()}");
+      }
+    });
   }
 
   List<Record> getRecordsByBook(Book book) {
@@ -32,9 +45,11 @@ abstract class RecordRepositoryBase with Store {
   }
 
   List<Record> getRecordsBySet(SetRecords set) {
-    return records
-        .where((element) => element.sets.any((element) => element.id == set.id))
-        .toList();
+    //TODO
+    // return records
+    //     .where((element) => element.setIds.any((id) => id == set.id))
+    //     .toList();
+    return [];
   }
 
   List<Record> getSavedRecordsByBook(Book book) {
@@ -50,10 +65,40 @@ abstract class RecordRepositoryBase with Store {
   }
 
   Record? getRecord(String original) {
+    final fromCache = records.where((element) =>
+        element.originalLowerCase == original.toLowerCase().trim());
+
+    if (fromCache.isNotEmpty) {
+      return fromCache.first;
+    }
     return null;
   }
 
-  void putRecord(Record record, {SetRecords? set}) {}
+  void putRecord(Record record, {SetRecords? set}) async {
+    try {
+      record.id = records
+          .firstWhere(
+              (element) =>
+                  element.originalLowerCase == record.originalLowerCase,
+              orElse: () => record)
+          .id;
+      final body = record.toJson()..["user"] = pb.user?.id;
+      if (record.id.isEmpty) {
+        await pb.client.collection(_record).create(body: body);
+      } else {
+        await pb.client.collection(_record).update(record.id, body: body);
+      }
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
 
-  void removeRecord(Record record, {SetRecords? set}) {}
+  void removeRecord(Record record, {SetRecords? set}) async {
+    //TODO
+    try {
+      await pb.client.collection(_record).delete(record.id);
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
 }

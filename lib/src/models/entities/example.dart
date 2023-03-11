@@ -6,13 +6,10 @@ part 'example.g.dart';
 
 @JsonSerializable()
 class Example {
-  String user;
-  String id;
-
   final String text;
   final String tr;
 
-  Example(this.text, this.tr, {this.id = "", this.user = ""});
+  Example(this.text, this.tr);
 
   factory Example.fromRecord(RecordModel record) =>
       Example.fromJson(record.toJson());

@@ -67,7 +67,6 @@ abstract class BookRepositoryBase with Store {
   void putBook(Book book) async {
     try {
       final body = book.toJson()..["user"] = pb.user?.id;
-      log(body.toString());
 
       if (book.id.isEmpty) {
         final chapters = encodeFile(book.chapters);
@@ -98,7 +97,9 @@ abstract class BookRepositoryBase with Store {
         await pb.putFile(result, "chapters", chapters);
         await pb.putFile(result, "words", words);
         await pb.putFile(result, "cover", book.cover!);
-      } else {}
+      } else {
+        await pb.client.collection(_book).update(book.id, body: body);
+      }
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }

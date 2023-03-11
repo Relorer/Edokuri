@@ -6,9 +6,7 @@ part 'meaning.g.dart';
 
 @JsonSerializable()
 class Meaning {
-  String id;
   String pos;
-  String user;
 
   String description;
 
@@ -20,8 +18,12 @@ class Meaning {
 
   bool hasExamples() => examples.isNotEmpty;
 
-  Meaning(this.pos, this.description, this.meanings, this.examples,
-      {this.id = "", this.user = ""});
+  Meaning(
+    this.pos,
+    this.description,
+    this.meanings,
+    this.examples,
+  );
 
   factory Meaning.fromRecord(RecordModel record) =>
       Meaning.fromJson(record.toJson());
