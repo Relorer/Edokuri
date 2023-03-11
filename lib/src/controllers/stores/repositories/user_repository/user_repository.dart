@@ -18,6 +18,7 @@ abstract class UserRepositoryBase with Store {
   void updateUserInfo() {}
 
   int learningTimeForTodayInMinutes() {
+    //TODO
     // final today = DateTime.now();
     // final learningTimesForToday = currentUser.learnTimes
     //     .where((element) => element.start.isSameDate(today))
@@ -33,6 +34,7 @@ abstract class UserRepositoryBase with Store {
   }
 
   void addTimeMarkForToday() {
+    //TODO
     // DateTime date = DateTime.now();
     // if (currentUser.streak.isEmpty ||
     //     !currentUser.streak.last.dateTime.isSameDate(date)) {
@@ -42,6 +44,7 @@ abstract class UserRepositoryBase with Store {
   }
 
   int getStreak() {
+    //TODO
     // if (currentUser.streak.isEmpty) return 0;
 
     // DateTime date = DateTime.now();

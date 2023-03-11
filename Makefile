@@ -23,4 +23,4 @@ format:
 	dart format .
 
 import:
-	pub run import_sorter:main
+	flutter pub run import_sorter:main

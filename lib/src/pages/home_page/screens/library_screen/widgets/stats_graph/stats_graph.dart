@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/utils/datetime_extensions.dart';
 import 'package:edokuri/src/core/utils/random_utils.dart';
 import 'package:edokuri/src/models/models.dart';
@@ -76,7 +76,7 @@ class _StatsGraphState extends State<StatsGraph> {
                   onTapUp: ((details) => _setPressedPosition(null)),
                   onTapCancel: (() => _setPressedPosition(null)),
                   child: Observer(builder: (_) {
-                    final recordRepository = context.read<RecordRepository>();
+                    final recordRepository = getIt<RecordRepository>();
                     final graphData = GraphData([
                       ...Iterable<int>.generate(7)
                           .map((e) {

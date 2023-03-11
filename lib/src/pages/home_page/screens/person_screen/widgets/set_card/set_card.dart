@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/controllers/stores/repositories/set_repository/set_repository.dart';
 import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/utils/records_list_extensions.dart';
 import 'package:edokuri/src/core/widgets/ellipsis_text.dart';
 import 'package:edokuri/src/core/widgets/simple_card.dart';
@@ -32,8 +32,7 @@ class SetCard extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => Observer(builder: (_) {
           return SetPage(
-            setData: SetData(
-                context.read<RecordRepository>().getRecordsBySet(set),
+            setData: SetData(getIt<RecordRepository>().getRecordsBySet(set),
                 set: set),
           );
         }),
@@ -42,7 +41,7 @@ class SetCard extends StatelessWidget {
   }
 
   void _removeSet(BuildContext context) {
-    context.read<SetRepository>().removeSet(set);
+    getIt<SetRepository>().removeSet(set);
     Navigator.pop(context);
   }
 

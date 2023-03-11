@@ -43,7 +43,12 @@ abstract class PocketbaseControllerBase with Store {
         "model": e.model,
       });
 
-      user = User.fromRecord(client.authStore.model);
+      if (client.authStore.model != null) {
+        user = User.fromRecord(client.authStore.model);
+        setupRepositoryScope(user!.id);
+      } else {
+        user = null;
+      }
 
       secureStorage.write(key: authTokenKey, value: encoded);
     });
@@ -105,6 +110,14 @@ abstract class PocketbaseControllerBase with Store {
   Future putFile(RecordModel record, String field, List<int> bytes) async {
     try {
       cacheController.putFile(bytes, getFileUrl(record, field).toString());
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
+  Future removeFile(RecordModel record, String field) async {
+    try {
+      cacheController.removeFile(getFileUrl(record, field).toString());
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }

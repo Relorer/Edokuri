@@ -42,6 +42,11 @@ abstract class BookRepositoryBase with Store {
       try {
         if (e.record == null) return;
         books.removeWhere((element) => element.id == e.record!.id);
+        if (e.action == "delete") {
+          pb.removeFile(e.record!, "chapters");
+          pb.removeFile(e.record!, "words");
+          pb.removeFile(e.record!, "cover");
+        }
         if (e.action == "update" || e.action == "create") {
           books.add(await getBookFromRecord(e.record!));
         }
@@ -89,9 +94,10 @@ abstract class BookRepositoryBase with Store {
         }
         final result =
             await pb.client.collection(_book).create(body: body, files: files);
-        pb.putFile(result, "chapters", chapters);
-        pb.putFile(result, "words", words);
-        pb.putFile(result, "cover", book.cover!);
+        //TODO
+        await pb.putFile(result, "chapters", chapters);
+        await pb.putFile(result, "words", words);
+        await pb.putFile(result, "cover", book.cover!);
       } else {}
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");

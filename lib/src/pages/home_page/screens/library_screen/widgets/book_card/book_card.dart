@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/generated/locale.dart';
@@ -33,7 +32,7 @@ class BookCard extends StatelessWidget {
   }
 
   void _removeBook(BuildContext context) {
-    context.read<BookRepository>().removeBook(book);
+    getIt<BookRepository>().removeBook(book);
     getIt<ToastController>().showDefaultTost("Book is removed");
     Navigator.pop(context);
   }
@@ -44,8 +43,8 @@ class BookCard extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => Observer(builder: (_) {
           return SetPage(
-            setData: SetData(
-                context.read<RecordRepository>().getSavedRecordsByBook(book)),
+            setData:
+                SetData(getIt<RecordRepository>().getSavedRecordsByBook(book)),
           );
         }),
       ),
@@ -80,12 +79,9 @@ class BookCard extends StatelessWidget {
             chaptersCount: book.chapters.length,
             currentCompletedChapter: book.currentCompletedChapter,
             title: book.title ?? LocaleKeys.noTitle.tr(),
-            recordsCount: context
-                .read<RecordRepository>()
-                .getSavedRecordsByBook(book)
-                .length,
-            newWordsPercent:
-                context.read<RecordRepository>().newWordsInBook(book),
+            recordsCount:
+                getIt<RecordRepository>().getSavedRecordsByBook(book).length,
+            newWordsPercent: getIt<RecordRepository>().newWordsInBook(book),
           );
         })
       ]),

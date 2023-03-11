@@ -24,22 +24,8 @@ import '../models/models.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
-  getIt.registerFactory(
-      () => FileController(getIt<BookRepository>(), getIt<ToastController>()));
   getIt.registerFactory(() => TTSController());
-  getIt.registerFactory(() => LibrarySortController(getIt<RecordRepository>()));
-  getIt.registerFactory(() => RecordsSortController(getIt<RecordRepository>()));
   getIt.registerFactory(() => ToastController());
-  getIt.registerFactoryParam<ReaderController, Book, void>((book, _) =>
-      ReaderController(
-          getIt<RecordRepository>(), getIt<BookRepository>(), book));
-
-  getIt.registerFactoryParam<ReadingTimerController, Book, void>((book, _) =>
-      ReadingTimerController(
-          getIt<BookRepository>(), getIt<UserRepository>(), book));
-
-  getIt.registerFactory<LearningTimerController>(
-      () => LearningTimerController(getIt<UserRepository>()));
 
   getIt.registerSingletonAsync(
       () => TranslatorControllerFactory().getTranslatorController());
@@ -50,21 +36,52 @@ Future<void> setupLocator() async {
   getIt.registerSingleton(const FlutterSecureStorage());
 
   getIt.registerSingletonAsync<PocketbaseController>(PocketBaseFactory().getPB);
+}
 
-  //repositories
-  getIt.registerSingletonWithDependencies(
-      () => UserRepository(getIt<PocketbaseController>()),
-      dependsOn: [PocketbaseController]);
-  getIt.registerSingletonWithDependencies(
-      () => BookRepository(
-          getIt<PocketbaseController>(), getIt<UserRepository>()),
-      dependsOn: [PocketbaseController]);
-  getIt.registerSingletonWithDependencies(
-      () =>
-          SetRepository(getIt<PocketbaseController>(), getIt<UserRepository>()),
-      dependsOn: [PocketbaseController]);
-  getIt.registerSingletonWithDependencies(
-      () => RecordRepository(
-          getIt<PocketbaseController>(), getIt<UserRepository>()),
-      dependsOn: [PocketbaseController]);
+Future<void> setupRepositoryScope(String userId) async {
+  if (getIt.currentScopeName == userId) return;
+  if (getIt.currentScopeName != "baseScope") {
+    await getIt.popScope();
+  }
+
+  getIt.pushNewScope(
+      init: (getIt) {
+        getIt.registerSingletonWithDependencies(
+            () => UserRepository(getIt<PocketbaseController>()),
+            dependsOn: [PocketbaseController]);
+        getIt.registerSingletonWithDependencies(
+            () => BookRepository(
+                getIt<PocketbaseController>(), getIt<UserRepository>()),
+            dependsOn: [PocketbaseController]);
+        getIt.registerSingletonWithDependencies(
+            () => SetRepository(
+                getIt<PocketbaseController>(), getIt<UserRepository>()),
+            dependsOn: [PocketbaseController]);
+        getIt.registerSingletonWithDependencies(
+            () => RecordRepository(
+                getIt<PocketbaseController>(), getIt<UserRepository>()),
+            dependsOn: [PocketbaseController]);
+
+        getIt.registerSingletonWithDependencies(
+            () => LibrarySortController(getIt<RecordRepository>()),
+            dependsOn: [RecordRepository]);
+        getIt.registerSingletonWithDependencies(
+            () => RecordsSortController(getIt<RecordRepository>()),
+            dependsOn: [RecordRepository]);
+
+        getIt.registerFactory(() =>
+            FileController(getIt<BookRepository>(), getIt<ToastController>()));
+
+        getIt.registerFactoryParam<ReaderController, Book, void>((book, _) =>
+            ReaderController(
+                getIt<RecordRepository>(), getIt<BookRepository>(), book));
+
+        getIt.registerFactoryParam<ReadingTimerController, Book, void>(
+            (book, _) => ReadingTimerController(
+                getIt<BookRepository>(), getIt<UserRepository>(), book));
+
+        getIt.registerFactory<LearningTimerController>(
+            () => LearningTimerController(getIt<UserRepository>()));
+      },
+      scopeName: userId);
 }

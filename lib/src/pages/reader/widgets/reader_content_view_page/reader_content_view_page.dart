@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/known_word.dart';
@@ -74,7 +75,7 @@ class ReaderContentViewPage extends StatelessWidget {
             ? WidgetSpan(
                 child: Observer(
                 builder: (context) => getWord(
-                    context.read<RecordRepository>().getRecord(piece.content),
+                    getIt<RecordRepository>().getRecord(piece.content),
                     piece,
                     () => _translate(context, piece, tempCurrentIndex)),
               ))

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/app_bar_space_with_exp_coll.dart';
 import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page.dart';
@@ -98,11 +98,9 @@ class PersonAppBar extends StatelessWidget {
                         ),
                       ),
                       Observer(builder: (_) {
-                        final recordRepository =
-                            context.read<RecordRepository>();
+                        final recordRepository = getIt<RecordRepository>();
 
-                        final readingTimes = context
-                            .read<BookRepository>()
+                        final readingTimes = getIt<BookRepository>()
                             .books
                             .map((element) => element.readingTimeInMinutes);
                         final readingTime = readingTimes.isNotEmpty
@@ -127,9 +125,9 @@ class PersonAppBar extends StatelessWidget {
                             PersonAppBarLine("reading:",
                                 "${readingTime.toStringAsFixed(1)}H"),
                             PersonAppBarLine("training:",
-                                "${(context.read<UserRepository>().learningTimeForTodayInMinutes() / 60).toStringAsFixed(1)}H"),
+                                "${(getIt<UserRepository>().learningTimeForTodayInMinutes() / 60).toStringAsFixed(1)}H"),
                             PersonAppBarLine("current streak:",
-                                "${context.read<UserRepository>().getStreak()}-days"),
+                                "${getIt<UserRepository>().getStreak()}-days"),
                           ],
                         );
                       })

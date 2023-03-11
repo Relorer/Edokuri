@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
@@ -29,7 +28,7 @@ class RecordCard extends StatelessWidget {
   }
 
   void _removeRecord(BuildContext context) {
-    context.read<RecordRepository>().removeRecord(record, set: setData.set);
+    getIt<RecordRepository>().removeRecord(record, set: setData.set);
     Navigator.pop(context);
   }
 

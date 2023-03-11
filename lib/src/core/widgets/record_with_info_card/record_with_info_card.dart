@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 // 🌎 Project imports:
@@ -44,7 +43,7 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
   @override
   initState() {
     super.initState();
-    _recordRepository = context.read<RecordRepository>();
+    _recordRepository = getIt<RecordRepository>();
     _translator = getIt<TranslatorController>();
   }
 
