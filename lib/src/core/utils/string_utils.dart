@@ -1,4 +1,8 @@
-import 'package:freader/src/models/book.dart';
+// 🎯 Dart imports:
+import 'dart:convert';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/models/models.dart';
 
 final RegExp _pieceOfLineExp =
     RegExp(r"(([a-zA-Z]|('|-|’)[a-zA-Z])+(?=([^a-zA-Z]|$))|[^a-zA-Z]+)");
@@ -29,4 +33,12 @@ List<String> getAllWords(String content) {
 
 bool containsWord(String content) {
   return _wordExp.hasMatch(content);
+}
+
+List<int> encodeFile(List<String> content) {
+  return utf8.encode(json.encode(content));
+}
+
+List<String> decodeFile(List<int> bytes) {
+  return List<String>.from(json.decode(utf8.decode(bytes)));
 }

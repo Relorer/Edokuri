@@ -71,6 +71,7 @@ jobs:
           cache: 'gradle'
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.7.5'
           channel: 'stable'
           cache: true
       - run: flutter --version
@@ -86,8 +87,9 @@ jobs:
         run: flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart -S "assets/translations"
 
       - name: 'Create env file'
-        run:
+        run:  |
           echo "YANDEX_DICTIONARY_KEY=${{ secrets.YANDEX_DICTIONARY_KEY }}" > .env
+          echo "POCKETBASE_URL=${{ secrets.POCKETBASE_URL }}" >> .env
 
       - name: Start release build (abb)
         run: flutter build appbundle

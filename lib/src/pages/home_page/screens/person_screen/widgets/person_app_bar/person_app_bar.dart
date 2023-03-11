@@ -1,16 +1,21 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/src/core/widgets/app_bar_space_with_exp_coll.dart';
-import 'package:freader/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
-import 'package:freader/src/pages/settings_page/settings_page.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
-import 'package:provider/provider.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
+import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/widgets/app_bar_space_with_exp_coll.dart';
+import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page.dart';
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class PersonAppBar extends StatelessWidget {
   final double appBarHeight;
@@ -51,7 +56,8 @@ class PersonAppBar extends StatelessWidget {
                     constraints: const BoxConstraints(),
                     icon: SvgPicture.asset(
                       settingsSvg,
-                      color: Theme.of(context).paleElementColor,
+                      colorFilter: ColorFilter.mode(
+                          Colors.white.withOpacity(0.8), BlendMode.srcIn),
                     ),
                     onPressed: () => _openSettings(context),
                   ),
@@ -87,15 +93,14 @@ class PersonAppBar extends StatelessWidget {
                         child: SvgPicture.asset(
                           waveSvg,
                           fit: BoxFit.fill,
-                          color: Theme.of(context).paleElementColor,
+                          colorFilter: ColorFilter.mode(
+                              Colors.white.withOpacity(0.8), BlendMode.srcIn),
                         ),
                       ),
                       Observer(builder: (_) {
-                        final recordRepository =
-                            context.read<RecordRepository>();
+                        final recordRepository = getIt<RecordRepository>();
 
-                        final readingTimes = context
-                            .read<BookRepository>()
+                        final readingTimes = getIt<BookRepository>()
                             .books
                             .map((element) => element.readingTimeInMinutes);
                         final readingTime = readingTimes.isNotEmpty
@@ -120,9 +125,9 @@ class PersonAppBar extends StatelessWidget {
                             PersonAppBarLine("reading:",
                                 "${readingTime.toStringAsFixed(1)}H"),
                             PersonAppBarLine("training:",
-                                "${(context.read<UserRepository>().learningTimeForTodayInMinutes() / 60).toStringAsFixed(1)}H"),
+                                "${(getIt<UserRepository>().learningTimeForTodayInMinutes() / 60).toStringAsFixed(1)}H"),
                             PersonAppBarLine("current streak:",
-                                "${context.read<UserRepository>().getStreak()}-days"),
+                                "${getIt<UserRepository>().getStreak()}-days"),
                           ],
                         );
                       })

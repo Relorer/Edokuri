@@ -1,6 +1,9 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/models/book.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page/base_word.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/base_word.dart';
 
 class KnownWord extends StatelessWidget {
   final Piece word;

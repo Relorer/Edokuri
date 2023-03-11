@@ -1,7 +1,12 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class ButtonWithIcon extends StatelessWidget {
   final String text;
@@ -37,7 +42,8 @@ class ButtonWithIcon extends StatelessWidget {
               child: Center(
                 child: SvgPicture.asset(
                   svg,
-                  color: Theme.of(context).paleElementColor,
+                  colorFilter: ColorFilter.mode(
+                      Theme.of(context).paleElementColor, BlendMode.srcIn),
                 ),
               ),
             ),

@@ -1,17 +1,21 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:freader/src/controllers/common/tts_controller/tts_controller.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
-import 'package:freader/src/core/service_locator.dart';
-import 'package:freader/src/core/widgets/simple_card.dart';
-import 'package:freader/src/models/record.dart';
-import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
-import 'package:freader/src/pages/set_page/widgets/record_card/record_card_dialog.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
-import 'package:provider/provider.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/widgets/simple_card.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
+import 'package:edokuri/src/pages/set_page/widgets/record_card/record_card_dialog.dart';
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordCard extends StatelessWidget {
   final SetData setData;
@@ -24,7 +28,7 @@ class RecordCard extends StatelessWidget {
   }
 
   void _removeRecord(BuildContext context) {
-    context.read<RecordRepository>().removeRecord(record, set: setData.set);
+    getIt<RecordRepository>().removeRecord(record, set: setData.set);
     Navigator.pop(context);
   }
 
@@ -94,7 +98,8 @@ class RecordCard extends StatelessWidget {
                       getIt<TTSController>().speak(record.original),
                   icon: SvgPicture.asset(
                     speakerSvg,
-                    color: darkGray,
+                    colorFilter:
+                        const ColorFilter.mode(darkGray, BlendMode.srcIn),
                   )),
             ],
           )),

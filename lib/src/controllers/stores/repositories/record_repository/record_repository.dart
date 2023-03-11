@@ -1,35 +1,41 @@
-import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/src/models/models.dart';
-import 'package:freader/objectbox.g.dart' as box;
+// 🎯 Dart imports:
+import 'dart:developer';
+
+// 📦 Package imports:
 import 'package:mobx/mobx.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
+import 'package:edokuri/src/models/models.dart';
 
 part 'record_repository.g.dart';
 
 class RecordRepository = RecordRepositoryBase with _$RecordRepository;
 
+const _record = "record";
+
 abstract class RecordRepositoryBase with Store {
-  final box.Store store;
+  final PocketbaseController pb;
   final UserRepository userRepository;
 
   ObservableList<Record> records = ObservableList<Record>.of([]);
 
-  RecordRepositoryBase(this.store, this.userRepository) {
-    _getRecords(store).forEach(setNewList);
-  }
-
-  @action
-  void setNewList(List<Record> newRecords) {
-    records.clear();
-    records.addAll(newRecords);
-  }
-
-  Stream<List<Record>> _getRecords(box.Store store) {
-    final query = store
-        .box<Record>()
-        .query(box.Record_.user.equals(userRepository.currentUser.id));
-    return query
-        .watch(triggerImmediately: true)
-        .map<List<Record>>((query) => query.find());
+  RecordRepositoryBase(this.pb, this.userRepository) {
+    pb.client.collection(_record).getFullList().then(
+        (value) => records.addAll(value.map((e) => Record.fromRecord(e))));
+    pb.client.collection(_record).subscribe("*", (e) {
+      try {
+        if (e.record == null) return;
+        final record = Record.fromRecord(e.record!);
+        records.removeWhere((element) => element.id == record.id);
+        if (e.action == "update" || e.action == "create") {
+          records.add(record);
+        }
+      } catch (e, stacktrace) {
+        log("${e.toString()}\n${stacktrace.toString()}");
+      }
+    });
   }
 
   List<Record> getRecordsByBook(Book book) {
@@ -40,9 +46,11 @@ abstract class RecordRepositoryBase with Store {
   }
 
   List<Record> getRecordsBySet(SetRecords set) {
-    return records
-        .where((element) => element.sets.any((element) => element.id == set.id))
-        .toList();
+    //TODO
+    // return records
+    //     .where((element) => element.setIds.any((id) => id == set.id))
+    //     .toList();
+    return [];
   }
 
   List<Record> getSavedRecordsByBook(Book book) {
@@ -67,27 +75,31 @@ abstract class RecordRepositoryBase with Store {
     return null;
   }
 
-  void putRecord(Record record, {SetRecords? set}) {
-    if (set != null) {
-      record.sets.add(set);
+  void putRecord(Record record, {SetRecords? set}) async {
+    try {
+      record.id = records
+          .firstWhere(
+              (element) =>
+                  element.originalLowerCase == record.originalLowerCase,
+              orElse: () => record)
+          .id;
+      final body = record.toJson()..["user"] = pb.user?.id;
+      if (record.id.isEmpty) {
+        await pb.client.collection(_record).create(body: body);
+      } else {
+        await pb.client.collection(_record).update(record.id, body: body);
+      }
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
     }
-
-    record.user.target = userRepository.currentUser;
-    store.box<Record>().put(record);
-    store.box<Translation>().putMany(record.translations);
-    store.box<Meaning>().putMany(record.meanings);
-    store.box<Example>().putMany(record.examples);
-    store.box<Example>().putMany(record.sentences);
-    store.box<SetRecords>().putMany(record.sets);
   }
 
-  void removeRecord(Record record, {SetRecords? set}) {
-    if (set != null) {
-      record.sets.removeWhere((element) => element.id == set.id);
-      store.box<Record>().put(record);
-      store.box<SetRecords>().put(set);
-    } else {
-      store.box<Record>().remove(record.id);
+  void removeRecord(Record record, {SetRecords? set}) async {
+    //TODO
+    try {
+      await pb.client.collection(_record).delete(record.id);
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
     }
   }
 }

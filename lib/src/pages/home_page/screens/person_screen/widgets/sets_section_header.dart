@@ -1,8 +1,11 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/button_with_icon.dart';
-import 'package:freader/src/core/widgets/section_headers/section_header_text.dart';
-import 'package:freader/src/pages/set_editing_page/set_editign_page.dart';
-import 'package:freader/src/theme/svgs.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/core/widgets/button_with_icon.dart';
+import 'package:edokuri/src/core/widgets/section_headers/section_header_text.dart';
+import 'package:edokuri/src/pages/set_editing_page/set_editign_page.dart';
+import 'package:edokuri/src/theme/svgs.dart';
 
 class SetsSectionHeader extends StatelessWidget {
   const SetsSectionHeader({super.key});

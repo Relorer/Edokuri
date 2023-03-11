@@ -1,10 +1,15 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
-import 'package:freader/src/core/widgets/section_dialog.dart';
-import 'package:freader/src/core/widgets/sliver_single_child.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/core/widgets/section_dialog.dart';
+import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class SectionHeader extends StatelessWidget {
   final Widget leftChild;
@@ -39,7 +44,8 @@ class SectionHeader extends StatelessWidget {
                   constraints: const BoxConstraints(),
                   icon: SvgPicture.asset(
                     menuSvg,
-                    color: Theme.of(context).paleElementColor,
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).paleElementColor, BlendMode.srcIn),
                   ),
                   onPressed: () => _menuButtonHandler(context),
                 )

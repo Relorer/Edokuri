@@ -1,6 +1,9 @@
+// 🐦 Flutter imports:
 import 'package:flutter/foundation.dart';
-import 'package:freader/src/controllers/common/toast_controller/toast_controller.dart';
-import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
 import 'services/epub_service.dart';
 import 'services/file_picker_service.dart';
 

@@ -1,5 +1,5 @@
-import 'package:freader/src/models/record.dart';
-import 'package:freader/src/models/set.dart';
+// 🌎 Project imports:
+import 'package:edokuri/src/models/models.dart';
 
 class SetData {
   final SetRecords? set;

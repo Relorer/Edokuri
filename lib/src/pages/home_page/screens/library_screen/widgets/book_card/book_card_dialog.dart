@@ -1,8 +1,11 @@
-import 'package:freader/generated/locale.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/button_with_icon.dart';
-import 'package:freader/src/core/widgets/default_bottom_sheet.dart';
-import 'package:freader/src/theme/svgs.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/generated/locale.dart';
+import 'package:edokuri/src/core/widgets/button_with_icon.dart';
+import 'package:edokuri/src/core/widgets/default_bottom_sheet.dart';
+import 'package:edokuri/src/theme/svgs.dart';
 
 class BookCardDialog extends StatelessWidget {
   final VoidCallback? openBook;
@@ -16,12 +19,12 @@ class BookCardDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultBottomSheet(children: [
       ButtonWithIcon(
-        text: LocaleKeys.continue_reading.tr(),
+        text: LocaleKeys.continueReading.tr(),
         onTap: openBook,
         svg: readingSvg,
       ),
       ButtonWithIcon(
-        text: LocaleKeys.go_to_set.tr(),
+        text: LocaleKeys.goToSet.tr(),
         svg: goToSetSvg,
         onTap: openBookSet,
       ),

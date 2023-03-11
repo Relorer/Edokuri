@@ -1,16 +1,19 @@
-import 'package:freader/generated/locale.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/ellipsis_text.dart';
-import 'package:freader/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_progress_bar.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/generated/locale.dart';
+import 'package:edokuri/src/core/widgets/ellipsis_text.dart';
+import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_progress_bar.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class BookCardContent extends StatelessWidget {
   final String title;
   final String author;
   final int currentCompletedChapter;
   final int chaptersCount;
-  final int newWordsPersent;
+  final int newWordsPercent;
   final int recordsCount;
 
   const BookCardContent(
@@ -19,7 +22,7 @@ class BookCardContent extends StatelessWidget {
       required this.chaptersCount,
       required this.currentCompletedChapter,
       required this.title,
-      required this.newWordsPersent,
+      required this.newWordsPercent,
       required this.recordsCount});
 
   @override
@@ -57,8 +60,8 @@ class BookCardContent extends StatelessWidget {
                   style: Theme.of(context).bookSubInfoStyle,
                 ),
                 EllipsisText(
-                  LocaleKeys.new_words
-                      .tr(namedArgs: {"persent": newWordsPersent.toString()}),
+                  LocaleKeys.newWords
+                      .tr(namedArgs: {"persent": newWordsPercent.toString()}),
                   style: Theme.of(context).bookSubInfoStyle,
                 )
               ],

@@ -1,17 +1,22 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/core/utils/string_utils.dart';
-import 'package:freader/src/models/book.dart';
-import 'package:freader/src/models/record.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page/known_word.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page/reader_text_selection_controls.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page/saved_word.dart';
-import 'package:freader/src/pages/reader/widgets/reader_content_view_page/unknown_word.dart';
-import 'package:freader/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
-import 'package:freader/src/theme/theme.dart';
 import 'package:provider/provider.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/utils/string_utils.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/known_word.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/reader_text_selection_controls.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/saved_word.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/unknown_word.dart';
+import 'package:edokuri/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class ReaderContentViewPage extends StatelessWidget {
   final String content;
@@ -35,7 +40,7 @@ class ReaderContentViewPage extends StatelessWidget {
     return SavedWord(
       word: word,
       onTap: onTap,
-      reviewNumber: record.reviewNumber,
+      reviewNumber: 1, //TODO
     );
   }
 
@@ -70,7 +75,7 @@ class ReaderContentViewPage extends StatelessWidget {
             ? WidgetSpan(
                 child: Observer(
                 builder: (context) => getWord(
-                    context.read<RecordRepository>().getRecord(piece.content),
+                    getIt<RecordRepository>().getRecord(piece.content),
                     piece,
                     () => _translate(context, piece, tempCurrentIndex)),
               ))

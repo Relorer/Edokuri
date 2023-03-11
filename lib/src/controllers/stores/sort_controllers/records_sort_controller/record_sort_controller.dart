@@ -1,7 +1,11 @@
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/controllers/stores/sort_controllers/base_sort_controller.dart';
-import 'package:freader/src/models/record.dart';
+// 📦 Package imports:
 import 'package:mobx/mobx.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/controllers/stores/sort_controllers/base_sort_controller.dart';
+import 'package:edokuri/src/models/models.dart';
+
 part 'record_sort_controller.g.dart';
 
 enum RecordsSortTypes { alphabetically, recent }

@@ -1,6 +1,9 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/section_headers/section_header.dart';
-import 'package:freader/src/theme/theme.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/core/widgets/section_headers/section_header.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class SectionHeaderText extends StatelessWidget {
   final String leftText;

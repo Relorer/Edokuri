@@ -1,10 +1,13 @@
+// 📦 Package imports:
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:freader/src/controllers/common/translator_controller/services/google_translator_service.dart';
-import 'package:freader/src/controllers/common/translator_controller/services/msa_dictionary_service.dart';
-import 'package:freader/src/controllers/common/translator_controller/services/yandex_dictionary_service.dart';
-import 'package:freader/src/controllers/common/translator_controller/translate_source.dart';
-import 'package:freader/src/models/record.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/translator_controller/services/google_translator_service.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/services/msa_dictionary_service.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/services/yandex_dictionary_service.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
+import 'package:edokuri/src/models/models.dart';
 
 const maxPhraseLength = 30;
 
@@ -59,17 +62,17 @@ class TranslatorController {
     }
 
     return Record(
-        original: content,
-        originalLowerCase: content.toLowerCase(),
-        transcription: transcription,
-        synonyms: synonyms,
-        known: false,
-        creationDate: DateTime.now(),
-        lastReview: DateTime(0),
-        reviewNumber: 0)
-      ..meanings.addAll(meanings)
-      ..examples.addAll(examples)
-      ..translations.addAll(translations);
+      original: content,
+      originalLowerCase: content.toLowerCase(),
+      transcription: transcription,
+      known: false,
+      creationDate: DateTime.now(),
+      sentences: [],
+      synonyms: synonyms,
+      meanings: meanings,
+      examples: examples,
+      translations: translations,
+    );
   }
 
   Future<String> translateSentence(String sentence) async {
