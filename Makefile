@@ -21,6 +21,7 @@ localization:
 format:
 	make import
 	dart format .
+	dart fix --apply
 
 import:
 	flutter pub run import_sorter:main

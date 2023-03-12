@@ -6,35 +6,35 @@ import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
-import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:edokuri/src/models/models.dart';
 
-part 'set_repository.g.dart';
+part 'set_records_repository.g.dart';
 
-class SetRepository = SetRepositoryBase with _$SetRepository;
+class SetRecordsRepository = SetRecordsRepositoryBase
+    with _$SetRecordsRepository;
 
 const _setRecords = "setRecords";
 
-abstract class SetRepositoryBase with Store {
+abstract class SetRecordsRepositoryBase with Store {
   final PocketbaseController pb;
-  final UserRepository userRepository;
 
   ObservableList<SetRecords> sets = ObservableList<SetRecords>.of([]);
 
-  SetRepositoryBase(this.pb, this.userRepository) {
-    pb.client.collection(_setRecords).getFullList().then(
-        (value) => sets.addAll(value.map((e) => SetRecords.fromRecord(e))));
-    pb.client.collection(_setRecords).subscribe("*", (e) {
-      try {
-        if (e.record == null) return;
-        final record = SetRecords.fromRecord(e.record!);
-        sets.removeWhere((element) => element.id == record.id);
-        if (e.action == "update" || e.action == "create") {
-          sets.add(record);
+  SetRecordsRepositoryBase(this.pb) {
+    pb.client.collection(_setRecords).getFullList().then((value) {
+      sets.addAll(value.map((e) => SetRecords.fromRecord(e)));
+      pb.client.collection(_setRecords).subscribe("*", (e) {
+        try {
+          if (e.record == null) return;
+          final record = SetRecords.fromRecord(e.record!);
+          sets.removeWhere((element) => element.id == record.id);
+          if (e.action == "update" || e.action == "create") {
+            sets.add(record);
+          }
+        } catch (e, stacktrace) {
+          log("${e.toString()}\n${stacktrace.toString()}");
         }
-      } catch (e, stacktrace) {
-        log("${e.toString()}\n${stacktrace.toString()}");
-      }
+      });
     });
   }
 

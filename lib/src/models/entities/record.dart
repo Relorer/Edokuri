@@ -21,6 +21,7 @@ class Record {
   final String originalLowerCase;
   final String transcription;
   final DateTime creationDate;
+  final DateTime lastReview;
 
   bool known;
 
@@ -41,6 +42,7 @@ class Record {
     required this.synonyms,
     required this.sentences,
     required this.translations,
+    required this.lastReview,
     this.userId = "",
   });
 

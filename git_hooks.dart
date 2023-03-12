@@ -11,6 +11,7 @@ void main(List<String> arguments) {
 
 Future<bool> _preCommit() async {
   await shell.run('''
+    flutter pub run build_runner build --delete-conflicting-outputs
     flutter pub run import_sorter:main
     dart format .
     dart fix --apply

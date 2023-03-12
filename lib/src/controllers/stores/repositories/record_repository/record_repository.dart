@@ -6,7 +6,7 @@ import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
-import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/models/models.dart';
 
 part 'record_repository.g.dart';
@@ -17,24 +17,25 @@ const _record = "record";
 
 abstract class RecordRepositoryBase with Store {
   final PocketbaseController pb;
-  final UserRepository userRepository;
+  final SetRecordsRepository setRecordsRepository;
 
   ObservableList<Record> records = ObservableList<Record>.of([]);
 
-  RecordRepositoryBase(this.pb, this.userRepository) {
-    pb.client.collection(_record).getFullList().then(
-        (value) => records.addAll(value.map((e) => Record.fromRecord(e))));
-    pb.client.collection(_record).subscribe("*", (e) {
-      try {
-        if (e.record == null) return;
-        final record = Record.fromRecord(e.record!);
-        records.removeWhere((element) => element.id == record.id);
-        if (e.action == "update" || e.action == "create") {
-          records.add(record);
+  RecordRepositoryBase(this.pb, this.setRecordsRepository) {
+    pb.client.collection(_record).getFullList().then((value) {
+      records.addAll(value.map((e) => Record.fromRecord(e)));
+      pb.client.collection(_record).subscribe("*", (e) {
+        try {
+          if (e.record == null) return;
+          final record = Record.fromRecord(e.record!);
+          records.removeWhere((element) => element.id == record.id);
+          if (e.action == "update" || e.action == "create") {
+            records.add(record);
+          }
+        } catch (e, stacktrace) {
+          log("${e.toString()}\n${stacktrace.toString()}");
         }
-      } catch (e, stacktrace) {
-        log("${e.toString()}\n${stacktrace.toString()}");
-      }
+      });
     });
   }
 
@@ -46,11 +47,9 @@ abstract class RecordRepositoryBase with Store {
   }
 
   List<Record> getRecordsBySet(SetRecords set) {
-    //TODO
-    // return records
-    //     .where((element) => element.setIds.any((id) => id == set.id))
-    //     .toList();
-    return [];
+    return records
+        .where((element) => set.records.any((id) => id == element.id))
+        .toList();
   }
 
   List<Record> getSavedRecordsByBook(Book book) {
@@ -83,11 +82,16 @@ abstract class RecordRepositoryBase with Store {
                   element.originalLowerCase == record.originalLowerCase,
               orElse: () => record)
           .id;
+
       final body = record.toJson()..["user"] = pb.user?.id;
       if (record.id.isEmpty) {
-        await pb.client.collection(_record).create(body: body);
+        record.id = (await pb.client.collection(_record).create(body: body)).id;
       } else {
         await pb.client.collection(_record).update(record.id, body: body);
+      }
+      if (set != null) {
+        set.records.add(record.id);
+        setRecordsRepository.putSet(set);
       }
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
@@ -95,9 +99,14 @@ abstract class RecordRepositoryBase with Store {
   }
 
   void removeRecord(Record record, {SetRecords? set}) async {
-    //TODO
     try {
-      await pb.client.collection(_record).delete(record.id);
+      if (set != null) {
+        set.records.removeWhere((id) => id == record.id);
+        setRecordsRepository.putSet(set);
+        putRecord(record);
+      } else {
+        await pb.client.collection(_record).delete(record.id);
+      }
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }

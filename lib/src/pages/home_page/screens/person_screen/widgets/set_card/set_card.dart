@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:edokuri/src/controllers/stores/repositories/set_repository/set_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/utils/records_list_extensions.dart';
@@ -41,7 +40,7 @@ class SetCard extends StatelessWidget {
   }
 
   void _removeSet(BuildContext context) {
-    getIt<SetRepository>().removeSet(set);
+    getIt<SetRecordsRepository>().removeSet(set);
     Navigator.pop(context);
   }
 
@@ -91,7 +90,7 @@ class SetCard extends StatelessWidget {
                 height: defaultMargin,
               ),
               EllipsisText(
-                "${set.records.saved.length} records",
+                "${getIt<RecordRepository>().getRecordsBySet(set).saved.length} records",
                 style: Theme.of(context).cardSubtitleStyle,
               ),
             ],

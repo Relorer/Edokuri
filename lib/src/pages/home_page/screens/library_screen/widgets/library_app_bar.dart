@@ -6,8 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/generated/locale.dart';
-import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
-import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/app_bar_title.dart';
 import 'package:edokuri/src/theme/theme.dart';
@@ -44,9 +43,9 @@ class LibraryAppBar extends StatelessWidget {
                       return AppBarTitle(
                         leftText: LocaleKeys.today.tr(),
                         rightText: LocaleKeys.shortMin.tr(namedArgs: {
-                          "count": (getIt<BookRepository>()
+                          "count": (getIt<ActivityTimeRepository>()
                                       .readingTimeForTodayInMinutes() +
-                                  getIt<UserRepository>()
+                                  getIt<ActivityTimeRepository>()
                                       .learningTimeForTodayInMinutes())
                               .toString()
                         }),

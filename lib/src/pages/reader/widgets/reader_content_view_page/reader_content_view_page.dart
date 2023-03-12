@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
-import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';

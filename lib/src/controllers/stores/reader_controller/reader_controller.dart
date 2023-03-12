@@ -8,8 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
-import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
 
@@ -127,17 +126,17 @@ abstract class ReaderControllerBase with Store {
     Future.forEach<Piece>(
         words,
         (element) => Future(() => recordRepository.putRecord(Record(
-              original: element.content.toLowerCase(),
-              originalLowerCase: element.content.toLowerCase(),
-              transcription: "",
-              known: true,
-              creationDate: creationDate,
-              sentences: [],
-              examples: [],
-              meanings: [],
-              synonyms: [],
-              translations: [],
-            ))));
+            original: element.content.toLowerCase(),
+            originalLowerCase: element.content.toLowerCase(),
+            transcription: "",
+            known: true,
+            creationDate: creationDate,
+            sentences: [],
+            examples: [],
+            meanings: [],
+            synonyms: [],
+            translations: [],
+            lastReview: DateTime.utc(0)))));
   }
 
   @action
