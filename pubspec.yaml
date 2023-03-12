@@ -88,9 +88,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   git_hooks: ^1.0.0
-  import_sorter: 
-    git: https://github.com/Relorer/import_sorter_with_export_main
+  import_sorter: ^4.6.0
   json_serializable: ^6.6.1
+  process_run: ^0.12.5+2
 
 import_sorter:
   emojis: true

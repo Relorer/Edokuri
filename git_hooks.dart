@@ -1,6 +1,8 @@
 import "package:dart_pre_commit/dart_pre_commit.dart";
 import "package:git_hooks/git_hooks.dart";
-import "package:import_sorter/main.dart" as sort;
+import "package:process_run/shell_run.dart";
+
+final shell = Shell();
 
 void main(List<String> arguments) {
   final params = {Git.preCommit: _preCommit};
@@ -8,7 +10,12 @@ void main(List<String> arguments) {
 }
 
 Future<bool> _preCommit() async {
-  sort.main([]);
+  await shell.run('''
+    flutter pub run import_sorter:main
+    dart format .
+    dart fix --apply
+  ''');
+
   final result = await DartPreCommit.run();
   return result.isSuccess;
 }
