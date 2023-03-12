@@ -3,8 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  connectivity_plus_windows
-  objectbox_flutter_libs
+  connectivity_plus
+  flutter_secure_storage_windows
   url_launcher_windows
 )
 
