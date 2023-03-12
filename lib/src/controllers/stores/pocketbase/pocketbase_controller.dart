@@ -103,7 +103,7 @@ abstract class PocketbaseControllerBase with Store {
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }
-    return "[\"file not found\"]".codeUnits;
+    return [];
   }
 
   Future putFile(RecordModel record, String field, List<int> bytes) async {

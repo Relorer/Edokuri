@@ -23,6 +23,7 @@ abstract class BookRepositoryBase with Store {
   final PocketbaseController pb;
   final CacheController cacheController = CacheController();
 
+  @observable
   ObservableList<Book> books = ObservableList<Book>.of([]);
 
   BookRepositoryBase(this.pb) {
@@ -57,6 +58,8 @@ abstract class BookRepositoryBase with Store {
             book.currentPositionInChapter = newBook.currentPositionInChapter;
             book.readTimes = book.readTimes;
             book.title = book.title;
+            book.lastReading = book.lastReading;
+            books.replaceRange(0, 1, [books.first]);
           }
         } catch (e, stacktrace) {
           log("${e.toString()}\n${stacktrace.toString()}");
@@ -67,9 +70,23 @@ abstract class BookRepositoryBase with Store {
 
   Future<Book> getBookFromRecord(RecordModel record) async {
     final book = Book.fromRecord(record);
-    book.chapters.addAll(decodeFile(await pb.getFile(record, "chapters")));
-    book.words.addAll(decodeFile(await pb.getFile(record, "words")));
-    book.cover = Uint8List.fromList((await pb.getFile(record, "cover")));
+
+    final chapters = await pb.getFile(record, "chapters");
+    if (chapters.isNotEmpty) {
+      book.chapters.addAll(decodeFile(chapters));
+    } else {
+      book.chapters.add("Not found");
+    }
+    final words = await pb.getFile(record, "words");
+    if (words.isNotEmpty) {
+      book.words.addAll(decodeFile(words));
+    }
+
+    final cover = await pb.getFile(record, "cover");
+    if (cover.isNotEmpty) {
+      book.cover = Uint8List.fromList(cover);
+    }
+
     return book;
   }
 
