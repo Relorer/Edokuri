@@ -8,7 +8,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
-import 'package:edokuri/src/core/utils/records_list_extensions.dart';
 import 'package:edokuri/src/core/widgets/ellipsis_text.dart';
 import 'package:edokuri/src/core/widgets/simple_card.dart';
 import 'package:edokuri/src/models/models.dart';
@@ -90,7 +89,7 @@ class SetCard extends StatelessWidget {
                 height: defaultMargin,
               ),
               EllipsisText(
-                "${getIt<RecordRepository>().getRecordsBySet(set).saved.length} records",
+                "${getIt<RecordRepository>().getRecordsBySet(set).length} records",
                 style: Theme.of(context).cardSubtitleStyle,
               ),
             ],

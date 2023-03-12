@@ -37,14 +37,26 @@ abstract class BookRepositoryBase with Store {
       pb.client.collection(_book).subscribe("*", (e) async {
         try {
           if (e.record == null) return;
-          books.removeWhere((element) => element.id == e.record!.id);
           if (e.action == "delete") {
             pb.removeFile(e.record!, "chapters");
             pb.removeFile(e.record!, "words");
             pb.removeFile(e.record!, "cover");
-          }
-          if (e.action == "update" || e.action == "create") {
+            books.removeWhere((element) => element.id == e.record!.id);
+          } else if (e.action == "create") {
             books.add(await getBookFromRecord(e.record!));
+          } else {
+            final newBook = Book.fromRecord(e.record!);
+            final book =
+                books.firstWhere((element) => element.id == newBook.id);
+
+            book.author = newBook.author;
+            book.currentChapter = newBook.currentChapter;
+            book.currentCompletedChapter = newBook.currentCompletedChapter;
+            book.currentCompletedPositionInChapter =
+                newBook.currentCompletedPositionInChapter;
+            book.currentPositionInChapter = newBook.currentPositionInChapter;
+            book.readTimes = book.readTimes;
+            book.title = book.title;
           }
         } catch (e, stacktrace) {
           log("${e.toString()}\n${stacktrace.toString()}");

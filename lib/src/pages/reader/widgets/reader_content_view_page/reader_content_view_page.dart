@@ -24,23 +24,24 @@ class ReaderContentViewPage extends StatelessWidget {
   const ReaderContentViewPage({Key? key, required this.content})
       : super(key: key);
 
-  Widget getWord(Record? record, Piece word, Function()? onTap) {
-    if (record == null) {
-      return UnknownWord(
+  Widget getWord(Piece word, Function()? onTap) {
+    final record = getIt<RecordRepository>().getRecord(word.content);
+    if (record != null) {
+      return SavedWord(
         word: word,
         onTap: onTap,
+        reviewNumber: 1, //TODO
       );
     }
-    if (record.known) {
+    if (getIt<KnownRecordsRepository>().exist(word.content)) {
       return KnownWord(
         word: word,
         onTap: onTap,
       );
     }
-    return SavedWord(
+    return UnknownWord(
       word: word,
       onTap: onTap,
-      reviewNumber: 1, //TODO
     );
   }
 
@@ -75,9 +76,7 @@ class ReaderContentViewPage extends StatelessWidget {
             ? WidgetSpan(
                 child: Observer(
                 builder: (context) => getWord(
-                    getIt<RecordRepository>().getRecord(piece.content),
-                    piece,
-                    () => _translate(context, piece, tempCurrentIndex)),
+                    piece, () => _translate(context, piece, tempCurrentIndex)),
               ))
             : TextSpan(
                 text: piece.content,

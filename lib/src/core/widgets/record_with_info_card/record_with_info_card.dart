@@ -92,9 +92,8 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
     if (_record!.translations.any((element) => element.selected)) {
       _record!.translations.removeWhere(
           (element) => element.source == userSource && !element.selected);
-      _record!.known = false;
       _recordRepository.putRecord(_record!, set: widget.set);
-    } else if (!_record!.known && _record!.id.isNotEmpty) {
+    } else if (_record!.id.isNotEmpty) {
       _recordRepository.removeRecord(_record!, set: widget.set);
     }
   }

@@ -108,17 +108,12 @@ class PersonAppBar extends StatelessWidget {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            PersonAppBarLine(
-                                "Records:",
-                                recordRepository.records
-                                    .where((element) => !element.known)
-                                    .length
-                                    .toString()),
+                            PersonAppBarLine("Records:",
+                                recordRepository.records.length.toString()),
                             PersonAppBarLine(
                                 "Known words:",
-                                recordRepository.records
-                                    .where((element) => element.known)
-                                    .length
+                                getIt<KnownRecordsRepository>()
+                                    .count()
                                     .toString()),
                             PersonAppBarLine("reading:",
                                 "${readingTime.toStringAsFixed(1)}H"),

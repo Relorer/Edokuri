@@ -8,10 +8,16 @@ part 'known_records.g.dart';
 class KnownRecords {
   String id;
   String user;
+  final DateTime creationDate;
 
   List<String> records;
 
-  KnownRecords({this.id = "", this.records = const [], this.user = ""});
+  KnownRecords({
+    this.id = "",
+    this.user = "",
+    required this.records,
+    required this.creationDate,
+  });
 
   factory KnownRecords.fromRecord(RecordModel record) =>
       KnownRecords.fromJson(record.toJson());

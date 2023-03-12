@@ -18,10 +18,12 @@ const _record = "record";
 abstract class RecordRepositoryBase with Store {
   final PocketbaseController pb;
   final SetRecordsRepository setRecordsRepository;
+  final KnownRecordsRepository knownRecordsRepository;
 
   ObservableList<Record> records = ObservableList<Record>.of([]);
 
-  RecordRepositoryBase(this.pb, this.setRecordsRepository) {
+  RecordRepositoryBase(
+      this.pb, this.setRecordsRepository, this.knownRecordsRepository) {
     pb.client.collection(_record).getFullList().then((value) {
       records.addAll(value.map((e) => Record.fromRecord(e)));
       pb.client.collection(_record).subscribe("*", (e) {
@@ -39,10 +41,16 @@ abstract class RecordRepositoryBase with Store {
     });
   }
 
-  List<Record> getRecordsByBook(Book book) {
+  List<Record> getSavedRecordsByBook(Book book) {
     return records
         .where((element) =>
             book.words.any((word) => word == element.original.toLowerCase()))
+        .toList();
+  }
+
+  List<String> _getKnownRecordsByBook(Book book) {
+    return book.words
+        .where((element) => knownRecordsRepository.exist(element))
         .toList();
   }
 
@@ -52,16 +60,11 @@ abstract class RecordRepositoryBase with Store {
         .toList();
   }
 
-  List<Record> getSavedRecordsByBook(Book book) {
-    return getRecordsByBook(book)
-        .where((element) => book.words.any((word) => !element.known))
-        .toList();
-  }
-
   int newWordsInBook(Book book) {
-    final wordsInBook = getRecordsByBook(book).toList();
-    if (book.words.isEmpty || wordsInBook.isEmpty) return 100;
-    return 100 - (wordsInBook.length / book.words.length * 100).toInt();
+    final wordsInBook = getSavedRecordsByBook(book).toList().length +
+        _getKnownRecordsByBook(book).length;
+    if (book.words.isEmpty || wordsInBook == 0) return 100;
+    return 100 - (wordsInBook / book.words.length * 100).toInt();
   }
 
   Record? getRecord(String original) {
