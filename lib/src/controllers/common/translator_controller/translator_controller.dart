@@ -65,7 +65,6 @@ class TranslatorController {
         original: content,
         originalLowerCase: content.toLowerCase(),
         transcription: transcription,
-        known: false,
         creationDate: DateTime.now(),
         sentences: [],
         synonyms: synonyms,

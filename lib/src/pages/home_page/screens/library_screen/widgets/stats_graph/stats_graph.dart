@@ -37,27 +37,24 @@ class _StatsGraphState extends State<StatsGraph> {
         .toList();
   }
 
-  int _getNewKnownRecords(Iterable<Record> records, DateTime day) {
-    return records
-        .where(
-            (element) => element.creationDate.isSameDate(day) && element.known)
+  int _getNewKnownRecords(DateTime day) {
+    return getIt<KnownRecordsRepository>()
+        .getKnownRecordsByDay(day)
+        .records
         .length;
   }
 
   int _getNewSavedRecords(Iterable<Record> records, DateTime day) {
     return records
-        .where((element) =>
-            (element.creationDate.isSameDate(day) ||
-                element.translations.any((element) =>
-                    element.selectionDate?.isSameDate(day) ?? false)) &&
-            !element.known)
+        .where((element) => (element.creationDate.isSameDate(day) ||
+            element.translations.any(
+                (element) => element.selectionDate?.isSameDate(day) ?? false)))
         .length;
   }
 
   int _getReviewedRecords(Iterable<Record> records, DateTime day) {
     return records
-        .where(
-            (element) => (element.lastReview.isSameDate(day)) && !element.known)
+        .where((element) => (element.lastReview.isSameDate(day)))
         .length;
   }
 
@@ -86,8 +83,7 @@ class _StatsGraphState extends State<StatsGraph> {
                             final date =
                                 DateTime.now().subtract(Duration(days: e));
                             return GraphDayData(date,
-                                newKnownRecords: _getNewKnownRecords(
-                                    recordRepository.records, date),
+                                newKnownRecords: _getNewKnownRecords(date),
                                 newSavedRecords: _getNewSavedRecords(
                                     recordRepository.records, date),
                                 reviewedWords: _getReviewedRecords(

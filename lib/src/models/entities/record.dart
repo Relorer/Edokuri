@@ -21,9 +21,8 @@ class Record {
   final String originalLowerCase;
   final String transcription;
   final DateTime creationDate;
-  final DateTime lastReview;
-
-  bool known;
+  DateTime lastReview;
+  int reviewNumber;
 
   String get translation => translations
       .where((element) => element.selected)
@@ -35,7 +34,6 @@ class Record {
     required this.original,
     required this.originalLowerCase,
     required this.transcription,
-    required this.known,
     required this.creationDate,
     required this.examples,
     required this.meanings,
@@ -43,6 +41,7 @@ class Record {
     required this.sentences,
     required this.translations,
     required this.lastReview,
+    this.reviewNumber = 0,
     this.userId = "",
   });
 

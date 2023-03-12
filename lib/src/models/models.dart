@@ -9,3 +9,4 @@ export './entities/record.dart';
 export './entities/set_records.dart';
 export './entities/translation.dart';
 export './entities/time_mark.dart';
+export './entities/known_records.dart';

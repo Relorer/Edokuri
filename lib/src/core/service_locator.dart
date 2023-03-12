@@ -59,8 +59,11 @@ Future<void> setupRepositoryScope(String userId) async {
             () => SetRecordsRepository(getIt<PocketbaseController>()),
             dependsOn: [PocketbaseController]);
         getIt.registerSingletonWithDependencies(
-            () => RecordRepository(
-                getIt<PocketbaseController>(), getIt<SetRecordsRepository>()),
+            () => KnownRecordsRepository(getIt<PocketbaseController>()),
+            dependsOn: [PocketbaseController]);
+        getIt.registerSingletonWithDependencies(
+            () => RecordRepository(getIt<PocketbaseController>(),
+                getIt<SetRecordsRepository>(), getIt<KnownRecordsRepository>()),
             dependsOn: [PocketbaseController]);
 
         getIt.registerSingletonWithDependencies(
@@ -74,8 +77,8 @@ Future<void> setupRepositoryScope(String userId) async {
             FileController(getIt<BookRepository>(), getIt<ToastController>()));
 
         getIt.registerFactoryParam<ReaderController, Book, void>((book, _) =>
-            ReaderController(
-                getIt<RecordRepository>(), getIt<BookRepository>(), book));
+            ReaderController(getIt<RecordRepository>(), getIt<BookRepository>(),
+                getIt<KnownRecordsRepository>(), book));
 
         getIt.registerFactoryParam<ReadingTimerController, Book, void>(
             (book, _) => ReadingTimerController(

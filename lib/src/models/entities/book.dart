@@ -19,6 +19,7 @@ class Book {
   int currentPositionInChapter;
   int currentCompletedChapter;
   int currentCompletedPositionInChapter;
+  DateTime lastReading;
 
   List<String> readTimes;
 
@@ -39,18 +40,11 @@ class Book {
     required this.currentCompletedChapter,
     required this.currentCompletedPositionInChapter,
     required this.currentPositionInChapter,
+    required this.lastReading,
     this.cover,
     this.user = "",
     this.readTimes = const [],
   });
-
-  int get readingTimeInMinutes => readTimes.isNotEmpty
-      ? readTimes
-              .map((element) => 1) // element.timespan TODO
-              .reduce((t1, t2) => t1 + t2) /
-          1000 ~/
-          60
-      : 0;
 
   factory Book.fromRecord(RecordModel record) => Book.fromJson(record.toJson());
 

@@ -27,6 +27,7 @@ class ReadingTimerController {
       if (at == null) return;
 
       book.readTimes.add(at.id);
+      book.lastReading = DateTime.now();
       bookRepository.putBook(book);
 
       timeMarkRepository.addTimeMarkForToday();

@@ -25,10 +25,12 @@ class _PositionInBook {
 
 abstract class ReaderControllerBase with Store {
   final RecordRepository recordRepository;
+  final KnownRecordsRepository knownRecordsRepository;
   final BookRepository bookRepository;
   final Book book;
 
-  ReaderControllerBase(this.recordRepository, this.bookRepository, this.book);
+  ReaderControllerBase(this.recordRepository, this.bookRepository,
+      this.knownRecordsRepository, this.book);
 
   @observable
   int pageCount = 1;
@@ -111,7 +113,6 @@ abstract class ReaderControllerBase with Store {
   }
 
   void _completePage(int chapter, int page) async {
-    final creationDate = DateTime.now();
     await Future.delayed(const Duration(seconds: 1));
     final words =
         await Future(() => getParagraphs(chaptersContent[chapter][page])
@@ -121,22 +122,11 @@ abstract class ReaderControllerBase with Store {
             .where(
               (element) =>
                   element.isWord &&
-                  recordRepository.getRecord(element.content) == null,
+                  recordRepository.getRecord(element.content) == null &&
+                  !knownRecordsRepository.exist(element.content),
             ));
-    Future.forEach<Piece>(
-        words,
-        (element) => Future(() => recordRepository.putRecord(Record(
-            original: element.content.toLowerCase(),
-            originalLowerCase: element.content.toLowerCase(),
-            transcription: "",
-            known: true,
-            creationDate: creationDate,
-            sentences: [],
-            examples: [],
-            meanings: [],
-            synonyms: [],
-            translations: [],
-            lastReview: DateTime.utc(0)))));
+    knownRecordsRepository
+        .addRecords(words.map((e) => e.content.toLowerCase()).toList());
   }
 
   @action

@@ -27,6 +27,7 @@ class LibraryBookList extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(
                       defaultMargin, 0, defaultMargin, defaultMargin),
                   child: BookCard(
+                    key: ValueKey(books[index].id),
                     book: books[index],
                   ),
                 ),

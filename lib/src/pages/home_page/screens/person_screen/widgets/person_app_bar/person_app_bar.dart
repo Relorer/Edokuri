@@ -98,32 +98,20 @@ class PersonAppBar extends StatelessWidget {
                       Observer(builder: (_) {
                         final recordRepository = getIt<RecordRepository>();
 
-                        final readingTimes = getIt<BookRepository>()
-                            .books
-                            .map((element) => element.readingTimeInMinutes);
-                        final readingTime = readingTimes.isNotEmpty
-                            ? readingTimes.reduce((t1, t2) => t1 + t2) / 60
-                            : 0;
-
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            PersonAppBarLine(
-                                "Records:",
-                                recordRepository.records
-                                    .where((element) => !element.known)
-                                    .length
-                                    .toString()),
+                            PersonAppBarLine("Records:",
+                                recordRepository.records.length.toString()),
                             PersonAppBarLine(
                                 "Known words:",
-                                recordRepository.records
-                                    .where((element) => element.known)
-                                    .length
+                                getIt<KnownRecordsRepository>()
+                                    .count()
                                     .toString()),
                             PersonAppBarLine("reading:",
-                                "${readingTime.toStringAsFixed(1)}H"),
+                                "${(getIt<ActivityTimeRepository>().readingTimeInMinutes() / 60).toStringAsFixed(1)}H"),
                             PersonAppBarLine("training:",
-                                "${(getIt<ActivityTimeRepository>().learningTimeForTodayInMinutes() / 60).toStringAsFixed(1)}H"),
+                                "${(getIt<ActivityTimeRepository>().learningTimeInMinutes() / 60).toStringAsFixed(1)}H"),
                             PersonAppBarLine("current streak:",
                                 "${getIt<TimeMarkRepository>().getStreak()}-days"),
                           ],
