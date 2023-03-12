@@ -66,16 +66,23 @@ abstract class ActivityTimeRepositoryBase with Store {
   }
 
   int learningTimeForTodayInMinutes() {
+    return _timeForTodayInMinutes(Type.learning);
+  }
+
+  int readingTimeForTodayInMinutes() {
+    return _timeForTodayInMinutes(Type.reading);
+  }
+
+  int _timeForTodayInMinutes(Type type) {
     final today = DateTime.now();
-    final learningTimesForToday = activityTimes
-        .where((element) => element.type == Type.learning)
+    final timesForToday = activityTimes
+        .where((element) => element.type == type)
         .where((element) => element.start.isSameDate(today))
         .map((e) =>
             e.end.millisecondsSinceEpoch - e.start.millisecondsSinceEpoch);
 
-    final learningTimeForToday = learningTimesForToday.isEmpty
-        ? 0
-        : learningTimesForToday.reduce((t1, t2) => t1 + t2);
+    final learningTimeForToday =
+        timesForToday.isEmpty ? 0 : timesForToday.reduce((t1, t2) => t1 + t2);
 
     return learningTimeForToday / 1000 ~/ 60;
   }

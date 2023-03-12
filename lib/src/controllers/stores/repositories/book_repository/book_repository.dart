@@ -109,22 +109,4 @@ abstract class BookRepositoryBase with Store {
       log("${e.toString()}\n${stacktrace.toString()}");
     }
   }
-
-  int readingTimeForTodayInMinutes() {
-    //TODO
-    // final today = DateTime.now();
-    // final readingTimesForToday = books
-    //     .expand((element) => element.readTimes)
-    //     .where((element) => element.start.isSameDate(today))
-    //     .map((e) =>
-    //         e.end.millisecondsSinceEpoch - e.start.millisecondsSinceEpoch);
-
-    // final readingTimeForToday = readingTimesForToday.isEmpty
-    //     ? 0
-    //     : readingTimesForToday.reduce((t1, t2) => t1 + t2);
-
-    // return readingTimeForToday / 1000 ~/ 60;
-
-    return 0;
-  }
 }
