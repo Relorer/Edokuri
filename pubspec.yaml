@@ -101,6 +101,7 @@ dart_pre_commit:
     level: major
   analyze:
     error-level: warning
+    scan-mode: staged
   pull-up-dependencies: false
 
 flutter_icons:
