@@ -71,19 +71,19 @@ abstract class BookRepositoryBase with Store {
 
         final files = [
           http.MultipartFile.fromBytes(
-            'chapters', // the name of the file field
+            'chapters',
             chapters,
             filename: 'chapters',
           ),
           http.MultipartFile.fromBytes(
-            'words', // the name of the file field
+            'words',
             words,
             filename: 'words',
           ),
         ];
         if (book.cover != null) {
           files.add(http.MultipartFile.fromBytes(
-            'cover', // the name of the file field
+            'cover',
             book.cover!,
             filename: 'cover',
           ));
