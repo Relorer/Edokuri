@@ -56,10 +56,11 @@ Future<void> setupRepositoryScope(String userId) async {
             () => TimeMarkRepository(getIt<PocketbaseController>()),
             dependsOn: [PocketbaseController]);
         getIt.registerSingletonWithDependencies(
-            () => SetRepository(getIt<PocketbaseController>()),
+            () => SetRecordsRepository(getIt<PocketbaseController>()),
             dependsOn: [PocketbaseController]);
         getIt.registerSingletonWithDependencies(
-            () => RecordRepository(getIt<PocketbaseController>()),
+            () => RecordRepository(
+                getIt<PocketbaseController>(), getIt<SetRecordsRepository>()),
             dependsOn: [PocketbaseController]);
 
         getIt.registerSingletonWithDependencies(

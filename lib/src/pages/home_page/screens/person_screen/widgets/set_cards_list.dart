@@ -16,7 +16,7 @@ class SetCardsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      final studying = getIt<SetRepository>()
+      final studying = getIt<SetRecordsRepository>()
           .sets
           .map((element) => SetCard(element))
           .toList();

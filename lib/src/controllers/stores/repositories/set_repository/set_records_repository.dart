@@ -8,18 +8,19 @@ import 'package:mobx/mobx.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/models/models.dart';
 
-part 'set_repository.g.dart';
+part 'set_records_repository.g.dart';
 
-class SetRepository = SetRepositoryBase with _$SetRepository;
+class SetRecordsRepository = SetRecordsRepositoryBase
+    with _$SetRecordsRepository;
 
 const _setRecords = "setRecords";
 
-abstract class SetRepositoryBase with Store {
+abstract class SetRecordsRepositoryBase with Store {
   final PocketbaseController pb;
 
   ObservableList<SetRecords> sets = ObservableList<SetRecords>.of([]);
 
-  SetRepositoryBase(this.pb) {
+  SetRecordsRepositoryBase(this.pb) {
     pb.client.collection(_setRecords).getFullList().then((value) {
       sets.addAll(value.map((e) => SetRecords.fromRecord(e)));
       pb.client.collection(_setRecords).subscribe("*", (e) {

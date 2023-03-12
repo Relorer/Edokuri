@@ -2,9 +2,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-// 🌎 Project imports:
-import 'package:edokuri/src/models/models.dart';
-
 part 'set_records.g.dart';
 
 @JsonSerializable()
@@ -14,7 +11,7 @@ class SetRecords {
 
   String name;
 
-  List<Record> records;
+  List<String> records;
 
   SetRecords(
       {this.id = "",

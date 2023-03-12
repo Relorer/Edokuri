@@ -40,7 +40,7 @@ class SetCard extends StatelessWidget {
   }
 
   void _removeSet(BuildContext context) {
-    getIt<SetRepository>().removeSet(set);
+    getIt<SetRecordsRepository>().removeSet(set);
     Navigator.pop(context);
   }
 
@@ -90,7 +90,7 @@ class SetCard extends StatelessWidget {
                 height: defaultMargin,
               ),
               EllipsisText(
-                "${set.records.saved.length} records",
+                "${getIt<RecordRepository>().getRecordsBySet(set).saved.length} records",
                 style: Theme.of(context).cardSubtitleStyle,
               ),
             ],
