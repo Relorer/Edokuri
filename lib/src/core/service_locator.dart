@@ -59,6 +59,9 @@ Future<void> setupRepositoryScope(String userId) async {
             () => SetRecordsRepository(getIt<PocketbaseController>()),
             dependsOn: [PocketbaseController]);
         getIt.registerSingletonWithDependencies(
+            () => KnownRecordsRepository(getIt<PocketbaseController>()),
+            dependsOn: [PocketbaseController]);
+        getIt.registerSingletonWithDependencies(
             () => RecordRepository(
                 getIt<PocketbaseController>(), getIt<SetRecordsRepository>()),
             dependsOn: [PocketbaseController]);
