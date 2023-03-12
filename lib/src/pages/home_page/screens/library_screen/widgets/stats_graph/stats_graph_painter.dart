@@ -1,11 +1,16 @@
+// 🎯 Dart imports:
 import 'dart:math';
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/models/graph.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
 
+// 📦 Package imports:
 import 'package:path_drawing/path_drawing.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 final Map<int, String> weekdayName = {
   1: "MO",

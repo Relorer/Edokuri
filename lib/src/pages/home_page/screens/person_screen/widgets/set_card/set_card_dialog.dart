@@ -1,8 +1,11 @@
-import 'package:freader/generated/locale.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/button_with_icon.dart';
-import 'package:freader/src/core/widgets/default_bottom_sheet.dart';
-import 'package:freader/src/theme/svgs.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/generated/locale.dart';
+import 'package:edokuri/src/core/widgets/button_with_icon.dart';
+import 'package:edokuri/src/core/widgets/default_bottom_sheet.dart';
+import 'package:edokuri/src/theme/svgs.dart';
 
 class SetCardDialog extends StatelessWidget {
   final VoidCallback? openSet;

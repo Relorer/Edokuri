@@ -1,24 +1,29 @@
-import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/src/models/activity_time.dart';
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/models/models.dart';
 
 class LearningTimerController {
-  final UserRepository userRepository;
+  final ActivityTimeRepository activityTimeRepository;
+  final TimeMarkRepository timeMarkRepository;
 
-  DateTime? _startReading;
+  DateTime? _startLearning;
 
-  LearningTimerController(this.userRepository);
+  LearningTimerController(this.activityTimeRepository, this.timeMarkRepository);
 
-  startReadingTimer() {
-    _startReading = DateTime.now();
+  startLearningTimer() {
+    _startLearning = DateTime.now();
   }
 
-  stopReadingTimer() {
-    if (_startReading != null) {
-      userRepository.currentUser.learnTimes
-          .add(ActivityTime(_startReading!, DateTime.now()));
-      userRepository.updateUserInfo();
-      _startReading = null;
-      userRepository.addTimeMarkForToday();
+  stopLearningTimer() async {
+    if (_startLearning != null) {
+      final at = await activityTimeRepository.putActivityTime(
+          ActivityTime(_startLearning!, DateTime.now(), Type.learning));
+
+      _startLearning = null;
+
+      if (at == null) return;
+
+      timeMarkRepository.addTimeMarkForToday();
     }
   }
 }

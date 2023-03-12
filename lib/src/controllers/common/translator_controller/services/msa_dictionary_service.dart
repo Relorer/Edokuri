@@ -1,6 +1,9 @@
+// 📦 Package imports:
 import 'package:dictionaryx/dictentry.dart';
 import 'package:dictionaryx/dictionary_msa_json_flutter.dart';
-import 'package:freader/src/models/record.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/models/models.dart';
 
 class MSAPartOfRecord {
   List<Meaning> meanings;

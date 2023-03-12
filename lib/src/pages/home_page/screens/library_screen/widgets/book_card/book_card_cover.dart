@@ -1,9 +1,15 @@
+// 🎯 Dart imports:
 import 'dart:typed_data';
 
-import 'package:flutter_svg/flutter_svg.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme.dart';
+
+// 📦 Package imports:
+import 'package:flutter_svg/flutter_svg.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class BookCardCover extends StatelessWidget {
   final Uint8List? cover;
@@ -25,7 +31,8 @@ class BookCardCover extends StatelessWidget {
             child: Center(
                 child: SvgPicture.asset(
               imageSvg,
-              color: Colors.white.withOpacity(0.8),
+              colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.8), BlendMode.srcIn),
             )),
           );
   }

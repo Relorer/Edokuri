@@ -1,8 +1,11 @@
-import 'package:freader/generated/locale.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/controllers/stores/sort_controllers/base_sort_controller.dart';
-import 'package:freader/src/models/book.dart';
+// 📦 Package imports:
 import 'package:mobx/mobx.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/generated/locale.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/controllers/stores/sort_controllers/base_sort_controller.dart';
+import 'package:edokuri/src/models/models.dart';
 
 part 'library_sort_controller.g.dart';
 
@@ -29,7 +32,7 @@ abstract class LibrarySortControllerBase
   String getSortTypeName(BooksSortTypes type) {
     switch (type) {
       case BooksSortTypes.amountNewWords:
-        return LocaleKeys.amount_of_new_words.tr();
+        return LocaleKeys.amountOfNewWords.tr();
       case BooksSortTypes.name:
         return LocaleKeys.name.tr();
       case BooksSortTypes.progress:
@@ -63,11 +66,7 @@ abstract class LibrarySortControllerBase
               .compareTo(b1.currentCompletedChapter / b1.chapters.length));
       case BooksSortTypes.recent:
         return types.toList()
-          ..sort((b1, b2) =>
-              (b2.readTimes.isNotEmpty ? b2.readTimes.last.end : DateTime(0))
-                  .compareTo(b1.readTimes.isNotEmpty
-                      ? b1.readTimes.last.end
-                      : DateTime(0)));
+          ..sort((b1, b2) => (b2.lastReading).compareTo(b1.lastReading));
     }
   }
 }

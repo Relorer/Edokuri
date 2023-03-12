@@ -1,7 +1,12 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class HomePageNavigation extends StatelessWidget {
   final int currentIndex;
@@ -29,9 +34,11 @@ class HomePageNavigation extends StatelessWidget {
                     label: '',
                     icon: SvgPicture.asset(
                       e,
-                      color: currentIndex == items.indexOf(e)
-                          ? Theme.of(context).brightElementColor
-                          : Theme.of(context).paleElementColor,
+                      colorFilter: ColorFilter.mode(
+                          currentIndex == items.indexOf(e)
+                              ? Theme.of(context).brightElementColor
+                              : Theme.of(context).paleElementColor,
+                          BlendMode.srcIn),
                     ),
                   ))
               .toList(),

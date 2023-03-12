@@ -1,12 +1,15 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_sentences_section.dart';
-import 'package:freader/src/models/record.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_examples_section.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_header.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_meanings_section.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_synonyms_section.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_translations_section.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_examples_section.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_header.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_meanings_section.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_sentences_section.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_synonyms_section.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_translations_section.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoCardContent extends StatelessWidget {
   final bool showTranslationSourceSentences;

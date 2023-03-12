@@ -1,12 +1,16 @@
+// 🎯 Dart imports:
 import 'dart:ui';
 
+// 🐦 Flutter imports:
 import 'package:flutter/widgets.dart';
-import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/core/utils/string_utils.dart';
-import 'package:freader/src/models/book.dart';
-import 'package:freader/src/models/record.dart';
+
+// 📦 Package imports:
 import 'package:mobx/mobx.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/core/utils/string_utils.dart';
+import 'package:edokuri/src/models/models.dart';
 
 part 'reader_controller.g.dart';
 
@@ -21,10 +25,12 @@ class _PositionInBook {
 
 abstract class ReaderControllerBase with Store {
   final RecordRepository recordRepository;
+  final KnownRecordsRepository knownRecordsRepository;
   final BookRepository bookRepository;
   final Book book;
 
-  ReaderControllerBase(this.recordRepository, this.bookRepository, this.book);
+  ReaderControllerBase(this.recordRepository, this.bookRepository,
+      this.knownRecordsRepository, this.book);
 
   @observable
   int pageCount = 1;
@@ -107,7 +113,6 @@ abstract class ReaderControllerBase with Store {
   }
 
   void _completePage(int chapter, int page) async {
-    final creationDate = DateTime.now();
     await Future.delayed(const Duration(seconds: 1));
     final words =
         await Future(() => getParagraphs(chaptersContent[chapter][page])
@@ -117,19 +122,11 @@ abstract class ReaderControllerBase with Store {
             .where(
               (element) =>
                   element.isWord &&
-                  recordRepository.getRecord(element.content) == null,
+                  recordRepository.getRecord(element.content) == null &&
+                  !knownRecordsRepository.exist(element.content),
             ));
-    Future.forEach<Piece>(
-        words,
-        (element) => Future(() => recordRepository.putRecord(Record(
-            original: element.content.toLowerCase(),
-            originalLowerCase: element.content.toLowerCase(),
-            transcription: "",
-            synonyms: [],
-            known: true,
-            creationDate: creationDate,
-            lastReview: DateTime(0),
-            interval: 0))));
+    knownRecordsRepository
+        .addRecords(words.map((e) => e.content.toLowerCase()).toList());
   }
 
   @action
@@ -137,7 +134,7 @@ abstract class ReaderControllerBase with Store {
     chaptersContent = [];
     final List<List<String>> temp = [];
     for (var element in book.chapters) {
-      temp.add(await _paginate(pageSize, element.content, style));
+      temp.add(await _paginate(pageSize, element, style));
     }
     currentPageIndex = currentPageIndex < 0
         ? _getPageIndexByChapterAndPosition(
@@ -195,7 +192,7 @@ abstract class ReaderControllerBase with Store {
   }
 
   String getSentence(int indexInSentence) {
-    final chapterContent = book.chapters[currentChapter].content;
+    final chapterContent = book.chapters[currentChapter];
 
     final indexInSentenceInChapter =
         indexInSentence + getCurrentPositionInChapter();

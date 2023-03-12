@@ -1,10 +1,15 @@
+// 🐦 Flutter imports:
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:freader/src/models/record.dart';
 import 'package:flutter/material.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+
+// 📦 Package imports:
+import 'package:flutter_svg/flutter_svg.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoSentencesSection extends StatelessWidget {
   final bool showTranslation;

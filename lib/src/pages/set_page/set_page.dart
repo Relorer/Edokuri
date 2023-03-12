@@ -1,8 +1,11 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
-import 'package:freader/src/core/widgets/record_with_info_card/record_with_info_card.dart';
-import 'package:freader/src/core/widgets/second_background_empty_app_bar.dart';
-import 'package:freader/src/pages/set_page/set_screen.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:edokuri/src/core/widgets/record_with_info_card/record_with_info_card.dart';
+import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
+import 'package:edokuri/src/pages/set_page/set_screen.dart';
 
 class SetPage extends StatelessWidget {
   final SetData setData;
@@ -15,7 +18,7 @@ class SetPage extends StatelessWidget {
         bottomPadding: 0,
         set: setData.set,
         body: Scaffold(
-          appBar: PhantomAppBar(),
+          appBar: const PhantomAppBar(),
           body: SetScreen(
             setData: setData,
           ),

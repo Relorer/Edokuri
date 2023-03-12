@@ -1,13 +1,16 @@
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/generated/locale.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/src/pages/home_page/screens/library_screen/widgets/app_bar_title.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
-import 'package:provider/provider.dart';
 
+// 📦 Package imports:
+import 'package:flutter_mobx/flutter_mobx.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/generated/locale.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/app_bar_title.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 import 'stats_graph/stats_graph.dart';
 
 class LibraryAppBar extends StatelessWidget {
@@ -39,12 +42,10 @@ class LibraryAppBar extends StatelessWidget {
                     child: Observer(builder: (_) {
                       return AppBarTitle(
                         leftText: LocaleKeys.today.tr(),
-                        rightText: LocaleKeys.short_min.tr(namedArgs: {
-                          "count": (context
-                                      .read<BookRepository>()
+                        rightText: LocaleKeys.shortMin.tr(namedArgs: {
+                          "count": (getIt<ActivityTimeRepository>()
                                       .readingTimeForTodayInMinutes() +
-                                  context
-                                      .read<UserRepository>()
+                                  getIt<ActivityTimeRepository>()
                                       .learningTimeForTodayInMinutes())
                               .toString()
                         }),

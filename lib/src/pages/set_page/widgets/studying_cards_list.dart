@@ -1,9 +1,12 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
-import 'package:freader/src/pages/learn_page/learn_page.dart';
-import 'package:freader/src/pages/set_page/widgets/studying_card/studying_card.dart';
-import 'package:freader/src/theme/svgs.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:edokuri/src/pages/learn_page/learn_page.dart';
+import 'package:edokuri/src/pages/set_page/widgets/studying_card/studying_card.dart';
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class StudyingCardsList extends StatelessWidget {
   final SetData setData;

@@ -1,18 +1,21 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/set_repository/set_repository.dart';
-import 'package:freader/src/controllers/stores/set_controller/set_controller.dart';
-import 'package:freader/src/core/utils/records_list_extensions.dart';
-import 'package:freader/src/core/widgets/ellipsis_text.dart';
-import 'package:freader/src/core/widgets/simple_card.dart';
-import 'package:freader/src/models/set.dart';
-import 'package:freader/src/pages/home_page/screens/person_screen/widgets/set_card/set_card_dialog.dart';
-import 'package:freader/src/pages/set_editing_page/set_editign_page.dart';
-import 'package:freader/src/pages/set_page/set_page.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
-import 'package:provider/provider.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/widgets/ellipsis_text.dart';
+import 'package:edokuri/src/core/widgets/simple_card.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/set_card/set_card_dialog.dart';
+import 'package:edokuri/src/pages/set_editing_page/set_editign_page.dart';
+import 'package:edokuri/src/pages/set_page/set_page.dart';
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class SetCard extends StatelessWidget {
   final SetRecords set;
@@ -27,8 +30,7 @@ class SetCard extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => Observer(builder: (_) {
           return SetPage(
-            setData: SetData(
-                context.read<RecordRepository>().getRecordsBySet(set),
+            setData: SetData(getIt<RecordRepository>().getRecordsBySet(set),
                 set: set),
           );
         }),
@@ -37,7 +39,7 @@ class SetCard extends StatelessWidget {
   }
 
   void _removeSet(BuildContext context) {
-    context.read<SetRepository>().removeSet(set);
+    getIt<SetRecordsRepository>().removeSet(set);
     Navigator.pop(context);
   }
 
@@ -87,7 +89,7 @@ class SetCard extends StatelessWidget {
                 height: defaultMargin,
               ),
               EllipsisText(
-                "${set.records.saved.length} records",
+                "${getIt<RecordRepository>().getRecordsBySet(set).length} records",
                 style: Theme.of(context).cardSubtitleStyle,
               ),
             ],

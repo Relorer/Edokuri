@@ -1,9 +1,14 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/reader_controller/reader_controller.dart';
-import 'package:freader/src/core/widgets/circular_progress_indicator_pale.dart';
-import 'package:freader/src/pages/reader/widgets/bouncing_page_view.dart';
 import 'package:provider/provider.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
+import 'package:edokuri/src/core/widgets/circular_progress_indicator_pale.dart';
+import 'package:edokuri/src/pages/reader/widgets/bouncing_page_view.dart';
 
 class ReaderContentView extends StatelessWidget {
   const ReaderContentView({super.key});

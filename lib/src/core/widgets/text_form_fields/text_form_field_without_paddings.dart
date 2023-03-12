@@ -1,5 +1,8 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/theme/theme.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/theme/theme.dart';
 
 class TextFormFieldWithoutPaddings extends StatelessWidget {
   final void Function(String)? onFieldSubmitted;

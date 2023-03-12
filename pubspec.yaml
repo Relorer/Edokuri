@@ -1,9 +1,9 @@
-name: freader
+name: edokuri
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -27,65 +27,82 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  flutter:
-    sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  provider: ^6.0.4
+  auto_size_text: ^3.0.0
+  blur: ^3.1.0
+  card_swiper: ^2.0.4
+  carousel_slider: ^4.2.1
+  connectivity_plus: ^3.0.3
+  cupertino_icons: ^1.0.5
+  custom_navigation_bar: ^0.8.2
+  dictionaryx: ^0.3.5
+  direct_select: ^2.0.0
+  easy_debounce: ^2.0.3
+  easy_localization: ^3.0.1
   epubx:
     git: https://github.com/Relorer/epubx.dart
-  file_picker: ^5.2.2
-  html: ^0.15.1
-  path: ^1.8.1
-  objectbox: ^1.6.2
-  objectbox_flutter_libs: any
+  file_picker: ^5.2.5
+  flip_card: ^0.7.0
+  flutter:
+    sdk: flutter
+  flutter_cache_manager: ^3.3.0
+  flutter_config: ^2.0.0
+  flutter_displaymode: ^0.5.0
+  flutter_mobx: ^2.0.6+5
+  flutter_native_splash: ^2.2.14
+  flutter_secure_storage: ^8.0.0
+  flutter_svg: ^2.0.2
   flutter_swiper_null_safety: ^1.0.2
-  carousel_slider: ^4.1.1
-  syncfusion_flutter_sliders: ^20.3.52
-  path_provider: ^2.0.11
-  custom_navigation_bar: ^0.8.2
-  flutter_svg: ^1.0.3
-  image: ^3.1.3
-  flutter_displaymode: ^0.4.0
-  mobx: ^2.1.1
-  flutter_mobx: ^2.0.6+4
-  mobx_codegen: ^2.0.7+3
-  need_resume: ^1.0.7+1
-  easy_localization: ^3.0.1
-  google_mlkit_translation: ^0.5.0
-  dictionaryx: ^0.3.5
-  sliding_up_panel: ^2.0.0+1
-  http: ^0.13.5
-  flutter_dotenv: ^5.0.2
-  connectivity_plus: ^2.1.0
-  easy_debounce: ^2.0.2+1
-  translator: ^0.1.7
-  url_launcher: ^6.1.6
+  flutter_web_auth: ^0.5.0
+  fluttertoast: ^8.2.1
   get_it: ^7.2.0
+  google_mlkit_translation: ^0.5.0
+  group_button: ^5.2.2
+  html: ^0.15.2
+  http: ^0.13.5
+  image: ^3.0.2
+  json_annotation: ^4.8.0
+  mobx: ^2.1.4
+  mobx_codegen: ^2.1.1
+  need_resume: ^1.0.7+1
+  numberpicker: ^2.1.1
+  path: ^1.8.2
   path_drawing: ^1.0.1
-  card_swiper: ^2.0.4
-  auto_size_text: ^3.0.0
-  flip_card: ^0.6.0
+  path_provider: ^2.0.13
+  pocketbase: ^0.7.3
+  provider: ^6.0.5
+  shared_preferences: ^2.0.18
+  sliding_up_panel: ^2.0.0+1
   smooth_page_indicator:
     git: https://github.com/Relorer/smooth_page_indicator.git
+  syncfusion_flutter_sliders: ^20.4.53
   text_to_speech: ^0.2.3
-  numberpicker: ^2.1.1
-  direct_select: ^2.0.0
-  group_button: ^5.2.2
-  shared_preferences: ^2.0.15
-  fluttertoast: ^8.1.3
-  
+  translator: ^0.1.7
+  url_launcher: ^6.1.10
+
 dev_dependencies:
+  build_runner: ^2.3.3
+  change_app_package_name: ^1.1.0
+  dart_pre_commit: ^4.1.0
+  flutter_launcher_icons: ^0.11.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
-  build_runner: ^2.3.2
-  objectbox_generator: ^1.6.2
-  flutter_launcher_icons: ^0.11.0
-  flutter_lints: ^2.0.0
-  flutter_native_splash: ^2.2.14
+  git_hooks: ^1.0.0
+  import_sorter: ^4.6.0
+  json_serializable: ^6.6.1
+  process_run: ^0.12.5+2
 
+import_sorter:
+  emojis: true
+  comments: true
+
+dart_pre_commit:
+  outdated:
+    level: major
+  analyze:
+    error-level: warning
+    scan-mode: staged
+  pull-up-dependencies: false
 
 flutter_icons:
   android: "launcher_icon"
@@ -106,7 +123,7 @@ flutter_icons:
   macos:
     generate: true
     image_path: "assets/images/app-icon.png"
-    
+
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen
   # with background color and splash image.
@@ -114,17 +131,14 @@ flutter_native_splash:
   # flutter pub run flutter_native_splash:create
   # To restore Flutter's default white splash screen, run the following command in the terminal:
   # flutter pub run flutter_native_splash:remove
-
   # color or background_image is the only required parameter.  Use color to set the background
   # of your splash screen to a solid color.  Use background_image to set the background of your
   # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
   color: "#292F40"
   #background_image: "assets/background.png"
-
   # Optional parameters are listed below.  To enable a parameter, uncomment the line by removing
   # the leading # character.
-
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
   image: assets/images/logo.png
@@ -133,11 +147,9 @@ flutter_native_splash:
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,
   # see the Android 12 section below.
   #branding: assets/dart.png
-
   # To position the branding image at the bottom of the screen you can use bottom, bottomRight,
   # and bottomLeft. The default values is bottom if not specified or specified something else.
   #branding_mode: bottom
-
   # The color_dark, background_image_dark, image_dark, branding_dark are parameters that set the background
   # and image when the device is in dark mode. If they are not specified, the app will use the
   # parameters from above. If the image_dark parameter is specified, color_dark or
@@ -147,7 +159,6 @@ flutter_native_splash:
   #background_image_dark: "assets/dark-background.png"
   #image_dark: assets/splash-invert.png
   #branding_dark: assets/dart_dark.png
-
   # Android 12 handles the splash screen differently than previous versions.  Please visit
   # https://developer.android.com/guide/topics/ui/splash-screen
   # Following are Android 12 specific parameter.
@@ -163,26 +174,21 @@ flutter_native_splash:
 
     # Splash screen background color.
     color: "#292F40"
-
     # App icon background color.
     #icon_background_color: "#111111"
-
     # The branding property allows you to specify an image used as branding in the splash screen.
     #branding: assets/dart.png
-
     # The image_dark, color_dark, icon_background_color_dark, and branding_dark set values that
     # apply when the device is in dark mode. If they are not specified, the app will use the
     # parameters from above.
     #image_dark: assets/android12splash-invert.png
     #color_dark: "#042a49"
     #icon_background_color_dark: "#eeeeee"
-
   # The android, ios and web parameters can be used to disable generating a splash screen on a given
   # platform.
   #android: false
   #ios: false
   #web: false
-
   # Platform specific images can be specified with the following parameters, which will override
   # the respective parameter.  You may specify all, selected, or none of these parameters:
   #color_android: "#42a5f5"
@@ -207,7 +213,6 @@ flutter_native_splash:
   #branding_dark_android: assets/dart_dark-android.png
   #branding_ios: assets/brand-ios.png
   #branding_dark_ios: assets/dart_dark-ios.png
-
   # The position of the splash image can be set with android_gravity, ios_content_mode, and
   # web_image_mode parameters.  All default to center.
   #
@@ -225,12 +230,10 @@ flutter_native_splash:
   #
   # web_image_mode can be one of the following modes: center, contain, stretch, and cover.
   #web_image_mode: center
-
   # The screen orientation can be set in Android with the android_screen_orientation parameter.
   # Valid parameters can be found here:
   # https://developer.android.com/guide/topics/manifest/activity-element#screen
   #android_screen_orientation: sensorLandscape
-
   # To hide the notification bar, use the fullscreen parameter.  Has no effect in web since web
   # has no notification bar.  Defaults to false.
   # NOTE: Unlike Android, iOS will not automatically show the notification bar when the app loads.
@@ -238,18 +241,14 @@ flutter_native_splash:
   #       WidgetsFlutterBinding.ensureInitialized();
   #       SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom, SystemUiOverlay.top]);
   #fullscreen: true
-
   # If you have changed the name(s) of your info.plist file(s), you can specify the filename(s)
   # with the info_plist_files parameter.  Remove only the # characters in the three lines below,
   # do not remove any spaces:
   #info_plist_files:
   #  - 'ios/Runner/Info-Debug.plist'
   #  - 'ios/Runner/Info-Release.plist'
-
-
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -261,13 +260,10 @@ flutter:
     - assets/images/
     - assets/translations/
     - .env
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

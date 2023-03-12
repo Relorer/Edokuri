@@ -1,6 +1,9 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:freader/src/theme/theme.dart';
-import 'package:freader/src/theme/theme_consts.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class GroupButtons extends StatelessWidget {
   final List<String> buttonsText;
@@ -48,8 +51,7 @@ class _ButtonOfGroupButtons extends StatelessWidget {
   final String text;
   final Function(bool)? onSelected;
 
-  const _ButtonOfGroupButtons(this.text, this.isSelected,
-      {super.key, this.onSelected});
+  const _ButtonOfGroupButtons(this.text, this.isSelected, {this.onSelected});
 
   @override
   Widget build(BuildContext context) {

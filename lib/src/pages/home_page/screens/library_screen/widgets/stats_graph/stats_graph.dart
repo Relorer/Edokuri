@@ -1,16 +1,20 @@
+// 🎯 Dart imports:
 import 'dart:math';
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freader/src/controllers/stores/repositories/record_repository/record_repository.dart';
-import 'package:freader/src/core/utils/datetime_extensions.dart';
-import 'package:freader/src/core/utils/random_utils.dart';
-import 'package:freader/src/models/graph.dart';
-import 'package:freader/src/models/record.dart';
-import 'package:freader/src/pages/home_page/screens/library_screen/widgets/stats_graph/stats_graph_painter.dart';
-import 'package:freader/src/theme/theme_consts.dart';
 
-import 'package:provider/provider.dart';
+// 📦 Package imports:
+import 'package:flutter_mobx/flutter_mobx.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/utils/datetime_extensions.dart';
+import 'package:edokuri/src/core/utils/random_utils.dart';
+import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/stats_graph/stats_graph_painter.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class StatsGraph extends StatefulWidget {
   const StatsGraph({Key? key}) : super(key: key);
@@ -33,27 +37,24 @@ class _StatsGraphState extends State<StatsGraph> {
         .toList();
   }
 
-  int _getNewKnownRecords(Iterable<Record> records, DateTime day) {
-    return records
-        .where(
-            (element) => element.creationDate.isSameDate(day) && element.known)
+  int _getNewKnownRecords(DateTime day) {
+    return getIt<KnownRecordsRepository>()
+        .getKnownRecordsByDay(day)
+        .records
         .length;
   }
 
   int _getNewSavedRecords(Iterable<Record> records, DateTime day) {
     return records
-        .where((element) =>
-            (element.creationDate.isSameDate(day) ||
-                element.translations.any((element) =>
-                    element.selectionDate?.isSameDate(day) ?? false)) &&
-            !element.known)
+        .where((element) => (element.creationDate.isSameDate(day) ||
+            element.translations.any(
+                (element) => element.selectionDate?.isSameDate(day) ?? false)))
         .length;
   }
 
   int _getReviewedRecords(Iterable<Record> records, DateTime day) {
     return records
-        .where(
-            (element) => (element.lastReview.isSameDate(day)) && !element.known)
+        .where((element) => (element.lastReview.isSameDate(day)))
         .length;
   }
 
@@ -75,15 +76,14 @@ class _StatsGraphState extends State<StatsGraph> {
                   onTapUp: ((details) => _setPressedPosition(null)),
                   onTapCancel: (() => _setPressedPosition(null)),
                   child: Observer(builder: (_) {
-                    final recordRepository = context.read<RecordRepository>();
+                    final recordRepository = getIt<RecordRepository>();
                     final graphData = GraphData([
                       ...Iterable<int>.generate(7)
                           .map((e) {
                             final date =
                                 DateTime.now().subtract(Duration(days: e));
                             return GraphDayData(date,
-                                newKnownRecords: _getNewKnownRecords(
-                                    recordRepository.records, date),
+                                newKnownRecords: _getNewKnownRecords(date),
                                 newSavedRecords: _getNewSavedRecords(
                                     recordRepository.records, date),
                                 reviewedWords: _getReviewedRecords(

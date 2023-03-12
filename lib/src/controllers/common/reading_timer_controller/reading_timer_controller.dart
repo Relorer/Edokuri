@@ -1,27 +1,36 @@
-import 'package:freader/src/controllers/stores/repositories/book_repository/book_repository.dart';
-import 'package:freader/src/controllers/stores/repositories/user_repository/user_repository.dart';
-import 'package:freader/src/models/activity_time.dart';
-import 'package:freader/src/models/book.dart';
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/models/models.dart';
 
 class ReadingTimerController {
   final BookRepository bookRepository;
-  final UserRepository userRepository;
+  final ActivityTimeRepository activityTimeRepository;
+  final TimeMarkRepository timeMarkRepository;
   final Book book;
 
   DateTime? _startReading;
 
-  ReadingTimerController(this.bookRepository, this.userRepository, this.book);
+  ReadingTimerController(this.bookRepository, this.activityTimeRepository,
+      this.timeMarkRepository, this.book);
 
   startReadingTimer() {
     _startReading = DateTime.now();
   }
 
-  stopReadingTimer() {
+  stopReadingTimer() async {
     if (_startReading != null) {
-      book.readTimes.add(ActivityTime(_startReading!, DateTime.now()));
-      bookRepository.putBook(book);
+      final at = await activityTimeRepository.putActivityTime(
+          ActivityTime(_startReading!, DateTime.now(), Type.reading));
+
       _startReading = null;
-      userRepository.addTimeMarkForToday();
+
+      if (at == null) return;
+
+      book.readTimes.add(at.id);
+      book.lastReading = DateTime.now();
+      bookRepository.putBook(book);
+
+      timeMarkRepository.addTimeMarkForToday();
     }
   }
 }

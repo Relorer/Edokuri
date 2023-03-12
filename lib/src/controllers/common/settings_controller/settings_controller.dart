@@ -1,3 +1,4 @@
+// 📦 Package imports:
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _packSize = "PACKSIZE";
@@ -5,7 +6,7 @@ const _autoPronouncingInLearnPage = "AUTOPRONOUNCINGINLEARNPAGE";
 const _frontCardInLearnPageTerm = "FRONTCARDINLEARNPAGE_TERM";
 const _frontCardInLearnPageDefinition = "FRONTCARDINLEARNPAGE_DEFINITION";
 
-class SrttingsControllerFactory {
+class SettingsControllerFactory {
   Future<SettingsController> getSettingsController() async {
     return SettingsController(await SharedPreferences.getInstance());
   }
