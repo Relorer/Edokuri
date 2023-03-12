@@ -6,7 +6,6 @@ import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
-import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:edokuri/src/models/models.dart';
 
 part 'record_repository.g.dart';
@@ -17,24 +16,24 @@ const _record = "record";
 
 abstract class RecordRepositoryBase with Store {
   final PocketbaseController pb;
-  final UserRepository userRepository;
 
   ObservableList<Record> records = ObservableList<Record>.of([]);
 
-  RecordRepositoryBase(this.pb, this.userRepository) {
-    pb.client.collection(_record).getFullList().then(
-        (value) => records.addAll(value.map((e) => Record.fromRecord(e))));
-    pb.client.collection(_record).subscribe("*", (e) {
-      try {
-        if (e.record == null) return;
-        final record = Record.fromRecord(e.record!);
-        records.removeWhere((element) => element.id == record.id);
-        if (e.action == "update" || e.action == "create") {
-          records.add(record);
+  RecordRepositoryBase(this.pb) {
+    pb.client.collection(_record).getFullList().then((value) {
+      records.addAll(value.map((e) => Record.fromRecord(e)));
+      pb.client.collection(_record).subscribe("*", (e) {
+        try {
+          if (e.record == null) return;
+          final record = Record.fromRecord(e.record!);
+          records.removeWhere((element) => element.id == record.id);
+          if (e.action == "update" || e.action == "create") {
+            records.add(record);
+          }
+        } catch (e, stacktrace) {
+          log("${e.toString()}\n${stacktrace.toString()}");
         }
-      } catch (e, stacktrace) {
-        log("${e.toString()}\n${stacktrace.toString()}");
-      }
+      });
     });
   }
 

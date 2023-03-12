@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/stores/repositories/book_repository/book_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/controllers/stores/sort_controllers/library_sort_controller/library_sort_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card.dart';

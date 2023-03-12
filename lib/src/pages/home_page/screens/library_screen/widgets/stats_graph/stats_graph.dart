@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/utils/datetime_extensions.dart';
 import 'package:edokuri/src/core/utils/random_utils.dart';

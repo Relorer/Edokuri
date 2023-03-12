@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/stores/repositories/set_repository/set_repository.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';

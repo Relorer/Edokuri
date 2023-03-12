@@ -10,7 +10,6 @@ import 'package:pocketbase/pocketbase.dart';
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/cache_controller/cache_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
-import 'package:edokuri/src/controllers/stores/repositories/user_repository/user_repository.dart';
 import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
 
@@ -22,12 +21,11 @@ const _book = "book";
 
 abstract class BookRepositoryBase with Store {
   final PocketbaseController pb;
-  final UserRepository userRepository;
   final CacheController cacheController = CacheController();
 
   ObservableList<Book> books = ObservableList<Book>.of([]);
 
-  BookRepositoryBase(this.pb, this.userRepository) {
+  BookRepositoryBase(this.pb) {
     pb.client.collection(_book).getFullList().then((value) async {
       try {
         for (var record in value) {
@@ -36,23 +34,22 @@ abstract class BookRepositoryBase with Store {
       } catch (e, stacktrace) {
         log("${e.toString()}\n${stacktrace.toString()}");
       }
-    });
-
-    pb.client.collection(_book).subscribe("*", (e) async {
-      try {
-        if (e.record == null) return;
-        books.removeWhere((element) => element.id == e.record!.id);
-        if (e.action == "delete") {
-          pb.removeFile(e.record!, "chapters");
-          pb.removeFile(e.record!, "words");
-          pb.removeFile(e.record!, "cover");
+      pb.client.collection(_book).subscribe("*", (e) async {
+        try {
+          if (e.record == null) return;
+          books.removeWhere((element) => element.id == e.record!.id);
+          if (e.action == "delete") {
+            pb.removeFile(e.record!, "chapters");
+            pb.removeFile(e.record!, "words");
+            pb.removeFile(e.record!, "cover");
+          }
+          if (e.action == "update" || e.action == "create") {
+            books.add(await getBookFromRecord(e.record!));
+          }
+        } catch (e, stacktrace) {
+          log("${e.toString()}\n${stacktrace.toString()}");
         }
-        if (e.action == "update" || e.action == "create") {
-          books.add(await getBookFromRecord(e.record!));
-        }
-      } catch (e, stacktrace) {
-        log("${e.toString()}\n${stacktrace.toString()}");
-      }
+      });
     });
   }
 
