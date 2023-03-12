@@ -55,7 +55,10 @@ class _StatsGraphState extends State<StatsGraph> {
   }
 
   int _getReviewedRecords(Iterable<Record> records, DateTime day) {
-    return 1; //TODO
+    return records
+        .where(
+            (element) => (element.lastReview.isSameDate(day)) && !element.known)
+        .length;
   }
 
   void _setPressedPosition(Offset? offset) {

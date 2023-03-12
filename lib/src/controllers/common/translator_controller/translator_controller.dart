@@ -62,17 +62,17 @@ class TranslatorController {
     }
 
     return Record(
-      original: content,
-      originalLowerCase: content.toLowerCase(),
-      transcription: transcription,
-      known: false,
-      creationDate: DateTime.now(),
-      sentences: [],
-      synonyms: synonyms,
-      meanings: meanings,
-      examples: examples,
-      translations: translations,
-    );
+        original: content,
+        originalLowerCase: content.toLowerCase(),
+        transcription: transcription,
+        known: false,
+        creationDate: DateTime.now(),
+        sentences: [],
+        synonyms: synonyms,
+        meanings: meanings,
+        examples: examples,
+        translations: translations,
+        lastReview: DateTime.utc(0));
   }
 
   Future<String> translateSentence(String sentence) async {
