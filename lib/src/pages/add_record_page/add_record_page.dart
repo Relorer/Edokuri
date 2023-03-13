@@ -1,10 +1,10 @@
-// 🎯 Dart imports:
-
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_examples_section.dart';
@@ -20,8 +20,8 @@ import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
 class AddRecordPage extends StatefulWidget {
-  final String setName;
-  const AddRecordPage({Key? key, required this.setName}) : super(key: key);
+  final SetRecords? set;
+  const AddRecordPage({Key? key, required this.set}) : super(key: key);
 
   @override
   AddRecordPageState createState() {
@@ -30,22 +30,48 @@ class AddRecordPage extends StatefulWidget {
 }
 
 class AddRecordPageState extends State<AddRecordPage> {
-  late TextEditingController phraseController;
+  late RecordRepository _recordRepository;
+  late TextEditingController _phraseController;
   late TranslatorController _translator;
 
-  Record? record;
+  Record? _record;
 
   @override
   void initState() {
-    phraseController = TextEditingController();
+    _recordRepository = getIt<RecordRepository>();
+    _phraseController = TextEditingController();
     _translator = getIt<TranslatorController>();
     super.initState();
   }
 
   void _phraseTextSubmitted(String text) async {
-    phraseController.clear();
-    record = await _translator.translate(text);
+    _phraseController.clear();
+    _saveCurrentRecord();
+    setState(() {
+      _record = null;
+    });
+    final temp = _recordRepository.getRecord(text);
+    _record = temp != null && temp.translations.isNotEmpty
+        ? temp
+        : await _translator.translate(text);
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _saveCurrentRecord();
+    super.dispose();
+  }
+
+  _saveCurrentRecord() {
+    if (_record == null) return;
+    if (_record!.translations.any((element) => element.selected)) {
+      _record!.translations.removeWhere(
+          (element) => element.source == userSource && !element.selected);
+      _recordRepository.putRecord(_record!, set: widget.set);
+    } else if (_record!.id.isNotEmpty) {
+      _recordRepository.removeRecord(_record!, set: widget.set);
+    }
   }
 
   List<Widget> _getSections(Record record) {
@@ -83,9 +109,9 @@ class AddRecordPageState extends State<AddRecordPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).secondBackgroundColor,
         elevation: 0,
-        title: Text("Add to ${widget.setName}"),
+        title: Text("Add to ${widget.set?.name ?? "All"}"),
       ),
-      backgroundColor: record == null
+      backgroundColor: _record == null
           ? Theme.of(context).colorScheme.background
           : Colors.white,
       body: SafeArea(
@@ -96,18 +122,18 @@ class AddRecordPageState extends State<AddRecordPage> {
             child: Column(
               children: [
                 TextFormFieldDefault(
-                  controller: phraseController,
+                  controller: _phraseController,
                   labelText: 'Enter a phrase',
                   onFieldSubmitted: _phraseTextSubmitted,
                 ),
                 const SizedBox(
                   height: doubleDefaultMargin,
                 ),
-                record == null
+                _record == null
                     ? Container()
                     : Wrap(
                         runSpacing: defaultMargin,
-                        children: _getSections(record!),
+                        children: _getSections(_record!),
                       ),
                 const SizedBox(
                   height: doubleDefaultMargin,

@@ -16,8 +16,8 @@ import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
 class CardsSectionHeader extends StatefulWidget {
-  final String setName;
-  const CardsSectionHeader({super.key, required this.setName});
+  final SetRecords? set;
+  const CardsSectionHeader({super.key, required this.set});
 
   @override
   State<CardsSectionHeader> createState() => _CardsSectionHeaderState();
@@ -48,7 +48,7 @@ class _CardsSectionHeaderState extends State<CardsSectionHeader> {
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => AddRecordPage(
-                setName: widget.setName,
+                set: widget.set,
               ),
             ),
           ),
