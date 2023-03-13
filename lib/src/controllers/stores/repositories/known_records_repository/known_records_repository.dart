@@ -63,13 +63,7 @@ abstract class KnownRecordsRepositoryBase with Store {
 
   Future addRecords(List<String> records) async {
     try {
-      final current = knownRecords.firstWhere(
-        (element) => element.creationDate.isSameDate(DateTime.now()),
-        orElse: () => KnownRecords(records: [], creationDate: DateTime.now()),
-      );
-      current.records.addAll(records);
-      current.records.toSet().toList();
-      putSet(current);
+      putSet(KnownRecords(records: records, creationDate: DateTime.now()));
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }
@@ -84,14 +78,14 @@ abstract class KnownRecordsRepositoryBase with Store {
 
   int count() {
     if (knownRecords.isEmpty) return 0;
-    return knownRecords
-        .map((element) => element.records.length)
-        .reduce((value, element) => value + element);
+    return knownRecords.expand((element) => element.records).toSet().length;
   }
 
-  KnownRecords getKnownRecordsByDay(DateTime day) {
-    return knownRecords.firstWhere(
-        (element) => element.creationDate.isSameDate(day),
-        orElse: () => KnownRecords(records: [], creationDate: DateTime(0)));
+  int countForDay(DateTime day) {
+    final batches =
+        knownRecords.where((element) => element.creationDate.isSameDate(day));
+    if (batches.isEmpty) return 0;
+
+    return batches.expand((element) => element.records).toSet().length;
   }
 }

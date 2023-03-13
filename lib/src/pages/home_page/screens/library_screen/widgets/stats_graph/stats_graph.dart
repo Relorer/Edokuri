@@ -38,10 +38,7 @@ class _StatsGraphState extends State<StatsGraph> {
   }
 
   int _getNewKnownRecords(DateTime day) {
-    return getIt<KnownRecordsRepository>()
-        .getKnownRecordsByDay(day)
-        .records
-        .length;
+    return getIt<KnownRecordsRepository>().countForDay(day);
   }
 
   int _getNewSavedRecords(Iterable<Record> records, DateTime day) {
