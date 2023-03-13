@@ -36,7 +36,9 @@ class SetScreen extends StatelessWidget {
           StudyingCardsList(
             setData: setData,
           ),
-          const CardsSectionHeader(),
+          CardsSectionHeader(
+            setName: setData.set?.name ?? "All",
+          ),
           RecordCardsList(
             setData: setData,
           ),
