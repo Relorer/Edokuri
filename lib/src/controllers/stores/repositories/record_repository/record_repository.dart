@@ -106,10 +106,8 @@ abstract class RecordRepositoryBase with Store {
       if (set != null) {
         set.records.removeWhere((id) => id == record.id);
         setRecordsRepository.putSet(set);
-        putRecord(record);
-      } else {
-        await pb.client.collection(_record).delete(record.id);
       }
+      await pb.client.collection(_record).delete(record.id);
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }

@@ -12,10 +12,10 @@ import 'package:edokuri/src/models/models.dart';
 const maxPhraseLength = 30;
 
 class TranslatorController {
-  final MSADictionaryService msaDicService = MSADictionaryService();
+  final MSADictionaryService _msaDicService = MSADictionaryService();
   final OnDeviceTranslator _translator;
-  final YandexDictionaryService yaDicService = YandexDictionaryService();
-  final GoogleTranslatorService gService = GoogleTranslatorService();
+  final YandexDictionaryService _yaDicService = YandexDictionaryService();
+  final GoogleTranslatorService _gService = GoogleTranslatorService();
 
   TranslatorController(this._translator);
 
@@ -33,7 +33,7 @@ class TranslatorController {
     if (!content.contains(" ") || content.length < maxPhraseLength) {
       final contentLowerCase = content.toLowerCase();
 
-      var msaResult = msaDicService.lookup(contentLowerCase).then((value) {
+      var msaResult = _msaDicService.lookup(contentLowerCase).then((value) {
         meanings = value.meanings;
         synonyms = value.synonyms;
         synonyms.removeWhere(
@@ -41,7 +41,7 @@ class TranslatorController {
       });
 
       var yaResult = hasInternet
-          ? yaDicService.lookup(contentLowerCase).then((value) {
+          ? _yaDicService.lookup(contentLowerCase).then((value) {
               translations = value.translations;
               examples = value.examples;
               transcription = value.transcription;
@@ -53,7 +53,7 @@ class TranslatorController {
 
     if (translations.isEmpty) {
       final googleTranslate =
-          hasInternet ? await gService.translate(content) : "";
+          hasInternet ? await _gService.translate(content) : "";
 
       translations.add(googleTranslate.isNotEmpty
           ? Translation(googleTranslate, source: googleSource)
@@ -80,7 +80,7 @@ class TranslatorController {
     sentence = sentence.trim();
 
     final googleTranslate =
-        hasInternet ? await gService.translate(sentence) : "";
+        hasInternet ? await _gService.translate(sentence) : "";
 
     return googleTranslate.isNotEmpty
         ? googleTranslate
