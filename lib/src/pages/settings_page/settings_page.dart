@@ -10,9 +10,9 @@ import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart'
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
-import 'package:edokuri/src/core/widgets/button_with_icon.dart';
 import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_button.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme.dart';
 
@@ -56,17 +56,16 @@ class SettingsPageState extends State<SettingsPage> {
           SliverSingleChild(Column(
             children: [
               getIt<MLController>().isLoaded
-                  ? const Text("Language model is loaded")
-                  : TextButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.black38, // foreground
-                      ),
-                      onPressed: !getIt<MLController>().isLoading
-                          ? () => checkStateDownloadModel()
-                          : null,
-                      child: const Text("Download")),
-              ButtonWithIcon(
+                  ? const SettingPageButton(
+                      text: "Language model is loaded",
+                      svg: translateSvg,
+                    )
+                  : SettingPageButton(
+                      text: "Load the language model",
+                      onTap: checkStateDownloadModel,
+                      svg: translateSvg,
+                    ),
+              SettingPageButton(
                 text: "Sign out",
                 onTap: () async {
                   await getIt<PocketbaseController>().logout();
