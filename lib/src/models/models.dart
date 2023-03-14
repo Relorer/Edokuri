@@ -1,5 +1,6 @@
 export 'graph.dart';
 export 'paragraph.dart';
+export './set_data.dart';
 export './entities/user.dart';
 export './entities/book.dart';
 export './entities/example.dart';

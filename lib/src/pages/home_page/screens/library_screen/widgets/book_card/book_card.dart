@@ -8,7 +8,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:edokuri/generated/locale.dart';
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
-import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/simple_card.dart';
 import 'package:edokuri/src/models/models.dart';
