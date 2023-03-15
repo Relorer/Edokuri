@@ -18,7 +18,7 @@ class StudyingCardsList extends StatelessWidget {
     final studying = [
       StudyingCard(
         title: 'Learn',
-        subTitile: 'Focus your studying with a path',
+        subTitle: 'Focus your studying with a path',
         svg: learnSvg,
         onTap: setData.records.isEmpty
             ? null
