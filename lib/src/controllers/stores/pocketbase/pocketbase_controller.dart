@@ -9,12 +9,12 @@ import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:uuid/uuid.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/cache_controller/cache_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/models/models.dart';
-import 'package:uuid/uuid.dart';
 
 part 'pocketbase_controller.g.dart';
 
