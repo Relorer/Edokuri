@@ -1,4 +1,5 @@
 // 📦 Package imports:
+import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -24,6 +25,7 @@ final getIt = GetIt.instance;
 Future<void> setupLocator() async {
   getIt.registerFactory(() => TTSController());
   getIt.registerFactory(() => ToastController());
+  getIt.registerFactory(() => SnackbarController());
 
   getIt.registerSingleton(MLController());
 

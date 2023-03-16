@@ -1,8 +1,15 @@
+// 🎯 Dart imports:
+
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:easy_debounce/easy_debounce.dart';
+import 'package:provider/provider.dart';
+
 // 🌎 Project imports:
 import 'package:edokuri/generated/locale.dart';
+import 'package:edokuri/src/controllers/stores/search_record_controller/search_record_controller.dart';
 import 'package:edokuri/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
 import 'package:edokuri/src/core/widgets/button_with_icon.dart';
 import 'package:edokuri/src/core/widgets/section_headers/section_header.dart';
@@ -26,10 +33,21 @@ class CardsSectionHeader extends StatefulWidget {
 class _CardsSectionHeaderState extends State<CardsSectionHeader> {
   final TextEditingController textEditingController = TextEditingController();
 
-  _onFieldSubmitted(String text) {
-    TapOnWordHandlerProvider.of(context).tapOnWordHandler(text, "");
-    textEditingController.clear();
+  @override
+  void initState() {
+    super.initState();
+    textEditingController.addListener(() {
+      EasyDebounce.debounce('search-records', const Duration(seconds: 1), () {
+        if (mounted) {
+          context
+              .read<SearchRecordController>()
+              .setNewRequest(textEditingController.text);
+        }
+      });
+    });
   }
+
+  _onFieldSubmitted(String text) {}
 
   @override
   Widget build(BuildContext context) {

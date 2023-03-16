@@ -6,8 +6,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
-import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/set_page/set_screen.dart';
 
 class RecordsScreen extends StatefulWidget {

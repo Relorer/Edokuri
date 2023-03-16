@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
+import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/learn_page/learn_page.dart';
 import 'package:edokuri/src/pages/set_page/widgets/studying_card/studying_card.dart';
 import 'package:edokuri/src/theme/svgs.dart';
@@ -18,7 +18,7 @@ class StudyingCardsList extends StatelessWidget {
     final studying = [
       StudyingCard(
         title: 'Learn',
-        subTitile: 'Focus your studying with a path',
+        subTitle: 'Focus your studying with a path',
         svg: learnSvg,
         onTap: setData.records.isEmpty
             ? null
