@@ -1,4 +1,8 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/settings_controller/settings_controller.dart';
+import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
+import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,6 +24,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+  late SettingsController settingsController = getIt<SettingsController>();
+  late SnackbarController toastController = getIt<SnackbarController>();
+  late MLController mlController = getIt<MLController>();
 
   final List<Widget> _screens = <Widget>[
     const LibraryScreen(),
@@ -28,12 +35,27 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (settingsController.isFirstOpening && !mlController.isLoaded) {
+        toastController
+            .showDefaultSnackbar(context, "Loading language model...")
+            .then((value) => {
+                  if (value == SnackBarClosedReason.swipe)
+                    mlController.downloadModels()
+                });
+        settingsController.setIsFirstOpening(false);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RecordWithInfoCard(
       body: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
-
           if (!currentFocus.hasPrimaryFocus) {
             currentFocus.unfocus();
           }
