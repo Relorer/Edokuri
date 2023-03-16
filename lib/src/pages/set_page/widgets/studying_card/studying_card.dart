@@ -12,7 +12,7 @@ import 'package:edokuri/src/theme/theme_consts.dart';
 
 class StudyingCard extends StatelessWidget {
   final String title;
-  final String subTitile;
+  final String subTitle;
   final String svg;
   final void Function()? onTap;
 
@@ -20,7 +20,7 @@ class StudyingCard extends StatelessWidget {
       {super.key,
       required this.title,
       this.onTap,
-      required this.subTitile,
+      required this.subTitle,
       required this.svg});
 
   @override
@@ -51,7 +51,7 @@ class StudyingCard extends StatelessWidget {
                       style: Theme.of(context).bookTitleStyle,
                     ),
                     EllipsisText(
-                      subTitile,
+                      subTitle,
                       style: Theme.of(context).cardSubtitleStyle,
                     ),
                   ],
