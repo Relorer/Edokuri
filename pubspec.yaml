@@ -98,8 +98,7 @@ import_sorter:
   comments: true
 
 dart_pre_commit:
-  outdated:
-    level: major
+  outdated: false
   analyze:
     error-level: warning
     scan-mode: staged

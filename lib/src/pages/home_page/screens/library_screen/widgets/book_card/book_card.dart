@@ -41,8 +41,9 @@ class BookCard extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => Observer(builder: (_) {
           return SetPage(
-            setData:
-                SetData(getIt<RecordRepository>().getSavedRecordsByBook(book)),
+            setData: SetData(
+                getIt<RecordRepository>().getSavedRecordsByBook(book),
+                set: SetRecords(name: book.title ?? LocaleKeys.noTitle.tr())),
           );
         }),
       ),
