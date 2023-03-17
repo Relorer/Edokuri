@@ -17,7 +17,6 @@ import 'package:edokuri/src/core/widgets/text_form_fields/text_form_field_withou
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/add_record_page/add_record_page.dart';
 import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/sort_types_list.dart';
-import 'package:edokuri/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';

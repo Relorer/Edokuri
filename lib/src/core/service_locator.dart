@@ -1,5 +1,4 @@
 // 📦 Package imports:
-import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -8,6 +7,7 @@ import 'package:edokuri/src/controllers/common/file_controller/file_controller.d
 import 'package:edokuri/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:edokuri/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
 import 'package:edokuri/src/controllers/common/settings_controller/settings_controller.dart';
+import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator_controller_factory.dart';
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
