@@ -26,6 +26,7 @@ class StudyingCardsList extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => LearnPage(
+                      setData: setData,
                       records: setData.records,
                     ),
                   ),
