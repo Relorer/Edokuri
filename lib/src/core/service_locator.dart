@@ -6,7 +6,6 @@ import 'package:get_it/get_it.dart';
 import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:edokuri/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
-import 'package:edokuri/src/controllers/common/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator_controller_factory.dart';
@@ -16,6 +15,7 @@ import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_factory.dart';
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/controllers/stores/sort_controllers/library_sort_controller/library_sort_controller.dart';
 import 'package:edokuri/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
 import 'package:edokuri/src/models/models.dart';

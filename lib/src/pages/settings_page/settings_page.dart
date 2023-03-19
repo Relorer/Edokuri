@@ -1,18 +1,23 @@
+// 🎯 Dart imports:
+
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
+import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_button.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_switch.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme.dart';
 
@@ -65,6 +70,15 @@ class SettingsPageState extends State<SettingsPage> {
                       onTap: checkStateDownloadModel,
                       svg: translateSvg,
                     ),
+              Observer(builder: (context) {
+                final settings = getIt<SettingsController>();
+                return SettingsPageSwitch(
+                  svg: einkSvg,
+                  text: "Eink mode",
+                  value: settings.einkMode,
+                  onChanged: settings.setEinkMode,
+                );
+              }),
               SettingPageButton(
                 text: "Sign out",
                 onTap: () async {
