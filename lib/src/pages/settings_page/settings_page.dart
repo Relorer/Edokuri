@@ -1,12 +1,16 @@
+// 🎯 Dart imports:
+
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
+import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
@@ -14,6 +18,9 @@ import 'package:edokuri/src/core/widgets/section_headers/section_header_text.dar
 import 'package:edokuri/src/pages/settings_page/settings_page_general_block.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_learning_block.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_profile.dart';
+import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_button.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_switch.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
@@ -51,7 +58,7 @@ class SettingsPageState extends State<SettingsPage> {
                 icon: SvgPicture.asset(
                   exitSvg,
                   colorFilter:
-                      const ColorFilter.mode(paleElement, BlendMode.srcIn),
+                      const ColorFilter.mode(lightGray, BlendMode.srcIn),
                 ),
                 onPressed: () async {
                   await getIt<PocketbaseController>().logout();
