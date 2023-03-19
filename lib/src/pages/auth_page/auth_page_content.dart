@@ -6,6 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
+import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:edokuri/src/core/widgets/circular_progress_indicator_pale.dart';
@@ -26,7 +27,9 @@ class AuthPageContent extends StatelessWidget {
       color: Theme.of(context).secondBackgroundColor,
       child: Stack(
         children: [
-          const AuthPageBlurTextBg(),
+          getIt<SettingsController>().einkMode
+              ? const SizedBox()
+              : const AuthPageBlurTextBg(),
           Observer(builder: (context) {
             final pocketbase = getIt<PocketbaseController>();
 

@@ -36,7 +36,7 @@ class StudyingCard extends StatelessWidget {
                 child: SvgPicture.asset(
                   svg,
                   colorFilter:
-                      const ColorFilter.mode(savedWord, BlendMode.srcIn),
+                      const ColorFilter.mode(darkOrange, BlendMode.srcIn),
                 ),
               ),
               const SizedBox(

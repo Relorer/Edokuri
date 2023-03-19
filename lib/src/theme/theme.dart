@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import 'theme_consts.dart';
 
-ThemeData basicTheme() => ThemeData(
-    brightness: Brightness.light,
+ThemeData basicTheme(Brightness brightness) => ThemeData(
+    brightness: brightness,
     textTheme: const TextTheme(
       displayLarge: TextStyle(
           fontSize: 18,
@@ -14,16 +14,19 @@ ThemeData basicTheme() => ThemeData(
           fontWeight: FontWeight.bold),
     ),
     textSelectionTheme: const TextSelectionThemeData(
-      cursorColor: paleElement,
-      selectionColor: paleElement,
-      selectionHandleColor: paleElement,
+      cursorColor: lightGray,
+      selectionColor: lightGray,
+      selectionHandleColor: lightGray,
     ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
-        primary: darkGray, secondary: paleElement, background: white));
+        primary: darkGray,
+        secondary: lightGray,
+        background: white,
+        brightness: brightness));
 
 extension LightThemeEx on ThemeData {
   Color get secondBackgroundColor {
-    return darkGray;
+    return brightness == Brightness.light ? darkGray : white;
   }
 
   Color get brightElementColor {
@@ -31,20 +34,20 @@ extension LightThemeEx on ThemeData {
   }
 
   Color get paleElementColor {
-    return paleElement;
+    return lightGray;
   }
 
   Color get unknownWordColor {
-    return unknownWord;
+    return orange;
   }
 
   Color get savedWordColor {
-    return savedWord;
+    return darkOrange;
   }
 
   TextStyle get sectorTitleStye {
     return const TextStyle(
-        fontSize: 16, color: paleElement, fontWeight: FontWeight.bold);
+        fontSize: 16, color: lightGray, fontWeight: FontWeight.bold);
   }
 
   TextStyle get bookTitleStyle {
@@ -56,7 +59,7 @@ extension LightThemeEx on ThemeData {
   }
 
   TextStyle get graphWeekdayStyle {
-    return const TextStyle(fontSize: 12, color: paleElement);
+    return const TextStyle(fontSize: 12, color: lightGray);
   }
 
   TextStyle get cardTitleStyle {
@@ -64,7 +67,7 @@ extension LightThemeEx on ThemeData {
   }
 
   TextStyle get cardSubtitleStyle {
-    return const TextStyle(fontSize: 14, color: paleElement);
+    return const TextStyle(fontSize: 14, color: lightGray);
   }
 
   TextStyle get bookSubInfoStyle {
@@ -73,7 +76,7 @@ extension LightThemeEx on ThemeData {
 
   TextStyle get dialogTextStylePale {
     return const TextStyle(
-        fontSize: 16, color: paleElement, fontWeight: FontWeight.bold);
+        fontSize: 16, color: lightGray, fontWeight: FontWeight.bold);
   }
 
   TextStyle get dialogTextStyleBright {
@@ -83,11 +86,11 @@ extension LightThemeEx on ThemeData {
 
   TextStyle get readerHeadPanelTextStyle {
     return const TextStyle(
-        color: paleElement, fontWeight: FontWeight.w500, fontSize: 14);
+        color: lightGray, fontWeight: FontWeight.w500, fontSize: 14);
   }
 
   TextStyle get readerFooterPanelTextStyle {
-    return const TextStyle(color: paleElement, fontSize: 12);
+    return const TextStyle(color: lightGray, fontSize: 12);
   }
 
   TextStyle get readerPageTextStyle {
@@ -96,6 +99,6 @@ extension LightThemeEx on ThemeData {
   }
 
   Color get progressBarActiveColor {
-    return progressBarActive;
+    return orange;
   }
 }
