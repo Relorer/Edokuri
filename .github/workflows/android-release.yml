@@ -121,3 +121,8 @@ jobs:
           name: android-release-apk
           path:  |
             build/app/outputs/flutter-apk/app-release.apk
+      - name: Ping
+        uses: fjogeleit/http-request-action@v1.14.0
+        with:
+          url: 'https://apk.edokuri.ru/ping'
+          method: 'GET'
