@@ -48,7 +48,7 @@ class SettingsPageSwitch extends StatelessWidget {
         ),
         Switch(
           value: value,
-          activeColor: progressBarActive,
+          activeColor: orange,
           onChanged: onChanged,
         )
       ]),

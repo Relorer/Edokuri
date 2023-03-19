@@ -192,7 +192,7 @@ class StatsGraphPainter extends CustomPainter {
             right,
             reviewedWordsY2,
           ),
-          paint..color = unknownWord);
+          paint..color = orange);
 
       //newSavedWords
       canvas.drawRRect(
@@ -202,7 +202,7 @@ class StatsGraphPainter extends CustomPainter {
             right,
             newSavedWordsY2,
           ),
-          paint..color = savedWord);
+          paint..color = darkOrange);
 
       _roundColumns(canvas, left, newKnownWordsY1, right, bottom);
     }
@@ -233,7 +233,7 @@ class StatsGraphPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.4
       ..strokeCap = StrokeCap.round
-      ..color = paleElement.withOpacity(0.15);
+      ..color = lightGray.withOpacity(0.15);
 
     _drawHorizontalLine(canvas, size, 0, paint);
 

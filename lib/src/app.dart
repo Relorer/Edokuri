@@ -10,6 +10,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
+import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/pages/auth_page/auth_page.dart';
 import 'pages/home_page/home_page.dart';
@@ -48,12 +49,14 @@ class _AppState extends State<App> {
 
     return Observer(
       builder: (BuildContext context) {
-        var pocketbase = getIt<PocketbaseController>();
+        final pocketbase = getIt<PocketbaseController>();
+        final settings = getIt<SettingsController>();
         return MaterialApp(
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          theme: basicTheme(),
+          theme: basicTheme(
+              settings.einkMode ? Brightness.dark : Brightness.light),
           debugShowCheckedModeBanner: false,
           home: pocketbase.isAuthorized ? const HomePage() : const AuthPage(),
         );

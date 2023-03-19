@@ -39,7 +39,7 @@ class RecordInfoSentencesSection extends StatelessWidget {
                               width: double.maxFinite,
                               child: Text(element.tr,
                                   style: const TextStyle(
-                                      fontSize: 14, color: paleElement))),
+                                      fontSize: 14, color: lightGray))),
                           SizedBox(
                             height: sentences.indexOf(element) ==
                                     sentences.length - 1
