@@ -109,7 +109,7 @@ class StepSerializer implements JsonConverter<RecordStep, String> {
     }
     if (step == "thirdStep") {
       return ThirdStep();
-    } 
+    }
     return FoursStep();
   }
 
