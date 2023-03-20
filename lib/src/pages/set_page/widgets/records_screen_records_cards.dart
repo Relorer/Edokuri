@@ -9,8 +9,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
-import 'package:edokuri/src/controllers/stores/set_controller/set_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 

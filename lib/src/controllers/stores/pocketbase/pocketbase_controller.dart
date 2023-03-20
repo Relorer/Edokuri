@@ -9,6 +9,7 @@ import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:uuid/uuid.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/cache_controller/cache_controller.dart';
@@ -78,7 +79,20 @@ abstract class PocketbaseControllerBase with Store {
   }
 
   @action
-  Future skipAuth() async {}
+  Future skipAuth() async {
+    try {
+      final username = const Uuid().v4().replaceAll('-', '');
+      final pass = const Uuid().v4();
+      await client.collection('users').create(body: {
+        "username": username,
+        "password": pass,
+        "passwordConfirm": pass,
+      });
+      await client.collection('users').authWithPassword(username, pass);
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
 
   @action
   Future logout() async {
