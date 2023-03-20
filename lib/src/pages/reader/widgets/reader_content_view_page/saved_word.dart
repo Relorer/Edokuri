@@ -11,17 +11,25 @@ import 'package:edokuri/src/theme/theme.dart';
 
 class SavedWord extends StatelessWidget {
   final Piece word;
-  final int reviewNumber;
+  final int reviewInterval;
   final GestureTapCallback? onTap;
   const SavedWord(
-      {super.key, required this.word, required this.reviewNumber, this.onTap});
+      {super.key,
+      required this.word,
+      required this.reviewInterval,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return BaseWord(
-      color: Theme.of(context)
-          .savedWordColor
-          .withOpacity(0.4 * ((7 - min(reviewNumber, 7)) / 7)),
+      color: Theme.of(context).savedWordColor.withOpacity(0.4 *
+          ((365 * 24 * 60 * 60 * 1000 -
+                  min(reviewInterval, 365 * 24 * 60 * 60 * 1000)) /
+              365 *
+              24 *
+              60 *
+              60 *
+              1000)), // .withOpacity(0.4 * ((7 - min(reviewNumber, 7)) / 7)),
       word: word,
       onTap: onTap,
     );

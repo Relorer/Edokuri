@@ -71,6 +71,7 @@ class TranslatorController {
         meanings: meanings,
         examples: examples,
         translations: translations,
+        recordStep: FirstStep(),
         lastReview: DateTime.utc(0));
   }
 
