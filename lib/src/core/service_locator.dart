@@ -11,6 +11,7 @@ import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_cont
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator_controller_factory.dart';
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
+import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_factory.dart';
@@ -26,6 +27,9 @@ Future<void> setupLocator() async {
   getIt.registerFactory(() => TTSController());
   getIt.registerFactory(() => ToastController());
   getIt.registerFactory(() => SnackbarController());
+  getIt.registerFactoryParam<LearnController, List<Record>, void>(
+      (records, _) => LearnController(
+          getIt<RecordRepository>(), getIt<SettingsController>(), records));
 
   getIt.registerSingleton(MLController());
 
