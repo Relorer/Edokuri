@@ -136,7 +136,15 @@ class LearnPageState extends State<LearnPage> {
             Observer(builder: (_) {
               return learnController.answerIsShown
                   ? LearnPageAnswerButtonsMenu(
-                      learnController: learnController,
+                      changeIsShown: () {
+                        setState(() {
+                          learnController.answerIsShown = false;
+                        });
+                      },
+                      markRecordEasy: learnController.markRecordEasy,
+                      markRecordGood: learnController.markRecordGood,
+                      markRecordHard: learnController.markRecordHard,
+                      markRecordAgain: learnController.markRecordAgain,
                     )
                   : LearnPageShowAnswerButton(onTap: () {
                       setState(() {

@@ -6,6 +6,7 @@ import 'package:edokuri/src/controllers/common/settings_controller/settings_cont
 import 'package:edokuri/src/controllers/stores/learn_controller/review_intervals.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/models/entities/record.dart';
+import 'package:edokuri/src/models/recordState/recordState.dart';
 
 part 'learn_controller.g.dart';
 
@@ -22,14 +23,14 @@ abstract class LearnControllerBase with Store {
   LearnControllerBase(
       this._recordRepository, this._settingsController, this._records) {
     updateRecords();
-    putRecordsIntoGroups();
+    sortRecordsIntoGroups();
   }
 
   @observable
   bool answerIsShown = false;
 
   @observable
-  late Record? currentRecord;
+  late Record? currentRecord = null;
 
   @action
   void markRecordEasy() {
@@ -81,31 +82,37 @@ abstract class LearnControllerBase with Store {
     if (record.recordState == RecordState.recent) {
       recent.remove(record);
     }
-    if (record.recordState == RecordState.studied) {
+    else if (record.recordState == RecordState.studied) {
       studied.remove(record);
     }
-    repeatable.remove(record);
+    else {
+      repeatable.remove(record);
+    }
   }
 
   void putRecordIntoGroup(Record record) {
     if (record.recordState == RecordState.recent) {
       recent.add(record);
     }
-    if (record.recordState == RecordState.studied) {
+    else if (record.recordState == RecordState.studied) {
       studied.add(record);
     }
-    repeatable.add(record);
+    else {
+      repeatable.add(record);
+    }
   }
 
-  void putRecordsIntoGroups() {
+  void sortRecordsIntoGroups() {
     for (var element in _records) {
       if (element.recordState == RecordState.recent) {
         recent.add(element);
       }
-      if (element.recordState == RecordState.studied) {
+      else if (element.recordState == RecordState.studied) {
         studied.add(element);
       }
-      repeatable.add(element);
+      else {
+        repeatable.add(element);
+      }
     }
   }
 }

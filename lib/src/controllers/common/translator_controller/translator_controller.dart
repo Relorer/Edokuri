@@ -8,6 +8,7 @@ import 'package:edokuri/src/controllers/common/translator_controller/services/ms
 import 'package:edokuri/src/controllers/common/translator_controller/services/yandex_dictionary_service.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/models/recordStep/firstStep.dart';
 
 const maxPhraseLength = 30;
 
