@@ -39,5 +39,5 @@ bool timeForReviewHasCome(Record record) {
   return DateTime.now().millisecondsSinceEpoch -
           record.reviewInterval -
           record.lastReview.millisecondsSinceEpoch >
-      -20 * 60 * 1000; // 20 min
+      0;
 }

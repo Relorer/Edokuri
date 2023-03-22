@@ -15,7 +15,6 @@ abstract class LearnControllerBase with Store {
   final RecordRepository _recordRepository;
   final SettingsController _settingsController;
   final List<Record> _records;
-  bool answerIsShown = false;
   late List<Record> recent = <Record>[];
   late List<Record> studied = <Record>[];
   late List<Record> repeatable = <Record>[];
@@ -27,12 +26,15 @@ abstract class LearnControllerBase with Store {
   }
 
   @observable
-  late Record? currentRecord = null;
+  bool answerIsShown = false;
+
+  @observable
+  late Record? currentRecord;
 
   @action
   void markRecordEasy() {
     deleteRecordFromGroup(currentRecord!);
-    currentRecord!.getMarkEasy();
+    currentRecord!.markWordEasy();
     putRecordIntoGroup(currentRecord!);
     _recordRepository.putRecord(currentRecord!);
     updateRecords();
@@ -41,7 +43,7 @@ abstract class LearnControllerBase with Store {
   @action
   void markRecordGood() {
     deleteRecordFromGroup(currentRecord!);
-    currentRecord!.getMarkGood();
+    currentRecord!.markWordGood();
     putRecordIntoGroup(currentRecord!);
     _recordRepository.putRecord(currentRecord!);
     updateRecords();
@@ -50,7 +52,7 @@ abstract class LearnControllerBase with Store {
   @action
   void markRecordHard() {
     deleteRecordFromGroup(currentRecord!);
-    currentRecord!.getMarkHard();
+    currentRecord!.markWordHard();
     putRecordIntoGroup(currentRecord!);
     _recordRepository.putRecord(currentRecord!);
     updateRecords();
@@ -59,7 +61,7 @@ abstract class LearnControllerBase with Store {
   @action
   void markRecordAgain() {
     deleteRecordFromGroup(currentRecord!);
-    currentRecord!.getMarkAgain();
+    currentRecord!.markWordAgain();
     putRecordIntoGroup(currentRecord!);
     _recordRepository.putRecord(currentRecord!);
     updateRecords();
@@ -75,35 +77,35 @@ abstract class LearnControllerBase with Store {
     }
   }
 
-  void deleteRecordFromGroup(Record record){
-    if (record.recordState == RecordState.recent){
+  void deleteRecordFromGroup(Record record) {
+    if (record.recordState == RecordState.recent) {
       recent.remove(record);
     }
-    if (record.recordState == RecordState.studied){
+    if (record.recordState == RecordState.studied) {
       studied.remove(record);
     }
     repeatable.remove(record);
   }
 
-  void putRecordIntoGroup(Record record){
-    if (record.recordState == RecordState.recent){
+  void putRecordIntoGroup(Record record) {
+    if (record.recordState == RecordState.recent) {
       recent.add(record);
     }
-    if (record.recordState == RecordState.studied){
+    if (record.recordState == RecordState.studied) {
       studied.add(record);
     }
     repeatable.add(record);
   }
 
-  void putRecordsIntoGroups(){
-    _records.forEach((element) {
-      if (element.recordState == RecordState.recent){
+  void putRecordsIntoGroups() {
+    for (var element in _records) {
+      if (element.recordState == RecordState.recent) {
         recent.add(element);
       }
-      if (element.recordState == RecordState.studied){
+      if (element.recordState == RecordState.studied) {
         studied.add(element);
       }
       repeatable.add(element);
-    });
+    }
   }
 }

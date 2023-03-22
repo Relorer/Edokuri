@@ -19,10 +19,8 @@ class SavedWord extends StatelessWidget {
       required this.reviewInterval,
       this.onTap});
 
-  double getOpacity(int interval){
-    if (reviewInterval != 0){
-      
-    }
+  double getOpacity(int interval) {
+    if (reviewInterval != 0) {}
     int year = 65 * 24 * 60 * 60 * 1000;
     int yearDifference = year - min(reviewInterval, year);
     double devidedDifference = yearDifference / year;
@@ -33,7 +31,8 @@ class SavedWord extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseWord(
-      color: Theme.of(context).savedWordColor.withOpacity(getOpacity(reviewInterval)), // .withOpacity(0.4 * ((7 - min(reviewNumber, 7)) / 7)),
+      color: Theme.of(context).savedWordColor.withOpacity(getOpacity(
+          reviewInterval)), // .withOpacity(0.4 * ((7 - min(reviewNumber, 7)) / 7)),
       word: word,
       onTap: onTap,
     );

@@ -60,7 +60,7 @@ class LearnPageState extends State<LearnPage> {
         showTranslation: learnController.answerIsShown,
       ));
     }
-    
+
     if (learnController.answerIsShown && record.synonyms.isNotEmpty) {
       sections.add(RecordInfoSynonymsSection(synonyms: record.synonyms));
     }
@@ -113,12 +113,7 @@ class LearnPageState extends State<LearnPage> {
                 reviewedRecords: learnController.repeatable.length,
                 studiedRecords: learnController.studied.length,
               );
-              // return LearnPageHeader(
-              //   newRecords: 12,
-              //   reviewedRecords: 12,
-              //   studiedRecords: 12,
-              // );
-              }),
+            }),
             Expanded(
               child: BouncingCustomScrollView(slivers: [
                 SliverSingleChild(Column(

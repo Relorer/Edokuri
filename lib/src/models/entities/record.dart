@@ -56,23 +56,23 @@ class Record {
     this.userId = "",
   });
 
-  void getMarkEasy() {
-    recordStep.getEasy(this);
+  void markWordEasy() {
+    recordStep.markWordEasy(this);
     reviewNumber++;
   }
 
-  void getMarkGood() {
-    recordStep.getGood(this);
+  void markWordGood() {
+    recordStep.markWordGood(this);
     reviewNumber++;
   }
 
-  void getMarkHard() {
-    recordStep.getHard(this);
+  void markWordHard() {
+    recordStep.markWordHard(this);
     reviewNumber++;
   }
 
-  void getMarkAgain() {
-    recordStep.getAgain(this);
+  void markWordAgain() {
+    recordStep.markWordAgain(this);
     reviewNumber++;
   }
 
@@ -155,22 +155,22 @@ class StateSerializer implements JsonConverter<RecordState, String> {
 }
 
 abstract class RecordStep {
-  void getEasy(Record record);
-  void getGood(Record record);
-  void getHard(Record record);
-  void getAgain(Record record);
+  void markWordEasy(Record record);
+  void markWordGood(Record record);
+  void markWordHard(Record record);
+  void markWordAgain(Record record);
 }
 
 class FirstStep extends RecordStep {
   @override
-  void getAgain(Record record) {
+  void markWordAgain(Record record) {
     record.reviewInterval = getNextReviewTime(0);
     record.recordState = RecordState.studied;
     record.lastReview = DateTime.now();
   }
 
   @override
-  void getEasy(Record record) {
+  void markWordEasy(Record record) {
     record.reviewInterval = getNextReviewTime(6);
     record.recordState = RecordState.repeatable;
     record.lastReview = DateTime.now();
@@ -178,7 +178,7 @@ class FirstStep extends RecordStep {
   }
 
   @override
-  void getGood(Record record) {
+  void markWordGood(Record record) {
     record.reviewInterval = getNextReviewTime(2);
     record.recordState = RecordState.studied;
     record.lastReview = DateTime.now();
@@ -186,7 +186,7 @@ class FirstStep extends RecordStep {
   }
 
   @override
-  void getHard(Record record) {
+  void markWordHard(Record record) {
     record.reviewInterval = getNextReviewTime(1);
     record.recordState = RecordState.studied;
     record.lastReview = DateTime.now();
@@ -195,14 +195,14 @@ class FirstStep extends RecordStep {
 
 class SecondStep extends RecordStep {
   @override
-  void getAgain(Record record) {
+  void markWordAgain(Record record) {
     record.reviewInterval = getNextReviewTime(0);
     record.lastReview = DateTime.now();
     record.recordStep = FirstStep();
   }
 
   @override
-  void getEasy(Record record) {
+  void markWordEasy(Record record) {
     record.reviewInterval = getNextReviewTime(6);
     record.recordState = RecordState.repeatable;
     record.lastReview = DateTime.now();
@@ -210,14 +210,14 @@ class SecondStep extends RecordStep {
   }
 
   @override
-  void getGood(Record record) {
+  void markWordGood(Record record) {
     record.reviewInterval = getNextReviewTime(3);
     record.lastReview = DateTime.now();
     record.recordStep = ThirdStep();
   }
 
   @override
-  void getHard(Record record) {
+  void markWordHard(Record record) {
     record.reviewInterval = getNextReviewTime(2);
     record.lastReview = DateTime.now();
     record.recordStep = FirstStep();
@@ -226,14 +226,14 @@ class SecondStep extends RecordStep {
 
 class ThirdStep extends RecordStep {
   @override
-  void getAgain(Record record) {
+  void markWordAgain(Record record) {
     record.reviewInterval = getNextReviewTime(2);
     record.lastReview = DateTime.now();
     record.recordStep = FirstStep();
   }
 
   @override
-  void getEasy(Record record) {
+  void markWordEasy(Record record) {
     record.reviewInterval = getNextReviewTime(6);
     record.recordState = RecordState.repeatable;
     record.lastReview = DateTime.now();
@@ -241,7 +241,7 @@ class ThirdStep extends RecordStep {
   }
 
   @override
-  void getGood(Record record) {
+  void markWordGood(Record record) {
     record.reviewInterval = getNextReviewTime(5);
     record.recordState = RecordState.repeatable;
     record.lastReview = DateTime.now();
@@ -249,7 +249,7 @@ class ThirdStep extends RecordStep {
   }
 
   @override
-  void getHard(Record record) {
+  void markWordHard(Record record) {
     record.reviewInterval = getNextReviewTime(4);
     record.lastReview = DateTime.now();
     record.recordStep = FirstStep();
@@ -258,7 +258,7 @@ class ThirdStep extends RecordStep {
 
 class FoursStep extends RecordStep {
   @override
-  void getAgain(Record record) {
+  void markWordAgain(Record record) {
     record.reviewInterval = getNextReviewTime(2);
     record.recordState = RecordState.studied;
     record.lastReview = DateTime.now();
@@ -266,7 +266,7 @@ class FoursStep extends RecordStep {
   }
 
   @override
-  void getEasy(Record record) {
+  void markWordEasy(Record record) {
     record.reviewInterval = (record.reviewInterval *
         getIntervalMultiplier(2) *
         getIntervalMultiplier(1)) as int;
@@ -275,7 +275,7 @@ class FoursStep extends RecordStep {
   }
 
   @override
-  void getGood(Record record) {
+  void markWordGood(Record record) {
     record.reviewInterval =
         (record.reviewInterval * getIntervalMultiplier(2)) as int;
     record.reviewInterval = roundDays(record.reviewInterval);
@@ -283,7 +283,7 @@ class FoursStep extends RecordStep {
   }
 
   @override
-  void getHard(Record record) {
+  void markWordHard(Record record) {
     record.reviewInterval =
         (record.reviewInterval * getIntervalMultiplier(0)) as int;
     record.reviewInterval = roundDays(record.reviewInterval);
