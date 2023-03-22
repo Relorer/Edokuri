@@ -77,9 +77,7 @@ class Record {
   }
 
   static int compareTo(Record a, Record b) {
-    if (a.reviewInterval > b.reviewInterval) return 1;
-    if (a.reviewInterval < b.reviewInterval) return -1;
-    return 0;
+    return a.reviewInterval - b.reviewInterval;
   }
 
   factory Record.fromRecord(RecordModel record) =>
