@@ -90,6 +90,33 @@ abstract class BookRepositoryBase with Store {
     return book;
   }
 
+  void updateBookCover(Book book) async {
+    try {
+      final chapters = encodeFile(book.chapters);
+      final words = encodeFile(book.words);
+      final files = [
+        http.MultipartFile.fromBytes(
+          'chapters',
+          chapters,
+          filename: 'chapters',
+        ),
+        http.MultipartFile.fromBytes(
+          'words',
+          words,
+          filename: 'words',
+        ),
+        http.MultipartFile.fromBytes(
+          'cover',
+          book.cover!,
+          filename: 'cover',
+        )
+      ];
+      await pb.client.collection(_book).update(book.id, files: files);
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
   void putBook(Book book) async {
     try {
       final body = book.toJson()..["user"] = pb.user?.id;
