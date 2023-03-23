@@ -35,7 +35,7 @@ class BookCardDialog extends StatelessWidget {
       ),
       ButtonWithIcon(
           text: LocaleKeys.addCustomCover.tr(),
-          svg: editSvg,
+          svg: changeCoverSvg,
           onTap: addCustomCover),
       ButtonWithIcon(
         text: LocaleKeys.delete.tr(),
