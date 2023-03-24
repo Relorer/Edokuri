@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -16,6 +18,7 @@ import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_
 import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_dialog.dart';
 import 'package:edokuri/src/pages/reader/reader_page.dart';
 import 'package:edokuri/src/pages/set_page/set_page.dart';
+import 'package:image_picker/image_picker.dart';
 
 class BookCard extends StatelessWidget {
   final Book book;
@@ -50,6 +53,16 @@ class BookCard extends StatelessWidget {
     );
   }
 
+  void _addCustomCover(BuildContext context) async {
+    Navigator.pop(context);
+    final imagePicker = ImagePicker();
+    final file = await imagePicker.pickImage(source: ImageSource.gallery);
+    final Uint8List bytes = await file!.readAsBytes();
+    book.cover = bytes;
+    await getIt<BookRepository>().updateBookCover(book);
+    getIt<ToastController>().showDefaultTost("Cover is changed");
+  }
+
   void _longPressHandler(BuildContext context) {
     showModalBottomSheet<void>(
       barrierColor: Colors.black26,
@@ -59,6 +72,7 @@ class BookCard extends StatelessWidget {
         openBook: () => _openBook(context),
         removeBook: () => _removeBook(context),
         openBookSet: () => _openBookSet(context),
+        addCustomCover: () => _addCustomCover(context),
       ),
     );
   }

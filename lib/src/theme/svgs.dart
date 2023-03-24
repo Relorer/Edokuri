@@ -21,6 +21,7 @@ const googleLogoSvg = "assets/icons/google_logo.svg";
 const addRecordSvg = "assets/icons/add_record.svg";
 const translateSvg = "assets/icons/translate.svg";
 const backArrowSvg = "assets/icons/back_arrow.svg";
+const changeCoverSvg = "assets/icons/change_cover.svg";
 
 const translatedByGoogleSvg = "assets/images/translated_by_google.svg";
 const waveSvg = "assets/images/wave.svg";

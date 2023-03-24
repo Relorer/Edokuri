@@ -11,9 +11,14 @@ class BookCardDialog extends StatelessWidget {
   final VoidCallback? openBook;
   final VoidCallback? openBookSet;
   final VoidCallback? removeBook;
+  final VoidCallback? addCustomCover;
 
   const BookCardDialog(
-      {super.key, this.openBook, this.removeBook, this.openBookSet});
+      {super.key,
+      this.openBook,
+      this.removeBook,
+      this.openBookSet,
+      this.addCustomCover});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +33,10 @@ class BookCardDialog extends StatelessWidget {
         svg: goToSetSvg,
         onTap: openBookSet,
       ),
+      ButtonWithIcon(
+          text: LocaleKeys.addCustomCover.tr(),
+          svg: changeCoverSvg,
+          onTap: addCustomCover),
       ButtonWithIcon(
         text: LocaleKeys.delete.tr(),
         svg: deleteSvg,
