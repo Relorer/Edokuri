@@ -59,7 +59,7 @@ class BookCard extends StatelessWidget {
     final file = await imagePicker.pickImage(source: ImageSource.gallery);
     final Uint8List bytes = await file!.readAsBytes();
     book.cover = bytes;
-    getIt<BookRepository>().updateBookCover(book);
+    await getIt<BookRepository>().updateBookCover(book);
     getIt<ToastController>().showDefaultTost("Cover is changed");
   }
 

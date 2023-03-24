@@ -90,21 +90,9 @@ abstract class BookRepositoryBase with Store {
     return book;
   }
 
-  void updateBookCover(Book book) async {
+  Future<void> updateBookCover(Book book) async {
     try {
-      final chapters = encodeFile(book.chapters);
-      final words = encodeFile(book.words);
       final files = [
-        http.MultipartFile.fromBytes(
-          'chapters',
-          chapters,
-          filename: 'chapters',
-        ),
-        http.MultipartFile.fromBytes(
-          'words',
-          words,
-          filename: 'words',
-        ),
         http.MultipartFile.fromBytes(
           'cover',
           book.cover!,
