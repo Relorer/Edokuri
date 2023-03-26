@@ -57,6 +57,7 @@ abstract class LearnControllerBase with Store {
   }
 
   void markRecord(Record record) {
+    answerIsShown = false;
     deleteRecordFromGroup(currentRecord!);
     putRecordIntoGroup(currentRecord!);
     _recordRepository.putRecord(currentRecord!);
