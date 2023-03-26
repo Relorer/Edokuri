@@ -18,11 +18,17 @@ const _setRecords = "setRecords";
 abstract class SetRecordsRepositoryBase with Store {
   final PocketbaseController pb;
 
+  @observable
+  bool isLoading = false;
+
+  @observable
   ObservableList<SetRecords> sets = ObservableList<SetRecords>.of([]);
 
   SetRecordsRepositoryBase(this.pb) {
+    isLoading = true;
     pb.client.collection(_setRecords).getFullList().then((value) {
       sets.addAll(value.map((e) => SetRecords.fromRecord(e)));
+      isLoading = false;
       pb.client.collection(_setRecords).subscribe("*", (e) {
         try {
           if (e.record == null) return;
