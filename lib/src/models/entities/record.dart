@@ -60,26 +60,6 @@ class Record {
     this.userId = "",
   });
 
-  void markWordEasy() {
-    recordStep.markWordEasy(this);
-    reviewNumber++;
-  }
-
-  void markWordGood() {
-    recordStep.markWordGood(this);
-    reviewNumber++;
-  }
-
-  void markWordHard() {
-    recordStep.markWordHard(this);
-    reviewNumber++;
-  }
-
-  void markWordAgain() {
-    recordStep.markWordAgain(this);
-    reviewNumber++;
-  }
-
   static int compareTo(Record a, Record b) {
     return a.reviewInterval - b.reviewInterval;
   }

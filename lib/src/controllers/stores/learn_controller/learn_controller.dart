@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/settings_controller/settings_controller.dart';
+import 'package:edokuri/src/controllers/stores/learn_controller/words_markers.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/models/entities/record.dart';
 import 'package:edokuri/src/models/recordState/recordState.dart';
@@ -33,29 +34,29 @@ abstract class LearnControllerBase with Store {
 
   @action
   void markRecordEasy() {
-    currentRecord!.markWordEasy();
+    markWordEasy(currentRecord!);
     markRecord(currentRecord!);
   }
 
   @action
   void markRecordGood() {
-    currentRecord!.markWordGood();
+    markWordGood(currentRecord!);
     markRecord(currentRecord!);
   }
 
   @action
   void markRecordHard() {
-    currentRecord!.markWordHard();
+    markWordHard(currentRecord!);
     markRecord(currentRecord!);
   }
 
   @action
   void markRecordAgain() {
-    currentRecord!.markWordAgain();
+    markWordAgain(currentRecord!);
     markRecord(currentRecord!);
   }
 
-  void markRecord(Record record){
+  void markRecord(Record record) {
     deleteRecordFromGroup(currentRecord!);
     putRecordIntoGroup(currentRecord!);
     _recordRepository.putRecord(currentRecord!);
@@ -74,30 +75,28 @@ abstract class LearnControllerBase with Store {
 
   void deleteRecordFromGroup(Record record) {
     int index = findIndexById(recent, record.id);
-    if (index != -1){
+    if (index != -1) {
       recent.removeAt(index);
       return;
     }
     index = findIndexById(studied, record.id);
-    if (index != -1){
+    if (index != -1) {
       studied.removeAt(index);
       return;
-    } 
+    }
     index = findIndexById(repeatable, record.id);
-    if (index != -1){
+    if (index != -1) {
       repeatable.removeAt(index);
       return;
-    } 
+    }
   }
 
   void putRecordIntoGroup(Record record) {
     if (record.recordState == RecordState.recent) {
       recent.add(record);
-    }
-    else if (record.recordState == RecordState.studied) {
+    } else if (record.recordState == RecordState.studied) {
       studied.add(record);
-    }
-    else {
+    } else {
       repeatable.add(record);
     }
   }
@@ -106,19 +105,17 @@ abstract class LearnControllerBase with Store {
     for (var element in _records) {
       if (element.recordState == RecordState.recent) {
         recent.add(element);
-      }
-      else if (element.recordState == RecordState.studied) {
+      } else if (element.recordState == RecordState.studied) {
         studied.add(element);
-      }
-      else {
+      } else {
         repeatable.add(element);
       }
     }
   }
 
-  int findIndexById(List<Record> records, String id){
-    for (int i = 0; i < records.length; i++){
-      if (records[i].id == id){
+  int findIndexById(List<Record> records, String id) {
+    for (int i = 0; i < records.length; i++) {
+      if (records[i].id == id) {
         return i;
       }
     }

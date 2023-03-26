@@ -20,10 +20,12 @@ class StateSerializer implements JsonConverter<RecordState, String> {
 
   @override
   String toJson(RecordState state) {
-    if (getRecordStateString(state) == getRecordStateString(RecordState.studied)) {
+    if (getRecordStateString(state) ==
+        getRecordStateString(RecordState.studied)) {
       return getRecordStateString(RecordState.studied);
     }
-    if (getRecordStateString(state) == getRecordStateString(RecordState.repeatable)) {
+    if (getRecordStateString(state) ==
+        getRecordStateString(RecordState.repeatable)) {
       return getRecordStateString(RecordState.repeatable);
     }
     return getRecordStateString(RecordState.recent);
