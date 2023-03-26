@@ -91,3 +91,10 @@ class Record {
 
   Map<String, dynamic> toJson() => _$RecordToJson(this);
 }
+
+bool timeForReviewHasCome(Record record) {
+  return DateTime.now().millisecondsSinceEpoch -
+          record.reviewInterval -
+          record.lastReview.millisecondsSinceEpoch >
+      0;
+}

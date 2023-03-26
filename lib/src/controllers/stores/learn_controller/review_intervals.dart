@@ -21,10 +21,3 @@ int getNextReviewTime(int reviewNumber) {
       return reviewNumber;
   }
 }
-
-bool timeForReviewHasCome(Record record) {
-  return DateTime.now().millisecondsSinceEpoch -
-          record.reviewInterval -
-          record.lastReview.millisecondsSinceEpoch >
-      0;
-}
