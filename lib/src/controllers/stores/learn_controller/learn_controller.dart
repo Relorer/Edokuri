@@ -34,35 +34,30 @@ abstract class LearnControllerBase with Store {
 
   @action
   void markRecordEasy() {
-    deleteRecordFromGroup(currentRecord!);
     currentRecord!.markWordEasy();
-    putRecordIntoGroup(currentRecord!);
-    _recordRepository.putRecord(currentRecord!);
-    updateRecords();
+    markRecord(currentRecord!);
   }
 
   @action
   void markRecordGood() {
-    deleteRecordFromGroup(currentRecord!);
     currentRecord!.markWordGood();
-    putRecordIntoGroup(currentRecord!);
-    _recordRepository.putRecord(currentRecord!);
-    updateRecords();
+    markRecord(currentRecord!);
   }
 
   @action
   void markRecordHard() {
-    deleteRecordFromGroup(currentRecord!);
     currentRecord!.markWordHard();
-    putRecordIntoGroup(currentRecord!);
-    _recordRepository.putRecord(currentRecord!);
-    updateRecords();
+    markRecord(currentRecord!);
   }
 
   @action
   void markRecordAgain() {
-    deleteRecordFromGroup(currentRecord!);
     currentRecord!.markWordAgain();
+    markRecord(currentRecord!);
+  }
+
+  void markRecord(Record record){
+    deleteRecordFromGroup(currentRecord!);
     putRecordIntoGroup(currentRecord!);
     _recordRepository.putRecord(currentRecord!);
     updateRecords();
@@ -79,15 +74,21 @@ abstract class LearnControllerBase with Store {
   }
 
   void deleteRecordFromGroup(Record record) {
-    if (record.recordState == RecordState.recent) {
-      recent.remove(record);
+    int index = findIndexById(recent, record.id);
+    if (index != -1){
+      recent.removeAt(index);
+      return;
     }
-    else if (record.recordState == RecordState.studied) {
-      studied.remove(record);
-    }
-    else {
-      repeatable.remove(record);
-    }
+    index = findIndexById(studied, record.id);
+    if (index != -1){
+      studied.removeAt(index);
+      return;
+    } 
+    index = findIndexById(repeatable, record.id);
+    if (index != -1){
+      repeatable.removeAt(index);
+      return;
+    } 
   }
 
   void putRecordIntoGroup(Record record) {
@@ -114,5 +115,14 @@ abstract class LearnControllerBase with Store {
         repeatable.add(element);
       }
     }
+  }
+
+  int findIndexById(List<Record> records, String id){
+    for (int i = 0; i < records.length; i++){
+      if (records[i].id == id){
+        return i;
+      }
+    }
+    return -1;
   }
 }
