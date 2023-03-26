@@ -60,10 +60,6 @@ class Record {
     this.userId = "",
   });
 
-  static int compareTo(Record a, Record b) {
-    return a.reviewInterval - b.reviewInterval;
-  }
-
   factory Record.fromRecord(RecordModel record) =>
       Record.fromJson(record.toJson());
 

@@ -64,7 +64,9 @@ abstract class LearnControllerBase with Store {
   }
 
   void updateRecords() {
-    _records.sort(Record.compareTo);
+    _records.sort((Record a, Record b) {
+      return a.reviewInterval - b.reviewInterval;
+    });
 
     if (timeForReviewHasCome(_records[0])) {
       currentRecord = _records[0];
