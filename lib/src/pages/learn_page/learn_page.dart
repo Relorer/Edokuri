@@ -41,12 +41,12 @@ class LearnPageState extends State<LearnPage> {
   late LearnController learnController =
       getIt<LearnController>(param1: widget.records);
 
-  List<Widget> _getSections(Record record) {
+  List<Widget> _getSections(Record record, bool isAnswerShown) {
     final sections = <Widget>[
       RecordInfoHeader(record.original),
     ];
 
-    if (learnController.answerIsShown) {
+    if (isAnswerShown) {
       sections.add(RecordInfoTranslationsSection(
         changeable: false,
         translations:
@@ -57,22 +57,22 @@ class LearnPageState extends State<LearnPage> {
     if (record.examples.isNotEmpty) {
       sections.add(RecordInfoExamplesSection(
         examples: record.examples,
-        showTranslation: learnController.answerIsShown,
+        showTranslation: isAnswerShown,
       ));
     }
 
-    if (learnController.answerIsShown && record.synonyms.isNotEmpty) {
+    if (isAnswerShown && record.synonyms.isNotEmpty) {
       sections.add(RecordInfoSynonymsSection(synonyms: record.synonyms));
     }
 
     if (record.sentences.isNotEmpty) {
       sections.add(RecordInfoSentencesSection(
         sentences: record.sentences,
-        showTranslation: learnController.answerIsShown,
+        showTranslation: isAnswerShown,
       ));
     }
 
-    if (learnController.answerIsShown && record.meanings.isNotEmpty) {
+    if (isAnswerShown && record.meanings.isNotEmpty) {
       sections.add(RecordInfoMeaningsSection(
         meanings: record.meanings,
       ));
@@ -125,7 +125,7 @@ class LearnPageState extends State<LearnPage> {
                           runSpacing: defaultMargin,
                           children: learnController.currentRecord == null
                               ? []
-                              : _getSections(learnController.currentRecord!),
+                              : _getSections(learnController.currentRecord!, learnController.answerIsShown),
                         );
                       }),
                     )
