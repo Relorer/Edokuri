@@ -21,7 +21,8 @@ class BouncingCustomScrollView extends StatelessWidget {
             PointerDeviceKind.touch,
             PointerDeviceKind.mouse,
           },
-          physics: const BouncingScrollPhysics()),
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics())),
       child: CustomScrollView(
         controller: controller,
         slivers: slivers,
