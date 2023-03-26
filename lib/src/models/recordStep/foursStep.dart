@@ -44,7 +44,7 @@ class FoursStep extends RecordStep {
   }
 
   int roundDays(int interval) {
-    if (interval > oneDay) // 1day < interval < 1 year
+    if (interval > oneDay)
     {
       return interval ~/ (oneDay) +
           (((interval % (oneDay)) > (oneDay / 2))
