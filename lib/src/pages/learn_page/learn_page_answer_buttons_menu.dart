@@ -1,16 +1,16 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:flutter/material.dart';
 
-// 🌎 Project imports:
-import 'package:edokuri/src/pages/learn_page/learn_page_answer_button.dart';
+// 📦 Package imports:
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
-class LearnPageAnswerButtonsMenu extends StatelessWidget {
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
+import 'package:edokuri/src/pages/learn_page/learn_page_answer_button.dart';
 
-  const LearnPageAnswerButtonsMenu(
-      {super.key});
+class LearnPageAnswerButtonsMenu extends StatelessWidget {
+  const LearnPageAnswerButtonsMenu({super.key});
 
   @override
   Widget build(BuildContext context) {

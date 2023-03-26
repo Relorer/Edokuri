@@ -2,11 +2,11 @@
 import 'dart:math';
 
 // 🐦 Flutter imports:
-import 'package:edokuri/src/models/time_intervals_consts.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/models/time_intervals_consts.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/base_word.dart';
 import 'package:edokuri/src/theme/theme.dart';
 

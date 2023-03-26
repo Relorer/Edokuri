@@ -9,7 +9,8 @@ class StateSerializer implements JsonConverter<RecordState, String> {
 
   @override
   RecordState fromJson(String state) {
-    return RecordState.values.firstWhere((e) => e.toString() == 'RecordState.' + state);
+    return RecordState.values
+        .firstWhere((e) => e.toString() == 'RecordState.' + state);
   }
 
   @override
