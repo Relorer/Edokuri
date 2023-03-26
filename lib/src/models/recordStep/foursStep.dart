@@ -44,17 +44,12 @@ class FoursStep extends RecordStep {
   }
 
   int roundDays(int interval) {
-    if (interval > 1 * 24 * 60 * 60 * 1000 &&
-        interval < 365 * 24 * 60 * 60 * 1000) // 1day < interval < 1 year
+    if (interval > oneDay) // 1day < interval < 1 year
     {
-      return interval ~/ (1 * 24 * 60 * 60 * 1000) +
-          (((interval % (1 * 24 * 60 * 60 * 1000)) > (12 * 60 * 60 * 1000))
-              ? 24 * 60 * 60 * 1000
+      return interval ~/ (oneDay) +
+          (((interval % (oneDay)) > (oneDay / 2))
+              ? oneDay
               : 0);
-    }
-    if (interval > 365 * 24 * 60 * 60 * 1000) // interval > 1 year
-    {
-      return 365 * 24 * 60 * 60 * 1000;
     }
     return interval;
   }
