@@ -3,6 +3,7 @@ start:
 	flutter run
 
 prepare:
+	flutter pub global activate git_hooks
 	flutter clean
 	flutter pub get
 	make generate

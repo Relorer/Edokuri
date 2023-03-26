@@ -97,6 +97,8 @@ dev_dependencies:
 import_sorter:
   emojis: true
   comments: true
+  ignored_files:
+    - \/bin\/*
 
 dart_pre_commit:
   outdated: false

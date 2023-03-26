@@ -1,10 +1,12 @@
-// 🐦 Flutter imports:
+// 🎯 Dart imports:
 import 'dart:typed_data';
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/generated/locale.dart';
@@ -18,7 +20,6 @@ import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_
 import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_dialog.dart';
 import 'package:edokuri/src/pages/reader/reader_page.dart';
 import 'package:edokuri/src/pages/set_page/set_page.dart';
-import 'package:image_picker/image_picker.dart';
 
 class BookCard extends StatelessWidget {
   final Book book;
