@@ -62,13 +62,16 @@ class _CardsSectionHeaderState extends State<CardsSectionHeader> {
       menuDialogChildren: [
         ButtonWithIcon(
           text: "Add new records",
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => AddRecordPage(
-                set: widget.set,
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AddRecordPage(
+                  set: widget.set,
+                ),
               ),
-            ),
-          ),
+            );
+          },
           svg: addRecordSvg,
         ),
         Padding(
