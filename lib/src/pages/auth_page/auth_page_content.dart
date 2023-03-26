@@ -31,9 +31,7 @@ class AuthPageContent extends StatelessWidget {
             final pocketbase = getIt<PocketbaseController>();
 
             if (pocketbase.isLoading) {
-              return const Center(
-                child: CircularProgressIndicatorPale(),
-              );
+              return const CircularProgressIndicatorPale();
             }
             return BouncingCustomScrollView(
               revers: true,
