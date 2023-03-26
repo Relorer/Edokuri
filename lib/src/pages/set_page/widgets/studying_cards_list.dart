@@ -37,13 +37,7 @@ class StudyingCardsList extends StatelessWidget {
                   );
                 }),
         );
-      }),
-      // StudyingCard(
-      //   title: 'Test',
-      //   subTitile: 'Take a practice test',
-      //   svg: testSvg,
-      //   onTap: setData.records.isEmpty ? null : (() {}),
-      // )
+      })
     ];
 
     return SliverList(
