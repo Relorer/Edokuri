@@ -35,31 +35,28 @@ abstract class LearnControllerBase with Store {
 
   @action
   void markRecordEasy() {
-    markWordEasy(currentRecord!);
-    markRecord(currentRecord!);
+    markRecord(currentRecord!, currentRecord!.recordStep.markWordEasy);
   }
 
   @action
   void markRecordGood() {
-    markWordGood(currentRecord!);
-    markRecord(currentRecord!);
+    markRecord(currentRecord!, currentRecord!.recordStep.markWordGood);
   }
 
   @action
   void markRecordHard() {
-    markWordHard(currentRecord!);
-    markRecord(currentRecord!);
+    markRecord(currentRecord!, currentRecord!.recordStep.markWordHard);
   }
 
   @action
   void markRecordAgain() {
-    markWordAgain(currentRecord!);
-    markRecord(currentRecord!);
+    markRecord(currentRecord!, currentRecord!.recordStep.markWordAgain);
   }
 
-  void markRecord(Record record) {
+  void markRecord(Record record, Function markRecord) {
     answerIsShown = false;
     deleteRecordFromGroup(currentRecord!);
+    markRecord(record);
     putRecordIntoGroup(currentRecord!);
     _recordRepository.putRecord(currentRecord!);
     updateRecords();
@@ -78,55 +75,30 @@ abstract class LearnControllerBase with Store {
   }
 
   void deleteRecordFromGroup(Record record) {
-    int index = findIndexById(recent, record.id);
-    if (index != -1) {
-      recent.removeAt(index);
-      return;
-    }
-    index = findIndexById(studied, record.id);
-    if (index != -1) {
-      studied.removeAt(index);
-      return;
-    }
-    index = findIndexById(repeatable, record.id);
-    if (index != -1) {
-      repeatable.removeAt(index);
-      return;
+    switch (record.recordState) {
+      case RecordState.recent:
+        recent.remove(record);
+        break;
+      case RecordState.studied:
+        studied.remove(record);
+        break;
+      case RecordState.repeatable:
+        repeatable.remove(record);
+        break;
     }
   }
 
   void putRecordIntoGroup(Record record) {
-    if (record.recordState == RecordState.recent) {
-      recent.add(record);
-    } else if (record.recordState == RecordState.studied) {
-      studied.add(record);
-    } else {
-      repeatable.add(record);
+    switch (record.recordState) {
+      case RecordState.recent:
+        recent.add(record);
+        break;
+      case RecordState.studied:
+        studied.add(record);
+        break;
+      case RecordState.repeatable:
+        repeatable.add(record);
+        break;
     }
-  }
-
-  int findIndexById(List<Record> records, String id) {
-    for (int i = 0; i < records.length; i++) {
-      if (records[i].id == id) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  void markWordEasy(Record record) {
-    record.recordStep.markWordEasy(record);
-  }
-
-  void markWordGood(Record record) {
-    record.recordStep.markWordGood(record);
-  }
-
-  void markWordHard(Record record) {
-    record.recordStep.markWordHard(record);
-  }
-
-  void markWordAgain(Record record) {
-    record.recordStep.markWordAgain(record);
   }
 }
