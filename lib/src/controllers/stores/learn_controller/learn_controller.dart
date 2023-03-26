@@ -30,7 +30,7 @@ abstract class LearnControllerBase with Store {
   bool answerIsShown = false;
 
   @observable
-  late Record? currentRecord = null;
+  Record? currentRecord;
 
   @action
   void markRecordEasy() {
