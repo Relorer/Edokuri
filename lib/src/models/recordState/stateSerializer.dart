@@ -9,25 +9,11 @@ class StateSerializer implements JsonConverter<RecordState, String> {
 
   @override
   RecordState fromJson(String state) {
-    if (state == getRecordStateString(RecordState.studied)) {
-      return RecordState.studied;
-    }
-    if (state == getRecordStateString(RecordState.repeatable)) {
-      return RecordState.repeatable;
-    }
-    return RecordState.recent;
+    return RecordState.values.firstWhere((e) => e.toString() == 'RecordState.' + state);
   }
 
   @override
   String toJson(RecordState state) {
-    if (getRecordStateString(state) ==
-        getRecordStateString(RecordState.studied)) {
-      return getRecordStateString(RecordState.studied);
-    }
-    if (getRecordStateString(state) ==
-        getRecordStateString(RecordState.repeatable)) {
-      return getRecordStateString(RecordState.repeatable);
-    }
-    return getRecordStateString(RecordState.recent);
+    return state.toString().split('.').last;
   }
 }
