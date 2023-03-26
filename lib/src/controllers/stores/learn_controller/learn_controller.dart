@@ -3,7 +3,6 @@ import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/settings_controller/settings_controller.dart';
-import 'package:edokuri/src/controllers/stores/learn_controller/words_markers.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/models/entities/record.dart';
 import 'package:edokuri/src/models/recordState/recordState.dart';
@@ -121,5 +120,25 @@ abstract class LearnControllerBase with Store {
       }
     }
     return -1;
+  }
+
+  void markWordEasy(Record record) {
+    record.recordStep.markWordEasy(record);
+    record.reviewNumber++;
+  }
+
+  void markWordGood(Record record) {
+    record.recordStep.markWordGood(record);
+    record.reviewNumber++;
+  }
+
+  void markWordHard(Record record) {
+    record.recordStep.markWordHard(record);
+    record.reviewNumber++;
+  }
+
+  void markWordAgain(Record record) {
+    record.recordStep.markWordAgain(record);
+    record.reviewNumber++;
   }
 }
