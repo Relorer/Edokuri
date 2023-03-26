@@ -1,8 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-
 // 🌎 Project imports:
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/models/models.dart';
@@ -10,6 +8,8 @@ import 'package:edokuri/src/pages/add_record_page/add_record_page.dart';
 import 'package:edokuri/src/pages/set_page/widgets/studying_card/studying_card.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
+
+// 📦 Package imports:
 
 class RecordAddButton extends StatelessWidget {
   final SetRecords? setRecords;
