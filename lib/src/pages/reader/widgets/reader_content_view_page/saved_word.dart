@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // 🐦 Flutter imports:
+import 'package:edokuri/src/models/time_intervals_consts.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -20,11 +21,9 @@ class SavedWord extends StatelessWidget {
       this.onTap});
 
   double getOpacity(int interval) {
-    if (reviewInterval != 0) {}
-    int year = 65 * 24 * 60 * 60 * 1000;
-    int yearDifference = year - min(reviewInterval, year);
-    double devidedDifference = yearDifference / year;
-    double opacity = 0.4 * devidedDifference;
+    int yearDifference = oneYear - min(reviewInterval, oneYear);
+    double dividedDifference = yearDifference / oneYear;
+    double opacity = 0.4 * dividedDifference;
     return opacity;
   }
 
