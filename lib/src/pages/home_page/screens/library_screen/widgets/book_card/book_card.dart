@@ -33,10 +33,10 @@ class BookCard extends StatelessWidget {
     );
   }
 
-  void _removeBook(BuildContext context) {
-    getIt<BookRepository>().removeBook(book);
-    getIt<ToastController>().showDefaultTost("Book is removed");
+  void _removeBook(BuildContext context) async {
     Navigator.pop(context);
+    await getIt<BookRepository>().removeBook(book);
+    getIt<ToastController>().showDefaultTost("Book is removed");
   }
 
   void _openBookSet(BuildContext context) {

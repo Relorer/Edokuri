@@ -92,6 +92,8 @@ abstract class BookRepositoryBase with Store {
 
   Future<void> updateBookCover(Book book) async {
     try {
+      final recordModel = await pb.client.collection(_book).getOne(book.id);
+      await pb.removeFile(recordModel, "cover");
       final files = [
         http.MultipartFile.fromBytes(
           'cover',
@@ -148,6 +150,10 @@ abstract class BookRepositoryBase with Store {
 
   Future removeBook(Book book) async {
     try {
+      final recordModel = await pb.client.collection(_book).getOne(book.id);
+      await pb.removeFile(recordModel, "chapters");
+      await pb.removeFile(recordModel, "words");
+      await pb.removeFile(recordModel, "cover");
       await pb.client.collection(_book).delete(book.id);
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");

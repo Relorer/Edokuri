@@ -122,7 +122,8 @@ abstract class PocketbaseControllerBase with Store {
 
   Future putFile(RecordModel record, String field, List<int> bytes) async {
     try {
-      cacheController.putFile(bytes, getFileUrl(record, field).toString());
+      await cacheController.putFile(
+          bytes, getFileUrl(record, field).toString());
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }
@@ -130,7 +131,7 @@ abstract class PocketbaseControllerBase with Store {
 
   Future removeFile(RecordModel record, String field) async {
     try {
-      cacheController.removeFile(getFileUrl(record, field).toString());
+      await cacheController.removeFile(getFileUrl(record, field).toString());
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }
