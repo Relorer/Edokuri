@@ -3,6 +3,7 @@ import 'package:edokuri/src/models/entities/record.dart';
 import 'package:edokuri/src/models/recordState/recordState.dart';
 import 'package:edokuri/src/models/recordStep/recordStep.dart';
 import 'package:edokuri/src/models/recordStep/recordStep2.dart';
+import 'package:edokuri/src/models/recordStep/recordStep4.dart';
 import 'package:edokuri/src/models/time_intervals_consts.dart';
 
 class RecordStep1 extends RecordStep {
@@ -23,12 +24,13 @@ class RecordStep1 extends RecordStep {
     record.reviewInterval = tenMinutes;
     record.recordState = RecordState.studied;
     record.recordStep = RecordStep2();
-    super.markWordGood(record);
+    record.lastReview = DateTime.now();
   }
 
   @override
   void markWordHard(Record record) {
     record.reviewInterval = sixMinutes;
-    super.markWordHard(record);
+    record.recordState = RecordState.studied;
+    record.lastReview = DateTime.now();
   }
 }
