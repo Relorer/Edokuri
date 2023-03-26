@@ -22,19 +22,6 @@ int getNextReviewTime(int reviewNumber) {
   }
 }
 
-double getIntervalMultiplier(int multiplierNumber) {
-  switch (multiplierNumber) {
-    case 0:
-      return 1.2;
-    case 1:
-      return 1.3;
-    case 2:
-      return 2.5;
-    default:
-      return multiplierNumber as double;
-  }
-}
-
 bool timeForReviewHasCome(Record record) {
   return DateTime.now().millisecondsSinceEpoch -
           record.reviewInterval -
