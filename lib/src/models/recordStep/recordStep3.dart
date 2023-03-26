@@ -24,13 +24,13 @@ class RecordStep3 extends RecordStep {
     record.reviewInterval = threeDays;
     record.recordState = RecordState.repeatable;
     record.recordStep = RecordStep4();
-    record.lastReview = DateTime.now();
+    super.markWordGood(record);
   }
 
   @override
   void markWordHard(Record record) {
     record.reviewInterval = twoDays;
-    record.lastReview = DateTime.now();
     record.recordStep = RecordStep1();
+    super.markWordHard(record);
   }
 }

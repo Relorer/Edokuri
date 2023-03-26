@@ -22,7 +22,7 @@ class RecordStep4 extends RecordStep {
         easyAnswerTimeMultiplier *
         goodAnswerTimeMultiplier) as int;
     record.reviewInterval = roundDays(record.reviewInterval);
-    record.lastReview = DateTime.now();
+    super.markWordEasy(record);
   }
 
   @override
@@ -30,7 +30,7 @@ class RecordStep4 extends RecordStep {
     record.reviewInterval =
         (record.reviewInterval * goodAnswerTimeMultiplier) as int;
     record.reviewInterval = roundDays(record.reviewInterval);
-    record.lastReview = DateTime.now();
+    super.markWordGood(record);
   }
 
   @override
@@ -38,7 +38,7 @@ class RecordStep4 extends RecordStep {
     record.reviewInterval =
         (record.reviewInterval * hardAnswerTimeMultiplier) as int;
     record.reviewInterval = roundDays(record.reviewInterval);
-    record.lastReview = DateTime.now();
+    super.markWordHard(record);
   }
 
   int roundDays(int interval) {
