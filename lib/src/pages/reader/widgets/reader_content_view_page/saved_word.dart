@@ -30,8 +30,7 @@ class SavedWord extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseWord(
-      color: Theme.of(context).savedWordColor.withOpacity(getOpacity(
-          )),
+      color: Theme.of(context).savedWordColor.withOpacity(getOpacity()),
       word: word,
       onTap: onTap,
     );

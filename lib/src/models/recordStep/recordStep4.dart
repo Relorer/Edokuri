@@ -3,7 +3,7 @@ import 'package:edokuri/src/models/entities/record.dart';
 import 'package:edokuri/src/models/recordStep/recordStep.dart';
 import 'package:edokuri/src/models/time_intervals_consts.dart';
 
-class FoursStep extends RecordStep {
+class RecordStep4 extends RecordStep {
   final double hardAnswerTimeMultiplier = 1.2;
   final double easyAnswerTimeMultiplier = 1.3;
   final double goodAnswerTimeMultiplier = 2.5;

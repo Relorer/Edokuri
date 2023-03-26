@@ -2,11 +2,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/models/recordStep/firstStep.dart';
-import 'package:edokuri/src/models/recordStep/foursStep.dart';
 import 'package:edokuri/src/models/recordStep/recordStep.dart';
-import 'package:edokuri/src/models/recordStep/secondStep.dart';
-import 'package:edokuri/src/models/recordStep/thirdStep.dart';
+import 'package:edokuri/src/models/recordStep/recordStep1.dart';
+import 'package:edokuri/src/models/recordStep/recordStep2.dart';
+import 'package:edokuri/src/models/recordStep/recordStep3.dart';
+import 'package:edokuri/src/models/recordStep/recordStep4.dart';
 
 class StepSerializer implements JsonConverter<RecordStep, String> {
   const StepSerializer();
@@ -14,26 +14,26 @@ class StepSerializer implements JsonConverter<RecordStep, String> {
   @override
   RecordStep fromJson(String step) {
     if (step == "firstStep") {
-      return FirstStep();
+      return RecordStep1();
     }
     if (step == "secondStep") {
-      return SecondStep();
+      return RecordStep2();
     }
     if (step == "thirdStep") {
-      return ThirdStep();
+      return RecordStep3();
     }
-    return FoursStep();
+    return RecordStep4();
   }
 
   @override
   String toJson(RecordStep step) {
-    if (step is FirstStep) {
+    if (step is RecordStep1) {
       return "firstStep";
     }
-    if (step is SecondStep) {
+    if (step is RecordStep2) {
       return "secondStep";
     }
-    if (step is ThirdStep) {
+    if (step is RecordStep3) {
       return "thirdStep";
     }
     return "foursStep";

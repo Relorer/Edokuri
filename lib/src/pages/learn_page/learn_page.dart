@@ -125,7 +125,8 @@ class LearnPageState extends State<LearnPage> {
                           runSpacing: defaultMargin,
                           children: learnController.currentRecord == null
                               ? []
-                              : _getSections(learnController.currentRecord!, learnController.answerIsShown),
+                              : _getSections(learnController.currentRecord!,
+                                  learnController.answerIsShown),
                         );
                       }),
                     )

@@ -8,8 +8,8 @@ import 'package:pocketbase/pocketbase.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/models/recordState/recordState.dart';
 import 'package:edokuri/src/models/recordState/stateSerializer.dart';
-import 'package:edokuri/src/models/recordStep/firstStep.dart';
 import 'package:edokuri/src/models/recordStep/recordStep.dart';
+import 'package:edokuri/src/models/recordStep/recordStep1.dart';
 import 'package:edokuri/src/models/recordStep/stepSerializer.dart';
 
 part 'record.g.dart';
@@ -33,7 +33,7 @@ class Record {
   int reviewInterval = 0;
 
   @StepSerializer()
-  RecordStep recordStep = FirstStep();
+  RecordStep recordStep = RecordStep1();
   @StateSerializer()
   RecordState recordState = RecordState.recent;
 

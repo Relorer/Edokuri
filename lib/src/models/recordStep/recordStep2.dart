@@ -1,10 +1,10 @@
 // 🌎 Project imports:
 import 'package:edokuri/src/models/entities/record.dart';
 import 'package:edokuri/src/models/recordStep/recordStep.dart';
-import 'package:edokuri/src/models/recordStep/thirdStep.dart';
+import 'package:edokuri/src/models/recordStep/recordStep3.dart';
 import 'package:edokuri/src/models/time_intervals_consts.dart';
 
-class SecondStep extends RecordStep {
+class RecordStep2 extends RecordStep {
   @override
   void markWordAgain(Record record) {
     record.reviewInterval = oneMinute;
@@ -20,7 +20,7 @@ class SecondStep extends RecordStep {
   @override
   void markWordGood(Record record) {
     record.reviewInterval = oneDay;
-    record.recordStep = ThirdStep();
+    record.recordStep = RecordStep3();
     super.markWordGood(record);
   }
 
