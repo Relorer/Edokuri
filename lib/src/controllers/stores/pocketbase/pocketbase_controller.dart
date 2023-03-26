@@ -35,6 +35,9 @@ abstract class PocketbaseControllerBase with Store {
   @observable
   bool isAuthorized = false;
 
+  @observable
+  bool isLoading = false;
+
   PocketbaseControllerBase() {
     client.authStore.onChange.listen((e) async {
       final encoded = jsonEncode(<String, dynamic>{
@@ -70,28 +73,40 @@ abstract class PocketbaseControllerBase with Store {
 
   @action
   Future googleAuth() async {
-    await _authWithProvider("google");
+    await startWithLoading(() async {
+      await _authWithProvider("google");
+    });
   }
 
   @action
   Future githubAuth() async {
-    await _authWithProvider("github");
+    await startWithLoading(() async {
+      await _authWithProvider("github");
+    });
   }
 
   @action
   Future skipAuth() async {
-    try {
-      final username = const Uuid().v4().replaceAll('-', '');
-      final pass = const Uuid().v4();
-      await client.collection('users').create(body: {
-        "username": username,
-        "password": pass,
-        "passwordConfirm": pass,
-      });
-      await client.collection('users').authWithPassword(username, pass);
-    } catch (e, stacktrace) {
-      log("${e.toString()}\n${stacktrace.toString()}");
-    }
+    await startWithLoading(() async {
+      try {
+        final username = const Uuid().v4().replaceAll('-', '');
+        final pass = const Uuid().v4();
+        await client.collection('users').create(body: {
+          "username": username,
+          "password": pass,
+          "passwordConfirm": pass,
+        });
+        await client.collection('users').authWithPassword(username, pass);
+      } catch (e, stacktrace) {
+        log("${e.toString()}\n${stacktrace.toString()}");
+      }
+    });
+  }
+
+  Future startWithLoading(Function func) async {
+    isLoading = true;
+    await func();
+    isLoading = false;
   }
 
   @action

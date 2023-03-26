@@ -1,8 +1,14 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
+import 'package:edokuri/src/core/widgets/circular_progress_indicator_pale.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/pages/auth_page/auth_page_blur_text_bg.dart';
 import 'package:edokuri/src/pages/auth_page/auth_page_login_buttons.dart';
@@ -21,19 +27,28 @@ class AuthPageContent extends StatelessWidget {
       child: Stack(
         children: [
           const AuthPageBlurTextBg(),
-          BouncingCustomScrollView(
-            revers: true,
-            slivers: [
-              SliverSingleChild(Column(
-                children: const [
-                  AuthPageLogo(),
-                  Padding(
-                      padding: EdgeInsets.all(doubleDefaultMargin * 2),
-                      child: AuthPageLoginButtons())
-                ],
-              ))
-            ],
-          )
+          Observer(builder: (context) {
+            final pocketbase = getIt<PocketbaseController>();
+
+            if (pocketbase.isLoading) {
+              return const Center(
+                child: CircularProgressIndicatorPale(),
+              );
+            }
+            return BouncingCustomScrollView(
+              revers: true,
+              slivers: [
+                SliverSingleChild(Column(
+                  children: const [
+                    AuthPageLogo(),
+                    Padding(
+                        padding: EdgeInsets.all(doubleDefaultMargin * 2),
+                        child: AuthPageLoginButtons())
+                  ],
+                ))
+              ],
+            );
+          })
         ],
       ),
     );
