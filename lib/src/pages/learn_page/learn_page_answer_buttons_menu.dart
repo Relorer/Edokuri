@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:

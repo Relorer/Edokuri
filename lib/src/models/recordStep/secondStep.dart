@@ -1,8 +1,5 @@
 // 🌎 Project imports:
 import 'package:edokuri/src/models/entities/record.dart';
-import 'package:edokuri/src/models/recordState/recordState.dart';
-import 'package:edokuri/src/models/recordStep/firstStep.dart';
-import 'package:edokuri/src/models/recordStep/foursStep.dart';
 import 'package:edokuri/src/models/recordStep/recordStep.dart';
 import 'package:edokuri/src/models/recordStep/thirdStep.dart';
 import 'package:edokuri/src/models/time_intervals_consts.dart';
