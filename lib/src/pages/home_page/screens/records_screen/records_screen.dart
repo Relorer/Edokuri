@@ -23,8 +23,9 @@ class _RecordsScreenState extends State<RecordsScreen> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
+      final recordRepository = getIt<RecordRepository>();
       return SetScreen(
-        setData: SetData(getIt<RecordRepository>().records),
+        setData: SetData(recordRepository.records),
       );
     });
   }

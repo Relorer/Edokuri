@@ -24,9 +24,13 @@ abstract class BookRepositoryBase with Store {
   final CacheController cacheController = CacheController();
 
   @observable
+  bool isLoading = false;
+
+  @observable
   ObservableList<Book> books = ObservableList<Book>.of([]);
 
   BookRepositoryBase(this.pb) {
+    isLoading = true;
     pb.client.collection(_book).getFullList().then((value) async {
       try {
         for (var record in value) {
@@ -35,6 +39,7 @@ abstract class BookRepositoryBase with Store {
       } catch (e, stacktrace) {
         log("${e.toString()}\n${stacktrace.toString()}");
       }
+      isLoading = false;
       pb.client.collection(_book).subscribe("*", (e) async {
         try {
           if (e.record == null) return;
@@ -44,7 +49,9 @@ abstract class BookRepositoryBase with Store {
             pb.removeFile(e.record!, "cover");
             books.removeWhere((element) => element.id == e.record!.id);
           } else if (e.action == "create") {
+            isLoading = true;
             books.add(await getBookFromRecord(e.record!));
+            isLoading = false;
           } else {
             final newBook = Book.fromRecord(e.record!);
             final book =

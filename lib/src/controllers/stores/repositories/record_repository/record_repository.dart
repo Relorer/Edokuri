@@ -20,12 +20,18 @@ abstract class RecordRepositoryBase with Store {
   final SetRecordsRepository setRecordsRepository;
   final KnownRecordsRepository knownRecordsRepository;
 
+  @observable
+  bool isLoading = false;
+
+  @observable
   ObservableList<Record> records = ObservableList<Record>.of([]);
 
   RecordRepositoryBase(
       this.pb, this.setRecordsRepository, this.knownRecordsRepository) {
+    isLoading = true;
     pb.client.collection(_record).getFullList().then((value) {
       records.addAll(value.map((e) => Record.fromRecord(e)));
+      isLoading = false;
       pb.client.collection(_record).subscribe("*", (e) {
         try {
           if (e.record == null) return;
