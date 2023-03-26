@@ -6,7 +6,6 @@ import "package:git_hooks/git_hooks.dart";
 // ignore: depend_on_referenced_packages
 import "package:process_run/shell_run.dart";
 
-
 final shell = Shell();
 
 void main(List<String> arguments) {
