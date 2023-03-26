@@ -22,9 +22,15 @@ abstract class LearnControllerBase with Store {
   LearnControllerBase(
       this._recordRepository, this._settingsController, this._records) {
     updateRecords();
-    recent = _records.where((element) => element.recordState == RecordState.recent).toList();
-    studied = _records.where((element) => element.recordState == RecordState.studied).toList();
-    repeatable = _records.where((element) => element.recordState == RecordState.repeatable).toList();
+    recent = _records
+        .where((element) => element.recordState == RecordState.recent)
+        .toList();
+    studied = _records
+        .where((element) => element.recordState == RecordState.studied)
+        .toList();
+    repeatable = _records
+        .where((element) => element.recordState == RecordState.repeatable)
+        .toList();
   }
 
   @observable

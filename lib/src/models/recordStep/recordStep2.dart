@@ -11,26 +11,34 @@ class RecordStep2 extends RecordStep {
   @override
   void markWordAgain(Record record) {
     record.reviewInterval = oneMinute;
-    super.markWordAgain(record);
+    record.recordState = RecordState.studied;
+    record.lastReview = DateTime.now();
+    record.recordStep = RecordStep1();
+    record.reviewNumber++;
   }
 
   @override
   void markWordEasy(Record record) {
     record.reviewInterval = fourDays;
-    super.markWordEasy(record);
+    record.recordState = RecordState.repeatable;
+    record.lastReview = DateTime.now();
+    record.recordStep = RecordStep4();
+    record.reviewNumber++;
   }
 
   @override
   void markWordGood(Record record) {
     record.reviewInterval = oneDay;
     record.recordStep = RecordStep3();
-    super.markWordGood(record);
+    record.lastReview = DateTime.now();
+    record.reviewNumber++;
   }
 
   @override
   void markWordHard(Record record) {
     record.reviewInterval = tenMinutes;
     record.recordStep = RecordStep1();
-    super.markWordHard(record);
+    record.lastReview = DateTime.now();
+    record.reviewNumber++;
   }
 }
