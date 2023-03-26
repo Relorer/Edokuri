@@ -13,9 +13,7 @@ class FoursStep extends RecordStep {
   @override
   void markWordAgain(Record record) {
     record.reviewInterval = tenMinutes;
-    record.recordState = RecordState.studied;
-    record.lastReview = DateTime.now();
-    record.recordStep = FirstStep();
+    super.markWordAgain(record);
   }
 
   @override
@@ -24,7 +22,7 @@ class FoursStep extends RecordStep {
         easyAnswerTimeMultiplier *
         goodAnswerTimeMultiplier) as int;
     record.reviewInterval = roundDays(record.reviewInterval);
-    record.lastReview = DateTime.now();
+    super.markWordEasy(record);
   }
 
   @override
@@ -32,7 +30,7 @@ class FoursStep extends RecordStep {
     record.reviewInterval =
         (record.reviewInterval * goodAnswerTimeMultiplier) as int;
     record.reviewInterval = roundDays(record.reviewInterval);
-    record.lastReview = DateTime.now();
+    super.markWordGood(record);
   }
 
   @override

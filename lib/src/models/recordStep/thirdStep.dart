@@ -10,30 +10,26 @@ class ThirdStep extends RecordStep {
   @override
   void markWordAgain(Record record) {
     record.reviewInterval = tenMinutes;
-    record.lastReview = DateTime.now();
-    record.recordStep = FirstStep();
+    super.markWordAgain(record);
   }
 
   @override
   void markWordEasy(Record record) {
     record.reviewInterval = fourDays;
-    record.recordState = RecordState.repeatable;
-    record.lastReview = DateTime.now();
-    record.recordStep = FoursStep();
+    super.markWordEasy(record);
   }
 
   @override
   void markWordGood(Record record) {
     record.reviewInterval = threeDays;
     record.recordState = RecordState.repeatable;
-    record.lastReview = DateTime.now();
     record.recordStep = FoursStep();
+    super.markWordGood(record);
   }
 
   @override
   void markWordHard(Record record) {
     record.reviewInterval = twoDays;
-    record.lastReview = DateTime.now();
-    record.recordStep = FirstStep();
+    super.markWordHard(record);
   }
 }

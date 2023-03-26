@@ -10,30 +10,26 @@ class FirstStep extends RecordStep {
   @override
   void markWordAgain(Record record) {
     record.reviewInterval = oneMinute;
-    record.recordState = RecordState.studied;
-    record.lastReview = DateTime.now();
+    super.markWordAgain(record);
   }
 
   @override
   void markWordEasy(Record record) {
     record.reviewInterval = fourDays;
-    record.recordState = RecordState.repeatable;
-    record.lastReview = DateTime.now();
-    record.recordStep = FoursStep();
+    super.markWordEasy(record);
   }
 
   @override
   void markWordGood(Record record) {
     record.reviewInterval = tenMinutes;
     record.recordState = RecordState.studied;
-    record.lastReview = DateTime.now();
     record.recordStep = SecondStep();
+    super.markWordGood(record);
   }
 
   @override
   void markWordHard(Record record) {
     record.reviewInterval = sixMinutes;
-    record.recordState = RecordState.studied;
-    record.lastReview = DateTime.now();
+    super.markWordHard(record);
   }
 }
