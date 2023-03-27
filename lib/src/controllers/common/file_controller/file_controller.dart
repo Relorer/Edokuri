@@ -15,7 +15,7 @@ class FileController {
 
   FileController(this._bookRepository, this._toastController);
 
-  Future<void> addBookFile(Uint8List file) async {
+  Future addBookFile(Uint8List file) async {
     var book = await compute(_epubService.readBook, file);
     if (book.words.isEmpty) {
       return _toastController.showDefaultTost("The book can't be empty");
@@ -27,7 +27,7 @@ class FileController {
   Future getBookFromUser() async {
     var files = await _filePickerService.getFiles(allowedExtensions: ["epub"]);
     for (var file in files) {
-      addBookFile(file);
+      await addBookFile(file);
     }
   }
 }
