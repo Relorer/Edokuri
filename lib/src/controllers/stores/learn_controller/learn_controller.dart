@@ -2,8 +2,8 @@
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/common/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
+import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/models/entities/record.dart';
 import 'package:edokuri/src/models/recordState/recordState.dart';
 
