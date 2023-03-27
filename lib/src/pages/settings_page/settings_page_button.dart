@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/theme/theme_consts.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -20,7 +21,7 @@ class SettingPageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ButtonWithIcon(
-      color: Theme.of(context).colorScheme.background,
+      color: Colors.transparent,
       highlightColor: Theme.of(context).secondBackgroundColor,
       style: Theme.of(context).dialogTextStyleBright.copyWith(
           color: Theme.of(context).secondBackgroundColor.withOpacity(0.9)),

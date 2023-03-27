@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/theme/theme_consts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,20 +23,26 @@ class SettingsPageGeneralBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverSingleChild(SettingsPageBlockContainer(
-      child: Column(
-        children: [
-          getIt<MLController>().isLoaded
-              ? const SettingPageButton(
-                  text: "Language model is loaded",
-                  svg: translateSvg,
-                )
-              : SettingPageButton(
-                  text: "Load the language model",
-                  onTap: checkStateDownloadModel,
-                  svg: translateSvg,
-                ),
-        ],
+    return SliverSingleChild(Material(
+      color: Colors.transparent,
+      child: SettingsPageBlockContainer(
+        child: Column(
+          children: [
+            SizedBox(
+              height: defaultRadius,
+            ),
+            getIt<MLController>().isLoaded && false
+                ? SizedBox()
+                : SettingPageButton(
+                    text: "Load the language model",
+                    onTap: checkStateDownloadModel,
+                    svg: translateSvg,
+                  ),
+                  SizedBox(
+              height: defaultRadius,
+            ),
+          ],
+        ),
       ),
     ));
   }
