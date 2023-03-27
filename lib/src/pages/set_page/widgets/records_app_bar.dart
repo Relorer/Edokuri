@@ -8,6 +8,8 @@ import 'package:edokuri/src/pages/set_page/widgets/records_screen_records_cards.
 import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
+// 📦 Package imports:
+
 class RecordsAppBar extends StatelessWidget {
   final double appBarHeight;
   final VoidCallback? resetScrollClick;
@@ -65,9 +67,15 @@ class RecordsAppBar extends StatelessWidget {
             child: Container(
                 height: appBarHeight,
                 color: Theme.of(context).secondBackgroundColor,
-                child: RecordsScreenRecordsCards(
-                  setData: setData,
-                )),
+                child: setData.records.isEmpty
+                    ? Center(
+                        child: Image.asset(
+                        "assets/images/logo.png",
+                        opacity: const AlwaysStoppedAnimation(.7),
+                      ))
+                    : RecordsScreenRecordsCards(
+                        setData: setData,
+                      )),
           ),
         ));
   }

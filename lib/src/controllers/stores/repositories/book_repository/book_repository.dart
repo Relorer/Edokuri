@@ -24,9 +24,13 @@ abstract class BookRepositoryBase with Store {
   final CacheController cacheController = CacheController();
 
   @observable
+  bool isLoading = false;
+
+  @observable
   ObservableList<Book> books = ObservableList<Book>.of([]);
 
   BookRepositoryBase(this.pb) {
+    isLoading = true;
     pb.client.collection(_book).getFullList().then((value) async {
       try {
         for (var record in value) {
@@ -35,6 +39,7 @@ abstract class BookRepositoryBase with Store {
       } catch (e, stacktrace) {
         log("${e.toString()}\n${stacktrace.toString()}");
       }
+      isLoading = false;
       pb.client.collection(_book).subscribe("*", (e) async {
         try {
           if (e.record == null) return;
@@ -44,7 +49,9 @@ abstract class BookRepositoryBase with Store {
             pb.removeFile(e.record!, "cover");
             books.removeWhere((element) => element.id == e.record!.id);
           } else if (e.action == "create") {
+            isLoading = true;
             books.add(await getBookFromRecord(e.record!));
+            isLoading = false;
           } else {
             final newBook = Book.fromRecord(e.record!);
             final book =
@@ -90,6 +97,23 @@ abstract class BookRepositoryBase with Store {
     return book;
   }
 
+  Future<void> updateBookCover(Book book) async {
+    try {
+      final recordModel = await pb.client.collection(_book).getOne(book.id);
+      await pb.removeFile(recordModel, "cover");
+      final files = [
+        http.MultipartFile.fromBytes(
+          'cover',
+          book.cover!,
+          filename: 'cover',
+        )
+      ];
+      await pb.client.collection(_book).update(book.id, files: files);
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
   void putBook(Book book) async {
     try {
       final body = book.toJson()..["user"] = pb.user?.id;
@@ -133,6 +157,10 @@ abstract class BookRepositoryBase with Store {
 
   Future removeBook(Book book) async {
     try {
+      final recordModel = await pb.client.collection(_book).getOne(book.id);
+      await pb.removeFile(recordModel, "chapters");
+      await pb.removeFile(recordModel, "words");
+      await pb.removeFile(recordModel, "cover");
       await pb.client.collection(_book).delete(book.id);
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");

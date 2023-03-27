@@ -21,7 +21,8 @@ class HomePageNavigation extends StatelessWidget {
     const items = [shelfSvg, openBookSvg, personSvg];
 
     return Theme(
-        data: basicTheme().copyWith(splashFactory: NoSplash.splashFactory),
+        data: basicTheme(Brightness.light)
+            .copyWith(splashFactory: NoSplash.splashFactory),
         child: NavigationBar(
           backgroundColor: Theme.of(context).secondBackgroundColor,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
@@ -37,7 +38,7 @@ class HomePageNavigation extends StatelessWidget {
                       colorFilter: ColorFilter.mode(
                           currentIndex == items.indexOf(e)
                               ? Theme.of(context).brightElementColor
-                              : Theme.of(context).paleElementColor,
+                              : Theme.of(context).lightGrayColor,
                           BlendMode.srcIn),
                     ),
                   ))

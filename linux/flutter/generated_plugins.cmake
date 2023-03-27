@@ -3,7 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  objectbox_flutter_libs
+  flutter_secure_storage_linux
   url_launcher_linux
 )
 

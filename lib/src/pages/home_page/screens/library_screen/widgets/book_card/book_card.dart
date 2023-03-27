@@ -1,8 +1,12 @@
+// 🎯 Dart imports:
+import 'dart:typed_data';
+
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/generated/locale.dart';
@@ -29,10 +33,10 @@ class BookCard extends StatelessWidget {
     );
   }
 
-  void _removeBook(BuildContext context) {
-    getIt<BookRepository>().removeBook(book);
-    getIt<ToastController>().showDefaultTost("Book is removed");
+  void _removeBook(BuildContext context) async {
     Navigator.pop(context);
+    await getIt<BookRepository>().removeBook(book);
+    getIt<ToastController>().showDefaultTost("Book is removed");
   }
 
   void _openBookSet(BuildContext context) {
@@ -50,6 +54,16 @@ class BookCard extends StatelessWidget {
     );
   }
 
+  void _addCustomCover(BuildContext context) async {
+    Navigator.pop(context);
+    final imagePicker = ImagePicker();
+    final file = await imagePicker.pickImage(source: ImageSource.gallery);
+    final Uint8List bytes = await file!.readAsBytes();
+    book.cover = bytes;
+    await getIt<BookRepository>().updateBookCover(book);
+    getIt<ToastController>().showDefaultTost("Cover is changed");
+  }
+
   void _longPressHandler(BuildContext context) {
     showModalBottomSheet<void>(
       barrierColor: Colors.black26,
@@ -59,6 +73,7 @@ class BookCard extends StatelessWidget {
         openBook: () => _openBook(context),
         removeBook: () => _removeBook(context),
         openBookSet: () => _openBookSet(context),
+        addCustomCover: () => _addCustomCover(context),
       ),
     );
   }

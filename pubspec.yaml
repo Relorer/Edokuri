@@ -60,6 +60,7 @@ dependencies:
   html: ^0.15.2
   http: ^0.13.5
   image: ^3.0.2
+  image_picker: ^0.8.7
   json_annotation: ^4.8.0
   mobx: ^2.1.4
   mobx_codegen: ^2.1.1
@@ -77,6 +78,7 @@ dependencies:
   syncfusion_flutter_sliders: ^20.4.53
   text_to_speech: ^0.2.3
   translator: ^0.1.7
+  unique_names_generator: ^1.0.0
   url_launcher: ^6.1.10
   uuid: ^3.0.7
 
@@ -96,6 +98,8 @@ dev_dependencies:
 import_sorter:
   emojis: true
   comments: true
+  ignored_files:
+    - \/bin\/*
 
 dart_pre_commit:
   outdated: false

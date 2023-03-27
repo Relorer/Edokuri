@@ -17,5 +17,6 @@
     "today": "today",
     "shortMin": "{count}m",
     "library": "Library",
-    "partOf": "Part {currentPart} of {partCount}"
+    "partOf": "Part {currentPart} of {partCount}",
+    "addCustomCover": "Add custom cover"
 }

@@ -1,6 +1,9 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 // 🌎 Project imports:
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/learn_page/learn_page.dart';
@@ -16,29 +19,25 @@ class StudyingCardsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final studying = [
-      StudyingCard(
-        title: 'Learn',
-        subTitle: 'Focus your studying with a path',
-        svg: learnSvg,
-        onTap: setData.records.isEmpty
-            ? null
-            : (() {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => LearnPage(
-                      setData: setData,
-                      records: setData.records,
+      Observer(builder: (context) {
+        return StudyingCard(
+          title: 'Learn',
+          subTitle: 'Focus your studying with a path',
+          svg: learnSvg,
+          onTap: setData.records.isEmpty
+              ? null
+              : (() {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => LearnPage(
+                        setData: setData,
+                        records: setData.records,
+                      ),
                     ),
-                  ),
-                );
-              }),
-      ),
-      // StudyingCard(
-      //   title: 'Test',
-      //   subTitile: 'Take a practice test',
-      //   svg: testSvg,
-      //   onTap: setData.records.isEmpty ? null : (() {}),
-      // )
+                  );
+                }),
+        );
+      })
     ];
 
     return SliverList(

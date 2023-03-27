@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/common/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
+import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_with_info_card.dart';
 import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (settingsController.isFirstOpening && !mlController.isLoaded) {
         toastController
             .showDefaultSnackbar(context, "Loading language model...")
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                   if (value == SnackBarClosedReason.swipe)
                     mlController.downloadModels()
                 });
-        settingsController.setIsFirstOpening(false);
+        await settingsController.setIsFirstOpening(false);
       }
     });
   }
