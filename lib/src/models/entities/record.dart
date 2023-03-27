@@ -1,9 +1,16 @@
+// 🐦 Flutter imports:
+
 // 📦 Package imports:
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/models/recordState/recordState.dart';
+import 'package:edokuri/src/models/recordState/stateSerializer.dart';
+import 'package:edokuri/src/models/recordStep/recordStep.dart';
+import 'package:edokuri/src/models/recordStep/recordStep1.dart';
+import 'package:edokuri/src/models/recordStep/stepSerializer.dart';
 
 part 'record.g.dart';
 
@@ -23,6 +30,12 @@ class Record {
   final DateTime creationDate;
   DateTime lastReview;
   int reviewNumber;
+  int reviewInterval = 0;
+
+  @StepSerializer()
+  RecordStep recordStep = RecordStep1();
+  @StateSerializer()
+  RecordState recordState = RecordState.recent;
 
   String get translation => translations
       .where((element) => element.selected)
@@ -41,6 +54,8 @@ class Record {
     required this.sentences,
     required this.translations,
     required this.lastReview,
+    required this.recordStep,
+    this.recordState = RecordState.recent,
     this.reviewNumber = 0,
     this.userId = "",
   });
@@ -51,4 +66,11 @@ class Record {
   factory Record.fromJson(Map<String, dynamic> json) => _$RecordFromJson(json);
 
   Map<String, dynamic> toJson() => _$RecordToJson(this);
+}
+
+bool timeForReviewHasCome(Record record) {
+  return DateTime.now().millisecondsSinceEpoch -
+          record.reviewInterval -
+          record.lastReview.millisecondsSinceEpoch >
+      0;
 }

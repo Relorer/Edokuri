@@ -30,7 +30,7 @@ class ReaderContentViewPage extends StatelessWidget {
       return SavedWord(
         word: word,
         onTap: onTap,
-        reviewNumber: record.reviewNumber,
+        reviewInterval: record.reviewInterval,
       );
     }
     if (getIt<KnownRecordsRepository>().exist(word.content)) {
