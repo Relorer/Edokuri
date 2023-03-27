@@ -1,14 +1,15 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/theme/theme_consts.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_block_container.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class SettingsPageProfile extends StatelessWidget {
   const SettingsPageProfile({super.key});
@@ -37,7 +38,7 @@ class SettingsPageProfile extends StatelessWidget {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(100)),
                       image: DecorationImage(
-                          fit: BoxFit.cover, image: MemoryImage(user!.avatar!)),
+                          fit: BoxFit.cover, image: MemoryImage(user.avatar!)),
                     ),
                   )
                 : Container(

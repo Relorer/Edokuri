@@ -23,6 +23,7 @@ const translateSvg = "assets/icons/translate.svg";
 const backArrowSvg = "assets/icons/back_arrow.svg";
 const changeCoverSvg = "assets/icons/change_cover.svg";
 const einkSvg = "assets/icons/eink.svg";
+const trashSvg = "assets/icons/trash.svg";
 
 const translatedByGoogleSvg = "assets/images/translated_by_google.svg";
 const waveSvg = "assets/images/wave.svg";

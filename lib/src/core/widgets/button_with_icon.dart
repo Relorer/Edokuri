@@ -43,7 +43,7 @@ class ButtonWithIcon extends StatelessWidget {
                 child: SvgPicture.asset(
                   svg,
                   colorFilter: ColorFilter.mode(
-                      Theme.of(context).paleElementColor, BlendMode.srcIn),
+                      Theme.of(context).lightGrayColor, BlendMode.srcIn),
                 ),
               ),
             ),

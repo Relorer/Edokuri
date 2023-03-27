@@ -24,7 +24,8 @@ class SettingsPageSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(doubleDefaultMargin),
+      padding: const EdgeInsets.symmetric(
+          horizontal: doubleDefaultMargin, vertical: defaultRadius),
       child: Row(children: [
         SizedBox(
           width: 24,
@@ -32,7 +33,7 @@ class SettingsPageSwitch extends StatelessWidget {
             child: SvgPicture.asset(
               svg,
               colorFilter: ColorFilter.mode(
-                  Theme.of(context).paleElementColor, BlendMode.srcIn),
+                  Theme.of(context).lightGrayColor, BlendMode.srcIn),
             ),
           ),
         ),
@@ -48,7 +49,7 @@ class SettingsPageSwitch extends StatelessWidget {
         ),
         Switch(
           value: value,
-          activeColor: progressBarActive,
+          activeColor: orange,
           onChanged: onChanged,
         )
       ]),

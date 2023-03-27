@@ -35,7 +35,7 @@ class _PersonScreenState extends State<PersonScreen> {
               visible: setRepository.isLoading,
               child: const LinearProgressIndicator(
                 minHeight: 3,
-                color: paleElement,
+                color: lightGray,
               ))),
           const SetsSectionHeader(),
           const SetCardsList(),

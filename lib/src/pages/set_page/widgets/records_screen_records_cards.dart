@@ -48,7 +48,7 @@ class RecordsScreenRecordsCards extends StatelessWidget {
                         outlinedCenter: false,
                         dotHeight: defaultMargin * 0.6,
                         dotWidth: defaultMargin * 0.6,
-                        dotColor: Theme.of(context).paleElementColor,
+                        dotColor: Theme.of(context).lightGrayColor,
                         activeDotColor: Theme.of(context).brightElementColor),
                     onDotClicked: (index) {}),
               ),

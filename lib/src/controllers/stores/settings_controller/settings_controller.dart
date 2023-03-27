@@ -82,7 +82,7 @@ abstract class SettingsControllerBase with Store {
 
   @action
   Future setEinkMode(bool value) async {
-    await _sp.setBool(_einkMode, value);
-    einkMode = value;
+    // await _sp.setBool(_einkMode, value);
+    // einkMode = value;
   }
 }

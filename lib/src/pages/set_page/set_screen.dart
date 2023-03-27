@@ -57,7 +57,7 @@ class SetScreen extends StatelessWidget {
                   visible: recordRepository.isLoading,
                   child: const LinearProgressIndicator(
                     minHeight: 3,
-                    color: paleElement,
+                    color: lightGray,
                   ))),
               const StudyingSectionHeader(),
               StudyingCardsList(

@@ -45,7 +45,7 @@ class SectionHeader extends StatelessWidget {
                   icon: SvgPicture.asset(
                     menuSvg,
                     colorFilter: ColorFilter.mode(
-                        Theme.of(context).paleElementColor, BlendMode.srcIn),
+                        Theme.of(context).lightGrayColor, BlendMode.srcIn),
                   ),
                   onPressed: () => _menuButtonHandler(context),
                 )

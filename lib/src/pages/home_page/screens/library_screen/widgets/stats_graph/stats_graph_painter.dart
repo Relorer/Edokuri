@@ -158,7 +158,7 @@ class StatsGraphPainter extends CustomPainter {
             right,
             bottom,
           ),
-          paint..color = Theme.of(context).paleElementColor);
+          paint..color = Theme.of(context).lightGrayColor);
 
       _roundColumns(canvas, left, columnTop, right, bottom);
     } else {

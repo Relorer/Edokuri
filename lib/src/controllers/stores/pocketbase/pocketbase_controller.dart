@@ -29,14 +29,13 @@ const callbackUrlScheme = "https";
 const authTokenKey = "auth_token_key";
 
 abstract class PocketbaseControllerBase with Store {
-final generator = UniqueNamesGenerator(
-      config: Config(
+  final generator = UniqueNamesGenerator(
+    config: Config(
         length: 2,
         seperator: ' ',
         style: Style.capital,
-        dictionaries: [adjectives, animals]
-      ),
-    );
+        dictionaries: [adjectives, animals]),
+  );
 
   final secureStorage = getIt<FlutterSecureStorage>();
   final CacheController cacheController = CacheController();
@@ -58,9 +57,10 @@ final generator = UniqueNamesGenerator(
 
       if (client.authStore.model != null) {
         user = User.fromRecord(client.authStore.model);
-        final avatar = await getFile(client.authStore.model, "avatar", useCache: false);
+        final avatar =
+            await getFile(client.authStore.model, "avatar", useCache: false);
         if (avatar.isNotEmpty) {
-user!.avatar = Uint8List.fromList(avatar);
+          user!.avatar = Uint8List.fromList(avatar);
         }
         await setupRepositoryScope(user!.id);
       } else {
@@ -135,7 +135,8 @@ user!.avatar = Uint8List.fromList(avatar);
     return client.getFileUrl(record, fileName);
   }
 
-  Future<List<int>> getFile(RecordModel record, String field, {bool useCache = true}) async {
+  Future<List<int>> getFile(RecordModel record, String field,
+      {bool useCache = true}) async {
     try {
       final fileUrl = getFileUrl(record, field);
       if (!useCache) {
@@ -184,18 +185,20 @@ user!.avatar = Uint8List.fromList(avatar);
       final code = parsedUri.queryParameters['code']!;
       final response = await client.collection("users").authWithOAuth2(
           providerName, code, provider.codeVerifier, redirectUri);
-          
-          final avatar = await http.get( Uri.parse(response.meta["avatarUrl"])).then((value) => value.bodyBytes);
 
-          client.collection("users").update( client.authStore.model!.id, body: {
-            "name": response.meta["name"],
-          }, files: [
-            http.MultipartFile.fromBytes(
-            'avatar',
-            avatar,
-            filename: 'avatar',
-          ),
-          ]);
+      final avatar = await http
+          .get(Uri.parse(response.meta["avatarUrl"]))
+          .then((value) => value.bodyBytes);
+
+      client.collection("users").update(client.authStore.model!.id, body: {
+        "name": response.meta["name"],
+      }, files: [
+        http.MultipartFile.fromBytes(
+          'avatar',
+          avatar,
+          filename: 'avatar',
+        ),
+      ]);
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }

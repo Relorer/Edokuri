@@ -33,7 +33,7 @@ class RecordInfoSynonymsSection extends StatelessWidget {
                         .tapOnWordHandler(synonyms[index].toLowerCase(), ""))
                     : () => {},
                 backgroundColor:
-                    Theme.of(context).paleElementColor.withOpacity(0.1),
+                    Theme.of(context).lightGrayColor.withOpacity(0.1),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 padding: const EdgeInsets.all(0),
                 visualDensity:

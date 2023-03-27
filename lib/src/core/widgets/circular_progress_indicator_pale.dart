@@ -11,7 +11,7 @@ class CircularProgressIndicatorPale extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator(
-        color: Theme.of(context).paleElementColor,
+        color: Theme.of(context).lightGrayColor,
       ),
     );
   }

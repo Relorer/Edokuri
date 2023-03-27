@@ -1,10 +1,17 @@
 // 🐦 Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_block_container.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_button.dart';
+import 'package:edokuri/src/theme/svgs.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 // 📦 Package imports:
 
@@ -13,9 +20,26 @@ class SettingsPageLearningBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverSingleChild(SettingsPageBlockContainer(
-      child: Column(
-        children: const [],
+    return SliverSingleChild(Material(
+      color: Colors.transparent,
+      child: SettingsPageBlockContainer(
+        child: Observer(builder: (context) {
+          return Column(
+            children: [
+              const SizedBox(
+                height: defaultRadius,
+              ),
+              SettingPageButton(
+                text: "Clear known words",
+                onTap: getIt<KnownRecordsRepository>().removeAll,
+                svg: trashSvg,
+              ),
+              const SizedBox(
+                height: defaultRadius,
+              ),
+            ],
+          );
+        }),
       ),
     ));
   }

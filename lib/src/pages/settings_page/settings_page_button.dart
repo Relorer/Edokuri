@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/theme/theme_consts.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:

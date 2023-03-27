@@ -38,7 +38,7 @@ class HomePageNavigation extends StatelessWidget {
                       colorFilter: ColorFilter.mode(
                           currentIndex == items.indexOf(e)
                               ? Theme.of(context).brightElementColor
-                              : Theme.of(context).paleElementColor,
+                              : Theme.of(context).lightGrayColor,
                           BlendMode.srcIn),
                     ),
                   ))

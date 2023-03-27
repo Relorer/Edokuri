@@ -33,7 +33,7 @@ extension LightThemeEx on ThemeData {
     return white;
   }
 
-  Color get paleElementColor {
+  Color get lightGrayColor {
     return lightGray;
   }
 
