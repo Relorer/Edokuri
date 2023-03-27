@@ -104,47 +104,49 @@ class LearnPageState extends State<LearnPage> {
           ],
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(
-            child: Column(
-          children: [
-            Observer(builder: (_) {
-              return LearnPageHeader(
-                newRecords: learnController.recent.length,
-                reviewedRecords: learnController.repeatable.length,
-                studiedRecords: learnController.studied.length,
-              );
-            }),
-            Expanded(
-              child: BouncingCustomScrollView(slivers: [
-                SliverSingleChild(Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(doubleDefaultMargin),
-                      child: Observer(builder: (_) {
-                        return Wrap(
-                          runSpacing: defaultMargin,
-                          children: learnController.currentRecord == null
-                              ? []
-                              : _getSections(learnController.currentRecord!,
-                                  learnController.answerIsShown),
-                        );
-                      }),
-                    )
-                  ],
-                ))
-              ]),
-            ),
-            Observer(builder: (_) {
-              return learnController.answerIsShown
-                  ? const LearnPageAnswerButtonsMenu()
-                  : LearnPageShowAnswerButton(onTap: () {
-                      setState(() {
-                        learnController.answerIsShown = true;
-                      });
-                    });
-            }),
-          ],
-        )),
+        body: Observer(builder: (context) {
+          return SafeArea(
+              child: learnController.currentRecord == null
+                  ? const Center(
+                      child: Text(
+                      "There are no records to review \nCome back later",
+                      textAlign: TextAlign.center,
+                    ))
+                  : Column(
+                      children: [
+                        LearnPageHeader(
+                          newRecords: learnController.recent.length,
+                          reviewedRecords: learnController.repeatable.length,
+                          studiedRecords: learnController.studied.length,
+                        ),
+                        Expanded(
+                          child: BouncingCustomScrollView(slivers: [
+                            SliverSingleChild(Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.all(doubleDefaultMargin),
+                                  child: Wrap(
+                                    runSpacing: defaultMargin,
+                                    children: _getSections(
+                                        learnController.currentRecord!,
+                                        learnController.answerIsShown),
+                                  ),
+                                )
+                              ],
+                            ))
+                          ]),
+                        ),
+                        learnController.answerIsShown
+                            ? const LearnPageAnswerButtonsMenu()
+                            : LearnPageShowAnswerButton(onTap: () {
+                                setState(() {
+                                  learnController.answerIsShown = true;
+                                });
+                              }),
+                      ],
+                    ));
+        }),
       ),
     );
   }

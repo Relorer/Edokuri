@@ -23,7 +23,7 @@ import 'package:edokuri/src/models/models.dart';
 
 final getIt = GetIt.instance;
 
-Future<void> setupLocator() async {
+Future setupLocator() async {
   getIt.registerFactory(() => TTSController());
   getIt.registerFactory(() => ToastController());
   getIt.registerFactory(() => SnackbarController());
@@ -44,7 +44,7 @@ Future<void> setupLocator() async {
   getIt.registerSingletonAsync<PocketbaseController>(PocketBaseFactory().getPB);
 }
 
-Future<void> setupRepositoryScope(String userId) async {
+Future setupRepositoryScope(String userId) async {
   if (getIt.currentScopeName == userId) return;
   if (getIt.currentScopeName != "baseScope") {
     await getIt.popScope();

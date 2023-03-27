@@ -20,14 +20,14 @@ abstract class MLControllerBase with Store {
   bool isLoading = false;
 
   @action
-  Future<void> loadMLState() async {
+  Future loadMLState() async {
     isLoaded = await modelManager
             .isModelDownloaded(TranslateLanguage.english.bcpCode) &&
         await modelManager.isModelDownloaded(TranslateLanguage.russian.bcpCode);
   }
 
   @action
-  Future<void> downloadModels() async {
+  Future downloadModels() async {
     isLoading = true;
     await modelManager.downloadModel(
         isWifiRequired: false, TranslateLanguage.english.bcpCode);

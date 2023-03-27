@@ -41,30 +41,35 @@ abstract class LearnControllerBase with Store {
 
   @action
   void markRecordEasy() {
-    markRecord(currentRecord!, currentRecord!.recordStep.markWordEasy);
+    markRecord(currentRecord, currentRecord?.recordStep.markWordEasy);
   }
 
   @action
   void markRecordGood() {
-    markRecord(currentRecord!, currentRecord!.recordStep.markWordGood);
+    markRecord(currentRecord, currentRecord?.recordStep.markWordGood);
   }
 
   @action
   void markRecordHard() {
-    markRecord(currentRecord!, currentRecord!.recordStep.markWordHard);
+    markRecord(currentRecord, currentRecord?.recordStep.markWordHard);
   }
 
   @action
   void markRecordAgain() {
-    markRecord(currentRecord!, currentRecord!.recordStep.markWordAgain);
+    markRecord(currentRecord, currentRecord?.recordStep.markWordAgain);
   }
 
-  void markRecord(Record record, Function markRecord) {
+  void markRecord(Record? record, Function? markRecord) {
     answerIsShown = false;
-    deleteRecordFromGroup(currentRecord!);
-    markRecord(record);
-    putRecordIntoGroup(currentRecord!);
-    _recordRepository.putRecord(currentRecord!);
+    if (record == null) {
+      return;
+    }
+    deleteRecordFromGroup(record);
+    if (markRecord != null) {
+      markRecord(record);
+    }
+    putRecordIntoGroup(record);
+    _recordRepository.putRecord(record);
     updateRecords();
   }
 

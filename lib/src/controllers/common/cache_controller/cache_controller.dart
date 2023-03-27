@@ -20,7 +20,7 @@ class CacheController {
     return fileInfo?.file.readAsBytes();
   }
 
-  Future<void> removeFile(String id) {
+  Future removeFile(String id) {
     return _manager.removeFile(id);
   }
 }

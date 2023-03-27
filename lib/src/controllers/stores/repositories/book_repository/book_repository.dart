@@ -97,7 +97,7 @@ abstract class BookRepositoryBase with Store {
     return book;
   }
 
-  Future<void> updateBookCover(Book book) async {
+  Future updateBookCover(Book book) async {
     try {
       final recordModel = await pb.client.collection(_book).getOne(book.id);
       await pb.removeFile(recordModel, "cover");
