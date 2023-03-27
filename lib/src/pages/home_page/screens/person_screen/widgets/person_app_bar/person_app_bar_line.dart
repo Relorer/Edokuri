@@ -23,7 +23,7 @@ class PersonAppBarLine extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .displayLarge!
-                .copyWith(color: Theme.of(context).paleElementColor),
+                .copyWith(color: Theme.of(context).lightGrayColor),
           ),
           const SizedBox(width: defaultMargin),
           Text(

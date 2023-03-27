@@ -37,7 +37,7 @@ class SortTypesList<Types extends Enum, ItemType,
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       fillColor: MaterialStateColor.resolveWith(
                           (Set<MaterialState> states) {
-                        return Theme.of(context).paleElementColor;
+                        return Theme.of(context).lightGrayColor;
                       }),
                       value: e,
                       groupValue: librarySort.sortType,

@@ -53,6 +53,17 @@ abstract class KnownRecordsRepositoryBase with Store {
     }
   }
 
+  Future removeAll() async {
+    try {
+      final copy = knownRecords.toList();
+      for (var element in copy) {
+        await removeSet(element);
+      }
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
   Future removeSet(KnownRecords set) async {
     try {
       await pb.client.collection(_knownRecords).delete(set.id);

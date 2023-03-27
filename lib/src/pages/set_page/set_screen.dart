@@ -14,6 +14,7 @@ import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/home_page/utils/app_bar.dart';
 import 'package:edokuri/src/pages/set_page/widgets/cards_section_header.dart';
+import 'package:edokuri/src/pages/set_page/widgets/record_add_button.dart';
 import 'package:edokuri/src/pages/set_page/widgets/record_cards_list.dart';
 import 'package:edokuri/src/pages/set_page/widgets/records_app_bar.dart';
 import 'package:edokuri/src/pages/set_page/widgets/studying_cards_list.dart';
@@ -56,13 +57,18 @@ class SetScreen extends StatelessWidget {
                   visible: recordRepository.isLoading,
                   child: const LinearProgressIndicator(
                     minHeight: 3,
-                    color: paleElement,
+                    color: lightGray,
                   ))),
               const StudyingSectionHeader(),
               StudyingCardsList(
                 setData: _setData,
               ),
               CardsSectionHeader(set: _setData.set),
+              _setData.records.isEmpty
+                  ? RecordAddButton(
+                      setRecords: _setData.set,
+                    )
+                  : const SliverSingleChild(SizedBox()),
               RecordCardsList(
                 setData: _setData,
               ),

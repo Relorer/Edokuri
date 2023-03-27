@@ -36,7 +36,7 @@ class RecordInfoMeaningsSection extends StatelessWidget {
         meaningsWidgets.add(SizedBox(
             width: double.maxFinite,
             child: Text(m.description,
-                style: const TextStyle(fontSize: 14, color: paleElement))));
+                style: const TextStyle(fontSize: 14, color: lightGray))));
       }
       meaningsWidgets.add(SizedBox(
         height: groupedMeanings.keys.last == key ? 0 : defaultMargin,

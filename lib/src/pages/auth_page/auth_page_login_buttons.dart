@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
+import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/pages/auth_page/auth_page_button.dart';
 import 'package:edokuri/src/theme/svgs.dart';
@@ -14,14 +15,16 @@ class AuthPageLoginButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var pocketbase = getIt<PocketbaseController>();
-
+    final settings = getIt<SettingsController>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         AuthPageButton(
           svg: googleLogoSvg,
           text: "Sign in with Google",
+          bg: settings.einkMode ? lightGray : white,
           onTap: pocketbase.googleAuth,
+          textColor: settings.einkMode ? Colors.white : Colors.black,
         ),
         const SizedBox(
           height: doubleDefaultMargin,
@@ -38,9 +41,10 @@ class AuthPageLoginButtons extends StatelessWidget {
         ),
         TextButton(
           onPressed: pocketbase.skipAuth,
-          child: const Text(
+          child: Text(
             "Skip",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+                color: settings.einkMode ? Colors.black : Colors.white),
           ),
         )
       ],

@@ -70,8 +70,9 @@ class _RecordInfoTranslationsSectionState
                             BorderRadius.all(Radius.circular(defaultRadius)))
                     : null,
                 pressElevation: 3,
-                selectedColor:
-                    Theme.of(context).unknownWordColor.withOpacity(0.6),
+                selectedColor: widget.changeable
+                    ? Theme.of(context).unknownWordColor.withOpacity(0.6)
+                    : Theme.of(context).unknownWordColor.withOpacity(0.2),
                 backgroundColor:
                     Theme.of(context).unknownWordColor.withOpacity(0.2),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

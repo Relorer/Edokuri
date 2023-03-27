@@ -38,7 +38,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
               visible: bookRepository.isLoading,
               child: LinearProgressIndicator(
                 minHeight: 3,
-                color: paleElement,
+                color: lightGray,
               ))),
           const LibraryBooksSectionHeader(),
           const LibraryBookList()

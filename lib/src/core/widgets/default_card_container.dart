@@ -20,7 +20,7 @@ class DefaultCardContainer extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 blurRadius: defaultMargin,
-                color: Theme.of(context).paleElementColor.withOpacity(0.4),
+                color: Theme.of(context).lightGrayColor.withOpacity(0.4),
                 spreadRadius: 0.0,
                 offset: const Offset(0, 5),
               ),

@@ -27,7 +27,7 @@ class BookCardCover extends StatelessWidget {
         : Container(
             height: 110,
             width: 70,
-            color: Theme.of(context).paleElementColor.withOpacity(0.6),
+            color: Theme.of(context).lightGrayColor.withOpacity(0.6),
             child: Center(
                 child: SvgPicture.asset(
               imageSvg,
