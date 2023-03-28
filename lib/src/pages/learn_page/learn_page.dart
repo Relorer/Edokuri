@@ -115,7 +115,7 @@ class LearnPageState extends State<LearnPage> {
                   : Column(
                       children: [
                         LearnPageHeader(
-                          newRecords: learnController.recent.length,
+                          newRecords: learnController.newborn.length,
                           reviewedRecords: learnController.repeatable.length,
                           studiedRecords: learnController.studied.length,
                         ),

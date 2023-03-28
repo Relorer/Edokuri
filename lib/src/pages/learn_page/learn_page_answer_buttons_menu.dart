@@ -19,25 +19,25 @@ class LearnPageAnswerButtonsMenu extends StatelessWidget {
       children: [
         LearnPageAnswerButton(
           onTap: learnController.markRecordAgain,
-          topText: "< 1 min",
+          topText: learnController.againText,
           bottomText: "again",
           color: const Color(0xFFCE4003),
         ),
         LearnPageAnswerButton(
           onTap: learnController.markRecordHard,
-          topText: "< 10 min",
+          topText: learnController.hardText,
           bottomText: "hard",
           color: Colors.white,
         ),
         LearnPageAnswerButton(
           onTap: learnController.markRecordGood,
-          topText: "1d",
+          topText: learnController.goodText,
           bottomText: "good",
           color: const Color(0xFF34A853),
         ),
         LearnPageAnswerButton(
           onTap: learnController.markRecordEasy,
-          topText: "4d",
+          topText: learnController.easyText,
           bottomText: "easy",
           color: const Color(0xFF4285F4),
         ),

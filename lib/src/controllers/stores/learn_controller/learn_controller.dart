@@ -5,7 +5,7 @@ import 'package:mobx/mobx.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/models/entities/record.dart';
-import 'package:edokuri/src/models/recordState/recordState.dart';
+import 'package:edokuri/src/models/recordState/record_state.dart';
 
 part 'learn_controller.g.dart';
 
@@ -15,23 +15,9 @@ abstract class LearnControllerBase with Store {
   final RecordRepository _recordRepository;
   final SettingsController _settingsController;
   final List<Record> _records;
-  late List<Record> recent = <Record>[];
+  late List<Record> newborn = <Record>[];
   late List<Record> studied = <Record>[];
   late List<Record> repeatable = <Record>[];
-
-  LearnControllerBase(
-      this._recordRepository, this._settingsController, this._records) {
-    updateRecords();
-    recent = _records
-        .where((element) => element.recordState == RecordState.recent)
-        .toList();
-    studied = _records
-        .where((element) => element.recordState == RecordState.studied)
-        .toList();
-    repeatable = _records
-        .where((element) => element.recordState == RecordState.repeatable)
-        .toList();
-  }
 
   @observable
   bool answerIsShown = false;
@@ -39,24 +25,50 @@ abstract class LearnControllerBase with Store {
   @observable
   Record? currentRecord;
 
+  @computed
+  String get easyText => currentRecord?.step.easyNextIntervalText ?? "";
+
+  @computed
+  String get goodText => currentRecord?.step.goodNextIntervalText ?? "";
+
+  @computed
+  String get hardText => currentRecord?.step.hardNextIntervalText ?? "";
+
+  @computed
+  String get againText => currentRecord?.step.againNextIntervalText ?? "";
+
+  LearnControllerBase(
+      this._recordRepository, this._settingsController, this._records) {
+    updateRecords();
+    newborn = _records
+        .where((element) => element.state == RecordState.newborn)
+        .toList();
+    studied = _records
+        .where((element) => element.state == RecordState.studied)
+        .toList();
+    repeatable = _records
+        .where((element) => element.state == RecordState.repeatable)
+        .toList();
+  }
+
   @action
   void markRecordEasy() {
-    markRecord(currentRecord, currentRecord?.recordStep.markWordEasy);
+    markRecord(currentRecord, currentRecord?.step.markWordEasy);
   }
 
   @action
   void markRecordGood() {
-    markRecord(currentRecord, currentRecord?.recordStep.markWordGood);
+    markRecord(currentRecord, currentRecord?.step.markWordGood);
   }
 
   @action
   void markRecordHard() {
-    markRecord(currentRecord, currentRecord?.recordStep.markWordHard);
+    markRecord(currentRecord, currentRecord?.step.markWordHard);
   }
 
   @action
   void markRecordAgain() {
-    markRecord(currentRecord, currentRecord?.recordStep.markWordAgain);
+    markRecord(currentRecord, currentRecord?.step.markWordAgain);
   }
 
   void markRecord(Record? record, Function? markRecord) {
@@ -86,9 +98,9 @@ abstract class LearnControllerBase with Store {
   }
 
   void deleteRecordFromGroup(Record record) {
-    switch (record.recordState) {
-      case RecordState.recent:
-        recent.remove(record);
+    switch (record.state) {
+      case RecordState.newborn:
+        newborn.remove(record);
         break;
       case RecordState.studied:
         studied.remove(record);
@@ -100,9 +112,9 @@ abstract class LearnControllerBase with Store {
   }
 
   void putRecordIntoGroup(Record record) {
-    switch (record.recordState) {
-      case RecordState.recent:
-        recent.add(record);
+    switch (record.state) {
+      case RecordState.newborn:
+        newborn.add(record);
         break;
       case RecordState.studied:
         studied.add(record);
