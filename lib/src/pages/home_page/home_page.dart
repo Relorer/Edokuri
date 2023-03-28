@@ -25,7 +25,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   late SettingsController settingsController = getIt<SettingsController>();
-  late SnackbarController toastController = getIt<SnackbarController>();
+  late SnackbarController snackbarController = getIt<SnackbarController>();
   late MLController mlController = getIt<MLController>();
 
   final List<Widget> _screens = <Widget>[
@@ -39,10 +39,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (settingsController.isFirstOpening && !mlController.isLoaded) {
-        toastController
+        snackbarController
             .showDefaultSnackbar(context, "Loading language model...")
             .then((value) => {
-                  if (value == SnackBarClosedReason.swipe)
+                  if (value != SnackBarClosedReason.dismiss)
                     mlController.downloadModels()
                 });
         await settingsController.setIsFirstOpening(false);
