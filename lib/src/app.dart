@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -8,13 +7,14 @@ import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:open_as_default/open_as_default.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/pages/auth_page/auth_page.dart';
-import 'package:open_as_default/open_as_default.dart';
 import 'pages/home_page/home_page.dart';
 import 'theme/theme.dart';
 

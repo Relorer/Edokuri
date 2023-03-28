@@ -93,14 +93,14 @@ class LearnPageState extends State<LearnPage> {
           elevation: 0,
           title: Text(widget.setData.set?.name ?? "All"),
           actions: <Widget>[
-            IconButton(
-              icon: SvgPicture.asset(
-                backArrowSvg,
-              ),
-              onPressed: () {
-                // do something
-              },
-            ),
+            learnController.canRevertLastMark
+                ? IconButton(
+                    icon: SvgPicture.asset(
+                      backArrowSvg,
+                    ),
+                    onPressed: learnController.revertLastMark,
+                  )
+                : const SizedBox()
           ],
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -114,11 +114,7 @@ class LearnPageState extends State<LearnPage> {
                     ))
                   : Column(
                       children: [
-                        LearnPageHeader(
-                          newRecords: learnController.recent.length,
-                          reviewedRecords: learnController.repeatable.length,
-                          studiedRecords: learnController.studied.length,
-                        ),
+                        const LearnPageHeader(),
                         Expanded(
                           child: BouncingCustomScrollView(slivers: [
                             SliverSingleChild(Column(

@@ -1,5 +1,5 @@
 enum RecordState {
-  recent,
+  newborn,
   studied,
   repeatable,
 }

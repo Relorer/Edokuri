@@ -5,12 +5,12 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step.dart';
+import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
+import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/step_serializer.dart';
 import 'package:edokuri/src/models/models.dart';
-import 'package:edokuri/src/models/recordState/recordState.dart';
-import 'package:edokuri/src/models/recordState/stateSerializer.dart';
-import 'package:edokuri/src/models/recordStep/recordStep.dart';
-import 'package:edokuri/src/models/recordStep/recordStep1.dart';
-import 'package:edokuri/src/models/recordStep/stepSerializer.dart';
+import 'package:edokuri/src/models/recordState/record_state.dart';
+import 'package:edokuri/src/models/recordState/state_serializer.dart';
 
 part 'record.g.dart';
 
@@ -33,9 +33,10 @@ class Record {
   int reviewInterval = 0;
 
   @StepSerializer()
-  RecordStep recordStep = RecordStep1();
+  late RecordStep step = RecordStep1.withRecord(this);
+
   @StateSerializer()
-  RecordState recordState = RecordState.recent;
+  RecordState state = RecordState.newborn;
 
   String get translation => translations
       .where((element) => element.selected)
@@ -54,11 +55,13 @@ class Record {
     required this.sentences,
     required this.translations,
     required this.lastReview,
-    required this.recordStep,
-    this.recordState = RecordState.recent,
+    required this.step,
+    this.state = RecordState.newborn,
     this.reviewNumber = 0,
     this.userId = "",
-  });
+  }) {
+    step.record = this;
+  }
 
   factory Record.fromRecord(RecordModel record) =>
       Record.fromJson(record.toJson());
