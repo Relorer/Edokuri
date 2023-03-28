@@ -14,6 +14,7 @@ class LearnController = LearnControllerBase with _$LearnController;
 abstract class LearnControllerBase with Store {
   final RecordRepository _recordRepository;
   final SettingsController _settingsController;
+
   final List<Record> _records;
   late List<Record> newborn = <Record>[];
   late List<Record> studied = <Record>[];
@@ -21,6 +22,9 @@ abstract class LearnControllerBase with Store {
 
   @observable
   bool answerIsShown = false;
+
+  @observable
+  bool canRevertLastMark = false;
 
   @observable
   Record? currentRecord;
@@ -36,6 +40,19 @@ abstract class LearnControllerBase with Store {
 
   @computed
   String get againText => currentRecord?.step.againNextIntervalText ?? "";
+
+  @computed
+  String get newbornCount => newborn.length.toString();
+
+  @computed
+  String get studiedCount => studied.length.toString();
+
+  @computed
+  String get repeatableCount => repeatable.length.toString();
+
+  @computed
+  RecordState get currentRecordState =>
+      currentRecord?.state ?? RecordState.newborn;
 
   LearnControllerBase(
       this._recordRepository, this._settingsController, this._records) {
@@ -69,6 +86,11 @@ abstract class LearnControllerBase with Store {
   @action
   void markRecordAgain() {
     markRecord(currentRecord, currentRecord?.step.markWordAgain);
+  }
+
+  @action
+  void revertLastMark() {
+    //TODO
   }
 
   void markRecord(Record? record, Function? markRecord) {

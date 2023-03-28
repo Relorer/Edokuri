@@ -81,11 +81,11 @@ abstract class RecordStep {
     int minutes = (milliseconds % hourInMs) ~/ minuteInMs;
 
     if (days > 0) {
-      return "{$days}d ";
+      return "${days}d ";
     } else if (hours > 0) {
-      return "{$hours}h ";
+      return "${hours}h ";
     } else {
-      return "< {$minutes}m";
+      return "< ${minutes}m";
     }
   }
 }
