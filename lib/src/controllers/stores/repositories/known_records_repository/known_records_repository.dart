@@ -74,7 +74,8 @@ abstract class KnownRecordsRepositoryBase with Store {
 
   Future addRecords(List<String> records) async {
     try {
-      putSet(KnownRecords(records: records, creationDate: DateTime.now()));
+      putSet(
+          KnownRecords(records: records, creationDate: DateTime.now().toUtc()));
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }

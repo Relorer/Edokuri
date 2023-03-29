@@ -60,7 +60,7 @@ abstract class TimeMarkRepositoryBase with Store {
   }
 
   void addTimeMarkForToday() {
-    DateTime date = DateTime.now();
+    DateTime date = DateTime.now().toUtc();
     if (timeMarks.isEmpty || !timeMarks.last.dateTime.isSameDate(date)) {
       putTimeMark(TimeMark(dateTime: date));
     }
@@ -69,7 +69,7 @@ abstract class TimeMarkRepositoryBase with Store {
   int getStreak() {
     if (timeMarks.isEmpty) return 0;
 
-    DateTime date = DateTime.now();
+    DateTime date = DateTime.now().toUtc();
     int result = timeMarks.last.dateTime.isSameDate(date) ? 1 : 0;
 
     for (var element in timeMarks.reversed.skip(1)) {

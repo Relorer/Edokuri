@@ -11,13 +11,13 @@ class LearningTimerController {
   LearningTimerController(this.activityTimeRepository, this.timeMarkRepository);
 
   startLearningTimer() {
-    _startLearning = DateTime.now();
+    _startLearning = DateTime.now().toUtc();
   }
 
   stopLearningTimer() async {
     if (_startLearning != null) {
       final at = await activityTimeRepository.putActivityTime(
-          ActivityTime(_startLearning!, DateTime.now(), Type.learning));
+          ActivityTime(_startLearning!, DateTime.now().toUtc(), Type.learning));
 
       _startLearning = null;
 

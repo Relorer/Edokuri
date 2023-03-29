@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/core/widgets/circular_progress_indicator_pale.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -35,6 +36,7 @@ class AddRecordPageState extends State<AddRecordPage> {
   late TranslatorController _translator;
 
   Record? _record;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -48,12 +50,14 @@ class AddRecordPageState extends State<AddRecordPage> {
     _phraseController.clear();
     _saveCurrentRecord();
     setState(() {
+      _isLoading = true;
       _record = null;
     });
     final temp = _recordRepository.getRecord(text);
     _record = temp != null && temp.translations.isNotEmpty
         ? temp
         : await _translator.translate(text);
+    _isLoading = false;
     setState(() {});
   }
 
@@ -115,32 +119,46 @@ class AddRecordPageState extends State<AddRecordPage> {
           ? Theme.of(context).colorScheme.background
           : Colors.white,
       body: SafeArea(
-          child: BouncingCustomScrollView(
-        slivers: [
-          SliverSingleChild(Padding(
-            padding: const EdgeInsets.symmetric(horizontal: defaultMargin),
-            child: Column(
-              children: [
-                TextFormFieldDefault(
-                  controller: _phraseController,
-                  labelText: 'Enter a phrase',
-                  onFieldSubmitted: _phraseTextSubmitted,
-                ),
-                const SizedBox(
-                  height: doubleDefaultMargin,
-                ),
-                _record == null
-                    ? Container()
-                    : Wrap(
-                        runSpacing: defaultMargin,
-                        children: _getSections(_record!),
+          child: Column(
+        children: [
+          Visibility(
+              replacement: const SizedBox(height: 3),
+              visible: _isLoading,
+              child: const LinearProgressIndicator(
+                minHeight: 3,
+                color: lightGray,
+              )),
+          Expanded(
+            child: BouncingCustomScrollView(
+              slivers: [
+                SliverSingleChild(Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: defaultMargin),
+                  child: Column(
+                    children: [
+                      TextFormFieldDefault(
+                        controller: _phraseController,
+                        labelText: 'Enter a phrase',
+                        onFieldSubmitted: _phraseTextSubmitted,
                       ),
-                const SizedBox(
-                  height: doubleDefaultMargin,
-                ),
+                      const SizedBox(
+                        height: doubleDefaultMargin,
+                      ),
+                      _record == null
+                          ? Container()
+                          : Wrap(
+                              runSpacing: defaultMargin,
+                              children: _getSections(_record!),
+                            ),
+                      const SizedBox(
+                        height: doubleDefaultMargin,
+                      ),
+                    ],
+                  ),
+                ))
               ],
             ),
-          ))
+          )
         ],
       )),
     );

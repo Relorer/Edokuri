@@ -1,4 +1,6 @@
 // 📦 Package imports:
+import 'dart:math';
+
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
@@ -11,20 +13,44 @@ part 'learn_controller.g.dart';
 
 class LearnController = LearnControllerBase with _$LearnController;
 
+const int lookIntoFuture = 20;
+const int lookIntoFutureMilliseconds = lookIntoFuture * 60 * 1000;
+
 abstract class LearnControllerBase with Store {
+  final Random random = Random();
+  // random number between 0 and 100
+  // if this number is less than "beforeStudied", then we show newborn records
+  // if this number is less than 'beforeRepeatable', then we show studied records
+  // otherwise we show repeatable records
+  final int beforeStudied = 10;
+  final int beforeRepeatable = 55;
+
   final RecordRepository _recordRepository;
   final SettingsController _settingsController;
 
+  @observable
+  Record? backupRecord;
+  Record? backupRecordLink;
+
   final List<Record> _records;
-  late List<Record> newborn = <Record>[];
-  late List<Record> studied = <Record>[];
-  late List<Record> repeatable = <Record>[];
+
+  @observable
+  late ObservableList<Record> newborn =
+      getRecordsByState(_records, RecordState.newborn);
+
+  @observable
+  late ObservableList<Record> studied =
+      getRecordsByState(_records, RecordState.studied);
+
+  @observable
+  late ObservableList<Record> repeatable =
+      getRecordsByState(_records, RecordState.repeatable);
 
   @observable
   bool answerIsShown = false;
 
-  @observable
-  bool canRevertLastMark = false;
+  @computed
+  bool get canRevertLastMark => backupRecord != null;
 
   @observable
   Record? currentRecord;
@@ -42,13 +68,13 @@ abstract class LearnControllerBase with Store {
   String get againText => currentRecord?.step.againNextIntervalText ?? "";
 
   @computed
-  String get newbornCount => newborn.length.toString();
+  String get newbornCount => getCountRecordsForReview(newborn).toString();
 
   @computed
-  String get studiedCount => studied.length.toString();
+  String get studiedCount => getCountRecordsForReview(studied).toString();
 
   @computed
-  String get repeatableCount => repeatable.length.toString();
+  String get repeatableCount => getCountRecordsForReview(repeatable).toString();
 
   @computed
   RecordState get currentRecordState =>
@@ -57,15 +83,6 @@ abstract class LearnControllerBase with Store {
   LearnControllerBase(
       this._recordRepository, this._settingsController, this._records) {
     updateRecords();
-    newborn = _records
-        .where((element) => element.state == RecordState.newborn)
-        .toList();
-    studied = _records
-        .where((element) => element.state == RecordState.studied)
-        .toList();
-    repeatable = _records
-        .where((element) => element.state == RecordState.repeatable)
-        .toList();
   }
 
   @action
@@ -90,7 +107,15 @@ abstract class LearnControllerBase with Store {
 
   @action
   void revertLastMark() {
-    //TODO
+    if (backupRecord == null || backupRecordLink == null) {
+      return;
+    }
+    deleteRecordFromGroup(backupRecordLink!);
+    putRecordIntoGroup(backupRecord!);
+    _recordRepository.putRecord(backupRecord!);
+    currentRecord = backupRecord;
+    backupRecord = null;
+    answerIsShown = true;
   }
 
   void markRecord(Record? record, Function? markRecord) {
@@ -98,22 +123,58 @@ abstract class LearnControllerBase with Store {
     if (record == null) {
       return;
     }
+    backupRecord = record.copyWith();
+    backupRecordLink = record;
     deleteRecordFromGroup(record);
+    updateRecords();
     if (markRecord != null) {
       markRecord(record);
     }
     putRecordIntoGroup(record);
     _recordRepository.putRecord(record);
-    updateRecords();
+    if (currentRecord == null) {
+      updateRecords();
+    }
   }
 
   void updateRecords() {
-    _records.sort((Record a, Record b) {
-      return a.reviewInterval - b.reviewInterval;
+    newborn.sort((Record a, Record b) {
+      return timeToReview(a) - timeToReview(b);
     });
 
-    if (timeForReviewHasCome(_records[0])) {
-      currentRecord = _records[0];
+    studied.sort((Record a, Record b) {
+      return timeToReview(a) - timeToReview(b);
+    });
+
+    repeatable.sort((Record a, Record b) {
+      return timeToReview(a) - timeToReview(b);
+    });
+
+    final number = random.nextInt(100);
+    if (number < beforeStudied &&
+        newborn.isNotEmpty &&
+        timeForReviewHasCome(newborn.first)) {
+      currentRecord = newborn.first;
+    } else if (number < beforeRepeatable &&
+        studied.isNotEmpty &&
+        timeForReviewHasCome(studied.first)) {
+      currentRecord = studied.first;
+    } else if (repeatable.isNotEmpty &&
+        timeForReviewHasCome(repeatable.first)) {
+      currentRecord = repeatable.first;
+    } else if (studied.isNotEmpty && timeForReviewHasCome(studied.first)) {
+      currentRecord = studied.first;
+    } else if (newborn.isNotEmpty && timeForReviewHasCome(newborn.first)) {
+      currentRecord = newborn.first;
+    } else if (repeatable.isNotEmpty &&
+        timeForReviewHasComeWithLookIntoFuture(repeatable.first)) {
+      currentRecord = repeatable.first;
+    } else if (studied.isNotEmpty &&
+        timeForReviewHasComeWithLookIntoFuture(studied.first)) {
+      currentRecord = studied.first;
+    } else if (newborn.isNotEmpty &&
+        timeForReviewHasComeWithLookIntoFuture(newborn.first)) {
+      currentRecord = newborn.first;
     } else {
       currentRecord = null;
     }
@@ -145,5 +206,17 @@ abstract class LearnControllerBase with Store {
         repeatable.add(record);
         break;
     }
+  }
+
+  int getCountRecordsForReview(List<Record> records) {
+    return records
+        .where((element) => timeForReviewHasComeWithLookIntoFuture(element))
+        .length;
+  }
+
+  ObservableList<Record> getRecordsByState(
+      List<Record> records, RecordState state) {
+    return ObservableList<Record>.of(
+        records.where((element) => element.state == state));
   }
 }

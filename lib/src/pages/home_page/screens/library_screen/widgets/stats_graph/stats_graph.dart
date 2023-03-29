@@ -77,8 +77,9 @@ class _StatsGraphState extends State<StatsGraph> {
                     final graphData = GraphData([
                       ...Iterable<int>.generate(7)
                           .map((e) {
-                            final date =
-                                DateTime.now().subtract(Duration(days: e));
+                            final date = DateTime.now()
+                                .toUtc()
+                                .subtract(Duration(days: e));
                             return GraphDayData(date,
                                 newKnownRecords: _getNewKnownRecords(date),
                                 newSavedRecords: _getNewSavedRecords(
