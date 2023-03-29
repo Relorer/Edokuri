@@ -1,8 +1,14 @@
 // 🌎 Project imports:
+import 'dart:math';
+
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
+import 'package:edokuri/src/core/utils/random_utils.dart';
 import 'package:edokuri/src/models/recordState/record_state.dart';
 import 'package:edokuri/src/models/time_intervals_consts.dart';
+
+Random random = Random();
+const double _mutation = 1.1;
 
 class RecordStep4 extends RecordStep {
   final double _hardCoef = 1.2;
@@ -15,8 +21,11 @@ class RecordStep4 extends RecordStep {
 
   // easy
   @override
-  int get easyNextInterval =>
-      (record.reviewInterval * _easyCoef * _goodCoef).toInt();
+  int get easyNextInterval => (record.reviewInterval *
+          _easyCoef *
+          _goodCoef *
+          doubleInRange(random, 1, _mutation))
+      .toInt();
 
   @override
   RecordState get easyNextState => RecordState.repeatable;
@@ -26,7 +35,9 @@ class RecordStep4 extends RecordStep {
 
   // good
   @override
-  int get goodNextInterval => (record.reviewInterval * _goodCoef).toInt();
+  int get goodNextInterval =>
+      (record.reviewInterval * _goodCoef * doubleInRange(random, 1, _mutation))
+          .toInt();
 
   @override
   RecordState get goodNextState => RecordState.repeatable;
@@ -36,7 +47,9 @@ class RecordStep4 extends RecordStep {
 
   // hard
   @override
-  int get hardNextInterval => (record.reviewInterval * _hardCoef).toInt();
+  int get hardNextInterval =>
+      (record.reviewInterval * _hardCoef * doubleInRange(random, 1, _mutation))
+          .toInt();
 
   @override
   RecordState get hardNextState => RecordState.repeatable;

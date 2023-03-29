@@ -1,4 +1,5 @@
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:edokuri/src/models/entities/record.dart';
 import 'package:edokuri/src/models/recordState/record_state.dart';
 import 'package:edokuri/src/models/time_intervals_consts.dart';
@@ -85,7 +86,10 @@ abstract class RecordStep {
     } else if (hours > 0) {
       return "${hours}h ";
     } else {
-      return "< ${minutes}m";
+      if (minutes <= lookIntoFuture) {
+        return "< ${minutes}m";
+      }
+      return "${minutes}m";
     }
   }
 }

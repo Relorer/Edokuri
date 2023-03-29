@@ -1,6 +1,7 @@
 // 🐦 Flutter imports:
 
 // 📦 Package imports:
+import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -74,6 +75,7 @@ class Record {
 bool timeForReviewHasCome(Record record) {
   return DateTime.now().millisecondsSinceEpoch -
           record.reviewInterval -
-          record.lastReview.millisecondsSinceEpoch >
+          record.lastReview.millisecondsSinceEpoch +
+          lookIntoFutureMilliseconds >
       0;
 }

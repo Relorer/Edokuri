@@ -11,14 +11,26 @@ part 'learn_controller.g.dart';
 
 class LearnController = LearnControllerBase with _$LearnController;
 
+const int lookIntoFuture = 20;
+const int lookIntoFutureMilliseconds = lookIntoFuture * 60 * 1000;
+
 abstract class LearnControllerBase with Store {
   final RecordRepository _recordRepository;
   final SettingsController _settingsController;
 
   final List<Record> _records;
-  late List<Record> newborn = <Record>[];
-  late List<Record> studied = <Record>[];
-  late List<Record> repeatable = <Record>[];
+
+  @observable
+  late ObservableList<Record> newborn =
+      getRecordsByState(_records, RecordState.newborn);
+
+  @observable
+  late ObservableList<Record> studied =
+      getRecordsByState(_records, RecordState.studied);
+
+  @observable
+  late ObservableList<Record> repeatable =
+      getRecordsByState(_records, RecordState.repeatable);
 
   @observable
   bool answerIsShown = false;
@@ -42,13 +54,13 @@ abstract class LearnControllerBase with Store {
   String get againText => currentRecord?.step.againNextIntervalText ?? "";
 
   @computed
-  String get newbornCount => newborn.length.toString();
+  String get newbornCount => getCountRecordsForReview(newborn).toString();
 
   @computed
-  String get studiedCount => studied.length.toString();
+  String get studiedCount => getCountRecordsForReview(studied).toString();
 
   @computed
-  String get repeatableCount => repeatable.length.toString();
+  String get repeatableCount => getCountRecordsForReview(repeatable).toString();
 
   @computed
   RecordState get currentRecordState =>
@@ -57,15 +69,6 @@ abstract class LearnControllerBase with Store {
   LearnControllerBase(
       this._recordRepository, this._settingsController, this._records) {
     updateRecords();
-    newborn = _records
-        .where((element) => element.state == RecordState.newborn)
-        .toList();
-    studied = _records
-        .where((element) => element.state == RecordState.studied)
-        .toList();
-    repeatable = _records
-        .where((element) => element.state == RecordState.repeatable)
-        .toList();
   }
 
   @action
@@ -145,5 +148,15 @@ abstract class LearnControllerBase with Store {
         repeatable.add(record);
         break;
     }
+  }
+
+  int getCountRecordsForReview(List<Record> records) {
+    return records.where((element) => timeForReviewHasCome(element)).length;
+  }
+
+  ObservableList<Record> getRecordsByState(
+      List<Record> records, RecordState state) {
+    return ObservableList<Record>.of(
+        records.where((element) => element.state == state));
   }
 }
