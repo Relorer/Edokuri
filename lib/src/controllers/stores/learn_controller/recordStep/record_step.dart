@@ -60,7 +60,7 @@ abstract class RecordStep {
   }
 
   void markWord(Record record) {
-    record.lastReview = DateTime.now();
+    record.lastReview = DateTime.now().toUtc();
     record.reviewNumber++;
   }
 

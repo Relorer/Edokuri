@@ -93,14 +93,16 @@ class LearnPageState extends State<LearnPage> {
           elevation: 0,
           title: Text(widget.setData.set?.name ?? "All"),
           actions: <Widget>[
-            learnController.canRevertLastMark
-                ? IconButton(
-                    icon: SvgPicture.asset(
-                      backArrowSvg,
-                    ),
-                    onPressed: learnController.revertLastMark,
-                  )
-                : const SizedBox()
+            Observer(builder: (context) {
+              return learnController.canRevertLastMark
+                  ? IconButton(
+                      icon: SvgPicture.asset(
+                        backArrowSvg,
+                      ),
+                      onPressed: learnController.revertLastMark,
+                    )
+                  : const SizedBox();
+            })
           ],
         ),
         backgroundColor: Theme.of(context).colorScheme.background,

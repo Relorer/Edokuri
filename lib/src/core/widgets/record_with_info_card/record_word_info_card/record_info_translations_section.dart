@@ -91,7 +91,7 @@ class _RecordInfoTranslationsSectionState
                           translations[index].selected =
                               !translations[index].selected;
                           translations[index].selectionDate =
-                              selected ? DateTime.now() : null;
+                              selected ? DateTime.now().toUtc() : null;
                         });
                       }
                     : (_) => {},

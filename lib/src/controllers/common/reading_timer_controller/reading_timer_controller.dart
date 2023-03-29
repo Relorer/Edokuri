@@ -14,20 +14,20 @@ class ReadingTimerController {
       this.timeMarkRepository, this.book);
 
   startReadingTimer() {
-    _startReading = DateTime.now();
+    _startReading = DateTime.now().toUtc();
   }
 
   stopReadingTimer() async {
     if (_startReading != null) {
       final at = await activityTimeRepository.putActivityTime(
-          ActivityTime(_startReading!, DateTime.now(), Type.reading));
+          ActivityTime(_startReading!, DateTime.now().toUtc(), Type.reading));
 
       _startReading = null;
 
       if (at == null) return;
 
       book.readTimes.add(at.id);
-      book.lastReading = DateTime.now();
+      book.lastReading = DateTime.now().toUtc();
       bookRepository.putBook(book);
 
       timeMarkRepository.addTimeMarkForToday();

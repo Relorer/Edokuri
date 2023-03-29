@@ -74,7 +74,7 @@ abstract class ActivityTimeRepositoryBase with Store {
   }
 
   int _timeForTodayInMinutes(Type type) {
-    final today = DateTime.now();
+    final today = DateTime.now().toUtc();
     final timesForToday = activityTimes
         .where((element) => element.type == type)
         .where((element) => element.start.isSameDate(today))

@@ -1,4 +1,6 @@
 // 📦 Package imports:
+import 'dart:math';
+
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
@@ -15,8 +17,20 @@ const int lookIntoFuture = 20;
 const int lookIntoFutureMilliseconds = lookIntoFuture * 60 * 1000;
 
 abstract class LearnControllerBase with Store {
+  final Random random = Random();
+  // random number between 0 and 100
+  // if this number is less than "beforeStudied", then we show newborn records
+  // if this number is less than 'beforeRepeatable', then we show studied records
+  // otherwise we show repeatable records
+  final int beforeStudied = 10;
+  final int beforeRepeatable = 55;
+
   final RecordRepository _recordRepository;
   final SettingsController _settingsController;
+
+  @observable
+  Record? backupRecord;
+  Record? backupRecordLink;
 
   final List<Record> _records;
 
@@ -35,8 +49,8 @@ abstract class LearnControllerBase with Store {
   @observable
   bool answerIsShown = false;
 
-  @observable
-  bool canRevertLastMark = false;
+  @computed
+  bool get canRevertLastMark => backupRecord != null;
 
   @observable
   Record? currentRecord;
@@ -93,7 +107,15 @@ abstract class LearnControllerBase with Store {
 
   @action
   void revertLastMark() {
-    //TODO
+    if (backupRecord == null || backupRecordLink == null) {
+      return;
+    }
+    deleteRecordFromGroup(backupRecordLink!);
+    putRecordIntoGroup(backupRecord!);
+    _recordRepository.putRecord(backupRecord!);
+    currentRecord = backupRecord;
+    backupRecord = null;
+    answerIsShown = true;
   }
 
   void markRecord(Record? record, Function? markRecord) {
@@ -101,6 +123,8 @@ abstract class LearnControllerBase with Store {
     if (record == null) {
       return;
     }
+    backupRecord = record.copyWith();
+    backupRecordLink = record;
     deleteRecordFromGroup(record);
     if (markRecord != null) {
       markRecord(record);
@@ -111,12 +135,34 @@ abstract class LearnControllerBase with Store {
   }
 
   void updateRecords() {
-    _records.sort((Record a, Record b) {
+    newborn.sort((Record a, Record b) {
       return a.reviewInterval - b.reviewInterval;
     });
 
-    if (timeForReviewHasCome(_records[0])) {
-      currentRecord = _records[0];
+    studied.sort((Record a, Record b) {
+      return a.reviewInterval - b.reviewInterval;
+    });
+
+    repeatable.sort((Record a, Record b) {
+      return a.reviewInterval - b.reviewInterval;
+    });
+
+    final number = random.nextInt(100);
+    if (number < beforeStudied &&
+        newborn.isNotEmpty &&
+        timeForReviewHasCome(newborn.first)) {
+      currentRecord = newborn.first;
+    } else if (number < beforeRepeatable &&
+        studied.isNotEmpty &&
+        timeForReviewHasCome(studied.first)) {
+      currentRecord = studied.first;
+    } else if (repeatable.isNotEmpty &&
+        timeForReviewHasCome(repeatable.first)) {
+      currentRecord = repeatable.first;
+    } else if (studied.isNotEmpty && timeForReviewHasCome(studied.first)) {
+      currentRecord = studied.first;
+    } else if (newborn.isNotEmpty && timeForReviewHasCome(newborn.first)) {
+      currentRecord = newborn.first;
     } else {
       currentRecord = null;
     }
