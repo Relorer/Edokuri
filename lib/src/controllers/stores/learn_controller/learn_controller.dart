@@ -126,25 +126,28 @@ abstract class LearnControllerBase with Store {
     backupRecord = record.copyWith();
     backupRecordLink = record;
     deleteRecordFromGroup(record);
+    updateRecords();
     if (markRecord != null) {
       markRecord(record);
     }
     putRecordIntoGroup(record);
     _recordRepository.putRecord(record);
-    updateRecords();
+    if (currentRecord == null) {
+      updateRecords();
+    }
   }
 
   void updateRecords() {
     newborn.sort((Record a, Record b) {
-      return a.reviewInterval - b.reviewInterval;
+      return timeToReview(a) - timeToReview(b);
     });
 
     studied.sort((Record a, Record b) {
-      return a.reviewInterval - b.reviewInterval;
+      return timeToReview(a) - timeToReview(b);
     });
 
     repeatable.sort((Record a, Record b) {
-      return a.reviewInterval - b.reviewInterval;
+      return timeToReview(a) - timeToReview(b);
     });
 
     final number = random.nextInt(100);
@@ -162,6 +165,15 @@ abstract class LearnControllerBase with Store {
     } else if (studied.isNotEmpty && timeForReviewHasCome(studied.first)) {
       currentRecord = studied.first;
     } else if (newborn.isNotEmpty && timeForReviewHasCome(newborn.first)) {
+      currentRecord = newborn.first;
+    } else if (repeatable.isNotEmpty &&
+        timeForReviewHasComeWithLookIntoFuture(repeatable.first)) {
+      currentRecord = repeatable.first;
+    } else if (studied.isNotEmpty &&
+        timeForReviewHasComeWithLookIntoFuture(studied.first)) {
+      currentRecord = studied.first;
+    } else if (newborn.isNotEmpty &&
+        timeForReviewHasComeWithLookIntoFuture(newborn.first)) {
       currentRecord = newborn.first;
     } else {
       currentRecord = null;
@@ -197,7 +209,9 @@ abstract class LearnControllerBase with Store {
   }
 
   int getCountRecordsForReview(List<Record> records) {
-    return records.where((element) => timeForReviewHasCome(element)).length;
+    return records
+        .where((element) => timeForReviewHasComeWithLookIntoFuture(element))
+        .length;
   }
 
   ObservableList<Record> getRecordsByState(

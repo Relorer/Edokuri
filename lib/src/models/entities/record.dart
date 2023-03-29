@@ -111,9 +111,20 @@ class Record {
   }
 }
 
+int timeToReview(Record record) {
+  return record.lastReview.millisecondsSinceEpoch +
+      record.reviewInterval -
+      DateTime.now().toUtc().millisecondsSinceEpoch;
+}
+
 bool timeForReviewHasCome(Record record) {
   return DateTime.now().toUtc().isAfter(DateTime.fromMillisecondsSinceEpoch(
+      record.reviewInterval + record.lastReview.millisecondsSinceEpoch));
+}
+
+bool timeForReviewHasComeWithLookIntoFuture(Record record) {
+  return DateTime.now().toUtc().isAfter(DateTime.fromMillisecondsSinceEpoch(
       record.reviewInterval +
-          record.lastReview.millisecondsSinceEpoch +
+          record.lastReview.millisecondsSinceEpoch -
           lookIntoFutureMilliseconds));
 }
