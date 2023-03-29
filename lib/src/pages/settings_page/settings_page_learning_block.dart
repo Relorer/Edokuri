@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -31,7 +32,11 @@ class SettingsPageLearningBlock extends StatelessWidget {
               ),
               SettingPageButton(
                 text: "Clear known words",
-                onTap: getIt<KnownRecordsRepository>().removeAll,
+                onTap: () {
+                  getIt<KnownRecordsRepository>().removeAll();
+                  getIt<ToastController>()
+                      .showDefaultTost("Known words cleared");
+                },
                 svg: trashSvg,
               ),
               const SizedBox(
