@@ -32,6 +32,7 @@ dependencies:
   card_swiper: ^2.0.4
   carousel_slider: ^4.2.1
   connectivity_plus: ^3.0.3
+  crypto: ^3.0.2
   cupertino_icons: ^1.0.5
   custom_navigation_bar: ^0.8.2
   dictionaryx: ^0.3.5
