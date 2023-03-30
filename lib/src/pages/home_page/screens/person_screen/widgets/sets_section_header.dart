@@ -25,7 +25,7 @@ class SetsSectionHeader extends StatelessWidget {
       leftText: "Sets",
       menuDialogChildren: [
         ButtonWithIcon(
-          text: "Creat new set",
+          text: "Create new set",
           onTap: () => _creatNewSet(context),
           svg: createSvg,
         ),

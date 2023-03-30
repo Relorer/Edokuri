@@ -24,38 +24,36 @@ class RecordInfoHeader extends StatelessWidget {
         onTap: () {
           getIt<TTSController>().speak(title);
         },
-        child: Expanded(
-          child: Column(
-            children: [
-              Text(
-                title.contains(" ") ? title : title.toUpperCase(),
-                textAlign:
-                    title.contains("\n") ? TextAlign.left : TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold),
-              ),
-              transcription.isEmpty
-                  ? Container()
-                  : AutoSizeText(
-                      transcription,
-                      style: Theme.of(context).cardSubtitleStyle,
-                    ),
-              Padding(
-                padding: const EdgeInsets.all(defaultMargin),
-                child: IconButton(
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    onPressed: () => getIt<TTSController>().speak(title),
-                    icon: SvgPicture.asset(
-                      speakerSvg,
-                      colorFilter:
-                          const ColorFilter.mode(darkGray, BlendMode.srcIn),
-                    )),
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            Text(
+              title.contains(" ") ? title : title.toUpperCase(),
+              textAlign:
+                  title.contains("\n") ? TextAlign.left : TextAlign.center,
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold),
+            ),
+            transcription.isEmpty
+                ? Container()
+                : AutoSizeText(
+                    transcription,
+                    style: Theme.of(context).cardSubtitleStyle,
+                  ),
+            Padding(
+              padding: const EdgeInsets.all(defaultMargin),
+              child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  onPressed: () => getIt<TTSController>().speak(title),
+                  icon: SvgPicture.asset(
+                    speakerSvg,
+                    colorFilter:
+                        const ColorFilter.mode(darkGray, BlendMode.srcIn),
+                  )),
+            ),
+          ],
         ),
       ),
     );

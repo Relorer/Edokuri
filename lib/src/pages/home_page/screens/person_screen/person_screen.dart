@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/pages/home_page/screens/person_screen/set_add_button.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -39,6 +40,9 @@ class _PersonScreenState extends State<PersonScreen> {
               ))),
           const SetsSectionHeader(),
           const SetCardsList(),
+          setRepository.sets.isEmpty
+              ? const SetAddButton()
+              : const SliverSingleChild(SizedBox()),
         ],
       );
     });
