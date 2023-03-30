@@ -1,11 +1,12 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
-import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
-import 'package:edokuri/src/pages/reader/reader_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// 📦 Package imports:
+import 'package:open_as_default/open_as_default.dart';
+
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
@@ -15,8 +16,8 @@ import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
 import 'package:edokuri/src/pages/home_page/screens/library_screen/library_screen.dart';
 import 'package:edokuri/src/pages/home_page/screens/person_screen/person_screen.dart';
 import 'package:edokuri/src/pages/home_page/screens/records_screen/records_screen.dart';
+import 'package:edokuri/src/pages/reader/reader_page.dart';
 import 'package:edokuri/src/theme/theme.dart';
-import 'package:open_as_default/open_as_default.dart';
 import 'widget/home_page_navigation.dart';
 
 class HomePage extends StatefulWidget {
