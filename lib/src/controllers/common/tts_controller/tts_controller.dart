@@ -1,10 +1,36 @@
 // 📦 Package imports:
-import 'package:text_to_speech/text_to_speech.dart';
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:audio_session/audio_session.dart';
+
+class TTSControllerFactory {
+  Future<TTSController> getTTSController() async {
+    final session = await AudioSession.instance;
+    await session.configure(const AudioSessionConfiguration.speech().copyWith(
+        androidAudioFocusGainType: AndroidAudioFocusGainType.gainTransient));
+
+    return TTSController(session);
+  }
+}
 
 class TTSController {
-  TextToSpeech tts = TextToSpeech();
+  final AudioSession session;
 
-  void speak(String text) {
-    tts.speak(text);
+  final FlutterTts tts = FlutterTts();
+
+  TTSController(this.session) {
+    tts.setCompletionHandler(() {
+      session.setActive(false);
+    });
+  }
+
+  void speak(String text) async {
+    if (await session.setActive(
+      true,
+    )) {
+      await tts.speak(text);
+    }
   }
 }

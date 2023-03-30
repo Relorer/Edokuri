@@ -119,7 +119,9 @@ int timeToReview(Record record) {
 
 bool timeForReviewHasCome(Record record) {
   return DateTime.now().toUtc().isAfter(DateTime.fromMillisecondsSinceEpoch(
-      record.reviewInterval + record.lastReview.millisecondsSinceEpoch));
+      record.reviewInterval +
+          record.lastReview.millisecondsSinceEpoch -
+          preLookIntoFutureMilliseconds));
 }
 
 bool timeForReviewHasComeWithLookIntoFuture(Record record) {

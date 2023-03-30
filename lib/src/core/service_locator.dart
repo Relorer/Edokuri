@@ -24,7 +24,7 @@ import 'package:edokuri/src/models/models.dart';
 final getIt = GetIt.instance;
 
 Future setupLocator() async {
-  getIt.registerFactory(() => TTSController());
+  getIt.registerSingletonAsync(() => TTSControllerFactory().getTTSController());
   getIt.registerFactory(() => ToastController());
   getIt.registerFactory(() => SnackbarController());
   getIt.registerFactoryParam<LearnController, List<Record>, void>(

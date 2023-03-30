@@ -23,7 +23,10 @@ class RecordsScreenRecordsCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
-      final records = setData.records.toList()..shuffle();
+      final records = setData.records.toList()
+        ..sort((Record a, Record b) {
+          return timeToReview(a) - timeToReview(b);
+        });
 
       if (records.isEmpty) {
         return Container();
