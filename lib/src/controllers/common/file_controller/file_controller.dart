@@ -56,7 +56,7 @@ class FileController {
 
       _bookRepository.putBook(book);
       _toastController.showDefaultTost("Book is added");
-      return BookWithStatus(book, true, true);
+      return BookWithStatus(book, true, false);
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
       _toastController

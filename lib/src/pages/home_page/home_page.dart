@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -42,22 +44,28 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     OpenAsDefault.getFileIntent.then((value) {
-      if (value != null) {
-        getIt<FileController>().addBookFile(value.readAsBytes()).then((value) {
-          if (value.book == null || !value.isExist) {
-            return;
-          }
-          if (mounted) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ReaderPage(
-                  book: value.book!,
+      try {
+        if (value != null) {
+          getIt<FileController>()
+              .addBookFile(value.readAsBytes())
+              .then((value) {
+            if (value.book == null || !value.isExist) {
+              return;
+            }
+            if (mounted) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReaderPage(
+                    book: value.book!,
+                  ),
                 ),
-              ),
-            );
-          }
-        });
+              );
+            }
+          });
+        }
+      } catch (e, stacktrace) {
+        log("${e.toString()}\n${stacktrace.toString()}");
       }
     });
     super.initState();
