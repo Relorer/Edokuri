@@ -15,6 +15,7 @@ import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/pages/auth_page/auth_page.dart';
+import 'controllers/stores/repositories/repositories.dart';
 import 'pages/home_page/home_page.dart';
 import 'theme/theme.dart';
 
@@ -31,12 +32,6 @@ class _AppState extends State<App> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       setHighRefreshRate();
-    });
-    OpenAsDefault.getFileIntent.then((value) {
-      if (value != null) {
-        final book = value.readAsBytesSync();
-        getIt<FileController>().addBookFile(book);
-      }
     });
   }
 

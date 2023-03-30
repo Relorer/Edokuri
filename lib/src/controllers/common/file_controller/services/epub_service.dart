@@ -49,7 +49,8 @@ class EpubService {
         currentPositionInChapter: 0,
         currentCompletedPositionInChapter: 0,
         lastReading: DateTime(0),
-        hash: hash.toString());
+        hash: hash.toString(),
+        readTimes: []);
 
     List<String> words = [];
 

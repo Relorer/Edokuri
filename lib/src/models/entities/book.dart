@@ -42,9 +42,9 @@ class Book {
     required this.currentPositionInChapter,
     required this.lastReading,
     required this.hash,
+    required this.readTimes,
     this.cover,
     this.user = "",
-    this.readTimes = const [],
   });
 
   factory Book.fromRecord(RecordModel record) => Book.fromJson(record.toJson());

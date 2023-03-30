@@ -1,4 +1,7 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/pages/reader/reader_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,6 +16,7 @@ import 'package:edokuri/src/pages/home_page/screens/library_screen/library_scree
 import 'package:edokuri/src/pages/home_page/screens/person_screen/person_screen.dart';
 import 'package:edokuri/src/pages/home_page/screens/records_screen/records_screen.dart';
 import 'package:edokuri/src/theme/theme.dart';
+import 'package:open_as_default/open_as_default.dart';
 import 'widget/home_page_navigation.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,6 +40,25 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    OpenAsDefault.getFileIntent.then((value) {
+      if (value != null) {
+        getIt<FileController>().addBookFile(value.readAsBytes()).then((value) {
+          if (value.book == null || !value.isExist) {
+            return;
+          }
+          if (mounted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReaderPage(
+                  book: value.book!,
+                ),
+              ),
+            );
+          }
+        });
+      }
+    });
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (settingsController.isFirstOpening && !mlController.isLoaded) {
