@@ -20,7 +20,7 @@ class Book {
   int currentCompletedChapter;
   int currentCompletedPositionInChapter;
   DateTime lastReading;
-
+  String hash;
   List<String> readTimes;
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,6 +41,7 @@ class Book {
     required this.currentCompletedPositionInChapter,
     required this.currentPositionInChapter,
     required this.lastReading,
+    required this.hash,
     this.cover,
     this.user = "",
     this.readTimes = const [],
