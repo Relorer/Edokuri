@@ -86,18 +86,19 @@ Future setupRepositoryScope(String userId) async {
             ReaderController(getIt<RecordRepository>(), getIt<BookRepository>(),
                 getIt<KnownRecordsRepository>(), book));
 
-        getIt.registerFactoryParam<ReadingTimerController, Book, void>(
-            (book, _) => ReadingTimerController(
-                getIt<BookRepository>(),
-                getIt<ActivityTimeRepository>(),
-                getIt<TimeMarkRepository>(),
-                book));
+        getIt.registerSingletonWithDependencies<ReadingTimerController>(
+            () => ReadingTimerController(getIt<BookRepository>(),
+                getIt<ActivityTimeRepository>(), getIt<TimeMarkRepository>()),
+            dependsOn: [
+              BookRepository,
+              ActivityTimeRepository,
+              TimeMarkRepository
+            ]);
 
-        getIt.registerFactory<LearningTimerController>(
+        getIt.registerSingletonWithDependencies<LearningTimerController>(
             () => LearningTimerController(
-                  getIt<ActivityTimeRepository>(),
-                  getIt<TimeMarkRepository>(),
-                ));
+                getIt<ActivityTimeRepository>(), getIt<TimeMarkRepository>()),
+            dependsOn: [ActivityTimeRepository, TimeMarkRepository]);
       },
       scopeName: userId);
 }
