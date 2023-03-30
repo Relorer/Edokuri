@@ -51,9 +51,12 @@ class RecordInfoCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      runSpacing: defaultMargin,
-      children: _getSections(record),
+    return Material(
+      color: Colors.transparent,
+      child: Wrap(
+        runSpacing: defaultMargin,
+        children: _getSections(record),
+      ),
     );
   }
 }

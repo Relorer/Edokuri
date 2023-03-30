@@ -43,7 +43,7 @@ class LearnPageState extends State<LearnPage> {
 
   List<Widget> _getSections(Record record, bool isAnswerShown) {
     final sections = <Widget>[
-      RecordInfoHeader(record.original),
+      RecordInfoHeader(record.original, record.transcription),
     ];
 
     if (isAnswerShown) {

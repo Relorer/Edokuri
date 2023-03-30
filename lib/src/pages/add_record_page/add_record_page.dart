@@ -80,7 +80,7 @@ class AddRecordPageState extends State<AddRecordPage> {
 
   List<Widget> _getSections(Record record) {
     final sections = [
-      RecordInfoHeader(record.original),
+      RecordInfoHeader(record.original, record.transcription),
       RecordInfoTranslationsSection(
         translations: record.translations,
       )
