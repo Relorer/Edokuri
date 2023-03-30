@@ -1,6 +1,7 @@
-// 🌎 Project imports:
+// 🎯 Dart imports:
 import 'dart:math';
 
+// 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
 import 'package:edokuri/src/core/utils/random_utils.dart';

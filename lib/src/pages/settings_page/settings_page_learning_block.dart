@@ -1,11 +1,11 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';

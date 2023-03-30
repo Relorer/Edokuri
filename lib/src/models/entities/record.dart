@@ -1,11 +1,11 @@
 // 🐦 Flutter imports:
 
 // 📦 Package imports:
-import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/step_serializer.dart';

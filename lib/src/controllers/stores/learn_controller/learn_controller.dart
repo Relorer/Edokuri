@@ -1,6 +1,7 @@
-// 📦 Package imports:
+// 🎯 Dart imports:
 import 'dart:math';
 
+// 📦 Package imports:
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:

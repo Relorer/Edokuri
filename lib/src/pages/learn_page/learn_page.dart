@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -8,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';

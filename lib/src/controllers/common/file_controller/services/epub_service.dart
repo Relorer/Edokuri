@@ -4,10 +4,10 @@ import 'dart:developer';
 import 'dart:typed_data';
 
 // 📦 Package imports:
+import 'package:crypto/crypto.dart';
 import 'package:epubx/epubx.dart';
 import 'package:html/parser.dart';
 import 'package:image/image.dart';
-import 'package:crypto/crypto.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/core/utils/string_utils.dart';
