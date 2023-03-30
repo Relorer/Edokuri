@@ -30,6 +30,7 @@ class SetAddButton extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(
             defaultMargin, 0, defaultMargin, defaultMargin),
         child: StudyingCard(
+          width: 24,
           title: 'Create new set',
           subTitle: 'Sets of records not tied to a book',
           svg: addRecordSvg,

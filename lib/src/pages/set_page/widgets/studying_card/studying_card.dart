@@ -14,6 +14,8 @@ class StudyingCard extends StatelessWidget {
   final String title;
   final String subTitle;
   final String svg;
+  final double? width;
+  final double? height;
   final void Function()? onTap;
 
   const StudyingCard(
@@ -21,6 +23,8 @@ class StudyingCard extends StatelessWidget {
       required this.title,
       this.onTap,
       required this.subTitle,
+      this.height,
+      this.width,
       required this.svg});
 
   @override
@@ -35,6 +39,8 @@ class StudyingCard extends StatelessWidget {
               Center(
                 child: SvgPicture.asset(
                   svg,
+                  width: width,
+                  height: height,
                   colorFilter:
                       const ColorFilter.mode(darkOrange, BlendMode.srcIn),
                 ),
