@@ -6,31 +6,33 @@ class ReadingTimerController {
   final BookRepository bookRepository;
   final ActivityTimeRepository activityTimeRepository;
   final TimeMarkRepository timeMarkRepository;
-  final Book book;
+  Book? book;
 
   DateTime? _startReading;
 
   ReadingTimerController(this.bookRepository, this.activityTimeRepository,
-      this.timeMarkRepository, this.book);
+      this.timeMarkRepository);
 
-  startReadingTimer() {
+  startReadingTimer(Book book) {
     _startReading = DateTime.now().toUtc();
+    this.book = book;
   }
 
   stopReadingTimer() async {
-    if (_startReading != null) {
-      final at = await activityTimeRepository.putActivityTime(
-          ActivityTime(_startReading!, DateTime.now().toUtc(), Type.reading));
-
+    if (_startReading != null && book != null) {
+      final start = _startReading!;
       _startReading = null;
+      final at = await activityTimeRepository.putActivityTime(
+          ActivityTime(start, DateTime.now().toUtc(), Type.reading));
 
       if (at == null) return;
 
-      book.readTimes.add(at.id);
-      book.lastReading = DateTime.now().toUtc();
-      bookRepository.putBook(book);
+      book!.readTimes.add(at.id);
+      book!.lastReading = DateTime.now().toUtc();
+      bookRepository.putBook(book!);
 
       timeMarkRepository.addTimeMarkForToday();
+      book = null;
     }
   }
 }

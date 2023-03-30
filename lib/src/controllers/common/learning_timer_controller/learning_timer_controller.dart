@@ -16,10 +16,11 @@ class LearningTimerController {
 
   stopLearningTimer() async {
     if (_startLearning != null) {
-      final at = await activityTimeRepository.putActivityTime(
-          ActivityTime(_startLearning!, DateTime.now().toUtc(), Type.learning));
-
+      final start = _startLearning!;
       _startLearning = null;
+
+      final at = await activityTimeRepository.putActivityTime(
+          ActivityTime(start, DateTime.now().toUtc(), Type.learning));
 
       if (at == null) return;
 

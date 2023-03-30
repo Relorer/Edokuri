@@ -127,6 +127,7 @@ abstract class PocketbaseControllerBase with Store {
 
   @action
   Future logout() async {
+    secureStorage.deleteAll();
     client.authStore.clear();
   }
 

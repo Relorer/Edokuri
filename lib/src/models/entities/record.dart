@@ -1,11 +1,11 @@
 // 🐦 Flutter imports:
 
 // 📦 Package imports:
-import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/step_serializer.dart';
@@ -119,7 +119,9 @@ int timeToReview(Record record) {
 
 bool timeForReviewHasCome(Record record) {
   return DateTime.now().toUtc().isAfter(DateTime.fromMillisecondsSinceEpoch(
-      record.reviewInterval + record.lastReview.millisecondsSinceEpoch));
+      record.reviewInterval +
+          record.lastReview.millisecondsSinceEpoch -
+          preLookIntoFutureMilliseconds));
 }
 
 bool timeForReviewHasComeWithLookIntoFuture(Record record) {

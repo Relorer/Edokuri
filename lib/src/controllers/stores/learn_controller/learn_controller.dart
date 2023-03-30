@@ -1,6 +1,7 @@
-// 📦 Package imports:
+// 🎯 Dart imports:
 import 'dart:math';
 
+// 📦 Package imports:
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
@@ -15,6 +16,9 @@ class LearnController = LearnControllerBase with _$LearnController;
 
 const int lookIntoFuture = 20;
 const int lookIntoFutureMilliseconds = lookIntoFuture * 60 * 1000;
+
+const int preLookIntoFuture = 3;
+const int preLookIntoFutureMilliseconds = preLookIntoFuture * 60 * 1000;
 
 abstract class LearnControllerBase with Store {
   final Random random = Random();

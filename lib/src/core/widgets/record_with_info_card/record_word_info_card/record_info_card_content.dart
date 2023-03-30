@@ -22,7 +22,7 @@ class RecordInfoCardContent extends StatelessWidget {
 
   List<Widget> _getSections(Record record) {
     final sections = [
-      RecordInfoHeader(record.original),
+      RecordInfoHeader(record.original, record.transcription),
       RecordInfoTranslationsSection(
         translations: record.translations,
       )
@@ -51,9 +51,12 @@ class RecordInfoCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      runSpacing: defaultMargin,
-      children: _getSections(record),
+    return Material(
+      color: Colors.transparent,
+      child: Wrap(
+        runSpacing: defaultMargin,
+        children: _getSections(record),
+      ),
     );
   }
 }

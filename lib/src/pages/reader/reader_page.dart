@@ -44,7 +44,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   @override
   initState() {
     reader = getIt<ReaderController>(param1: widget.book);
-    readerTimer = getIt<ReadingTimerController>(param1: widget.book);
+    readerTimer = getIt<ReadingTimerController>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _currentOrientation = MediaQuery.of(context).orientation;
@@ -54,7 +54,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
 
-    readerTimer.startReadingTimer();
+    readerTimer.startReadingTimer(widget.book);
   }
 
   @override
@@ -66,7 +66,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
         readerTimer.stopReadingTimer();
         break;
       case AppLifecycleState.resumed:
-        readerTimer.startReadingTimer();
+        readerTimer.startReadingTimer(widget.book);
         break;
     }
     super.didChangeAppLifecycleState(state);

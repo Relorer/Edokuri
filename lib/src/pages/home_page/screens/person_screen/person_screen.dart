@@ -9,6 +9,7 @@ import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
+import 'package:edokuri/src/pages/home_page/screens/person_screen/set_add_button.dart';
 import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar.dart';
 import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/set_cards_list.dart';
 import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/sets_section_header.dart';
@@ -39,6 +40,9 @@ class _PersonScreenState extends State<PersonScreen> {
               ))),
           const SetsSectionHeader(),
           const SetCardsList(),
+          setRepository.sets.isEmpty
+              ? const SetAddButton()
+              : const SliverSingleChild(SizedBox()),
         ],
       );
     });
