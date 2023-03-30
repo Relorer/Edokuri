@@ -23,6 +23,14 @@ class FileController {
       if (book.words.isEmpty) {
         return _toastController.showDefaultTost("The book can't be empty");
       }
+
+      if (_bookRepository.books
+          .where((element) => element.hash == book.hash)
+          .isNotEmpty) {
+        return _toastController
+            .showDefaultTost("The book has already been added");
+      }
+
       _bookRepository.putBook(book);
       _toastController.showDefaultTost("Book is added");
     } catch (e, stacktrace) {

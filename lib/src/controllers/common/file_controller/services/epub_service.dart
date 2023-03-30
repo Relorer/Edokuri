@@ -7,6 +7,7 @@ import 'dart:typed_data';
 import 'package:epubx/epubx.dart';
 import 'package:html/parser.dart';
 import 'package:image/image.dart';
+import 'package:crypto/crypto.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/core/utils/string_utils.dart';
@@ -31,6 +32,14 @@ class EpubService {
       chapters.addAll(_getChapters(ch));
     }
 
+    List<int> loadedBytes;
+    if (bytes is Future) {
+      loadedBytes = await bytes;
+    } else {
+      loadedBytes = bytes;
+    }
+    final hash = sha1.convert(loadedBytes);
+
     var book = Book(
         author: epub.AuthorList?.where((element) => element != null).join(", "),
         title: epub.Title,
@@ -39,7 +48,8 @@ class EpubService {
         currentCompletedChapter: 0,
         currentPositionInChapter: 0,
         currentCompletedPositionInChapter: 0,
-        lastReading: DateTime(0));
+        lastReading: DateTime(0),
+        hash: hash.toString());
 
     List<String> words = [];
 
