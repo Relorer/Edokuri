@@ -1,5 +1,6 @@
 // 🎯 Dart imports:
 import 'dart:async';
+import 'dart:developer';
 import 'dart:typed_data';
 
 // 📦 Package imports:
@@ -16,9 +17,13 @@ class EpubService {
     var epub = await EpubReader.openBook(bytes);
     Uint8List? cover;
 
-    var coverImage = await epub.readCover();
-    if (coverImage != null) {
-      cover = Uint8List.fromList(encodeJpg(coverImage));
+    try {
+      var coverImage = await epub.readCover();
+      if (coverImage != null) {
+        cover = Uint8List.fromList(encodeJpg(coverImage));
+      }
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
     }
 
     List<EpubChapterRef> chapters = [];

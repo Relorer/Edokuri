@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 
 // 🌎 Project imports:
@@ -16,12 +18,18 @@ class FileController {
   FileController(this._bookRepository, this._toastController);
 
   Future addBookFile(Uint8List file) async {
-    var book = await compute(_epubService.readBook, file);
-    if (book.words.isEmpty) {
-      return _toastController.showDefaultTost("The book can't be empty");
+    try {
+      var book = await compute(_epubService.readBook, file);
+      if (book.words.isEmpty) {
+        return _toastController.showDefaultTost("The book can't be empty");
+      }
+      _bookRepository.putBook(book);
+      _toastController.showDefaultTost("Book is added");
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+      _toastController
+          .showDefaultTost("Something went wrong, maybe the file is corrupted");
     }
-    _bookRepository.putBook(book);
-    _toastController.showDefaultTost("Book is added");
   }
 
   Future getBookFromUser() async {
