@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -37,9 +38,39 @@ class LearnPage extends StatefulWidget {
   }
 }
 
-class LearnPageState extends State<LearnPage> {
+class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
+  late LearningTimerController timer = getIt<LearningTimerController>();
   late LearnController learnController =
       getIt<LearnController>(param1: widget.records);
+
+  @override
+  initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+
+    timer.startLearningTimer();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.detached:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+        timer.stopLearningTimer();
+        break;
+      case AppLifecycleState.resumed:
+        timer.startLearningTimer();
+        break;
+    }
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
+  void dispose() {
+    timer.stopLearningTimer();
+    super.dispose();
+  }
 
   List<Widget> _getSections(Record record, bool isAnswerShown) {
     final sections = <Widget>[
