@@ -977,11 +977,12 @@ packages:
   open_as_default:
     dependency: "direct main"
     description:
-      name: open_as_default
-      sha256: "7f8a0cd362f57a49440fa3232d07c1c94ddbbd8affcbe6e02e5f8605af598bc1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
+      path: "."
+      ref: HEAD
+      resolved-ref: ff8c0f95eb5cabf8011979f4340be74eb129dbcf
+      url: "https://github.com/Relorer/open_as_default.git"
+    source: git
+    version: "0.0.4"
   package_config:
     dependency: transitive
     description:
