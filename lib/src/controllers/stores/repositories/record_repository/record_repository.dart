@@ -2,14 +2,14 @@
 import 'dart:developer';
 
 // 📦 Package imports:
-import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
-import 'package:edokuri/src/models/recordState/record_state.dart';
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/models/recordState/record_state.dart';
 
 part 'record_repository.g.dart';
 

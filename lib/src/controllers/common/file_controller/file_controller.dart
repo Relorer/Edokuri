@@ -5,8 +5,6 @@ import 'dart:developer';
 // 🐦 Flutter imports:
 import 'package:flutter/foundation.dart';
 
-// 📦 Package imports:
-
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
@@ -15,6 +13,8 @@ import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'services/epub_service.dart';
 import 'services/file_picker_service.dart';
+
+// 📦 Package imports:
 
 class BookWithStatus {
   final Book? book;
