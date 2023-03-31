@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -26,19 +28,24 @@ class RecordInfoSynonymsSection extends StatelessWidget {
           children: List<Widget>.generate(
             synonyms.length,
             (int index) {
-              return ActionChip(
-                pressElevation: 3,
-                onPressed: pressable
+              return GestureDetector(
+                onDoubleTap: pressable
                     ? (() => TapOnWordHandlerProvider.of(context)
                         .tapOnWordHandler(synonyms[index].toLowerCase(), ""))
                     : () => {},
-                backgroundColor:
-                    Theme.of(context).lightGrayColor.withOpacity(0.1),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: const EdgeInsets.all(0),
-                visualDensity:
-                    const VisualDensity(horizontal: 0.0, vertical: -4),
-                label: Text(synonyms[index].toLowerCase()),
+                child: ActionChip(
+                  pressElevation: 3,
+                  onPressed: () {
+                    getIt<TTSController>().speak(synonyms[index].toLowerCase());
+                  },
+                  backgroundColor:
+                      Theme.of(context).lightGrayColor.withOpacity(0.1),
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  padding: const EdgeInsets.all(0),
+                  visualDensity:
+                      const VisualDensity(horizontal: 0.0, vertical: -4),
+                  label: Text(synonyms[index].toLowerCase()),
+                ),
               );
             },
           ).toList(),

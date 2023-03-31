@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +13,7 @@ import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
-class RecordInfoSentencesSection extends StatelessWidget {
+class RecordInfoSentencesSection extends StatefulWidget {
   final bool showTranslation;
   final List<Example> sentences;
 
@@ -19,39 +21,64 @@ class RecordInfoSentencesSection extends StatelessWidget {
       {super.key, required this.sentences, required this.showTranslation});
 
   @override
+  State<RecordInfoSentencesSection> createState() =>
+      _RecordInfoSentencesSectionState();
+}
+
+class _RecordInfoSentencesSectionState
+    extends State<RecordInfoSentencesSection> {
+  bool _showTranslation = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _showTranslation = widget.showTranslation;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         const RecordInfoSectionHeader("Sentences"),
-        ...sentences.map((element) => Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                SizedBox(
-                    width: double.maxFinite,
-                    child: Text(element.text,
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ))),
-                showTranslation
-                    ? Column(
-                        children: [
-                          SizedBox(
-                              width: double.maxFinite,
-                              child: Text(element.tr,
-                                  style: const TextStyle(
-                                      fontSize: 14, color: lightGray))),
-                          SizedBox(
-                            height: sentences.indexOf(element) ==
-                                    sentences.length - 1
-                                ? 0
-                                : defaultMargin,
-                          )
-                        ],
-                      )
-                    : Container(),
-              ],
+        ...widget.sentences.map((element) => GestureDetector(
+              onTap: () {
+                getIt<TTSController>().speak(element.text);
+              },
+              onLongPress: () {
+                setState(() {
+                  _showTranslation = !_showTranslation;
+                });
+              },
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  SizedBox(
+                      width: double.maxFinite,
+                      child: Text(element.text,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ))),
+                  _showTranslation
+                      ? Column(
+                          children: [
+                            SizedBox(
+                                width: double.maxFinite,
+                                child: Text(element.tr,
+                                    style: const TextStyle(
+                                        fontSize: 14, color: lightGray))),
+                            SizedBox(
+                              height: widget.sentences.indexOf(element) ==
+                                      widget.sentences.length - 1
+                                  ? 0
+                                  : defaultMargin,
+                            )
+                          ],
+                        )
+                      : Container(),
+                ],
+              ),
             )),
-        showTranslation
+        _showTranslation
             ? Padding(
                 padding: const EdgeInsets.symmetric(vertical: defaultMargin),
                 child: SvgPicture.asset(

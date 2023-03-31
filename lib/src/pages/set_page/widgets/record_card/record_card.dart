@@ -42,6 +42,10 @@ class RecordCard extends StatelessWidget {
           _openRecordInfo(context);
         },
         removeSet: () => _removeRecord(context),
+        resetProgress: () {
+          Navigator.pop(context);
+          getIt<RecordRepository>().resetProgress(record);
+        },
       ),
     );
   }

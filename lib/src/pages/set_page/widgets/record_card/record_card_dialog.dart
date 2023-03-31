@@ -26,7 +26,7 @@ class RecordCardDialog extends StatelessWidget {
       ButtonWithIcon(
         text: "Reset progress",
         svg: loopSvg,
-        onTap: openRecord,
+        onTap: resetProgress,
       ),
       ButtonWithIcon(
         text: LocaleKeys.delete.tr(),
