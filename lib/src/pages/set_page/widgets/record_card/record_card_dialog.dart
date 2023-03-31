@@ -10,8 +10,10 @@ import 'package:edokuri/src/theme/svgs.dart';
 class RecordCardDialog extends StatelessWidget {
   final VoidCallback? openRecord;
   final VoidCallback? removeSet;
+  final VoidCallback? resetProgress;
 
-  const RecordCardDialog({super.key, this.openRecord, this.removeSet});
+  const RecordCardDialog(
+      {super.key, this.openRecord, this.removeSet, this.resetProgress});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,11 @@ class RecordCardDialog extends StatelessWidget {
       ButtonWithIcon(
         text: "Open info",
         svg: bookSvg,
+        onTap: openRecord,
+      ),
+      ButtonWithIcon(
+        text: "Reset progress",
+        svg: loopSvg,
         onTap: openRecord,
       ),
       ButtonWithIcon(

@@ -2,6 +2,8 @@
 import 'dart:developer';
 
 // 📦 Package imports:
+import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
+import 'package:edokuri/src/models/recordState/record_state.dart';
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
@@ -83,7 +85,20 @@ abstract class RecordRepositoryBase with Store {
     return null;
   }
 
-  void putRecord(Record record, {SetRecords? set}) async {
+  Future resetProgress(Record record) async {
+    try {
+      putRecord(record.copyWith(
+          step: RecordStep1(),
+          lastReview: DateTime.utc(0),
+          reviewInterval: 0,
+          reviewNumber: 0,
+          state: RecordState.newborn));
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
+  Future putRecord(Record record, {SetRecords? set}) async {
     try {
       record.id = records
           .firstWhere(
