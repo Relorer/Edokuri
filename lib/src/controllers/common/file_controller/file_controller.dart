@@ -32,12 +32,6 @@ class FileController {
 
   FileController(this._bookRepository, this._toastController);
 
-  bool bookExists(String hash) {
-    return _bookRepository.books
-        .where((element) => element.hash == hash)
-        .isNotEmpty;
-  }
-
   Future<BookWithStatus> addBookFile(FutureOr<List<int>> file) async {
     try {
       var book = await compute(_epubService.readBook, await file);
@@ -49,9 +43,12 @@ class FileController {
       final pocketbase = await getIt.getAsync<PocketbaseController>();
       book.hash = "${pocketbase.user!.id}-${book.hash}";
 
-      if (bookExists(book.hash)) {
+      final existed =
+          _bookRepository.books.where((element) => element.hash == book.hash);
+
+      if (existed.isNotEmpty) {
         _toastController.showDefaultTost("The book has already been added");
-        return BookWithStatus(book, false, true);
+        return BookWithStatus(existed.first, false, true);
       }
 
       _bookRepository.putBook(book);
