@@ -84,32 +84,38 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return RecordWithInfoCard(
-      body: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: AnnotatedRegion(
-          value: SystemUiOverlayStyle(
-              systemNavigationBarColor:
-                  Theme.of(context).secondBackgroundColor),
-          child: Scaffold(
-              appBar: const PhantomAppBar(),
-              backgroundColor: Theme.of(context).colorScheme.background,
-              bottomNavigationBar: HomePageNavigation(
-                currentIndex: _currentIndex,
-                onTap: (index) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-              ),
-              body: SafeArea(
-                child: _screens[_currentIndex],
-              )),
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return false;
+      },
+      child: RecordWithInfoCard(
+        body: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: AnnotatedRegion(
+            value: SystemUiOverlayStyle(
+                systemNavigationBarColor:
+                    Theme.of(context).secondBackgroundColor),
+            child: Scaffold(
+                appBar: const PhantomAppBar(),
+                backgroundColor: Theme.of(context).colorScheme.background,
+                bottomNavigationBar: HomePageNavigation(
+                  currentIndex: _currentIndex,
+                  onTap: (index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+                body: SafeArea(
+                  child: _screens[_currentIndex],
+                )),
+          ),
         ),
       ),
     );
