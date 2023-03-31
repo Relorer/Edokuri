@@ -173,13 +173,15 @@ class StatsGraphPainter extends CustomPainter {
           reviewedWordsY1 - day.newKnownRecords / maxValue * height;
       final newKnownWordsY2 = reviewedWordsY1;
 
+      const double hackCoefficient = 1.005;
+
       //newKnownWords
       canvas.drawRRect(
         RRect.fromLTRBAndCorners(
           left,
           newKnownWordsY1,
           right,
-          newKnownWordsY2,
+          newKnownWordsY2 * hackCoefficient,
         ),
         paint..color = white,
       );
@@ -190,7 +192,7 @@ class StatsGraphPainter extends CustomPainter {
             left,
             reviewedWordsY1,
             right,
-            reviewedWordsY2,
+            reviewedWordsY2 * hackCoefficient,
           ),
           paint..color = orange);
 
@@ -200,7 +202,7 @@ class StatsGraphPainter extends CustomPainter {
             left,
             newSavedWordsY1,
             right,
-            newSavedWordsY2,
+            newSavedWordsY2 * hackCoefficient,
           ),
           paint..color = darkOrange);
 
