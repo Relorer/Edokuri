@@ -69,7 +69,8 @@ dependencies:
   mobx_codegen: ^2.1.1
   need_resume: ^1.0.7+1
   numberpicker: ^2.1.1
-  open_as_default: ^0.0.3
+  open_as_default:
+    git: https://github.com/Relorer/open_as_default.git
   path: ^1.8.2
   path_drawing: ^1.0.1
   path_provider: ^2.0.13
