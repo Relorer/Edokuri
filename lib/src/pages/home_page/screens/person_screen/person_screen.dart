@@ -40,9 +40,11 @@ class _PersonScreenState extends State<PersonScreen> {
               ))),
           const SetsSectionHeader(),
           const SetCardsList(),
-          setRepository.sets.isEmpty
-              ? const SetAddButton()
-              : const SliverSingleChild(SizedBox()),
+          setRepository.isLoading
+              ? const SliverSingleChild(SizedBox())
+              : setRepository.sets.isEmpty
+                  ? const SetAddButton()
+                  : const SliverSingleChild(SizedBox()),
         ],
       );
     });

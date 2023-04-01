@@ -46,7 +46,7 @@ abstract class PocketbaseControllerBase with Store {
   bool isAuthorized = false;
 
   @observable
-  bool isLoading = false;
+  bool isLoading = true;
 
   PocketbaseControllerBase() {
     client.authStore.onChange.listen((e) async {
@@ -69,6 +69,7 @@ abstract class PocketbaseControllerBase with Store {
 
       isAuthorized = client.authStore.token.isNotEmpty;
       secureStorage.write(key: authTokenKey, value: encoded);
+      isLoading = false;
     });
   }
 
@@ -88,41 +89,31 @@ abstract class PocketbaseControllerBase with Store {
 
   @action
   Future googleAuth() async {
-    await startWithLoading(() async {
-      await _authWithProvider("google");
-    });
+    await _authWithProvider("google");
   }
 
   @action
   Future githubAuth() async {
-    await startWithLoading(() async {
-      await _authWithProvider("github");
-    });
+    await _authWithProvider("github");
   }
 
   @action
   Future skipAuth() async {
-    await startWithLoading(() async {
-      try {
-        final username = const Uuid().v4().replaceAll('-', '');
-        final pass = const Uuid().v4();
-        await client.collection('users').create(body: {
-          "name": generator.generate(),
-          "username": username,
-          "password": pass,
-          "passwordConfirm": pass,
-        });
-        await client.collection('users').authWithPassword(username, pass);
-      } catch (e, stacktrace) {
-        log("${e.toString()}\n${stacktrace.toString()}");
-      }
-    });
-  }
-
-  Future startWithLoading(Function func) async {
-    isLoading = true;
-    await func();
-    isLoading = false;
+    try {
+      isLoading = true;
+      final username = const Uuid().v4().replaceAll('-', '');
+      final pass = const Uuid().v4();
+      await client.collection('users').create(body: {
+        "name": generator.generate(),
+        "username": username,
+        "password": pass,
+        "passwordConfirm": pass,
+      });
+      await client.collection('users').authWithPassword(username, pass);
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+      isLoading = false;
+    }
   }
 
   @action
@@ -175,6 +166,7 @@ abstract class PocketbaseControllerBase with Store {
 
   Future _authWithProvider(String providerName) async {
     try {
+      isLoading = true;
       final authMethods = await client.collection("users").listAuthMethods();
       final provider = authMethods.authProviders
           .where((am) => am.name.toLowerCase() == providerName)
@@ -202,6 +194,7 @@ abstract class PocketbaseControllerBase with Store {
       ]);
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
+      isLoading = false;
     }
   }
 }

@@ -65,7 +65,7 @@ class SetScreen extends StatelessWidget {
                 setData: _setData,
               ),
               CardsSectionHeader(set: _setData.set),
-              _setData.records.isEmpty
+              !recordRepository.isLoading && _setData.records.isEmpty
                   ? RecordAddButton(
                       setRecords: _setData.set,
                     )
