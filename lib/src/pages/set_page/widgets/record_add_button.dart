@@ -26,7 +26,6 @@ class RecordAddButton extends StatelessWidget {
           title: 'Add new records',
           subTitle: 'Let\'s fill up the dictionary first',
           svg: addRecordSvg,
-          width: 24,
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
