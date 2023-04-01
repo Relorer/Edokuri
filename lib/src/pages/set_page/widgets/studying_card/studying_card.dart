@@ -36,13 +36,16 @@ class StudyingCard extends StatelessWidget {
               horizontal: doubleDefaultMargin, vertical: doubleDefaultMargin),
           child: Row(
             children: [
-              Center(
-                child: SvgPicture.asset(
-                  svg,
-                  width: width,
-                  height: height,
-                  colorFilter:
-                      const ColorFilter.mode(darkOrange, BlendMode.srcIn),
+              SizedBox(
+                width: 24,
+                child: Center(
+                  child: SvgPicture.asset(
+                    svg,
+                    width: width,
+                    height: height,
+                    colorFilter:
+                        const ColorFilter.mode(darkOrange, BlendMode.srcIn),
+                  ),
                 ),
               ),
               const SizedBox(

@@ -2,23 +2,20 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
-import 'package:edokuri/src/pages/set_editing_page/set_editign_page.dart';
 import 'package:edokuri/src/pages/set_page/widgets/studying_card/studying_card.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
 // 📦 Package imports:
 
-class SetAddButton extends StatelessWidget {
-  const SetAddButton({super.key});
+class BookAddButton extends StatelessWidget {
+  const BookAddButton({super.key});
 
-  _creatNewSet(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const SetEditingPage(),
-      ),
-    );
+  _upload(BuildContext context) {
+    getIt<FileController>().getBookFromUser();
   }
 
   @override
@@ -28,11 +25,11 @@ class SetAddButton extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(
             defaultMargin, 0, defaultMargin, defaultMargin),
         child: StudyingCard(
-          width: 24,
-          title: 'Create new set',
-          subTitle: 'Sets of records not tied to a book',
-          svg: createSvg,
-          onTap: () => _creatNewSet(context),
+          width: 16,
+          title: 'Upload a new book',
+          subTitle: 'Use epub format',
+          svg: uploadSvg,
+          onTap: () => _upload(context),
         ),
       ),
     );
