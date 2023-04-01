@@ -40,6 +40,7 @@ class SetScreen extends StatelessWidget {
             create: (_) => _searchRecordController),
       ],
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(child: Observer(builder: (context) {
           final recordRepository = getIt<RecordRepository>();
           return BouncingCustomScrollView(
