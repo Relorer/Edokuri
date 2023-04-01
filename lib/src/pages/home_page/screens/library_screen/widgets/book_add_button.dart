@@ -1,11 +1,10 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
-import 'package:edokuri/src/core/service_locator.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
-import 'package:edokuri/src/pages/set_editing_page/set_editign_page.dart';
 import 'package:edokuri/src/pages/set_page/widgets/studying_card/studying_card.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
