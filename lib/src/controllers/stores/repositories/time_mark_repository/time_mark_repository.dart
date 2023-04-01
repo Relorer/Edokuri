@@ -60,14 +60,19 @@ abstract class TimeMarkRepositoryBase with Store {
   }
 
   void addTimeMarkForToday() {
-    DateTime date = DateTime.now().toUtc();
-    if (timeMarks.isEmpty || !timeMarks.last.dateTime.isSameDate(date)) {
-      putTimeMark(TimeMark(dateTime: date));
+    DateTime now = DateTime.now().toUtc();
+
+    timeMarks.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
+    if (timeMarks.isEmpty || !timeMarks.last.dateTime.isSameDate(now)) {
+      putTimeMark(TimeMark(dateTime: now));
     }
   }
 
   int getStreak() {
     if (timeMarks.isEmpty) return 0;
+
+    timeMarks.sort((a, b) => a.dateTime.compareTo(b.dateTime));
 
     DateTime date = DateTime.now().toUtc();
     int result = timeMarks.last.dateTime.isSameDate(date) ? 1 : 0;
