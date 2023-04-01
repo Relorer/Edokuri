@@ -44,12 +44,15 @@ class SectionHeader extends StatelessWidget {
                   constraints: const BoxConstraints(),
                   icon: SvgPicture.asset(
                     menuSvg,
+                    height: 12,
                     colorFilter: ColorFilter.mode(
                         Theme.of(context).lightGrayColor, BlendMode.srcIn),
                   ),
                   onPressed: () => _menuButtonHandler(context),
                 )
-              : Container(),
+              : Container(
+                  height: 24,
+                ),
         ],
       ),
     ));
