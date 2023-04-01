@@ -32,6 +32,7 @@ abstract class ReaderControllerBase with Store {
   final BookRepository bookRepository;
   final Book book;
 
+  @observable
   PageController? pageController;
 
   final HandleVolumeController handleVolumeButtonController;
@@ -114,6 +115,14 @@ abstract class ReaderControllerBase with Store {
       position += chapters[chapter][i].length;
     }
     return position;
+  }
+
+  int getCompletedChaptersPageCount() {
+    var sum = 0;
+    for (var i = 0; i < currentChapter; i++) {
+      sum += chaptersContent[i].length;
+    }
+    return sum;
   }
 
   _PositionInBook _getPositionInBook(List<List<String>> chapters, int index) {
