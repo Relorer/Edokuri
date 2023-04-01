@@ -114,7 +114,22 @@ abstract class BookRepositoryBase with Store {
     }
   }
 
-  void putBook(Book book) async {
+  Future resetProgress(Book book) async {
+    try {
+      final body = {
+        "currentChapter": 0,
+        "currentCompletedChapter": 0,
+        "currentPositionInChapter": 0,
+        "currentCompletedPositionInChapter": 0,
+        "lastReading": DateTime(0).toIso8601String(),
+      };
+      await pb.client.collection(_book).update(book.id, body: body);
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
+  Future putBook(Book book) async {
     try {
       final body = book.toJson()..["user"] = pb.user?.id;
 

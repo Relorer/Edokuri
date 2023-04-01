@@ -14,8 +14,6 @@ import 'package:edokuri/src/pages/settings_page/settings_page_button.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
-// 📦 Package imports:
-
 class SettingsPageLearningBlock extends StatelessWidget {
   const SettingsPageLearningBlock({super.key});
 
@@ -32,8 +30,8 @@ class SettingsPageLearningBlock extends StatelessWidget {
               ),
               SettingPageButton(
                 text: "Clear known words",
-                onTap: () {
-                  getIt<KnownRecordsRepository>().removeAll();
+                onTap: () async {
+                  await getIt<KnownRecordsRepository>().removeAll();
                   getIt<ToastController>()
                       .showDefaultTost("Known words cleared");
                 },

@@ -19,8 +19,9 @@ class DefaultBottomSheet extends StatelessWidget {
       ),
       child: Container(
         color: Theme.of(context).secondBackgroundColor,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
           children: <Widget>[
             ...children,
             const SizedBox(

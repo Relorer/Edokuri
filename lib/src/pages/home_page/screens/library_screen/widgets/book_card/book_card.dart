@@ -54,6 +54,12 @@ class BookCard extends StatelessWidget {
     );
   }
 
+  void _resetProgress(BuildContext context) async {
+    Navigator.pop(context);
+    await getIt<BookRepository>().resetProgress(book);
+    getIt<ToastController>().showDefaultTost("Progress reset");
+  }
+
   void _addCustomCover(BuildContext context) async {
     Navigator.pop(context);
     final imagePicker = ImagePicker();
@@ -74,6 +80,7 @@ class BookCard extends StatelessWidget {
         removeBook: () => _removeBook(context),
         openBookSet: () => _openBookSet(context),
         addCustomCover: () => _addCustomCover(context),
+        resetProgress: () => _resetProgress(context),
       ),
     );
   }

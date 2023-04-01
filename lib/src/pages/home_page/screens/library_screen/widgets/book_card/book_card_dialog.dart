@@ -12,13 +12,15 @@ class BookCardDialog extends StatelessWidget {
   final VoidCallback? openBookSet;
   final VoidCallback? removeBook;
   final VoidCallback? addCustomCover;
+  final VoidCallback? resetProgress;
 
   const BookCardDialog(
       {super.key,
       this.openBook,
       this.removeBook,
       this.openBookSet,
-      this.addCustomCover});
+      this.addCustomCover,
+      this.resetProgress});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,11 @@ class BookCardDialog extends StatelessWidget {
           text: LocaleKeys.addCustomCover.tr(),
           svg: changeCoverSvg,
           onTap: addCustomCover),
+      ButtonWithIcon(
+        text: "Reset progress",
+        svg: loopSvg,
+        onTap: resetProgress,
+      ),
       ButtonWithIcon(
         text: LocaleKeys.delete.tr(),
         svg: deleteSvg,
