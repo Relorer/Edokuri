@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
+import 'package:edokuri/src/controllers/common/handle_volume_button/handle_volume_button.dart';
 import 'package:edokuri/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
 import 'package:edokuri/src/controllers/common/reading_timer_controller/reading_timer_controller.dart';
 import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
@@ -32,6 +33,10 @@ Future setupLocator() async {
           getIt<RecordRepository>(), getIt<SettingsController>(), records));
 
   getIt.registerSingleton(MLController());
+  getIt.registerSingleton<HandleVolumeController>(HandleVolumeController(),
+      dispose: (param) {
+    param.dispose();
+  });
 
   getIt.registerSingletonAsync(
       () => TranslatorControllerFactory().getTranslatorController());
@@ -83,8 +88,12 @@ Future setupRepositoryScope(String userId) async {
             FileController(getIt<BookRepository>(), getIt<ToastController>()));
 
         getIt.registerFactoryParam<ReaderController, Book, void>((book, _) =>
-            ReaderController(getIt<RecordRepository>(), getIt<BookRepository>(),
-                getIt<KnownRecordsRepository>(), book));
+            ReaderController(
+                getIt<RecordRepository>(),
+                getIt<BookRepository>(),
+                getIt<KnownRecordsRepository>(),
+                getIt<HandleVolumeController>(),
+                book));
 
         getIt.registerSingletonWithDependencies<ReadingTimerController>(
             () => ReadingTimerController(getIt<BookRepository>(),

@@ -19,13 +19,13 @@ class ReaderContentView extends StatelessWidget {
 
     return Observer(
       builder: (context) {
-        if (readerController.chaptersContent.isEmpty) {
+        if (readerController.chaptersContent.isEmpty ||
+            readerController.pageController == null) {
           return const CircularProgressIndicatorPale();
         }
         return BouncingPageView(
           onPageChanged: readerController.pageChangedHandler,
-          pageController:
-              PageController(initialPage: readerController.currentPageIndex),
+          pageController: readerController.pageController!,
           pagesContent:
               readerController.chaptersContent.expand((x) => x).toList(),
         );
