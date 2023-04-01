@@ -1,13 +1,16 @@
 // 🎯 Dart imports:
+import 'dart:async';
 import 'dart:ui';
 
 // 🐦 Flutter imports:
 import 'package:flutter/widgets.dart';
 
 // 📦 Package imports:
+import 'package:flutter_android_volume_keydown/flutter_android_volume_keydown.dart';
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/handle_volume_button/handle_volume_button.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
@@ -29,8 +32,42 @@ abstract class ReaderControllerBase with Store {
   final BookRepository bookRepository;
   final Book book;
 
-  ReaderControllerBase(this.recordRepository, this.bookRepository,
-      this.knownRecordsRepository, this.book);
+  PageController? pageController;
+
+  final HandleVolumeController handleVolumeButtonController;
+
+  void _handleVolumeButton(HardwareButton button) {
+    if (button == HardwareButton.volume_down) {
+      jumpToNextPage();
+    } else if (button == HardwareButton.volume_up) {
+      jumpToPreviousPage();
+    }
+  }
+
+  void jumpToNextPage() {
+    if (pageController == null) return;
+    pageController!.jumpToPage(pageController!.page!.toInt() + 1);
+  }
+
+  void jumpToPreviousPage() {
+    if (pageController == null) return;
+    pageController!.jumpToPage(pageController!.page!.toInt() - 1);
+  }
+
+  ReaderControllerBase(
+      this.recordRepository,
+      this.bookRepository,
+      this.knownRecordsRepository,
+      this.handleVolumeButtonController,
+      this.book) {
+    handleVolumeButtonController.addHandler(_handleVolumeButton);
+    handleVolumeButtonController.enable();
+  }
+
+  void dispose() {
+    handleVolumeButtonController.disable();
+    handleVolumeButtonController.removeHandler(_handleVolumeButton);
+  }
 
   @observable
   int pageCount = 1;
@@ -141,6 +178,8 @@ abstract class ReaderControllerBase with Store {
             temp, book.currentChapter, book.currentPositionInChapter)
         : _getPageIndexByChapterAndPosition(temp, currentChapter,
             _getPositionInChapter(temp, currentChapter, currentPage));
+
+    pageController = PageController(initialPage: currentPageIndex);
 
     currentCompletedPageIndex = currentCompletedPageIndex < 0
         ? _getPageIndexByChapterAndPosition(temp, book.currentCompletedChapter,

@@ -98,6 +98,7 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   void dispose() {
     reader.savePosition();
     readerTimer.stopReadingTimer();
+    reader.dispose();
     super.dispose();
   }
 

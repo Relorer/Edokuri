@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/handle_volume_button/handle_volume_button.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
@@ -39,6 +40,7 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
 
   Record? _record;
   final PanelController _panelController = PanelController();
+  final handleVolumeController = getIt<HandleVolumeController>();
 
   @override
   initState() {
@@ -49,6 +51,7 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
 
   _tapOnWordHandler(String word, String sentence) async {
     if (word.isEmpty) return;
+    handleVolumeController.pause();
 
     await _panelController.close().then((value) => setState(() {
           FocusScope.of(context).unfocus();
@@ -100,9 +103,12 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
 
   _panelCloseHandler() {
     _saveCurrentRecord();
-    setState(() {
-      _record = null;
-    });
+    if (_record != null) {
+      handleVolumeController.resume();
+      setState(() {
+        _record = null;
+      });
+    }
   }
 
   @override
