@@ -46,10 +46,11 @@ abstract class PocketbaseControllerBase with Store {
   bool isAuthorized = false;
 
   @observable
-  bool isLoading = true;
+  bool isLoading = false;
 
   PocketbaseControllerBase() {
     client.authStore.onChange.listen((e) async {
+      isLoading = true;
       final encoded = jsonEncode(<String, dynamic>{
         "token": e.token,
         "model": e.model,
