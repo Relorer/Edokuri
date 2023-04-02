@@ -71,21 +71,17 @@ abstract class TimeMarkRepositoryBase with Store {
 
   int getStreak() {
     if (timeMarks.isEmpty) return 0;
-
-    timeMarks.sort((a, b) => a.dateTime.compareTo(b.dateTime));
-
-    DateTime date = DateTime.now().toUtc();
-    int result = timeMarks.last.dateTime.isSameDate(date) ? 1 : 0;
-
-    for (var element in timeMarks.reversed.skip(1)) {
-      if (element.dateTime.isSameDate(date)) {
-        result++;
+    timeMarks.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+    int streak = 1;
+    for (int i = 1; i < timeMarks.length; i++) {
+      if (timeMarks[i].dateTime.isSameDate(timeMarks[i - 1].dateTime)) continue;
+      if (timeMarks[i].dateTime.isSameDate(
+          timeMarks[i - 1].dateTime.subtract(const Duration(days: 1)))) {
+        streak++;
       } else {
         break;
       }
-      date.subtract(const Duration(days: 1));
     }
-
-    return result;
+    return streak;
   }
 }
