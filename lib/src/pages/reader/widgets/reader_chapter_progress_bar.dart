@@ -45,6 +45,8 @@ class _ReaderChapterProgressBarState extends State<ReaderChapterProgressBar> {
       });
     }
 
+    final pageCount = max(reader.pageCount.toDouble() - 1, 1);
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -52,9 +54,13 @@ class _ReaderChapterProgressBarState extends State<ReaderChapterProgressBar> {
           borderRadius: const BorderRadius.all(Radius.circular(defaultRadius)),
           child: LinearProgressIndicator(
             value: max(
-                (page) / (reader.pageCount.toDouble() - 1),
-                reader.currentCompletedPage /
-                    (reader.pageCount.toDouble() - 1)),
+                page / pageCount,
+                (reader.currentChapter == reader.currentCompletedChapter
+                        ? reader.currentCompletedPage
+                        : reader.currentChapter < reader.currentCompletedChapter
+                            ? reader.pageCount
+                            : 0) /
+                    pageCount),
             color: Theme.of(context).progressBarActiveColor,
             backgroundColor: Colors.black12,
           ),
