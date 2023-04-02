@@ -16,12 +16,15 @@ class AuthPage extends StatelessWidget {
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(
           systemNavigationBarColor: Theme.of(context).secondBackgroundColor),
-      child: Scaffold(
-          appBar: const PhantomAppBar(),
-          backgroundColor: Theme.of(context).colorScheme.background,
-          body: const SafeAreaWithSettings(
-            child: AuthPageContent(),
-          )),
+      child: Container(
+        color: Theme.of(context).secondBackgroundColor,
+        child: SafeAreaWithSettings(
+          child: Scaffold(
+              appBar: const PhantomAppBar(),
+              backgroundColor: Theme.of(context).colorScheme.background,
+              body: const AuthPageContent()),
+        ),
+      ),
     );
   }
 }
