@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,6 +14,7 @@ import 'package:edokuri/generated/locale.dart';
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/utils/alert_dialog.dart';
 import 'package:edokuri/src/core/widgets/simple_card.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/book_card/book_card_content.dart';
@@ -34,9 +36,18 @@ class BookCard extends StatelessWidget {
   }
 
   void _removeBook(BuildContext context) async {
-    Navigator.pop(context);
-    await getIt<BookRepository>().removeBook(book);
-    getIt<ToastController>().showDefaultTost("Book is removed");
+    final result = await showOkCancelAlertDialogStyled(
+      context: context,
+      title: "Are you sure you want to delete \"${book.title}\" book?",
+      okLabel: "Yes",
+    );
+    if (result == OkCancelResult.ok) {
+      await getIt<BookRepository>().removeBook(book);
+      getIt<ToastController>().showDefaultTost("Book is removed");
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+    }
   }
 
   void _openBookSet(BuildContext context) {
@@ -55,16 +66,29 @@ class BookCard extends StatelessWidget {
   }
 
   void _resetProgress(BuildContext context) async {
-    Navigator.pop(context);
-    await getIt<BookRepository>().resetProgress(book);
-    getIt<ToastController>().showDefaultTost("Progress reset");
+    final result = await showOkCancelAlertDialogStyled(
+      context: context,
+      title:
+          "Are you sure you want to reset the progress for \"${book.title}\" book?",
+      okLabel: "Yes",
+    );
+    if (result == OkCancelResult.ok) {
+      await getIt<BookRepository>().resetProgress(book);
+      getIt<ToastController>().showDefaultTost("Progress reset");
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+    }
   }
 
   void _addCustomCover(BuildContext context) async {
     Navigator.pop(context);
     final imagePicker = ImagePicker();
     final file = await imagePicker.pickImage(source: ImageSource.gallery);
-    final Uint8List bytes = await file!.readAsBytes();
+    if (file == null) {
+      return;
+    }
+    final Uint8List bytes = await file.readAsBytes();
     book.cover = bytes;
     await getIt<BookRepository>().updateBookCover(book);
     getIt<ToastController>().showDefaultTost("Cover is changed");

@@ -4,12 +4,12 @@ import 'dart:math';
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
+
+// 📦 Package imports:
 
 class ReaderChapterProgressBar extends StatefulWidget {
   final ReaderController reader;

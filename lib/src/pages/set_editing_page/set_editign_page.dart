@@ -35,7 +35,7 @@ class SetEditingPageState extends State<SetEditingPage> {
   void _saveHandler(BuildContext context) {
     final SetRecords setForSave =
         widget.set == null ? SetRecords(name: controller.text) : widget.set!;
-    setForSave.name = controller.text;
+    setForSave.name = controller.text.trim();
 
     getIt<SetRecordsRepository>().putSet(setForSave);
     Navigator.pop(context);

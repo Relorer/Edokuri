@@ -4,12 +4,14 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/utils/alert_dialog.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
 import 'package:edokuri/src/core/widgets/section_headers/section_header_text.dart';
@@ -56,9 +58,16 @@ class SettingsPageState extends State<SettingsPage> {
                       const ColorFilter.mode(lightGray, BlendMode.srcIn),
                 ),
                 onPressed: () async {
-                  await getIt<PocketbaseController>().logout();
-                  if (context.mounted) {
-                    Navigator.pop(context);
+                  final result = await showOkCancelAlertDialogStyled(
+                    context: context,
+                    title: "Leave profile?",
+                    okLabel: "Yes",
+                  );
+                  if (result == OkCancelResult.ok) {
+                    await getIt<PocketbaseController>().logout();
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                    }
                   }
                 },
               ),

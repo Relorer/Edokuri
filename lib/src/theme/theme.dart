@@ -6,6 +6,14 @@ import 'theme_consts.dart';
 
 ThemeData basicTheme(Brightness brightness) => ThemeData(
     brightness: brightness,
+    dialogTheme: DialogTheme(
+        titleTextStyle: const TextStyle(
+            fontSize: 18, color: white, fontWeight: FontWeight.bold),
+        elevation: 2,
+        iconColor: white,
+        contentTextStyle: const TextStyle(fontSize: 16, color: white),
+        backgroundColor: darkGray,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
     textTheme: const TextTheme(
       displayLarge: TextStyle(
           fontSize: 18,

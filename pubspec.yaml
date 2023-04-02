@@ -27,6 +27,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  adaptive_dialog:
+    git: https://github.com/Relorer/adaptive_dialog
   audio_session: ^0.1.13
   auto_size_text: ^3.0.0
   blur: ^3.1.0
