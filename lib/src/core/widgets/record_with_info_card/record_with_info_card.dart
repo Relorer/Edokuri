@@ -14,6 +14,7 @@ import 'package:edokuri/src/core/widgets/provider_sliding_up_panel.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_container.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_content.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_card_skeleton.dart';
+import 'package:edokuri/src/core/widgets/safe_area_with_settings.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
 
@@ -126,22 +127,24 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
             controller: _panelController,
             panelCloseHandler: _panelCloseHandler,
             body: widget.body,
-            panelBuilder: (ScrollController sc) => Padding(
-              padding: EdgeInsets.only(bottom: widget.bottomPadding),
-              child: RecordInfoCardContainer(
-                  scrollController: sc,
-                  child: AnimatedSwitcher(
-                    switchInCurve: Curves.easeInCubic,
-                    switchOutCurve: Curves.easeOutCubic,
-                    duration: const Duration(milliseconds: 200),
-                    child: _record == null
-                        ? const RecordInfoCardSkeleton()
-                        : RecordInfoCardContent(
-                            record: _record!,
-                            showTranslationSourceSentences:
-                                widget.showTranslationSourceSentences,
-                          ),
-                  )),
+            panelBuilder: (ScrollController sc) => SafeAreaWithSettings(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: widget.bottomPadding),
+                child: RecordInfoCardContainer(
+                    scrollController: sc,
+                    child: AnimatedSwitcher(
+                      switchInCurve: Curves.easeInCubic,
+                      switchOutCurve: Curves.easeOutCubic,
+                      duration: const Duration(milliseconds: 200),
+                      child: _record == null
+                          ? const RecordInfoCardSkeleton()
+                          : RecordInfoCardContent(
+                              record: _record!,
+                              showTranslationSourceSentences:
+                                  widget.showTranslationSourceSentences,
+                            ),
+                    )),
+              ),
             ),
           )),
     );

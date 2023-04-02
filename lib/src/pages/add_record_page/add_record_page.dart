@@ -13,6 +13,7 @@ import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_sentences_section.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_synonyms_section.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_translations_section.dart';
+import 'package:edokuri/src/core/widgets/safe_area_with_settings.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/core/widgets/text_form_fields/text_form_field_default.dart';
 import 'package:edokuri/src/models/models.dart';
@@ -108,58 +109,63 @@ class AddRecordPageState extends State<AddRecordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).secondBackgroundColor,
-        elevation: 0,
-        title: Text("Add to ${widget.set?.name ?? "All"}"),
+    return Container(
+      color: Theme.of(context).secondBackgroundColor,
+      child: SafeAreaWithSettings(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).secondBackgroundColor,
+            elevation: 0,
+            title: Text("Add to ${widget.set?.name ?? "All"}"),
+          ),
+          backgroundColor: _record == null
+              ? Theme.of(context).colorScheme.background
+              : Colors.white,
+          body: SafeAreaWithSettings(
+              child: Column(
+            children: [
+              Visibility(
+                  replacement: const SizedBox(height: 3),
+                  visible: _isLoading,
+                  child: const LinearProgressIndicator(
+                    minHeight: 3,
+                    color: lightGray,
+                  )),
+              Expanded(
+                child: BouncingCustomScrollView(
+                  slivers: [
+                    SliverSingleChild(Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: defaultMargin),
+                      child: Column(
+                        children: [
+                          TextFormFieldDefault(
+                            controller: _phraseController,
+                            labelText: 'Enter a phrase',
+                            onFieldSubmitted: _phraseTextSubmitted,
+                          ),
+                          const SizedBox(
+                            height: doubleDefaultMargin,
+                          ),
+                          _record == null
+                              ? Container()
+                              : Wrap(
+                                  runSpacing: defaultMargin,
+                                  children: _getSections(_record!),
+                                ),
+                          const SizedBox(
+                            height: doubleDefaultMargin,
+                          ),
+                        ],
+                      ),
+                    ))
+                  ],
+                ),
+              )
+            ],
+          )),
+        ),
       ),
-      backgroundColor: _record == null
-          ? Theme.of(context).colorScheme.background
-          : Colors.white,
-      body: SafeArea(
-          child: Column(
-        children: [
-          Visibility(
-              replacement: const SizedBox(height: 3),
-              visible: _isLoading,
-              child: const LinearProgressIndicator(
-                minHeight: 3,
-                color: lightGray,
-              )),
-          Expanded(
-            child: BouncingCustomScrollView(
-              slivers: [
-                SliverSingleChild(Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: defaultMargin),
-                  child: Column(
-                    children: [
-                      TextFormFieldDefault(
-                        controller: _phraseController,
-                        labelText: 'Enter a phrase',
-                        onFieldSubmitted: _phraseTextSubmitted,
-                      ),
-                      const SizedBox(
-                        height: doubleDefaultMargin,
-                      ),
-                      _record == null
-                          ? Container()
-                          : Wrap(
-                              runSpacing: defaultMargin,
-                              children: _getSections(_record!),
-                            ),
-                      const SizedBox(
-                        height: doubleDefaultMargin,
-                      ),
-                    ],
-                  ),
-                ))
-              ],
-            ),
-          )
-        ],
-      )),
     );
   }
 }

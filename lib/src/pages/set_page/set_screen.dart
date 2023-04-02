@@ -10,6 +10,7 @@ import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/controllers/stores/search_record_controller/search_record_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
+import 'package:edokuri/src/core/widgets/safe_area_with_settings.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/home_page/utils/app_bar.dart';
@@ -19,6 +20,7 @@ import 'package:edokuri/src/pages/set_page/widgets/record_cards_list.dart';
 import 'package:edokuri/src/pages/set_page/widgets/records_app_bar.dart';
 import 'package:edokuri/src/pages/set_page/widgets/studying_cards_list.dart';
 import 'package:edokuri/src/pages/set_page/widgets/studying_section_header.dart';
+import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
 class SetScreen extends StatelessWidget {
@@ -39,43 +41,48 @@ class SetScreen extends StatelessWidget {
         Provider<SearchRecordController>(
             create: (_) => _searchRecordController),
       ],
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(child: Observer(builder: (context) {
-          final recordRepository = getIt<RecordRepository>();
-          return BouncingCustomScrollView(
-            controller: controller,
-            slivers: [
-              RecordsAppBar(
-                setData: _setData,
-                appBarHeight: getAppBarHeight(context),
-                resetScrollClick: () => controller.animateTo(0,
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.fastLinearToSlowEaseIn),
-              ),
-              SliverSingleChild(Visibility(
-                  replacement: const SizedBox(height: 3),
-                  visible: recordRepository.isLoading,
-                  child: const LinearProgressIndicator(
-                    minHeight: 3,
-                    color: lightGray,
-                  ))),
-              const StudyingSectionHeader(),
-              StudyingCardsList(
-                setData: _setData,
-              ),
-              CardsSectionHeader(set: _setData.set),
-              !recordRepository.isLoading && _setData.records.isEmpty
-                  ? RecordAddButton(
-                      setRecords: _setData.set,
-                    )
-                  : const SliverSingleChild(SizedBox()),
-              RecordCardsList(
-                setData: _setData,
-              ),
-            ],
-          );
-        })),
+      child: Container(
+        color: Theme.of(context).secondBackgroundColor,
+        child: SafeAreaWithSettings(
+          child: Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.background,
+            body: Observer(builder: (context) {
+              final recordRepository = getIt<RecordRepository>();
+              return BouncingCustomScrollView(
+                controller: controller,
+                slivers: [
+                  RecordsAppBar(
+                    setData: _setData,
+                    appBarHeight: getAppBarHeight(context),
+                    resetScrollClick: () => controller.animateTo(0,
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.fastLinearToSlowEaseIn),
+                  ),
+                  SliverSingleChild(Visibility(
+                      replacement: const SizedBox(height: 3),
+                      visible: recordRepository.isLoading,
+                      child: const LinearProgressIndicator(
+                        minHeight: 3,
+                        color: lightGray,
+                      ))),
+                  const StudyingSectionHeader(),
+                  StudyingCardsList(
+                    setData: _setData,
+                  ),
+                  CardsSectionHeader(set: _setData.set),
+                  !recordRepository.isLoading && _setData.records.isEmpty
+                      ? RecordAddButton(
+                          setRecords: _setData.set,
+                        )
+                      : const SliverSingleChild(SizedBox()),
+                  RecordCardsList(
+                    setData: _setData,
+                  ),
+                ],
+              );
+            }),
+          ),
+        ),
       ),
     );
   }

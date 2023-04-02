@@ -14,6 +14,7 @@ const _frontCardInLearnPageTerm = "FRONTCARDINLEARNPAGE_TERM";
 const _frontCardInLearnPageDefinition = "FRONTCARDINLEARNPAGE_DEFINITION";
 const _isFirstOpening = "ISFIRSTOPENING";
 const _einkMode = "EINKMODE";
+const _safeArea = "SAFEAREA";
 
 class SettingsControllerFactory {
   Future<SettingsController> getSettingsController() async {
@@ -38,6 +39,8 @@ abstract class SettingsControllerBase with Store {
   bool isFirstOpening = true;
   @observable
   bool einkMode = false;
+  @observable
+  bool safeArea = true;
 
   SettingsControllerBase(this._sp) {
     packSize = _sp.getInt(_packSize) ?? 10;
@@ -48,6 +51,7 @@ abstract class SettingsControllerBase with Store {
         _sp.getBool(_frontCardInLearnPageDefinition) ?? true;
     isFirstOpening = _sp.getBool(_isFirstOpening) ?? true;
     einkMode = _sp.getBool(_einkMode) ?? false;
+    safeArea = _sp.getBool(_safeArea) ?? false;
   }
 
   @action
@@ -82,7 +86,13 @@ abstract class SettingsControllerBase with Store {
 
   @action
   Future setEinkMode(bool value) async {
-    // await _sp.setBool(_einkMode, value);
-    // einkMode = value;
+    await _sp.setBool(_einkMode, value);
+    einkMode = value;
+  }
+
+  @action
+  Future setSafeArea(bool value) async {
+    await _sp.setBool(_safeArea, value);
+    safeArea = value;
   }
 }
