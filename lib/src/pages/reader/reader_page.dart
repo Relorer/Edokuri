@@ -12,11 +12,13 @@ import 'package:edokuri/src/controllers/common/reading_timer_controller/reading_
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_with_info_card.dart';
+import 'package:edokuri/src/core/widgets/safe_area_with_settings.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_content_view.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_footer_panel.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_head_panel.dart';
 import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class ReaderPage extends StatefulWidget {
   final Book book;
@@ -115,27 +117,30 @@ class ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
           value: SystemUiOverlayStyle(
               systemNavigationBarColor:
                   Theme.of(context).colorScheme.background),
-          child: Scaffold(
-              appBar: AppBar(
-                toolbarHeight: 0,
-                backgroundColor: Theme.of(context).colorScheme.background,
-                elevation: 0,
-              ),
-              body: SafeArea(
-                child: Container(
-                  color: Theme.of(context).colorScheme.background,
-                  child: Column(
-                    children: [
-                      const ReaderHeadPanel(),
-                      Expanded(
-                        key: _containerKey,
-                        child: const ReaderContentView(),
-                      ),
-                      const ReaderFooterPanel(),
-                    ],
+          child: Container(
+            color: white,
+            child: SafeAreaWithSettings(
+              child: Scaffold(
+                  appBar: AppBar(
+                    toolbarHeight: 0,
+                    backgroundColor: Theme.of(context).colorScheme.background,
+                    elevation: 0,
                   ),
-                ),
-              )),
+                  body: Container(
+                    color: Theme.of(context).colorScheme.background,
+                    child: Column(
+                      children: [
+                        const ReaderHeadPanel(),
+                        Expanded(
+                          key: _containerKey,
+                          child: const ReaderContentView(),
+                        ),
+                        const ReaderFooterPanel(),
+                      ],
+                    ),
+                  )),
+            ),
+          ),
         ),
       ),
     );

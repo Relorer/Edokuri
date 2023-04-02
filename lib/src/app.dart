@@ -51,6 +51,7 @@ class _AppState extends State<App> {
       builder: (BuildContext context) {
         final pocketbase = getIt<PocketbaseController>();
         final settings = getIt<SettingsController>();
+        settings.safeArea;
         return MaterialApp(
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,

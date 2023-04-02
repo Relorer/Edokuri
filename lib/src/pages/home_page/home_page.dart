@@ -15,6 +15,7 @@ import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart'
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_with_info_card.dart';
+import 'package:edokuri/src/core/widgets/safe_area_with_settings.dart';
 import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
 import 'package:edokuri/src/pages/home_page/screens/library_screen/library_screen.dart';
 import 'package:edokuri/src/pages/home_page/screens/person_screen/person_screen.dart';
@@ -85,37 +86,34 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        SystemNavigator.pop();
-        return false;
-      },
-      child: RecordWithInfoCard(
-        body: GestureDetector(
-          onTap: () {
-            FocusScopeNode currentFocus = FocusScope.of(context);
-            if (!currentFocus.hasPrimaryFocus) {
-              currentFocus.unfocus();
-            }
-          },
-          child: AnnotatedRegion(
-            value: SystemUiOverlayStyle(
-                systemNavigationBarColor:
-                    Theme.of(context).secondBackgroundColor),
-            child: Scaffold(
-                appBar: const PhantomAppBar(),
-                backgroundColor: Theme.of(context).colorScheme.background,
-                bottomNavigationBar: HomePageNavigation(
-                  currentIndex: _currentIndex,
-                  onTap: (index) {
-                    setState(() {
-                      _currentIndex = index;
-                    });
-                  },
-                ),
-                body: SafeArea(
-                  child: _screens[_currentIndex],
-                )),
+    return RecordWithInfoCard(
+      body: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: AnnotatedRegion(
+          value: SystemUiOverlayStyle(
+              systemNavigationBarColor:
+                  Theme.of(context).secondBackgroundColor),
+          child: Container(
+            color: Theme.of(context).secondBackgroundColor,
+            child: SafeAreaWithSettings(
+              child: Scaffold(
+                  appBar: const PhantomAppBar(),
+                  backgroundColor: Theme.of(context).colorScheme.background,
+                  bottomNavigationBar: HomePageNavigation(
+                    currentIndex: _currentIndex,
+                    onTap: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                  ),
+                  body: _screens[_currentIndex]),
+            ),
           ),
         ),
       ),

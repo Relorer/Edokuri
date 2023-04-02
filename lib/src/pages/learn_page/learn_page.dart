@@ -17,6 +17,7 @@ import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_sentences_section.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_synonyms_section.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_translations_section.dart';
+import 'package:edokuri/src/core/widgets/safe_area_with_settings.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/pages/learn_page/learn_page_answer_buttons_menu.dart';
@@ -137,45 +138,51 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
           ],
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: Observer(builder: (context) {
-          return SafeArea(
-              child: learnController.currentRecord == null
-                  ? const Center(
-                      child: Text(
-                      "There are no records to review \nCome back later",
-                      textAlign: TextAlign.center,
-                    ))
-                  : Column(
-                      children: [
-                        const LearnPageHeader(),
-                        Expanded(
-                          child: BouncingCustomScrollView(slivers: [
-                            SliverSingleChild(Column(
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.all(doubleDefaultMargin),
-                                  child: Wrap(
-                                    runSpacing: defaultMargin,
-                                    children: _getSections(
-                                        learnController.currentRecord!,
-                                        learnController.answerIsShown),
-                                  ),
-                                )
-                              ],
-                            ))
-                          ]),
-                        ),
-                        learnController.answerIsShown
-                            ? const LearnPageAnswerButtonsMenu()
-                            : LearnPageShowAnswerButton(onTap: () {
-                                setState(() {
-                                  learnController.answerIsShown = true;
-                                });
-                              }),
-                      ],
-                    ));
-        }),
+        body: Container(
+          color: Theme.of(context).secondBackgroundColor,
+          child: Observer(builder: (context) {
+            return SafeAreaWithSettings(
+              child: Container(
+                  color: white,
+                  child: learnController.currentRecord == null
+                      ? const Center(
+                          child: Text(
+                          "There are no records to review \nCome back later",
+                          textAlign: TextAlign.center,
+                        ))
+                      : Column(
+                          children: [
+                            const LearnPageHeader(),
+                            Expanded(
+                              child: BouncingCustomScrollView(slivers: [
+                                SliverSingleChild(Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(
+                                          doubleDefaultMargin),
+                                      child: Wrap(
+                                        runSpacing: defaultMargin,
+                                        children: _getSections(
+                                            learnController.currentRecord!,
+                                            learnController.answerIsShown),
+                                      ),
+                                    )
+                                  ],
+                                ))
+                              ]),
+                            ),
+                            learnController.answerIsShown
+                                ? const LearnPageAnswerButtonsMenu()
+                                : LearnPageShowAnswerButton(onTap: () {
+                                    setState(() {
+                                      learnController.answerIsShown = true;
+                                    });
+                                  }),
+                          ],
+                        )),
+            );
+          }),
+        ),
       ),
     );
   }

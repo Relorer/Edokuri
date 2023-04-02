@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/core/widgets/safe_area_with_settings.dart';
 import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
 import 'package:edokuri/src/pages/auth_page/auth_page_content.dart';
 import 'package:edokuri/src/theme/theme.dart';
@@ -18,7 +19,7 @@ class AuthPage extends StatelessWidget {
       child: Scaffold(
           appBar: const PhantomAppBar(),
           backgroundColor: Theme.of(context).colorScheme.background,
-          body: const SafeArea(
+          body: const SafeAreaWithSettings(
             child: AuthPageContent(),
           )),
     );

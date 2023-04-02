@@ -50,6 +50,12 @@ class SettingsPageGeneralBlock extends StatelessWidget {
                 value: settings.einkMode,
                 onChanged: settings.setEinkMode,
               ),
+              SettingsPageSwitch(
+                svg: fitScreenSvg,
+                text: "Safe Area",
+                value: settings.safeArea,
+                onChanged: settings.setSafeArea,
+              ),
               const SizedBox(
                 height: defaultRadius,
               ),
