@@ -51,7 +51,10 @@ class _ReaderChapterProgressBarState extends State<ReaderChapterProgressBar> {
         ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(defaultRadius)),
           child: LinearProgressIndicator(
-            value: reader.completedPages / (max(reader.pageCount - 1, 1)),
+            value: max(
+                (page) / (reader.pageCount.toDouble() - 1),
+                reader.currentCompletedPage /
+                    (reader.pageCount.toDouble() - 1)),
             color: Theme.of(context).progressBarActiveColor,
             backgroundColor: Colors.black12,
           ),
