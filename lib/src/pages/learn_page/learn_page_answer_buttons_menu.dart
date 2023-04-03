@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:edokuri/src/pages/learn_page/learn_page_answer_button.dart';
+import 'package:edokuri/src/theme/theme.dart';
 
 class LearnPageAnswerButtonsMenu extends StatelessWidget {
   const LearnPageAnswerButtonsMenu({super.key});

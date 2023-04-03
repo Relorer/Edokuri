@@ -40,7 +40,7 @@ class _PersonScreenState extends State<PersonScreen> {
               ))),
           const SetsSectionHeader(),
           const SetCardsList(),
-          setRepository.isLoading
+          setRepository.isLoading && setRepository.sets.isEmpty
               ? const SliverSingleChild(SizedBox())
               : setRepository.sets.isEmpty
                   ? const SetAddButton()

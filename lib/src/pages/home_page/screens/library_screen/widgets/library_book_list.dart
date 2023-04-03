@@ -21,7 +21,9 @@ class LibraryBookList extends StatelessWidget {
       final bookRepository = getIt<BookRepository>();
       final books = getIt<LibrarySortController>().sort(bookRepository.books);
 
-      if (bookRepository.isLoading) return const SliverToBoxAdapter();
+      if (bookRepository.isLoading && books.isEmpty) {
+        return const SliverToBoxAdapter();
+      }
 
       return books.isEmpty
           ? const BookAddButton()
