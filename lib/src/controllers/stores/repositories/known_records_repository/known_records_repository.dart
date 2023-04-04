@@ -40,7 +40,7 @@ abstract class KnownRecordsRepositoryBase with Store {
     });
   }
 
-  Future putSet(KnownRecords set) async {
+  Future putKnownRecords(KnownRecords set) async {
     try {
       final body = set.toJson()..["user"] = pb.user?.id;
       if (set.id.isEmpty) {
@@ -48,6 +48,14 @@ abstract class KnownRecordsRepositoryBase with Store {
       } else {
         await pb.client.collection(_knownRecords).update(set.id, body: body);
       }
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
+  void dispose() async {
+    try {
+      await pb.client.collection(_knownRecords).unsubscribe("*");
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }
@@ -74,7 +82,7 @@ abstract class KnownRecordsRepositoryBase with Store {
 
   Future addRecords(List<String> records) async {
     try {
-      putSet(
+      await putKnownRecords(
           KnownRecords(records: records, creationDate: DateTime.now().toUtc()));
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");

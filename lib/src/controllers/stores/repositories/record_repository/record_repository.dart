@@ -49,6 +49,14 @@ abstract class RecordRepositoryBase with Store {
     });
   }
 
+  void dispose() async {
+    try {
+      await pb.client.collection(_record).unsubscribe("*");
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
   List<Record> getSavedRecordsByBook(Book book) {
     return records
         .where((element) =>

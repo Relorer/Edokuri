@@ -57,25 +57,31 @@ Future setupRepositoryScope(String userId) async {
 
   getIt.pushNewScope(
       init: (getIt) {
-        getIt.registerSingletonWithDependencies(
+        getIt.registerSingletonWithDependencies<BookRepository>(
             () => BookRepository(getIt<PocketbaseController>()),
-            dependsOn: [PocketbaseController]);
-        getIt.registerSingletonWithDependencies(
+            dependsOn: [PocketbaseController],
+            dispose: (param) => param.dispose());
+        getIt.registerSingletonWithDependencies<ActivityTimeRepository>(
             () => ActivityTimeRepository(getIt<PocketbaseController>()),
-            dependsOn: [PocketbaseController]);
-        getIt.registerSingletonWithDependencies(
+            dependsOn: [PocketbaseController],
+            dispose: (param) => param.dispose());
+        getIt.registerSingletonWithDependencies<TimeMarkRepository>(
             () => TimeMarkRepository(getIt<PocketbaseController>()),
-            dependsOn: [PocketbaseController]);
-        getIt.registerSingletonWithDependencies(
+            dependsOn: [PocketbaseController],
+            dispose: (param) => param.dispose());
+        getIt.registerSingletonWithDependencies<SetRecordsRepository>(
             () => SetRecordsRepository(getIt<PocketbaseController>()),
-            dependsOn: [PocketbaseController]);
-        getIt.registerSingletonWithDependencies(
+            dependsOn: [PocketbaseController],
+            dispose: (param) => param.dispose());
+        getIt.registerSingletonWithDependencies<KnownRecordsRepository>(
             () => KnownRecordsRepository(getIt<PocketbaseController>()),
-            dependsOn: [PocketbaseController]);
-        getIt.registerSingletonWithDependencies(
+            dependsOn: [PocketbaseController],
+            dispose: (param) => param.dispose());
+        getIt.registerSingletonWithDependencies<RecordRepository>(
             () => RecordRepository(getIt<PocketbaseController>(),
                 getIt<SetRecordsRepository>(), getIt<KnownRecordsRepository>()),
-            dependsOn: [PocketbaseController]);
+            dependsOn: [PocketbaseController],
+            dispose: (param) => param.dispose());
 
         getIt.registerSingletonWithDependencies(
             () => LibrarySortController(getIt<RecordRepository>()),

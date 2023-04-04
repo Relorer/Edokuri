@@ -27,6 +27,8 @@ final pocketbaseUrl = FlutterConfig.get("POCKETBASE_URL");
 final redirectUri = "$pocketbaseUrl/auth-redirect";
 const callbackUrlScheme = "https";
 const authTokenKey = "auth_token_key";
+const passwordKey = "password_key";
+const usernameKey = "username_key";
 
 abstract class PocketbaseControllerBase with Store {
   final generator = UniqueNamesGenerator(
@@ -75,16 +77,21 @@ abstract class PocketbaseControllerBase with Store {
   }
 
   Future load() async {
-    final String? raw = await secureStorage.read(key: authTokenKey);
-    if (raw != null && raw.isNotEmpty) {
-      final decoded = jsonDecode(raw);
-      final token = (decoded as Map<String, dynamic>)["token"] as String? ?? "";
-      final model =
-          RecordModel.fromJson(decoded["model"] as Map<String, dynamic>? ?? {});
-      if (token.isNotEmpty) {
-        client.authStore.save(token, model);
-        await client.collection("users").authRefresh();
+    try {
+      final String? raw = await secureStorage.read(key: authTokenKey);
+      if (raw != null && raw.isNotEmpty) {
+        final decoded = jsonDecode(raw);
+        final token =
+            (decoded as Map<String, dynamic>)["token"] as String? ?? "";
+        final model = RecordModel.fromJson(
+            decoded["model"] as Map<String, dynamic>? ?? {});
+        if (token.isNotEmpty) {
+          client.authStore.save(token, model);
+          await client.collection("users").authRefresh();
+        }
       }
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
     }
   }
 
@@ -100,17 +107,36 @@ abstract class PocketbaseControllerBase with Store {
 
   @action
   Future skipAuth() async {
+    isLoading = true;
     try {
-      isLoading = true;
+      final username = await secureStorage.read(key: usernameKey);
+      final password = await secureStorage.read(key: passwordKey);
+
+      if (username != null && password != null) {
+        final recordAuth = await client
+            .collection('users')
+            .authWithPassword(username, password);
+        if (recordAuth.record == null) {
+          return;
+        }
+      }
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+
+    try {
       final username = const Uuid().v4().replaceAll('-', '');
-      final pass = const Uuid().v4();
+      final password = const Uuid().v4();
       await client.collection('users').create(body: {
         "name": generator.generate(),
         "username": username,
-        "password": pass,
-        "passwordConfirm": pass,
+        "password": password,
+        "passwordConfirm": password,
       });
-      await client.collection('users').authWithPassword(username, pass);
+
+      await secureStorage.write(key: usernameKey, value: username);
+      await secureStorage.write(key: passwordKey, value: password);
+      await client.collection('users').authWithPassword(username, password);
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
       isLoading = false;
@@ -119,7 +145,7 @@ abstract class PocketbaseControllerBase with Store {
 
   @action
   Future logout() async {
-    secureStorage.deleteAll();
+    secureStorage.delete(key: authTokenKey);
     client.authStore.clear();
   }
 
