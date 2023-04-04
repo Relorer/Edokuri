@@ -40,6 +40,14 @@ abstract class ActivityTimeRepositoryBase with Store {
     });
   }
 
+  void dispose() async {
+    try {
+      await pb.client.collection(_activityTime).unsubscribe("*");
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
   Future<ActivityTime?> putActivityTime(ActivityTime mark) async {
     try {
       final body = mark.toJson()..["user"] = pb.user?.id;

@@ -42,11 +42,11 @@ class BookCard extends StatelessWidget {
       okLabel: "Yes",
     );
     if (result == OkCancelResult.ok) {
-      await getIt<BookRepository>().removeBook(book);
-      getIt<ToastController>().showDefaultTost("Book is removed");
       if (context.mounted) {
         Navigator.pop(context);
       }
+      await getIt<BookRepository>().removeBook(book);
+      getIt<ToastController>().showDefaultTost("Book is removed");
     }
   }
 

@@ -41,7 +41,8 @@ class FileController {
         return BookWithStatus(null, false, false);
       }
       final pocketbase = await getIt.getAsync<PocketbaseController>();
-      book.hash = "${pocketbase.user!.id}-${book.hash}";
+      book.hash =
+          "${pocketbase.user!.id}-${pocketbase.user!.name}-${book.hash}";
 
       final existed =
           _bookRepository.books.where((element) => element.hash == book.hash);
@@ -52,7 +53,8 @@ class FileController {
       }
 
       _bookRepository.putBook(book);
-      _toastController.showDefaultTost("Book is added");
+      _toastController
+          .showDefaultTost("Book is added. Please wait for it to load");
       return BookWithStatus(book, true, false);
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");

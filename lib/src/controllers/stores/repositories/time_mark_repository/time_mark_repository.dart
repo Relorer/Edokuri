@@ -38,7 +38,15 @@ abstract class TimeMarkRepositoryBase with Store {
     });
   }
 
-  void putTimeMark(TimeMark mark) async {
+  void dispose() async {
+    try {
+      await pb.client.collection(_timeMark).unsubscribe("*");
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
+  Future putTimeMark(TimeMark mark) async {
     try {
       final body = mark.toJson()..["user"] = pb.user?.id;
       if (mark.id.isEmpty) {

@@ -66,11 +66,22 @@ class SettingsPageState extends State<SettingsPage> {
                             const ColorFilter.mode(lightGray, BlendMode.srcIn),
                       ),
                       onPressed: () async {
-                        final result = await showOkCancelAlertDialogStyled(
-                          context: context,
-                          title: "Leave profile?",
-                          okLabel: "Yes",
-                        );
+                        final pocketbase = getIt<PocketbaseController>();
+                        final result = pocketbase.user?.email == null ||
+                                pocketbase.user?.email == ""
+                            ? await showOkCancelAlertDialogStyled(
+                                context: context,
+                                title: "Leave profile?",
+                                message:
+                                    "You will be able to transfer your data to a new account when you log in to this device next time",
+                                okLabel: "Yes",
+                              )
+                            : await showOkCancelAlertDialogStyled(
+                                context: context,
+                                title: "Leave profile?",
+                                okLabel: "Yes",
+                              );
+
                         if (result == OkCancelResult.ok) {
                           await getIt<PocketbaseController>().logout();
                           if (context.mounted) {

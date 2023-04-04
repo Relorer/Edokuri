@@ -43,8 +43,15 @@ abstract class SetRecordsRepositoryBase with Store {
       });
     });
   }
+  void dispose() async {
+    try {
+      await pb.client.collection(_setRecords).unsubscribe("*");
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
 
-  void putSet(SetRecords set) async {
+  Future putSet(SetRecords set) async {
     try {
       final body = set.toJson()..["user"] = pb.user?.id;
       if (set.id.isEmpty) {

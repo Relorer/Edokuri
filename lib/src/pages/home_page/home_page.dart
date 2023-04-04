@@ -12,6 +12,7 @@ import 'package:open_as_default/open_as_default.dart';
 import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
+import 'package:edokuri/src/controllers/stores/pocketbase/migration_anonymous/migration_anonymous.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_with_info_card.dart';
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    MigrationAnonymous().load(context);
     OpenAsDefault.getFileIntent.then((value) {
       try {
         if (value != null) {

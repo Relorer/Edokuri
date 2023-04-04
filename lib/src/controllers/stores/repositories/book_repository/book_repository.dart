@@ -54,25 +54,40 @@ abstract class BookRepositoryBase with Store {
             isLoading = false;
           } else {
             final newBook = Book.fromRecord(e.record!);
-            final book =
-                books.firstWhere((element) => element.id == newBook.id);
-
-            book.author = newBook.author;
-            book.currentChapter = newBook.currentChapter;
-            book.currentCompletedChapter = newBook.currentCompletedChapter;
-            book.currentCompletedPositionInChapter =
-                newBook.currentCompletedPositionInChapter;
-            book.currentPositionInChapter = newBook.currentPositionInChapter;
-            book.readTimes = book.readTimes;
-            book.title = book.title;
-            book.lastReading = book.lastReading;
-            books.replaceRange(0, 1, [books.first]);
+            final booksWithId =
+                books.where((element) => element.id == newBook.id);
+            if (booksWithId.isEmpty) {
+              isLoading = true;
+              books.add(await getBookFromRecord(e.record!));
+              isLoading = false;
+              return;
+            } else {
+              final book = booksWithId.first;
+              book.author = newBook.author;
+              book.currentChapter = newBook.currentChapter;
+              book.currentCompletedChapter = newBook.currentCompletedChapter;
+              book.currentCompletedPositionInChapter =
+                  newBook.currentCompletedPositionInChapter;
+              book.currentPositionInChapter = newBook.currentPositionInChapter;
+              book.readTimes = book.readTimes;
+              book.title = book.title;
+              book.lastReading = book.lastReading;
+              books.replaceRange(0, 1, [books.first]);
+            }
           }
         } catch (e, stacktrace) {
           log("${e.toString()}\n${stacktrace.toString()}");
         }
       });
     });
+  }
+
+  void dispose() async {
+    try {
+      await pb.client.collection(_book).unsubscribe("*");
+    } catch (e, stacktrace) {
+      log("${e.toString()}\n${stacktrace.toString()}");
+    }
   }
 
   Future<Book> getBookFromRecord(RecordModel record) async {
