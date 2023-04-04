@@ -99,6 +99,7 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
 
     if (record.sentences.isNotEmpty) {
       sections.add(RecordInfoSentencesSection(
+        key: ValueKey(record.id),
         sentences: record.sentences,
         showTranslation: isAnswerShown,
       ));

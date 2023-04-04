@@ -36,6 +36,7 @@ class RecordInfoCardContent extends StatelessWidget {
     }
     if (record.sentences.isNotEmpty) {
       sections.add(RecordInfoSentencesSection(
+        key: ValueKey(record.id),
         sentences: record.sentences,
         showTranslation: showTranslationSourceSentences,
       ));

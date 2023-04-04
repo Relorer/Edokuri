@@ -94,6 +94,7 @@ class AddRecordPageState extends State<AddRecordPage> {
     }
     if (record.sentences.isNotEmpty) {
       sections.add(RecordInfoSentencesSection(
+        key: ValueKey(record.id),
         sentences: record.sentences,
         showTranslation: true,
       ));
