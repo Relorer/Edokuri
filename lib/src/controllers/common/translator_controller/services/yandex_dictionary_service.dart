@@ -42,7 +42,8 @@ class YandexDictionaryService {
             translations.add(Translation(syn["text"], source: yandexSource));
           }
           for (var ex in tr["ex"] ?? []) {
-            examples.add(Example(ex["text"], ex["tr"][0]["text"]));
+            examples
+                .add(Example(ex["text"], ex["tr"][0]["text"], yandexSource));
           }
         }
       }

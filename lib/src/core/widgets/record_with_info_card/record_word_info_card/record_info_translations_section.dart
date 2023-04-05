@@ -99,11 +99,14 @@ class _RecordInfoTranslationsSectionState
             },
           ).toList(),
         ),
-        translations.first.source == googleSource
+        translations.first.source != ""
             ? Padding(
                 padding: const EdgeInsets.symmetric(vertical: defaultMargin),
                 child: SvgPicture.asset(
-                  translatedByGoogleSvg,
+                  translations.first.source == googleSource
+                      ? translatedByGoogleSvg
+                      : yaLogoSvg,
+                  height: 14,
                 ),
               )
             : Container(),

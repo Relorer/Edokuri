@@ -73,8 +73,9 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
                   element.text.toLowerCase().trim() ==
                   sentence.toLowerCase().trim())
               .isEmpty) {
-        _record!.sentences.add(
-            Example(sentence, await _translator.translateSentence(sentence)));
+        final translate = await _translator.translateSentence(sentence);
+        _record!.sentences
+            .add(Example(sentence, translate.text, translate.source));
       }
     }));
 

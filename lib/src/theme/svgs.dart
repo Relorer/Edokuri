@@ -26,6 +26,8 @@ const einkSvg = "assets/icons/eink.svg";
 const trashSvg = "assets/icons/trash.svg";
 const loopSvg = "assets/icons/loop.svg";
 const fitScreenSvg = "assets/icons/fit_screen.svg";
+const yaTranslateSvg = "assets/icons/ya_translate.svg";
+const yaLogoSvg = "assets/icons/ya_logo.svg";
 
 const translatedByGoogleSvg = "assets/images/translated_by_google.svg";
 const waveSvg = "assets/images/wave.svg";
