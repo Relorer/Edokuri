@@ -27,13 +27,7 @@ class RecordInfoSentencesSection extends StatefulWidget {
 
 class _RecordInfoSentencesSectionState
     extends State<RecordInfoSentencesSection> {
-  bool _showTranslation = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _showTranslation = widget.showTranslation;
-  }
+  bool _showTranslation = widget.showTranslation;
 
   @override
   Widget build(BuildContext context) {
