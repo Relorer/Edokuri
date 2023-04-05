@@ -15,6 +15,7 @@ const _frontCardInLearnPageDefinition = "FRONTCARDINLEARNPAGE_DEFINITION";
 const _isFirstOpening = "ISFIRSTOPENING";
 const _einkMode = "EINKMODE";
 const _safeArea = "SAFEAREA";
+const _useYaTranslator = "USEYATRANSLATORFORSENTENCE";
 
 class SettingsControllerFactory {
   Future<SettingsController> getSettingsController() async {
@@ -41,6 +42,8 @@ abstract class SettingsControllerBase with Store {
   bool einkMode = false;
   @observable
   bool safeArea = true;
+  @observable
+  bool useYaTranslator = false;
 
   SettingsControllerBase(this._sp) {
     packSize = _sp.getInt(_packSize) ?? 10;
@@ -52,6 +55,7 @@ abstract class SettingsControllerBase with Store {
     isFirstOpening = _sp.getBool(_isFirstOpening) ?? true;
     einkMode = _sp.getBool(_einkMode) ?? false;
     safeArea = _sp.getBool(_safeArea) ?? false;
+    useYaTranslator = _sp.getBool(_useYaTranslator) ?? false;
   }
 
   @action
@@ -94,5 +98,11 @@ abstract class SettingsControllerBase with Store {
   Future setSafeArea(bool value) async {
     await _sp.setBool(_safeArea, value);
     safeArea = value;
+  }
+
+  @action
+  Future setUseYaTranslator(bool value) async {
+    await _sp.setBool(_useYaTranslator, value);
+    useYaTranslator = value;
   }
 }

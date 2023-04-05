@@ -8,8 +8,9 @@ part 'example.g.dart';
 class Example {
   final String text;
   final String tr;
+  final String source;
 
-  Example(this.text, this.tr);
+  Example(this.text, this.tr, this.source);
 
   factory Example.fromRecord(RecordModel record) =>
       Example.fromJson(record.toJson());

@@ -11,6 +11,7 @@ import 'package:edokuri/src/theme/theme_consts.dart';
 class SettingsPageSwitch extends StatelessWidget {
   final String text;
   final String svg;
+  final bool colorFilter;
   final bool value;
   final ValueChanged<bool>? onChanged;
 
@@ -19,7 +20,8 @@ class SettingsPageSwitch extends StatelessWidget {
       this.onChanged,
       required this.svg,
       required this.text,
-      required this.value});
+      required this.value,
+      this.colorFilter = true});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +34,10 @@ class SettingsPageSwitch extends StatelessWidget {
           child: Center(
             child: SvgPicture.asset(
               svg,
-              colorFilter: ColorFilter.mode(
-                  Theme.of(context).lightGrayColor, BlendMode.srcIn),
+              colorFilter: colorFilter
+                  ? ColorFilter.mode(
+                      Theme.of(context).lightGrayColor, BlendMode.srcIn)
+                  : null,
             ),
           ),
         ),
