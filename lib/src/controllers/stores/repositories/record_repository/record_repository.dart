@@ -2,14 +2,14 @@
 import 'dart:developer';
 
 // 📦 Package imports:
-import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
-import 'package:edokuri/src/core/service_locator.dart';
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/models/recordState/record_state.dart';
 
@@ -61,7 +61,7 @@ abstract class RecordRepositoryBase with Store {
     }
   }
 
-  Future updateTranslate(Record record) async {
+  Future<Record> updateTranslation(Record record) async {
     final newSentences = <Example>[];
     for (var sentence in record.sentences) {
       final translate =
@@ -81,7 +81,22 @@ abstract class RecordRepositoryBase with Store {
     record.examples.clear();
     record.examples.addAll(newExamples);
 
-    putRecord(record);
+    return record;
+  }
+
+  Future updateTranslationWithSave(Record record) async {
+    final newRecord = await updateTranslation(record);
+    putRecord(newRecord);
+  }
+
+  Future updateTranslationWithSaveAll() async {
+    final newRecords = await Future.wait(records.map((e) async {
+      return await updateTranslation(e);
+    }));
+
+    for (var record in newRecords) {
+      putRecord(record);
+    }
   }
 
   List<Record> getSavedRecordsByBook(Book book) {

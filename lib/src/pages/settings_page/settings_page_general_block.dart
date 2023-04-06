@@ -2,13 +2,11 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
-import 'package:edokuri/src/controllers/common/translator_controller/services/yandex_translator_service.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
@@ -16,7 +14,6 @@ import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_block_container.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_button.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_switch.dart';
-import 'package:edokuri/src/pages/settings_page/settings_page_text_form.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 

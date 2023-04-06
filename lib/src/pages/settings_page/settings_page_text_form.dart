@@ -1,12 +1,12 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
+// 📦 Package imports:
+import 'package:flutter_svg/svg.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/core/widgets/text_form_fields/text_form_field_default.dart';
+import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SettingsPageTextForm extends StatelessWidget {
   final String labelText;

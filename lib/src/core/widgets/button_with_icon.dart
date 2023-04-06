@@ -30,31 +30,34 @@ class ButtonWithIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: color ?? Theme.of(context).secondBackgroundColor,
-      child: InkWell(
-        highlightColor: (highlightColor ?? Colors.white).withAlpha(40),
-        splashColor: (highlightColor ?? Colors.white).withAlpha(30),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(doubleDefaultMargin),
-          child: Row(children: [
-            SizedBox(
-              width: 24,
-              child: Center(
-                child: SvgPicture.asset(
-                  svg,
-                  colorFilter: ColorFilter.mode(
-                      Theme.of(context).lightGrayColor, BlendMode.srcIn),
+      child: SizedBox(
+        height: 64,
+        child: InkWell(
+          highlightColor: (highlightColor ?? Colors.white).withAlpha(40),
+          splashColor: (highlightColor ?? Colors.white).withAlpha(30),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(doubleDefaultMargin),
+            child: Row(children: [
+              SizedBox(
+                width: 24,
+                child: Center(
+                  child: SvgPicture.asset(
+                    svg,
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).lightGrayColor, BlendMode.srcIn),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              width: doubleDefaultMargin,
-            ),
-            Text(
-              text,
-              style: style ?? Theme.of(context).dialogTextStyleBright,
-            )
-          ]),
+              const SizedBox(
+                width: doubleDefaultMargin,
+              ),
+              Text(
+                text,
+                style: style ?? Theme.of(context).dialogTextStyleBright,
+              )
+            ]),
+          ),
         ),
       ),
     );

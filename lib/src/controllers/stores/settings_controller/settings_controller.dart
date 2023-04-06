@@ -1,10 +1,12 @@
 // 🎯 Dart imports:
 
 // 📦 Package imports:
-import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
-import 'package:edokuri/src/core/service_locator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 
 // 🌎 Project imports:
 

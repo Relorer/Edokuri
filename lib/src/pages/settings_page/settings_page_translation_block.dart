@@ -1,7 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
-import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
-import 'package:edokuri/src/models/models.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -12,7 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/services/yandex_translator_service.dart';
-import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
@@ -85,9 +82,7 @@ class _SettingsPageTranslationBlockState
                 text: "Re-Translate sentence",
                 onTap: () async {
                   final rr = getIt<RecordRepository>();
-                  for (var record in rr.records) {
-                    rr.updateTranslate(record);
-                  }
+                  await rr.updateTranslationWithSaveAll();
                   getIt<ToastController>().showDefaultTost("Re-Translate done");
                 },
                 svg: loopSvg,
