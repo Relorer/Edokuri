@@ -4,19 +4,27 @@ import 'dart:convert';
 import 'dart:developer';
 
 // 📦 Package imports:
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+
+// 🌎 Project imports:
+import 'package:edokuri/src/core/service_locator.dart';
 
 const YandexTranslatorServiceKey = "YandexTranslatorServiceKey";
 
 class YandexTranslatorService {
   final Map<String, String> _cache = {};
-  final String _apiKey;
+  String _apiKey;
 
   YandexTranslatorService(this._apiKey);
 
   Future<String> translate(String text) async {
     if (_apiKey.isEmpty) {
-      return "";
+      final secureStorage = getIt<FlutterSecureStorage>();
+      _apiKey = await secureStorage.read(key: YandexTranslatorServiceKey) ?? "";
+      if (_apiKey.isEmpty) {
+        return "";
+      }
     }
 
     if (_cache.containsKey(text)) {
