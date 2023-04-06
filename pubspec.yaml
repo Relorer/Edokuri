@@ -40,6 +40,7 @@ dependencies:
   custom_navigation_bar: ^0.8.2
   dictionaryx: ^0.3.5
   direct_select: ^2.0.0
+  dropdown_button2: ^2.0.0
   easy_debounce: ^2.0.3
   easy_localization: ^3.0.1
   epubx:

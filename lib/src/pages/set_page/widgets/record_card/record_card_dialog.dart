@@ -11,9 +11,14 @@ class RecordCardDialog extends StatelessWidget {
   final VoidCallback? openRecord;
   final VoidCallback? removeSet;
   final VoidCallback? resetProgress;
+  final VoidCallback? updateTranslation;
 
   const RecordCardDialog(
-      {super.key, this.openRecord, this.removeSet, this.resetProgress});
+      {super.key,
+      this.openRecord,
+      this.removeSet,
+      this.resetProgress,
+      this.updateTranslation});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +32,11 @@ class RecordCardDialog extends StatelessWidget {
         text: "Reset progress",
         svg: loopSvg,
         onTap: resetProgress,
+      ),
+      ButtonWithIcon(
+        text: "Update translation",
+        svg: loop2Svg,
+        onTap: updateTranslation,
       ),
       ButtonWithIcon(
         text: LocaleKeys.delete.tr(),

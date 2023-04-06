@@ -5,9 +5,11 @@ import 'dart:developer';
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/models/recordState/record_state.dart';
 
@@ -21,6 +23,8 @@ abstract class RecordRepositoryBase with Store {
   final PocketbaseController pb;
   final SetRecordsRepository setRecordsRepository;
   final KnownRecordsRepository knownRecordsRepository;
+  final TranslatorController translatorController =
+      getIt<TranslatorController>();
 
   @observable
   bool isLoading = false;
@@ -54,6 +58,44 @@ abstract class RecordRepositoryBase with Store {
       await pb.client.collection(_record).unsubscribe("*");
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
+    }
+  }
+
+  Future<Record> updateTranslation(Record record) async {
+    final newSentences = <Example>[];
+    for (var sentence in record.sentences) {
+      final translate =
+          await translatorController.translateSentence(sentence.text);
+      newSentences
+          .add(Example(sentence.text, translate.text, translate.source));
+    }
+    record.sentences.clear();
+    record.sentences.addAll(newSentences);
+
+    final newExamples = <Example>[];
+    for (var example in record.examples) {
+      final translate =
+          await translatorController.translateSentence(example.text);
+      newExamples.add(Example(example.text, translate.text, translate.source));
+    }
+    record.examples.clear();
+    record.examples.addAll(newExamples);
+
+    return record;
+  }
+
+  Future updateTranslationWithSave(Record record) async {
+    final newRecord = await updateTranslation(record);
+    putRecord(newRecord);
+  }
+
+  Future updateTranslationWithSaveAll() async {
+    final newRecords = await Future.wait(records.map((e) async {
+      return await updateTranslation(e);
+    }));
+
+    for (var record in newRecords) {
+      putRecord(record);
     }
   }
 

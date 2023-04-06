@@ -2,21 +2,19 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
-import 'package:edokuri/src/controllers/common/translator_controller/services/yandex_translator_service.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_block_container.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_button.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_drop_list.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_switch.dart';
-import 'package:edokuri/src/pages/settings_page/settings_page_text_form.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
@@ -31,23 +29,6 @@ class SettingsPageGeneralBlock extends StatefulWidget {
 class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
   final secureStorage = getIt<FlutterSecureStorage>();
   TextEditingController controller = TextEditingController();
-
-  @override
-  void initState() {
-    controller.addListener(() {
-      EasyDebounce.debounce('change-ya-key', const Duration(seconds: 1), () {
-        secureStorage.write(
-            key: YandexTranslatorServiceKey, value: controller.text);
-      });
-    });
-    getYaKey();
-    super.initState();
-  }
-
-  void getYaKey() async {
-    final yaKey = await secureStorage.read(key: YandexTranslatorServiceKey);
-    controller.text = yaKey ?? "";
-  }
 
   void checkStateDownloadModel() async {
     if (!getIt<MLController>().isLoaded) {
@@ -76,6 +57,13 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
                       onTap: checkStateDownloadModel,
                       svg: translateSvg,
                     ),
+              SettingsPageDropList(
+                svg: languageSvg,
+                text: "Language",
+                value: "English",
+                values: const ["English"],
+                onChanged: (value) {},
+              ),
               SettingsPageSwitch(
                 svg: einkSvg,
                 text: "Eink mode",
@@ -88,19 +76,6 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
                 value: settings.safeArea,
                 onChanged: settings.setSafeArea,
               ),
-              SettingsPageSwitch(
-                svg: yaTranslateSvg,
-                colorFilter: false,
-                text: "Yandex Translation API",
-                value: settings.useYaTranslator,
-                onChanged: settings.setUseYaTranslator,
-              ),
-              settings.useYaTranslator
-                  ? SettingsPageTextForm(
-                      controller: controller,
-                      labelText: "Yandex API key",
-                    )
-                  : const SizedBox(),
               const SizedBox(
                 height: defaultRadius,
               ),

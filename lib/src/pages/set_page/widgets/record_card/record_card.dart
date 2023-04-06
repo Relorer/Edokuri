@@ -6,6 +6,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
@@ -69,6 +70,11 @@ class RecordCard extends StatelessWidget {
         },
         removeSet: () => _removeRecord(context),
         resetProgress: () => _resetProgress(context),
+        updateTranslation: () async {
+          Navigator.pop(context);
+          await getIt<RecordRepository>().updateTranslation(record);
+          getIt<ToastController>().showDefaultTost("Re-Translate done");
+        },
       ),
     );
   }
