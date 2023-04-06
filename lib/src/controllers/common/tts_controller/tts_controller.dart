@@ -19,6 +19,11 @@ class TTSController {
 
   final FlutterTts tts = FlutterTts();
 
+  bool isSlowing = true;
+  late String previousVoicedText = "";
+  final double normalRate = 0.5;
+  final double slowedRate = 0.1;
+
   TTSController(this.session) {
     tts.setCompletionHandler(() {
       session.setActive(false);
@@ -29,7 +34,19 @@ class TTSController {
     if (await session.setActive(
       true,
     )) {
+      determineSpeed(text);
       await tts.speak(text);
+    }
+  }
+
+  void determineSpeed(String text) async {
+    if (previousVoicedText == text && isSlowing) {
+      await tts.setSpeechRate(slowedRate);
+      isSlowing = false;
+    } else {
+      previousVoicedText = text;
+      await tts.setSpeechRate(normalRate);
+      isSlowing = true;
     }
   }
 }
