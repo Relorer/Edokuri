@@ -13,6 +13,7 @@ import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_block_container.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_button.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_drop_list.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_switch.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
@@ -56,6 +57,13 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
                       onTap: checkStateDownloadModel,
                       svg: translateSvg,
                     ),
+              SettingsPageDropList(
+                svg: languageSvg,
+                text: "Language",
+                value: "English",
+                values: const ["English"],
+                onChanged: (value) {},
+              ),
               SettingsPageSwitch(
                 svg: einkSvg,
                 text: "Eink mode",

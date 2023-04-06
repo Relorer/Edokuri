@@ -30,6 +30,7 @@ const fitScreenSvg = "assets/icons/fit_screen.svg";
 const yaTranslateSvg = "assets/icons/ya_translate.svg";
 const yaLogoSvg = "assets/icons/ya_logo.svg";
 const keySvg = "assets/icons/key.svg";
+const languageSvg = "assets/icons/language.svg";
 
 const translatedByGoogleSvg = "assets/images/translated_by_google.svg";
 const waveSvg = "assets/images/wave.svg";
