@@ -1,6 +1,8 @@
 // 🎯 Dart imports:
 
 // 📦 Package imports:
+import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -90,6 +92,8 @@ abstract class SettingsControllerBase with Store {
 
   @action
   Future setEinkMode(bool value) async {
+    getIt<ToastController>().showDefaultTost("Eink mode is not supported yet");
+    return;
     await _sp.setBool(_einkMode, value);
     einkMode = value;
   }

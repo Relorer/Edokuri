@@ -1,6 +1,7 @@
 // 🎯 Dart imports:
 
 // 🐦 Flutter imports:
+import 'package:edokuri/src/pages/settings_page/settings_page_translation_block.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -97,6 +98,10 @@ class SettingsPageState extends State<SettingsPage> {
                   leftText: "General",
                 ),
                 const SettingsPageGeneralBlock(),
+                const SectionHeaderText(
+                  leftText: "Translation",
+                ),
+                const SettingsPageTranslationBlock(),
                 const SectionHeaderText(
                   leftText: "Learning",
                 ),

@@ -25,38 +25,50 @@ class SettingsPageSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: doubleDefaultMargin, vertical: defaultRadius),
-      child: Row(children: [
-        SizedBox(
-          width: 24,
-          child: Center(
-            child: SvgPicture.asset(
-              svg,
-              colorFilter: colorFilter
-                  ? ColorFilter.mode(
-                      Theme.of(context).lightGrayColor, BlendMode.srcIn)
-                  : null,
+    return GestureDetector(
+      onTap: () {
+        if (onChanged != null) {
+          onChanged!(!value);
+        }
+      },
+      child: Container(
+        color: Colors.transparent,
+        height: 60,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: doubleDefaultMargin, vertical: defaultRadius),
+          child: Row(children: [
+            SizedBox(
+              width: 24,
+              child: Center(
+                child: SvgPicture.asset(
+                  svg,
+                  colorFilter: colorFilter
+                      ? ColorFilter.mode(
+                          Theme.of(context).lightGrayColor, BlendMode.srcIn)
+                      : null,
+                ),
+              ),
             ),
-          ),
+            const SizedBox(
+              width: doubleDefaultMargin,
+            ),
+            Text(text,
+                style: Theme.of(context).dialogTextStyleBright.copyWith(
+                    color: Theme.of(context)
+                        .secondBackgroundColor
+                        .withOpacity(0.9))),
+            const Expanded(
+              child: SizedBox(),
+            ),
+            Switch(
+              value: value,
+              activeColor: orange,
+              onChanged: onChanged,
+            )
+          ]),
         ),
-        const SizedBox(
-          width: doubleDefaultMargin,
-        ),
-        Text(text,
-            style: Theme.of(context).dialogTextStyleBright.copyWith(
-                color:
-                    Theme.of(context).secondBackgroundColor.withOpacity(0.9))),
-        const Expanded(
-          child: SizedBox(),
-        ),
-        Switch(
-          value: value,
-          activeColor: orange,
-          onChanged: onChanged,
-        )
-      ]),
+      ),
     );
   }
 }

@@ -20,23 +20,34 @@ import 'package:edokuri/src/pages/settings_page/settings_page_text_form.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
-class SettingsPageGeneralBlock extends StatefulWidget {
-  const SettingsPageGeneralBlock({super.key});
+class SettingsPageTranslationBlock extends StatefulWidget {
+  const SettingsPageTranslationBlock({super.key});
 
   @override
-  State<SettingsPageGeneralBlock> createState() =>
-      _SettingsPageGeneralBlockState();
+  State<SettingsPageTranslationBlock> createState() =>
+      _SettingsPageTranslationBlockState();
 }
 
-class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
+class _SettingsPageTranslationBlockState
+    extends State<SettingsPageTranslationBlock> {
   final secureStorage = getIt<FlutterSecureStorage>();
   TextEditingController controller = TextEditingController();
 
-  void checkStateDownloadModel() async {
-    if (!getIt<MLController>().isLoaded) {
-      await getIt<MLController>().downloadModels();
-      getIt<ToastController>().showDefaultTost("Language model is downloaded");
-    }
+  @override
+  void initState() {
+    controller.addListener(() {
+      EasyDebounce.debounce('change-ya-key', const Duration(seconds: 1), () {
+        secureStorage.write(
+            key: YandexTranslatorServiceKey, value: controller.text);
+      });
+    });
+    getYaKey();
+    super.initState();
+  }
+
+  void getYaKey() async {
+    final yaKey = await secureStorage.read(key: YandexTranslatorServiceKey);
+    controller.text = yaKey ?? "";
   }
 
   @override
@@ -52,25 +63,21 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
               const SizedBox(
                 height: defaultRadius,
               ),
-              getIt<MLController>().isLoaded
-                  ? const SizedBox()
-                  : SettingPageButton(
-                      text: "Load the language model",
-                      onTap: checkStateDownloadModel,
-                      svg: translateSvg,
-                    ),
               SettingsPageSwitch(
-                svg: einkSvg,
-                text: "Eink mode",
-                value: settings.einkMode,
-                onChanged: settings.setEinkMode,
+                svg: yaTranslateSvg,
+                colorFilter: false,
+                text: "Yandex Translation API",
+                value: settings.useYaTranslator,
+                onChanged: settings.setUseYaTranslator,
               ),
-              SettingsPageSwitch(
-                svg: fitScreenSvg,
-                text: "Safe area",
-                value: settings.safeArea,
-                onChanged: settings.setSafeArea,
-              ),
+              settings.useYaTranslator
+                  ? SettingsPageTextForm(
+                      controller: controller,
+                      svg: keySvg,
+                      hint: "",
+                      labelText: "Ya Api key",
+                    )
+                  : const SizedBox(),
               const SizedBox(
                 height: defaultRadius,
               ),
