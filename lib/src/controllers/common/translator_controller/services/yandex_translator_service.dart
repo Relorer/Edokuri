@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 const YandexTranslatorServiceKey = "YandexTranslatorServiceKey";
 
 class YandexTranslatorService {
+  final Map<String, String> _cache = {};
   final String _apiKey;
 
   YandexTranslatorService(this._apiKey);
@@ -16,6 +17,10 @@ class YandexTranslatorService {
   Future<String> translate(String text) async {
     if (_apiKey.isEmpty) {
       return "";
+    }
+
+    if (_cache.containsKey(text)) {
+      return _cache[text]!;
     }
 
     try {
@@ -39,7 +44,9 @@ class YandexTranslatorService {
       if (response.statusCode == 200) {
         final json = await response.stream.bytesToString();
         final parsedJson = jsonDecode(json);
-        return parsedJson["translations"][0]["text"];
+        final result = parsedJson["translations"][0]["text"];
+        _cache[text] = result;
+        return result;
       }
       log(response.reasonPhrase.toString());
       return "";
