@@ -1,4 +1,7 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
+import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
+import 'package:edokuri/src/models/models.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -78,6 +81,17 @@ class _SettingsPageTranslationBlockState
                       labelText: "Ya Api key",
                     )
                   : const SizedBox(),
+              SettingPageButton(
+                text: "Re-Translate sentence",
+                onTap: () async {
+                  final rr = getIt<RecordRepository>();
+                  for (var record in rr.records) {
+                    rr.updateTranslate(record);
+                  }
+                  getIt<ToastController>().showDefaultTost("Re-Translate done");
+                },
+                svg: loopSvg,
+              ),
               const SizedBox(
                 height: defaultRadius,
               ),

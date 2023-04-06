@@ -2,6 +2,8 @@
 import 'dart:developer';
 
 // 📦 Package imports:
+import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
@@ -21,6 +23,8 @@ abstract class RecordRepositoryBase with Store {
   final PocketbaseController pb;
   final SetRecordsRepository setRecordsRepository;
   final KnownRecordsRepository knownRecordsRepository;
+  final TranslatorController translatorController =
+      getIt<TranslatorController>();
 
   @observable
   bool isLoading = false;
@@ -55,6 +59,29 @@ abstract class RecordRepositoryBase with Store {
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }
+  }
+
+  Future updateTranslate(Record record) async {
+    final newSentences = <Example>[];
+    for (var sentence in record.sentences) {
+      final translate =
+          await translatorController.translateSentence(sentence.text);
+      newSentences
+          .add(Example(sentence.text, translate.text, translate.source));
+    }
+    record.sentences.clear();
+    record.sentences.addAll(newSentences);
+
+    final newExamples = <Example>[];
+    for (var example in record.examples) {
+      final translate =
+          await translatorController.translateSentence(example.text);
+      newExamples.add(Example(example.text, translate.text, translate.source));
+    }
+    record.examples.clear();
+    record.examples.addAll(newExamples);
+
+    putRecord(record);
   }
 
   List<Record> getSavedRecordsByBook(Book book) {
