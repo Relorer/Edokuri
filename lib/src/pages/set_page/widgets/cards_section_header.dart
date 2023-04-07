@@ -1,6 +1,8 @@
 // 🎯 Dart imports:
 
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/dictionary_controller/dictionary_contoller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -71,6 +73,22 @@ class _CardsSectionHeaderState extends State<CardsSectionHeader> {
                 ),
               ),
             );
+          },
+          svg: addRecordSvg,
+        ),
+        ButtonWithIcon(
+          text: "Import dictionary",
+          onTap: () {
+            getIt<DictionaryController>().importDictionary();
+            Navigator.pop(context);
+          },
+          svg: uploadSvg,
+        ),
+        ButtonWithIcon(
+          text: "Export dictionary",
+          onTap: () {
+            getIt<DictionaryController>().shareDictionary();
+            Navigator.pop(context);
           },
           svg: addRecordSvg,
         ),
