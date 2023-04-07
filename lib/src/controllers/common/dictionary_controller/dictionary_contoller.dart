@@ -1,17 +1,19 @@
-// 🐦 Flutter imports:
+// 🎯 Dart imports:
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 // 📦 Package imports:
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+
+// 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/file_controller/services/file_picker_service.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/record_repository/record_repository.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/models/models.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 class DictionaryController {
   Future<String> createTempTxtFile(String text) async {

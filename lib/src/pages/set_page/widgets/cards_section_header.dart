@@ -1,8 +1,6 @@
 // 🎯 Dart imports:
 
 // 🐦 Flutter imports:
-import 'package:edokuri/src/controllers/common/dictionary_controller/dictionary_contoller.dart';
-import 'package:edokuri/src/core/service_locator.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -11,8 +9,10 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/generated/locale.dart';
+import 'package:edokuri/src/controllers/common/dictionary_controller/dictionary_contoller.dart';
 import 'package:edokuri/src/controllers/stores/search_record_controller/search_record_controller.dart';
 import 'package:edokuri/src/controllers/stores/sort_controllers/records_sort_controller/record_sort_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/button_with_icon.dart';
 import 'package:edokuri/src/core/widgets/section_headers/section_header.dart';
 import 'package:edokuri/src/core/widgets/text_form_fields/text_form_field_without_paddings.dart';
@@ -63,6 +63,22 @@ class _CardsSectionHeaderState extends State<CardsSectionHeader> {
       ),
       menuDialogChildren: [
         ButtonWithIcon(
+          text: "Import dictionary",
+          onTap: () {
+            getIt<DictionaryController>().importDictionary();
+            Navigator.pop(context);
+          },
+          svg: uploadSvg,
+        ),
+        ButtonWithIcon(
+          text: "Share dictionary",
+          onTap: () {
+            getIt<DictionaryController>().shareDictionary();
+            Navigator.pop(context);
+          },
+          svg: shareSvg,
+        ),
+        ButtonWithIcon(
           text: "Add new records",
           onTap: () {
             Navigator.pop(context);
@@ -73,22 +89,6 @@ class _CardsSectionHeaderState extends State<CardsSectionHeader> {
                 ),
               ),
             );
-          },
-          svg: addRecordSvg,
-        ),
-        ButtonWithIcon(
-          text: "Import dictionary",
-          onTap: () {
-            getIt<DictionaryController>().importDictionary();
-            Navigator.pop(context);
-          },
-          svg: uploadSvg,
-        ),
-        ButtonWithIcon(
-          text: "Export dictionary",
-          onTap: () {
-            getIt<DictionaryController>().shareDictionary();
-            Navigator.pop(context);
           },
           svg: addRecordSvg,
         ),

@@ -1,9 +1,9 @@
 // 📦 Package imports:
-import 'package:edokuri/src/controllers/common/dictionary_controller/dictionary_contoller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/dictionary_controller/dictionary_contoller.dart';
 import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/common/handle_volume_button/handle_volume_button.dart';
 import 'package:edokuri/src/controllers/common/learning_timer_controller/learning_timer_controller.dart';
