@@ -57,7 +57,8 @@ class EpubService {
     for (var value in chapters) {
       var doc = parse(await value.readHtmlContent());
       var content = _stripHtmlIfNeeded(doc.body!.innerHtml).trim();
-      if (content.isNotEmpty) {
+      if (content.isNotEmpty &&
+          (book.chapters.isEmpty || content != book.chapters.last)) {
         words.addAll(getAllWords(content));
         book.chapters.add(content);
       }

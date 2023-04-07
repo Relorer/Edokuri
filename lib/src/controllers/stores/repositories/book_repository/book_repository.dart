@@ -1,8 +1,11 @@
 // 🎯 Dart imports:
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
 
 // 📦 Package imports:
+import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
 import 'package:pocketbase/pocketbase.dart';
@@ -12,6 +15,7 @@ import 'package:edokuri/src/controllers/common/cache_controller/cache_controller
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 part 'book_repository.g.dart';
 
@@ -78,6 +82,19 @@ abstract class BookRepositoryBase with Store {
         } catch (e, stacktrace) {
           log("${e.toString()}\n${stacktrace.toString()}");
         }
+      });
+
+      // add default book
+      rootBundle.load("assets/books/alice.epub").then((value) async {
+        final user = getIt<PocketbaseController>().user;
+        if (user == null ||
+            user.created.isBefore(
+                DateTime.now().subtract(const Duration(seconds: 30))) ||
+            books.any((element) =>
+                element.title == "Alice's Adventures in Wonderland")) {
+          return;
+        }
+        await getIt<FileController>().addBookFile(value.buffer.asUint8List());
       });
     });
   }
