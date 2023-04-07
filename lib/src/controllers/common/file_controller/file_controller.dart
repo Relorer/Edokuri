@@ -65,7 +65,8 @@ class FileController {
   }
 
   Future getBookFromUser() async {
-    var files = await _filePickerService.getFiles(allowedExtensions: ["epub"]);
+    var files = await _filePickerService
+        .getFilesAsBytesList(allowedExtensions: ["epub"]);
     for (var file in files) {
       await addBookFile(file);
     }

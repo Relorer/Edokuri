@@ -1,4 +1,5 @@
 // 📦 Package imports:
+import 'package:edokuri/src/controllers/common/dictionary_controller/dictionary_contoller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -28,6 +29,7 @@ Future setupLocator() async {
   getIt.registerSingletonAsync(() => TTSControllerFactory().getTTSController());
   getIt.registerFactory(() => ToastController());
   getIt.registerFactory(() => SnackbarController());
+  getIt.registerFactory(() => DictionaryController());
   getIt.registerFactoryParam<LearnController, List<Record>, void>(
       (records, _) => LearnController(
           getIt<RecordRepository>(), getIt<SettingsController>(), records));
