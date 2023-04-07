@@ -17,8 +17,9 @@ class User {
   String email;
   @JsonKey(includeFromJson: false, includeToJson: false)
   Uint8List? avatar;
+  DateTime created;
 
-  User({this.name = "", this.id = "", this.email = ""});
+  User({this.name = "", this.id = "", this.email = "", required this.created});
 
   factory User.fromRecord(RecordModel record) => User.fromJson(record.toJson());
 
