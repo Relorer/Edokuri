@@ -1,5 +1,7 @@
 # Edokuri
 
+Official page http://edokuri.ru/
+
 Unlock the power of language with Edokuri - the innovative foreign book reader designed to boost your vocabulary and enhance your reading experience! With its cutting-edge memory aids, you'll never forget a word or phrase again. Immerse yourself in new worlds and broaden your horizons with Edokuri by your side.
 
 <p align="center">
