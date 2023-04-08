@@ -272,6 +272,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/books/
+    - assets/ca/
     - assets/icons/
     - assets/images/
     - assets/translations/

@@ -1,8 +1,10 @@
 // 🐦 Flutter imports:
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_config/flutter_config.dart';
 
 // 🌎 Project imports:
@@ -16,6 +18,11 @@ void main() async {
   await FlutterConfig.loadEnvVariables();
   await setupLocator();
   await getIt.allReady();
+
+  ByteData data =
+      await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  SecurityContext.defaultContext
+      .setTrustedCertificatesBytes(data.buffer.asUint8List());
 
   runApp(
     EasyLocalization(
