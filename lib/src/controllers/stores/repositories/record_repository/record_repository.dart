@@ -96,7 +96,7 @@ abstract class RecordRepositoryBase with Store {
     }));
 
     for (var record in newRecords) {
-      putRecord(record);
+      await putRecord(record);
     }
   }
 
