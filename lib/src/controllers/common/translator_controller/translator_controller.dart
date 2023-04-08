@@ -1,13 +1,17 @@
+// 🎯 Dart imports:
+import 'dart:developer';
+
 // 📦 Package imports:
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/common/translator_controller/services/google_translator_service.dart';
-import 'package:edokuri/src/controllers/common/translator_controller/services/msa_dictionary_service.dart';
-import 'package:edokuri/src/controllers/common/translator_controller/services/yandex_dictionary_service.dart';
-import 'package:edokuri/src/controllers/common/translator_controller/services/yandex_translator_service.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/dictionary/msa_dictionary.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/dictionary/yandex_dictionary.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/translator/deepl_translator_service.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/translator/google_translator_service.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/translator/mlgoogle_translator_service.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/translator/translator.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
@@ -17,13 +21,17 @@ const maxPhraseLength = 30;
 
 class TranslatorController {
   final SettingsController _settingsController = getIt<SettingsController>();
-  final MSADictionaryService _msaDicService = MSADictionaryService();
-  final OnDeviceTranslator _translator;
-  final YandexDictionaryService _yaDicService = YandexDictionaryService();
-  final GoogleTranslatorService _gService = GoogleTranslatorService();
-  final YandexTranslatorService _yaService;
+  final MSADictionary _msaDicService = MSADictionary();
+  final YandexDictionary _yaDicService = YandexDictionary();
 
-  TranslatorController(this._translator, this._yaService);
+  final translators = <String, Translator>{};
+
+  TranslatorController(_yaService) {
+    translators[googleSource] = Google2Translator();
+    translators[googleMlSource] = MLGoogleTranslator();
+    translators[yandexSource] = _yaService;
+    translators[deeplSource] = DeeplTranslator();
+  }
 
   Future<Record> translate(String content) async {
     final hasInternet = await _hasInternet();
@@ -57,23 +65,9 @@ class TranslatorController {
       await Future.wait([msaResult, yaResult]);
     }
 
-    if (translations.isEmpty && _settingsController.useYaTranslator) {
-      final yaTranslate =
-          hasInternet ? await _yaService.translate(content) : "";
-
-      if (yaTranslate.isNotEmpty) {
-        translations.add(Translation(yaTranslate, source: yandexSource));
-      }
-    }
-
     if (translations.isEmpty) {
-      final googleTranslate =
-          hasInternet ? await _gService.translate(content) : "";
-
-      translations.add(googleTranslate.isNotEmpty
-          ? Translation(googleTranslate, source: googleSource)
-          : Translation(await _translator.translateText(content),
-              source: googleSource));
+      translations = await translateSentence(content).then((value) =>
+          value.text.map((e) => Translation(e, source: value.source)).toList());
     }
 
     return Record(
@@ -95,25 +89,28 @@ class TranslatorController {
 
     sentence = sentence.trim();
 
-    var translate = "";
-    var source = "";
+    for (var o in _settingsController.translatorOrder) {
+      try {
+        final translator = translators[o];
+        if (translator == null) {
+          continue;
+        }
 
-    if (_settingsController.useYaTranslator) {
-      translate = hasInternet ? await _yaService.translate(sentence) : "";
-      source = yandexSource;
+        if (translator.needInternet && !hasInternet) {
+          continue;
+        }
+
+        final translate = await translator.translate(sentence, "en", "ru");
+
+        if (translate.isNotEmpty) {
+          return TranslateWithSource(translate, o);
+        }
+      } catch (e, stacktrace) {
+        log("${e.toString()}\n${stacktrace.toString()}");
+      }
     }
 
-    if (translate.isEmpty) {
-      translate = hasInternet ? await _gService.translate(sentence) : "";
-      source = googleSource;
-    }
-
-    if (translate.isEmpty) {
-      translate = await _translator.translateText(sentence);
-      source = googleSource;
-    }
-
-    return TranslateWithSource(translate, source);
+    return TranslateWithSource(["Couldn't translate"], "");
   }
 
   Future<bool> _hasInternet() async {
@@ -124,7 +121,7 @@ class TranslatorController {
 }
 
 class TranslateWithSource {
-  final String text;
+  final List<String> text;
   final String source;
 
   TranslateWithSource(this.text, this.source);

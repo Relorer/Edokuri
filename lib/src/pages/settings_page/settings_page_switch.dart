@@ -61,11 +61,13 @@ class SettingsPageSwitch extends StatelessWidget {
             const Expanded(
               child: SizedBox(),
             ),
-            Switch(
-              value: value,
-              activeColor: orange,
-              onChanged: onChanged,
-            )
+            onChanged != null
+                ? Switch(
+                    value: value,
+                    activeColor: orange,
+                    onChanged: onChanged,
+                  )
+                : const SizedBox()
           ]),
         ),
       ),

@@ -67,7 +67,7 @@ abstract class RecordRepositoryBase with Store {
       final translate =
           await translatorController.translateSentence(sentence.text);
       newSentences
-          .add(Example(sentence.text, translate.text, translate.source));
+          .add(Example(sentence.text, translate.text.first, translate.source));
     }
     record.sentences.clear();
     record.sentences.addAll(newSentences);
@@ -76,7 +76,8 @@ abstract class RecordRepositoryBase with Store {
     for (var example in record.examples) {
       final translate =
           await translatorController.translateSentence(example.text);
-      newExamples.add(Example(example.text, translate.text, translate.source));
+      newExamples
+          .add(Example(example.text, translate.text.first, translate.source));
     }
     record.examples.clear();
     record.examples.addAll(newExamples);

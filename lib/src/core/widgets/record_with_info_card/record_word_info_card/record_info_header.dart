@@ -23,6 +23,8 @@ class RecordInfoHeader extends StatelessWidget {
     return SizedBox(
       width: double.maxFinite,
       child: InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         onTap: () {
           getIt<TTSController>().speak(title);
         },

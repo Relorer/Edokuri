@@ -1,17 +1,16 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-import 'package:flutter_svg/flutter_svg.dart';
-
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator_controller.dart';
 import 'package:edokuri/src/core/widgets/text_form_fields/text_form_field_default.dart';
+import 'package:edokuri/src/core/widgets/translated_by.dart';
 import 'package:edokuri/src/models/models.dart';
-import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
+
+// 📦 Package imports:
 
 class RecordInfoTranslationsSection extends StatefulWidget {
   final List<Translation> translations;
@@ -100,15 +99,7 @@ class _RecordInfoTranslationsSectionState
           ).toList(),
         ),
         translations.first.source != ""
-            ? Padding(
-                padding: const EdgeInsets.symmetric(vertical: defaultMargin),
-                child: SvgPicture.asset(
-                  translations.first.source == googleSource
-                      ? translatedByGoogleSvg
-                      : yaLogoSvg,
-                  height: 14,
-                ),
-              )
+            ? TranslatedBy(source: translations.first.source)
             : Container(),
         widget.changeable
             ? Padding(

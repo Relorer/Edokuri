@@ -2,17 +2,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-import 'package:flutter_svg/flutter_svg.dart';
-
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
+import 'package:edokuri/src/core/widgets/translated_by.dart';
 import 'package:edokuri/src/models/models.dart';
-import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
+
+// 📦 Package imports:
 
 class RecordInfoSentencesSection extends StatefulWidget {
   final bool showTranslation;
@@ -81,15 +79,7 @@ class _RecordInfoSentencesSectionState
               ),
             )),
         _showTranslation
-            ? Padding(
-                padding: const EdgeInsets.symmetric(vertical: defaultMargin),
-                child: SvgPicture.asset(
-                  widget.sentences.first.source == googleSource
-                      ? translatedByGoogleSvg
-                      : yaLogoSvg,
-                  height: 14,
-                ),
-              )
+            ? TranslatedBy(source: widget.sentences.first.source)
             : Container()
       ],
     );

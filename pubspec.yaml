@@ -69,6 +69,7 @@ dependencies:
   image: ^3.0.2
   image_picker: ^0.8.7
   json_annotation: ^4.8.0
+  just_the_tooltip: ^0.0.12
   mobx: ^2.1.4
   mobx_codegen: ^2.1.1
   need_resume: ^1.0.7+1
@@ -80,6 +81,7 @@ dependencies:
   path_provider: ^2.0.13
   pocketbase: ^0.7.3
   provider: ^6.0.5
+  reorderables: ^0.6.0
   share_plus: ^6.3.1
   shared_preferences: ^2.0.18
   sliding_up_panel: ^2.0.0+1

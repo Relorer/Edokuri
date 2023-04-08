@@ -32,6 +32,10 @@ const yaLogoSvg = "assets/icons/ya_logo.svg";
 const keySvg = "assets/icons/key.svg";
 const languageSvg = "assets/icons/language.svg";
 const shareSvg = "assets/icons/share.svg";
+const deeplSvg = "assets/icons/deepl.svg";
+const googleTranslationSvg = "assets/icons/google_translation.svg";
+const googleSvg = "assets/icons/google.svg";
+const deeplLogoSvg = "assets/icons/deepl_logo.svg";
 
 const translatedByGoogleSvg = "assets/images/translated_by_google.svg";
 const waveSvg = "assets/images/wave.svg";
