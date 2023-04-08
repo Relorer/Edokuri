@@ -69,6 +69,7 @@ dependencies:
   image: ^3.0.2
   image_picker: ^0.8.7
   json_annotation: ^4.8.0
+  just_the_tooltip: ^0.0.12
   mobx: ^2.1.4
   mobx_codegen: ^2.1.1
   need_resume: ^1.0.7+1

@@ -18,6 +18,7 @@ import 'package:edokuri/src/core/widgets/bouncing_custom_scroll_view.dart';
 import 'package:edokuri/src/core/widgets/safe_area_with_settings.dart';
 import 'package:edokuri/src/core/widgets/second_background_empty_app_bar.dart';
 import 'package:edokuri/src/core/widgets/section_headers/section_header_text.dart';
+import 'package:edokuri/src/core/widgets/section_headers/section_header_text_with_tip.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_general_block.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_learning_block.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_profile.dart';
@@ -98,8 +99,10 @@ class SettingsPageState extends State<SettingsPage> {
                   leftText: "General",
                 ),
                 const SettingsPageGeneralBlock(),
-                const SectionHeaderText(
+                const SectionHeaderTextWithTip(
                   leftText: "Translation",
+                  tip:
+                      'You can change the priority and disable unwanted translators',
                 ),
                 const SettingsPageTranslationBlock(),
                 const SectionHeaderText(

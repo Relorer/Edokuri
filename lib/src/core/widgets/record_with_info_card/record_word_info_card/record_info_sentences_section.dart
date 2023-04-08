@@ -2,8 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
@@ -11,6 +9,8 @@ import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_
 import 'package:edokuri/src/core/widgets/translated_by.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
+
+// 📦 Package imports:
 
 class RecordInfoSentencesSection extends StatefulWidget {
   final bool showTranslation;
