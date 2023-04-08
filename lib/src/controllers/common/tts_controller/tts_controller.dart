@@ -28,6 +28,7 @@ class TTSController {
     tts.setCompletionHandler(() {
       session.setActive(false);
     });
+    tts.setLanguage("en-US");
   }
 
   void speak(String text) async {
