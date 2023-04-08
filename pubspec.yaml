@@ -122,22 +122,22 @@ dart_pre_commit:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/app-icon.png"
+  image_path: "assets/images/app-icon-with-back.png"
   adaptive_icon_background: "#292F40"
   adaptive_icon_foreground: "assets/images/app-icon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/app-icon.png"
+    image_path: "assets/images/app-icon-with-back.png"
     background_color: "#292F40"
     theme_color: "#292F40"
   windows:
     generate: true
-    image_path: "assets/images/app-icon.png"
+    image_path: "assets/images/app-icon-with-back.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/images/app-icon.png"
+    image_path: "assets/images/app-icon-with-back.png"
 
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen
