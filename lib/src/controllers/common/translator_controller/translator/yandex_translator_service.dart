@@ -8,22 +8,31 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/translator/translator.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 
-const YandexTranslatorServiceKey = "YandexTranslatorServiceKey";
+const yandexTranslatorServiceKey = "yandexTranslatorServiceKey";
 
-class YandexTranslatorService {
-  final Map<String, String> _cache = {};
+class YandexTranslator implements Translator {
+  final Map<String, List<String>> _cache = {};
   String _apiKey;
 
-  YandexTranslatorService(this._apiKey);
+  YandexTranslator(this._apiKey);
 
-  Future<String> translate(String text) async {
+  @override
+  bool get needInternet => true;
+
+  @override
+  String get source => yandexSource;
+
+  @override
+  Future<List<String>> translate(String text, String from, String to) async {
     if (_apiKey.isEmpty) {
       final secureStorage = getIt<FlutterSecureStorage>();
-      _apiKey = await secureStorage.read(key: YandexTranslatorServiceKey) ?? "";
+      _apiKey = await secureStorage.read(key: yandexTranslatorServiceKey) ?? "";
       if (_apiKey.isEmpty) {
-        return "";
+        return <String>[];
       }
     }
 
@@ -41,8 +50,8 @@ class YandexTranslatorService {
           Uri.parse(
               'https://translate.api.cloud.yandex.net/translate/v2/translate'));
       request.body = json.encode({
-        "target_language_code": "ru",
-        "source_language_code": "en",
+        "target_language_code": to,
+        "source_language_code": from,
         "texts": [text]
       });
       request.headers.addAll(headers);
@@ -52,15 +61,15 @@ class YandexTranslatorService {
       if (response.statusCode == 200) {
         final json = await response.stream.bytesToString();
         final parsedJson = jsonDecode(json);
-        final result = parsedJson["translations"][0]["text"];
-        _cache[text] = result;
-        return result;
+        final result = parsedJson["translations"][0]["text"].toString();
+        _cache[text] = <String>[result];
+        return <String>[result];
       }
       log(response.reasonPhrase.toString());
-      return "";
+      return <String>[];
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
-      return "";
+      return <String>[];
     }
   }
 }

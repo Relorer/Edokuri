@@ -15,7 +15,7 @@ class MSAPartOfRecord {
   });
 }
 
-class MSADictionaryService {
+class MSADictionary {
   final _dMSA = DictionaryMSAFlutter();
 
   Future<MSAPartOfRecord> lookup(String word) async {

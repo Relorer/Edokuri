@@ -21,7 +21,7 @@ class YandexPartOfRecord {
   });
 }
 
-class YandexDictionaryService {
+class YandexDictionary {
   Future<YandexPartOfRecord> lookup(String word) async {
     String transcription = "";
     List<Translation> translations = [];
