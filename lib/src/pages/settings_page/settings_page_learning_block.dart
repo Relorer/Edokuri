@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_switch.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -25,10 +27,18 @@ class SettingsPageLearningBlock extends StatelessWidget {
       color: Colors.transparent,
       child: SettingsPageBlockContainer(
         child: Observer(builder: (context) {
+          final settings = getIt<SettingsController>();
+
           return Column(
             children: [
               const SizedBox(
                 height: defaultRadius,
+              ),
+              SettingsPageSwitch(
+                svg: speakerSvg,
+                text: "Auto pronounce",
+                value: settings.learningAutoPronouncing,
+                onChanged: settings.setLearningAutoPronouncing,
               ),
               SettingPageButton(
                 text: "Clear known words",

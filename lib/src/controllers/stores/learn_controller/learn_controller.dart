@@ -2,6 +2,8 @@
 import 'dart:math';
 
 // 📦 Package imports:
+import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
@@ -28,6 +30,8 @@ abstract class LearnControllerBase with Store {
   // otherwise we show repeatable records
   final int beforeStudied = 10;
   final int beforeRepeatable = 55;
+
+  final TTSController _ttsController = getIt<TTSController>();
 
   final RecordRepository _recordRepository;
   final SettingsController _settingsController;
@@ -181,6 +185,12 @@ abstract class LearnControllerBase with Store {
       currentRecord = newborn.first;
     } else {
       currentRecord = null;
+    }
+
+    if (_settingsController.learningAutoPronouncing &&
+        currentRecord != null &&
+        currentRecord!.original.isNotEmpty) {
+      _ttsController.speak(currentRecord!.original);
     }
   }
 

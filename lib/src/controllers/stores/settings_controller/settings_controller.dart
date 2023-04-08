@@ -24,6 +24,7 @@ const _useYandexTranslator = "USEYATRANSLATORFORSENTENCE";
 const _useDeeplTranslator = "USEDEEPLTRANSLATORFORSENTENCE";
 const _useGoogleTranslator = "USEGOOGLETRANSLATORFORSENTENCE";
 const _translatorOrderIndexes = "TRANSLATORORDERINDEXES";
+const _learningAutoPronouncing = "LEARNINGAUTOPRONOUNCING";
 
 class SettingsControllerFactory {
   Future<SettingsController> getSettingsController() async {
@@ -56,6 +57,8 @@ abstract class SettingsControllerBase with Store {
   bool useDeeplTranslator = true;
   @observable
   bool useGoogleTranslator = true;
+  @observable
+  bool learningAutoPronouncing = true;
 
   var translators = [
     deeplSource,
@@ -116,6 +119,7 @@ abstract class SettingsControllerBase with Store {
     if (translatorOrderIndexes.length != 4) {
       setTranslatorOrderIndexes([0, 1, 2, 3]);
     }
+    learningAutoPronouncing = _sp.getBool(_learningAutoPronouncing) ?? true;
   }
 
   @action
@@ -185,5 +189,11 @@ abstract class SettingsControllerBase with Store {
     await _sp.setStringList(
         _translatorOrderIndexes, value.map((e) => e.toString()).toList());
     translatorOrderIndexes = value;
+  }
+
+  @action
+  Future setLearningAutoPronouncing(bool value) async {
+    await _sp.setBool(_learningAutoPronouncing, value);
+    learningAutoPronouncing = value;
   }
 }
