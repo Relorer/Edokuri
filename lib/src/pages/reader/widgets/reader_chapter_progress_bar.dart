@@ -80,7 +80,7 @@ class _ReaderChapterProgressBarState extends State<ReaderChapterProgressBar> {
                 enabledThumbRadius: 6, elevation: 0, pressedElevation: 0),
           ),
           child: Slider(
-            value: page,
+            value: min(reader.pageCount.toDouble() - 1, page),
             max: reader.pageCount.toDouble() - 1,
             onChanged: (value) {},
             onChangeEnd: (value) {
