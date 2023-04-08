@@ -82,6 +82,7 @@ abstract class KnownRecordsRepositoryBase with Store {
 
   Future addRecords(List<String> records) async {
     try {
+      if (records.isEmpty) return;
       await putKnownRecords(
           KnownRecords(records: records, creationDate: DateTime.now().toUtc()));
     } catch (e, stacktrace) {
