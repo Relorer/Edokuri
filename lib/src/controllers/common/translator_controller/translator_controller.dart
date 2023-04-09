@@ -66,8 +66,11 @@ class TranslatorController {
     }
 
     if (translations.isEmpty) {
-      translations = await translateSentence(content).then((value) =>
-          value.text.map((e) => Translation(e, source: value.source)).toList());
+      translations =
+          await translateSentence(content, mostPrioritySource: deeplSource)
+              .then((value) => value.text
+                  .map((e) => Translation(e, source: value.source))
+                  .toList());
     }
 
     return Record(
@@ -84,23 +87,30 @@ class TranslatorController {
         lastReview: DateTime.utc(0));
   }
 
-  Future<TranslateWithSource> translateSentence(String sentence) async {
+  Future<TranslateWithSource> translateSentence(String sentence,
+      {String mostPrioritySource = ""}) async {
     final hasInternet = await _hasInternet();
 
     sentence = sentence.trim();
 
+    if (mostPrioritySource.isNotEmpty) {
+      try {
+        final translate =
+            await translateBySource(sentence, mostPrioritySource, hasInternet);
+
+        if (translate.isNotEmpty) {
+          return TranslateWithSource(translate, mostPrioritySource);
+        }
+      } catch (e, stacktrace) {
+        log("${e.toString()}\n${stacktrace.toString()}");
+      }
+    }
+
     for (var o in _settingsController.translatorOrder) {
       try {
-        final translator = translators[o];
-        if (translator == null) {
-          continue;
-        }
+        if (o == mostPrioritySource) continue;
 
-        if (translator.needInternet && !hasInternet) {
-          continue;
-        }
-
-        final translate = await translator.translate(sentence, "en", "ru");
+        final translate = await translateBySource(sentence, o, hasInternet);
 
         if (translate.isNotEmpty) {
           return TranslateWithSource(translate, o);
@@ -117,6 +127,20 @@ class TranslatorController {
     final connectivityResult = await (Connectivity().checkConnectivity());
     return connectivityResult == ConnectivityResult.wifi ||
         connectivityResult == ConnectivityResult.mobile;
+  }
+
+  Future<List<String>> translateBySource(
+      String sentence, String source, bool hasInternet) async {
+    final translator = translators[source];
+    if (translator == null) {
+      return [];
+    }
+
+    if (translator.needInternet && !hasInternet) {
+      return [];
+    }
+
+    return await translator.translate(sentence, "en", "ru");
   }
 }
 
