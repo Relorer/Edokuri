@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class SnackbarController {
   Future<SnackBarClosedReason> showDefaultSnackbar(
-      BuildContext context, String message) async {
+      BuildContext context, String message, int seconds, String label) async {
     return ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(
-            duration: const Duration(seconds: 15),
+            duration: Duration(seconds: seconds),
             content: Text(message),
             action: SnackBarAction(
-              label: "Undo",
+              label: label,
               onPressed: () =>
                   ScaffoldMessenger.of(context).hideCurrentSnackBar(),
             )))

@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/package_controller/package_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     MigrationAnonymous().load(context);
+    getIt<PackageController>().checkUpdate(context);
     OpenAsDefault.getFileIntent.then((value) {
       try {
         if (value != null) {
@@ -76,7 +78,8 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (settingsController.isFirstOpening && !mlController.isLoaded) {
         snackbarController
-            .showDefaultSnackbar(context, "Loading language model...")
+            .showDefaultSnackbar(
+                context, "Loading language model...", 5, "Undo")
             .then((value) => {
                   if (value != SnackBarClosedReason.dismiss)
                     mlController.downloadModels()

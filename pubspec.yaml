@@ -29,6 +29,7 @@ environment:
 dependencies:
   adaptive_dialog:
     git: https://github.com/Relorer/adaptive_dialog
+  android_path_provider: ^0.3.0
   audio_session: ^0.1.13
   auto_size_text: ^3.0.0
   blur: ^3.1.0
@@ -53,6 +54,7 @@ dependencies:
   flutter_cache_manager: ^3.3.0
   flutter_config: ^2.0.0
   flutter_displaymode: ^0.5.0
+  flutter_downloader: ^1.10.2
   flutter_mobx: ^2.0.6+5
   flutter_native_splash: ^2.2.14
   flutter_secure_storage: ^8.0.0
@@ -77,6 +79,7 @@ dependencies:
   numberpicker: ^2.1.1
   open_as_default:
     git: https://github.com/Relorer/open_as_default.git
+  package_info_plus: ^3.0.3
   path: ^1.8.2
   path_drawing: ^1.0.1
   path_provider: ^2.0.13

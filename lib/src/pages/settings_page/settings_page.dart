@@ -1,6 +1,8 @@
 // 🎯 Dart imports:
 
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/package_controller/package_controller.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_package_info.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -109,6 +111,7 @@ class SettingsPageState extends State<SettingsPage> {
                   leftText: "Learning",
                 ),
                 const SettingsPageLearningBlock(),
+                const SettingsPagePackageInfo()
               ],
             ),
           ),

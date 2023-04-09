@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // 🐦 Flutter imports:
+import 'package:edokuri/src/controllers/common/package_controller/package_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,6 +13,7 @@ import 'package:flutter_config/flutter_config.dart';
 // 🌎 Project imports:
 import 'package:edokuri/generated/codegen_loader.g.dart';
 import 'package:edokuri/src/core/service_locator.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'src/app.dart';
 
 void main() async {
@@ -25,6 +27,15 @@ void main() async {
       await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
   SecurityContext.defaultContext
       .setTrustedCertificatesBytes(data.buffer.asUint8List());
+
+  await FlutterDownloader.initialize(
+      debug:
+          true, // optional: set to false to disable printing logs to console (default: true)
+      ignoreSsl:
+          true // option: set to false to disable working with http links (default: false)
+      );
+
+  await FlutterDownloader.registerCallback(DownloadClass.callback);
 
   runApp(
     EasyLocalization(

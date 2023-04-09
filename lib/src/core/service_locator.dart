@@ -1,4 +1,5 @@
 // 📦 Package imports:
+import 'package:edokuri/src/controllers/common/package_controller/package_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -27,6 +28,8 @@ final getIt = GetIt.instance;
 
 Future setupLocator() async {
   getIt.registerSingletonAsync(() => TTSControllerFactory().getTTSController());
+  getIt.registerSingletonAsync(
+      () => PackageControllerFactory().getPackageController());
   getIt.registerFactory(() => ToastController());
   getIt.registerFactory(() => SnackbarController());
   getIt.registerFactory(() => DictionaryController());
