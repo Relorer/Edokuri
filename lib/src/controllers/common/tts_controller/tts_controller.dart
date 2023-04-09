@@ -4,6 +4,10 @@
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+// 🌎 Project imports:
+import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
+
 class TTSControllerFactory {
   Future<TTSController> getTTSController() async {
     final session = await AudioSession.instance;
@@ -16,13 +20,11 @@ class TTSControllerFactory {
 
 class TTSController {
   final AudioSession session;
-
+  final SettingsController settingsController = getIt<SettingsController>();
   final FlutterTts tts = FlutterTts();
 
   bool isSlowing = true;
   late String previousVoicedText = "";
-  final double normalRate = 0.5;
-  final double slowedRate = 0.1;
 
   TTSController(this.session) {
     tts.setCompletionHandler(() {
@@ -42,11 +44,11 @@ class TTSController {
 
   void determineSpeed(String text) async {
     if (previousVoicedText == text && isSlowing) {
-      await tts.setSpeechRate(slowedRate);
+      await tts.setSpeechRate(settingsController.ttsMinRate);
       isSlowing = false;
     } else {
       previousVoicedText = text;
-      await tts.setSpeechRate(normalRate);
+      await tts.setSpeechRate(settingsController.ttsMaxRate);
       isSlowing = true;
     }
   }
