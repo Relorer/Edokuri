@@ -1,8 +1,10 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/theme/theme.dart';
@@ -25,10 +27,17 @@ class SettingsPageSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final onChangeWithImpact = onChanged == null
+        ? null
+        : (value) {
+            HapticFeedback.mediumImpact();
+            onChanged!(value);
+          };
+
     return GestureDetector(
       onTap: () {
-        if (onChanged != null) {
-          onChanged!(!value);
+        if (onChangeWithImpact != null) {
+          onChangeWithImpact(!value);
         }
       },
       child: Container(
@@ -61,11 +70,21 @@ class SettingsPageSwitch extends StatelessWidget {
             const Expanded(
               child: SizedBox(),
             ),
-            onChanged != null
-                ? Switch(
+            onChangeWithImpact != null
+                ? FlutterSwitch(
                     value: value,
+                    width: 42,
+                    height: 24,
+                    padding: 5.0,
+                    toggleSize: 14,
                     activeColor: orange,
-                    onChanged: onChanged,
+                    inactiveColor: const Color(0xFFE1E4E6),
+                    inactiveToggleColor: const Color(0xFFE1E4E6),
+                    onToggle: onChangeWithImpact,
+                    inactiveToggleBorder: Border.all(
+                      color: Colors.white,
+                      width: 3,
+                    ),
                   )
                 : const SizedBox()
           ]),
