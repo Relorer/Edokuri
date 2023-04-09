@@ -91,9 +91,11 @@ abstract class RecordRepositoryBase with Store {
   }
 
   Future updateTranslationWithSaveAll() async {
-    final newRecords = await Future.wait(records.map((e) async {
-      return await updateTranslation(e);
-    }));
+    final newRecords = [];
+    for (var record in records) {
+      newRecords.add(await updateTranslation(record));
+      await Future.delayed(const Duration(seconds: 2));
+    }
 
     for (var record in newRecords) {
       await putRecord(record);
