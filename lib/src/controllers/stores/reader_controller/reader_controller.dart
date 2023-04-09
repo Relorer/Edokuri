@@ -239,16 +239,18 @@ abstract class ReaderControllerBase with Store {
     return index;
   }
 
-  String getSentence(int indexInSentence) {
+  String getSentence(int indexInSentence, int len) {
     final chapterContent = book.chapters[currentChapter];
 
     final indexInSentenceInChapter =
         indexInSentence + getCurrentPositionInChapter();
 
+    final indexPieceEndInChapter = indexInSentenceInChapter + len;
+
     final endSentenceReg = RegExp(r'(\.|!|\?|\n)');
 
     final endSentence =
-        chapterContent.indexOf(endSentenceReg, indexInSentenceInChapter);
+        chapterContent.indexOf(endSentenceReg, indexPieceEndInChapter);
     final startSentence =
         chapterContent.lastIndexOf(endSentenceReg, indexInSentenceInChapter);
 
