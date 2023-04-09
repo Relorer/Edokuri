@@ -76,6 +76,7 @@ class _RecordWithInfoCardState extends State<RecordWithInfoCard> {
         final translate = await _translator.translateSentence(sentence);
         _record!.sentences
             .add(Example(sentence, translate.text.first, translate.source));
+        setState(() {});
       }
     }));
 
