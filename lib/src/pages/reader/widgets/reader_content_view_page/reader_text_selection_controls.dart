@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReaderTextSelectionControls extends MaterialTextSelectionControls {
-  final void Function(String text) handleTranslate;
+  final void Function(String text, TextSelection selection) handleTranslate;
   final String Function(TextSelection) getSelectedText;
   final bool Function(String text) canTranslate;
 
@@ -47,7 +47,8 @@ class ReaderTextSelectionControls extends MaterialTextSelectionControls {
           canSelectAll(delegate) ? () => handleSelectAll(delegate) : null,
       handleTranslate: canTranslate(selectedText)
           ? () async {
-              handleTranslate(selectedText);
+              handleTranslate(
+                  selectedText, delegate.textEditingValue.selection);
             }
           : null,
       handleSearch: canTranslate(selectedText)

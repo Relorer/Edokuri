@@ -60,6 +60,8 @@ class EpubService {
       if (content.isNotEmpty &&
           (book.chapters.isEmpty || content != book.chapters.last)) {
         words.addAll(getAllWords(content));
+        var newLine = RegExp(r"\n");
+        content = content.split(newLine).map((e) => e.trim()).join("\n");
         book.chapters.add(content);
       }
     }

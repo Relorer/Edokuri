@@ -45,15 +45,16 @@ class ReaderContentViewPage extends StatelessWidget {
     );
   }
 
-  void _translate(BuildContext context, Piece piece, int index) {
-    final indexOnPage = content.indexOf(piece.content, index);
+  void _translate(BuildContext context, String content, int index) {
+    final indexOnPage = this.content.indexOf(content, index);
     if (indexOnPage > -1) {
-      final sentence =
-          context.read<ReaderController>().getSentence(indexOnPage);
+      final sentence = context
+          .read<ReaderController>()
+          .getSentence(indexOnPage, content.length);
       TapOnWordHandlerProvider.of(context)
-          .tapOnWordHandler(piece.content, sentence);
+          .tapOnWordHandler(content.trim(), sentence);
     } else {
-      TapOnWordHandlerProvider.of(context).tapOnWordHandler(piece.content, "");
+      TapOnWordHandlerProvider.of(context).tapOnWordHandler(content.trim(), "");
     }
   }
 
@@ -75,8 +76,8 @@ class ReaderContentViewPage extends StatelessWidget {
         textSpans.add(piece.isWord
             ? WidgetSpan(
                 child: Observer(
-                builder: (context) => getWord(
-                    piece, () => _translate(context, piece, tempCurrentIndex)),
+                builder: (context) => getWord(piece,
+                    () => _translate(context, piece.content, tempCurrentIndex)),
               ))
             : TextSpan(
                 text: piece.content,
@@ -105,9 +106,12 @@ class ReaderContentViewPage extends StatelessWidget {
                   piecesOfPage.length >= p0.end &&
                   p0.start > -1 &&
                   p0.end > -1
-              ? piecesOfPage.sublist(p0.start, p0.end).join().trim()
+              ? piecesOfPage.sublist(p0.start, p0.end).join()
               : ""),
-          handleTranslate: ((text) => tapOnWordHandler(text, "")),
+          handleTranslate: ((text, p0) {
+            final index = piecesOfPage.sublist(0, p0.start).join().length - 1;
+            _translate(context, text, index);
+          }),
           canTranslate: containsWord,
         ),
         TextSpan(
