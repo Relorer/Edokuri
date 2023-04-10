@@ -58,8 +58,7 @@ abstract class PackageControllerBase with Store {
 
       if (latestVersion != null) {
         this.latestVersion = latestVersion;
-        int compareResult =
-            compareVersions(version, latestVersion.version) - 10;
+        int compareResult = compareVersions(version, latestVersion.version);
 
         if (compareResult < 0 &&
             latestVersion.downloadUrl.isNotEmpty &&
@@ -125,14 +124,25 @@ abstract class PackageControllerBase with Store {
       return;
     }
 
+    final fileName = "edokuri-${latestVersion?.version}.apk";
+
+    deleteFile("$directory/$fileName");
     await FlutterDownloader.enqueue(
       url: url,
-      fileName:
-          "edokuri-${latestVersion?.version}-${DateTime.now().microsecondsSinceEpoch}.apk",
+      fileName: fileName,
       savedDir: directory,
       showNotification: true,
       openFileFromNotification: true,
     );
+  }
+
+  Future deleteFile(String path) async {
+    try {
+      final file = File(path);
+      await file.delete();
+    } catch (e) {
+      return;
+    }
   }
 
   Future<VersionWithDownloadUrl?> getLatestVersion() async {

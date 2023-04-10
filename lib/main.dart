@@ -14,6 +14,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:edokuri/generated/codegen_loader.g.dart';
 import 'package:edokuri/src/controllers/stores/package_controller/package_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'src/app.dart';
 
 void main() async {
@@ -36,6 +37,12 @@ void main() async {
       );
 
   await FlutterDownloader.registerCallback(DownloadClass.callback);
+
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      Permission.notification.request();
+    }
+  });
 
   runApp(
     EasyLocalization(
