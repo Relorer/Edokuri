@@ -50,6 +50,10 @@ abstract class PackageControllerBase with Store {
   @observable
   VersionWithDownloadUrl? latestVersion;
 
+  @computed
+  bool get thereIsNewVersion =>
+      compareVersions(version, latestVersion!.version) < 0;
+
   PackageControllerBase(this.packageInfo);
 
   Future checkUpdate(BuildContext context) async {
@@ -58,9 +62,8 @@ abstract class PackageControllerBase with Store {
 
       if (latestVersion != null) {
         this.latestVersion = latestVersion;
-        int compareResult = compareVersions(version, latestVersion.version);
 
-        if (compareResult < 0 &&
+        if (thereIsNewVersion &&
             latestVersion.downloadUrl.isNotEmpty &&
             context.mounted) {
           final result = await getIt<SnackbarController>().showDefaultSnackbar(

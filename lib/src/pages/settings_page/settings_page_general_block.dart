@@ -77,7 +77,7 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
                 value: settings.safeArea,
                 onChanged: settings.setSafeArea,
               ),
-              package.latestVersion != null
+              package.thereIsNewVersion
                   ? SettingPageButton(
                       color: const Color(0xFFF8EACD),
                       text: "Update to ${package.latestVersion?.version}",
