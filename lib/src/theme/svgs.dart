@@ -37,6 +37,7 @@ const googleTranslationSvg = "assets/icons/google_translation.svg";
 const googleSvg = "assets/icons/google.svg";
 const deeplLogoSvg = "assets/icons/deepl_logo.svg";
 const bookMusicSvg = "assets/icons/book_music.svg";
+const updateSvg = "assets/icons/update.svg";
 
 const translatedByGoogleSvg = "assets/images/translated_by_google.svg";
 const waveSvg = "assets/images/wave.svg";

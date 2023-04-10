@@ -14,6 +14,7 @@ import 'package:edokuri/src/controllers/common/translator_controller/translator_
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
+import 'package:edokuri/src/controllers/stores/package_controller/package_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_factory.dart';
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
@@ -27,6 +28,8 @@ final getIt = GetIt.instance;
 
 Future setupLocator() async {
   getIt.registerSingletonAsync(() => TTSControllerFactory().getTTSController());
+  getIt.registerSingletonAsync(
+      () => PackageControllerFactory().getPackageController());
   getIt.registerFactory(() => ToastController());
   getIt.registerFactory(() => SnackbarController());
   getIt.registerFactory(() => DictionaryController());

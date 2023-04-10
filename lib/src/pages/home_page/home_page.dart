@@ -12,6 +12,7 @@ import 'package:open_as_default/open_as_default.dart';
 import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
+import 'package:edokuri/src/controllers/stores/package_controller/package_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/migration_anonymous/migration_anonymous.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     MigrationAnonymous().load(context);
+    getIt<PackageController>().checkUpdate(context);
     OpenAsDefault.getFileIntent.then((value) {
       try {
         if (value != null) {
@@ -76,7 +78,8 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (settingsController.isFirstOpening && !mlController.isLoaded) {
         snackbarController
-            .showDefaultSnackbar(context, "Loading language model...")
+            .showDefaultSnackbar(
+                context, "Loading language model...", 5, "Undo")
             .then((value) => {
                   if (value != SnackBarClosedReason.dismiss)
                     mlController.downloadModels()

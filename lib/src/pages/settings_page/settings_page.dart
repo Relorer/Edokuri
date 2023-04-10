@@ -21,6 +21,7 @@ import 'package:edokuri/src/core/widgets/section_headers/section_header_text.dar
 import 'package:edokuri/src/core/widgets/section_headers/section_header_text_with_tip.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_general_block.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_learning_block.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_package_info.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_profile.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_translation_block.dart';
 import 'package:edokuri/src/theme/svgs.dart';
@@ -109,6 +110,7 @@ class SettingsPageState extends State<SettingsPage> {
                   leftText: "Learning",
                 ),
                 const SettingsPageLearningBlock(),
+                const SettingsPagePackageInfo()
               ],
             ),
           ),

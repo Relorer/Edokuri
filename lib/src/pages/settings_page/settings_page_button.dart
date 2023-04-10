@@ -9,18 +9,16 @@ class SettingPageButton extends StatelessWidget {
   final String text;
   final String svg;
   final GestureTapCallback? onTap;
+  final Color? color;
 
-  const SettingPageButton({
-    Key? key,
-    required this.svg,
-    this.onTap,
-    required this.text,
-  }) : super(key: key);
+  const SettingPageButton(
+      {Key? key, required this.svg, this.onTap, required this.text, this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ButtonWithIcon(
-      color: Colors.transparent,
+      color: color ?? Colors.transparent,
       highlightColor: Theme.of(context).secondBackgroundColor,
       style: Theme.of(context).dialogTextStyleBright.copyWith(
           color: Theme.of(context).secondBackgroundColor.withOpacity(0.9)),

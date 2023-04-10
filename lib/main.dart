@@ -8,10 +8,13 @@ import 'package:flutter/services.dart';
 // 📦 Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/generated/codegen_loader.g.dart';
+import 'package:edokuri/src/controllers/stores/package_controller/package_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'src/app.dart';
 
 void main() async {
@@ -25,6 +28,21 @@ void main() async {
       await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
   SecurityContext.defaultContext
       .setTrustedCertificatesBytes(data.buffer.asUint8List());
+
+  await FlutterDownloader.initialize(
+      debug:
+          true, // optional: set to false to disable printing logs to console (default: true)
+      ignoreSsl:
+          true // option: set to false to disable working with http links (default: false)
+      );
+
+  await FlutterDownloader.registerCallback(DownloadClass.callback);
+
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      Permission.notification.request();
+    }
+  });
 
   runApp(
     EasyLocalization(
