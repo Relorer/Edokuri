@@ -1,5 +1,4 @@
 // 📦 Package imports:
-import 'package:edokuri/src/controllers/common/package_controller/package_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -15,6 +14,7 @@ import 'package:edokuri/src/controllers/common/translator_controller/translator_
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
+import 'package:edokuri/src/controllers/stores/package_controller/package_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_factory.dart';
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';

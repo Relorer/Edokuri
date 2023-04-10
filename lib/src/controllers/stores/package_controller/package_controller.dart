@@ -1,34 +1,28 @@
-import 'dart:developer';
+// 🎯 Dart imports:
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 
-import 'package:audio_session/audio_session.dart';
-import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
-import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:android_path_provider/android_path_provider.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+import 'package:http/http.dart' as http;
+import 'package:mobx/mobx.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 
 // 🌎 Project imports:
-import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
+import 'package:edokuri/src/controllers/common/snackbar_controller/snackbar_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
-import 'package:android_path_provider/android_path_provider.dart';
 
-class DownloadClass {
-  static void callback(String id, DownloadTaskStatus status, int progress) {
-    print('Download task ($id) is in status ($status) and process ($progress)');
-    final SendPort? send =
-        IsolateNameServer.lookupPortByName('downloader_send_port');
-    if (send != null) {
-      send.send([id, status, progress]);
-    }
-  }
-}
+part 'package_controller.g.dart';
+
+const downloaderSendPort = "downloader_send_port";
 
 class PackageControllerFactory {
   Future<PackageController> getPackageController() async {
@@ -38,14 +32,9 @@ class PackageControllerFactory {
   }
 }
 
-class VersionWithDownloadUrl {
-  final String version;
-  final String downloadUrl;
+class PackageController = PackageControllerBase with _$PackageController;
 
-  VersionWithDownloadUrl(this.version, this.downloadUrl);
-}
-
-class PackageController {
+abstract class PackageControllerBase with Store {
   final PackageInfo packageInfo;
 
   String get appName => packageInfo.appName;
@@ -55,9 +44,13 @@ class PackageController {
   String get buildSignature => packageInfo.buildSignature;
   String get installerStore => packageInfo.installerStore ?? "";
 
+  @observable
+  int progress = -1;
+
+  @observable
   VersionWithDownloadUrl? latestVersion;
 
-  PackageController(this.packageInfo);
+  PackageControllerBase(this.packageInfo);
 
   Future checkUpdate(BuildContext context) async {
     try {
@@ -72,7 +65,7 @@ class PackageController {
             latestVersion.downloadUrl.isNotEmpty &&
             context.mounted) {
           final result = await getIt<SnackbarController>().showDefaultSnackbar(
-              context, "A new version is available", 5, "Update");
+              context, "A new version is available", 10, "Update");
 
           if (result == SnackBarClosedReason.action) {
             update();
@@ -96,8 +89,8 @@ class PackageController {
     if (Platform.isAndroid) {
       try {
         externalStorageDirPath = await AndroidPathProvider.downloadsPath;
-      } catch (err, st) {
-        print('failed to get downloads path: $err, $st');
+      } catch (e, stacktrace) {
+        log("${e.toString()}\n${stacktrace.toString()}");
 
         final directory = await getExternalStorageDirectory();
         externalStorageDirPath = directory?.path;
@@ -110,15 +103,20 @@ class PackageController {
   }
 
   Future<void> downloadAndInstallApk(String url) async {
-    ReceivePort _port = ReceivePort();
-    IsolateNameServer.registerPortWithName(
-        _port.sendPort, 'downloader_send_port');
-    _port.listen((dynamic data) {
+    ReceivePort port = ReceivePort();
+
+    IsolateNameServer.removePortNameMapping(downloaderSendPort);
+    IsolateNameServer.registerPortWithName(port.sendPort, downloaderSendPort);
+
+    port.listen((dynamic data) {
       String id = data[0];
-      DownloadTaskStatus status = data[1];
-      int progress = data[2];
-      if (status == DownloadTaskStatus.complete) {
+      int status = data[1];
+      progress = data[2];
+      if (status == DownloadTaskStatus.complete.value) {
         FlutterDownloader.open(taskId: id);
+        IsolateNameServer.removePortNameMapping(downloaderSendPort);
+      } else if (status == DownloadTaskStatus.failed.value) {
+        IsolateNameServer.removePortNameMapping(downloaderSendPort);
       }
     });
 
@@ -127,8 +125,10 @@ class PackageController {
       return;
     }
 
-    final taskId = await FlutterDownloader.enqueue(
+    await FlutterDownloader.enqueue(
       url: url,
+      fileName:
+          "edokuri-${latestVersion?.version}-${DateTime.now().microsecondsSinceEpoch}.apk",
       savedDir: directory,
       showNotification: true,
       openFileFromNotification: true,
@@ -177,4 +177,22 @@ class PackageController {
 
     return 0;
   }
+}
+
+class DownloadClass {
+  @pragma('vm:entry-point')
+  static void callback(String id, DownloadTaskStatus status, int progress) {
+    final SendPort? send =
+        IsolateNameServer.lookupPortByName(downloaderSendPort);
+    if (send != null) {
+      send.send([id, status.value, progress]);
+    }
+  }
+}
+
+class VersionWithDownloadUrl {
+  final String version;
+  final String downloadUrl;
+
+  VersionWithDownloadUrl(this.version, this.downloadUrl);
 }

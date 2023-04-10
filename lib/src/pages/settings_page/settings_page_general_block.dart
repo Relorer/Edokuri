@@ -8,6 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
+import 'package:edokuri/src/controllers/stores/package_controller/package_controller.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/sliver_single_child.dart';
@@ -44,7 +45,7 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
       child: SettingsPageBlockContainer(
         child: Observer(builder: (context) {
           final settings = getIt<SettingsController>();
-
+          final package = getIt<PackageController>();
           return Column(
             children: [
               const SizedBox(
@@ -76,6 +77,14 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
                 value: settings.safeArea,
                 onChanged: settings.setSafeArea,
               ),
+              package.latestVersion != null
+                  ? SettingPageButton(
+                      color: const Color(0xFFF8EACD),
+                      text: "Update to ${package.latestVersion?.version}",
+                      onTap: package.update,
+                      svg: updateSvg,
+                    )
+                  : const SizedBox(),
               const SizedBox(
                 height: defaultRadius,
               ),

@@ -2,18 +2,18 @@
 import 'dart:io';
 
 // 🐦 Flutter imports:
-import 'package:edokuri/src/controllers/common/package_controller/package_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/generated/codegen_loader.g.dart';
+import 'package:edokuri/src/controllers/stores/package_controller/package_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'src/app.dart';
 
 void main() async {
