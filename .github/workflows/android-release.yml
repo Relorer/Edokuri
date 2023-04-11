@@ -49,7 +49,7 @@ jobs:
         with:
           path: version1.txt
       - name: Update version in YAML
-        run: sed -i '' 's/99.99.99+99/${{ steps.version.outputs.content }}+${{ github.run_number }}/g' pubspec.yaml
+        run: sed -i 's/99.99.99+99/${{ steps.version.outputs.content }}+${{ github.run_number }}/g' pubspec.yaml
       - name: Download Android keystore
         id: android_keystore
         uses: timheuer/base64-to-file@v1.2
