@@ -52,7 +52,7 @@ jobs:
         env:
           VERSION: ${{ steps.version.outputs.content }}
         id: split
-        run: echo "::set-output name=fragment::${VERSION##*-}"
+        run: echo "::set-output name=fragment::${##*-VERSION}"
       - name: Update version in YAML
         run: |
           sed -i 's/1.1.1+1/${{ steps.split.outputs.fragment }}+${{ github.run_number }}/g' pubspec.yaml
