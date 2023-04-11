@@ -113,7 +113,7 @@ jobs:
       #       build/app/outputs/flutter-apk/app-x86_64-release.apk
 
       - name: Start release build (apk)
-        run: flutter build apk --build-number=${{ steps.gitversion.outputs.patch }}
+        run: flutter build apk --build-number=${{ github.run_number }}
         
       - name: Upload Android Release (apk)
         uses: actions/upload-artifact@v3
