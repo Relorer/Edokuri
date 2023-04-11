@@ -52,6 +52,8 @@ jobs:
         run: |
           sed -i 's/1.1.1+1/1.5.1+1/g' pubspec.yaml
           echo "${{ steps.version.outputs.content }}"
+          echo "${{ steps.version.outputs.GitVersion_Major }}"
+          echo "${{ steps.version.outputs }}"
           echo "${{ github.run_number }}"
       - name: Download Android keystore
         id: android_keystore
