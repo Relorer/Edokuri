@@ -50,8 +50,8 @@ jobs:
           path: version1.txt
       - name: Update version in YAML
         run: |
-          sed -i 's/1.1.1+1/1.5.1+1/g' pubspec.yaml
-          echo "${{ steps.version.outputs.content }}"
+          sed -i 's/1.1.1+1/${{ steps.version.outputs.content | split('-')[0]}}+${{ github.run_number }}/g' pubspec.yaml
+          echo "${{ steps.version.outputs.content | split('-')[0]}}"
           echo "${{ steps.gitversion.outputs.GitVersion_Minor }}"
           echo "${{ steps.version.outputs }}"
           echo "${{ github.run_number }}"
