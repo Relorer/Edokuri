@@ -48,13 +48,14 @@ jobs:
         uses: juliangruber/read-file-action@v1
         with:
           path: version1.txt
+      - name: Split version name
+        env:
+          VERSION: ${{ steps.version.outputs.content }}
+        id: split
+        run: echo "::set-output name=fragment::${VERSION##*-}"
       - name: Update version in YAML
         run: |
-          sed -i 's/1.1.1+1/${{ steps.version.outputs.content | split('-')[0]}}+${{ github.run_number }}/g' pubspec.yaml
-          echo "${{ steps.version.outputs.content | split('-')[0]}}"
-          echo "${{ steps.gitversion.outputs.GitVersion_Minor }}"
-          echo "${{ steps.version.outputs }}"
-          echo "${{ github.run_number }}"
+          sed -i 's/1.1.1+1/${{ steps.split.outputs.fragment }}+${{ github.run_number }}/g' pubspec.yaml
       - name: Download Android keystore
         id: android_keystore
         uses: timheuer/base64-to-file@v1.2
