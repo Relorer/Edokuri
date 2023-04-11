@@ -51,7 +51,7 @@ jobs:
       - uses: jungwinter/split@v2
         id: split
         with:
-          msg: steps.version.outputs.content
+          msg: ${{ steps.version.outputs.content }}
           separator: '-'
       - name: Update version in YAML
         run: |
