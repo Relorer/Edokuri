@@ -51,8 +51,9 @@ abstract class PackageControllerBase with Store {
   VersionWithDownloadUrl? latestVersion;
 
   @computed
-  bool get thereIsNewVersion =>
-      compareVersions(version, latestVersion!.version) < 0;
+  bool get thereIsNewVersion => latestVersion == null
+      ? false
+      : compareVersions(version, latestVersion!.version) < 0;
 
   PackageControllerBase(this.packageInfo);
 
