@@ -49,7 +49,11 @@ Future setupLocator() async {
   getIt.registerSingletonAsync<SettingsController>(
       () => SettingsControllerFactory().getSettingsController());
 
-  getIt.registerSingleton(const FlutterSecureStorage());
+  getIt.registerSingleton(const FlutterSecureStorage(
+    aOptions: AndroidOptions(
+      encryptedSharedPreferences: true,
+    ),
+  ));
 
   getIt.registerSingletonAsync<PocketbaseController>(PocketBaseFactory().getPB);
 }

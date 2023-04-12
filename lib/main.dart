@@ -9,12 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/generated/codegen_loader.g.dart';
 import 'package:edokuri/src/controllers/stores/package_controller/package_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'src/app.dart';
 
 void main() async {
