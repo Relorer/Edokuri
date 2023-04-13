@@ -13,8 +13,8 @@ class TTSControllerFactory {
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech().copyWith(
         androidAudioFocusGainType: AndroidAudioFocusGainType.gainTransient));
-
-    return TTSController(session);
+    List<Object?> voices = await FlutterTts().getVoices;
+    return TTSController(session, voices);
   }
 }
 
@@ -22,11 +22,12 @@ class TTSController {
   final AudioSession session;
   final SettingsController settingsController = getIt<SettingsController>();
   final FlutterTts tts = FlutterTts();
+  late List<Object?> voices;
 
   bool isSlowing = true;
   late String previousVoicedText = "";
 
-  TTSController(this.session) {
+  TTSController(this.session, this.voices) {
     tts.setCompletionHandler(() {
       session.setActive(false);
     });
@@ -34,12 +35,24 @@ class TTSController {
   }
 
   void speak(String text) async {
+    setVoice(settingsController.voice);
     if (await session.setActive(
       true,
     )) {
       determineSpeed(text);
       await tts.speak(text);
     }
+  }
+
+  void setVoice(String value) {
+    Object? voice = getIt<TTSController>()
+        .voices
+        .firstWhere((e) => (e as Map)["name"].toString() == value);
+    Map<String, String> voiceMap = {
+      "name": (voice as Map)["name"],
+      "locale": (voice)["locale"]
+    };
+    tts.setVoice(voiceMap);
   }
 
   void determineSpeed(String text) async {
