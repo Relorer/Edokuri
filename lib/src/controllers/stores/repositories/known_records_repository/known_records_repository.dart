@@ -20,7 +20,6 @@ const _knownRecords = "knownRecords";
 
 abstract class KnownRecordsRepositoryBase with Store {
   final PocketbaseController pb;
-  final RecordRepository recordRepository = getIt<RecordRepository>();
 
   ObservableList<KnownRecords> knownRecords =
       ObservableList<KnownRecords>.of([]);
@@ -30,7 +29,9 @@ abstract class KnownRecordsRepositoryBase with Store {
       knownRecords.addAll(value.map((e) => KnownRecords.fromRecord(e)));
       pb.client.collection(_knownRecords).subscribe("*", (e) {
         try {
-          recordRepository.ClearCache();
+          if (getIt.isReadySync<RecordRepository>()) {
+            getIt<RecordRepository>().ClearCache();
+          }
           if (e.record == null) return;
           final record = KnownRecords.fromRecord(e.record!);
           knownRecords.removeWhere((element) => element.id == record.id);
