@@ -119,14 +119,15 @@ class BookCard extends StatelessWidget {
           cover: book.cover,
         ),
         Observer(builder: (_) {
+          final repo = getIt<RecordRepository>();
+
           return BookCardContent(
             author: book.author ?? LocaleKeys.noAuthor.tr(),
             chaptersCount: book.chapters.length,
             currentCompletedChapter: book.currentCompletedChapter,
             title: book.title ?? LocaleKeys.noTitle.tr(),
-            recordsCount:
-                getIt<RecordRepository>().getSavedRecordsByBook(book).length,
-            newWordsPercent: getIt<RecordRepository>().newWordsInBook(book),
+            recordsCount: repo.getSavedRecordsByBook(book).length,
+            newWordsPercent: repo.newWordsInBook(book),
           );
         })
       ]),

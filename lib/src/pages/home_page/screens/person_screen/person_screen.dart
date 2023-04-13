@@ -16,14 +16,9 @@ import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/sets_s
 import 'package:edokuri/src/pages/home_page/utils/app_bar.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
-class PersonScreen extends StatefulWidget {
+class PersonScreen extends StatelessWidget {
   const PersonScreen({Key? key}) : super(key: key);
 
-  @override
-  State<PersonScreen> createState() => _PersonScreenState();
-}
-
-class _PersonScreenState extends State<PersonScreen> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {

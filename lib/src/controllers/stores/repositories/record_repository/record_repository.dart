@@ -38,8 +38,11 @@ abstract class RecordRepositoryBase with Store {
     pb.client.collection(_record).getFullList().then((value) {
       records.addAll(value.map((e) => Record.fromRecord(e)));
       isLoading = false;
+
+      ClearCache();
       pb.client.collection(_record).subscribe("*", (e) {
         try {
+          ClearCache();
           if (e.record == null) return;
           final record = Record.fromRecord(e.record!);
           records.removeWhere((element) => element.id == record.id);
@@ -51,6 +54,11 @@ abstract class RecordRepositoryBase with Store {
         }
       });
     });
+  }
+
+  void ClearCache() {
+    _cache.clear();
+    _newWordsInBookCache.clear();
   }
 
   void dispose() async {
@@ -102,11 +110,17 @@ abstract class RecordRepositoryBase with Store {
     }
   }
 
+  final Map<Book, List<Record>> _cache = {};
+
   List<Record> getSavedRecordsByBook(Book book) {
-    return records
+    if (_cache.containsKey(book)) {
+      return _cache[book]!;
+    }
+    _cache[book] = records
         .where((element) =>
             book.words.any((word) => word == element.original.toLowerCase()))
         .toList();
+    return _cache[book]!;
   }
 
   List<String> _getKnownRecordsByBook(Book book) {
@@ -121,11 +135,20 @@ abstract class RecordRepositoryBase with Store {
         .toList();
   }
 
+  final Map<Book, int> _newWordsInBookCache = {};
+
   int newWordsInBook(Book book) {
+    if (_newWordsInBookCache.containsKey(book)) {
+      return _newWordsInBookCache[book]!;
+    }
+
     final wordsInBook = getSavedRecordsByBook(book).toList().length +
         _getKnownRecordsByBook(book).length;
     if (book.words.isEmpty || wordsInBook == 0) return 100;
-    return 100 - (wordsInBook / book.words.length * 100).toInt();
+    _newWordsInBookCache[book] =
+        100 - (wordsInBook / book.words.length * 100).toInt();
+
+    return _newWordsInBookCache[book]!;
   }
 
   Record? getRecord(String original) {
