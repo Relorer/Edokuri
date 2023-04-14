@@ -80,6 +80,7 @@ class TranslatorController {
         creationDate: DateTime.now().toUtc(),
         sentences: [],
         synonyms: synonyms,
+        forms: [],
         meanings: meanings,
         examples: examples,
         translations: translations,
