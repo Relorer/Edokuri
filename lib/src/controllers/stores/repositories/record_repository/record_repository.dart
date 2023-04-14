@@ -69,6 +69,9 @@ abstract class RecordRepositoryBase with Store {
     }
   }
 
+  bool cached(Book book) =>
+      _cache.containsKey(book) && _newWordsInBookCache.containsKey(book);
+
   Future<Record> updateTranslation(Record record) async {
     final newSentences = <Example>[];
     for (var sentence in record.sentences) {

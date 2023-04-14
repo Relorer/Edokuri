@@ -121,16 +121,42 @@ class BookCard extends StatelessWidget {
         Observer(builder: (_) {
           final repo = getIt<RecordRepository>();
 
-          return BookCardContent(
-            author: book.author ?? LocaleKeys.noAuthor.tr(),
-            chaptersCount: book.chapters.length,
-            currentCompletedChapter: book.currentCompletedChapter,
-            title: book.title ?? LocaleKeys.noTitle.tr(),
-            recordsCount: repo.getSavedRecordsByBook(book).length,
-            newWordsPercent: repo.newWordsInBook(book),
+          if (repo.cached(book)) {
+            return BookCardContent(
+              author: book.author ?? LocaleKeys.noAuthor.tr(),
+              chaptersCount: book.chapters.length,
+              currentCompletedChapter: book.currentCompletedChapter,
+              title: book.title ?? LocaleKeys.noTitle.tr(),
+              recordsCount: repo.getSavedRecordsByBook(book).length,
+              newWordsPercent: repo.newWordsInBook(book),
+            );
+          }
+
+          return FutureBuilder<_BookProgress>(
+            builder: (ctx, snapshot) {
+              return BookCardContent(
+                author: book.author ?? LocaleKeys.noAuthor.tr(),
+                chaptersCount: book.chapters.length,
+                currentCompletedChapter: book.currentCompletedChapter,
+                title: book.title ?? LocaleKeys.noTitle.tr(),
+                recordsCount: snapshot.data?.recordsCount ?? 0,
+                newWordsPercent: snapshot.data?.newWordsPercent ?? 0,
+              );
+            },
+            future: Future.microtask(() {
+              final recordsCount = repo.getSavedRecordsByBook(book).length;
+              final newWordsPercent = repo.newWordsInBook(book);
+              return _BookProgress(recordsCount, newWordsPercent);
+            }),
           );
         })
       ]),
     );
   }
+}
+
+class _BookProgress {
+  final int recordsCount;
+  final int newWordsPercent;
+  _BookProgress(this.recordsCount, this.newWordsPercent);
 }
