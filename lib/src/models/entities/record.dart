@@ -20,11 +20,19 @@ class Record {
   String id;
   String userId;
 
+  @JsonKey(defaultValue: [])
   final List<Translation> translations;
+  @JsonKey(defaultValue: [])
   final List<Meaning> meanings;
+  @JsonKey(defaultValue: [])
   final List<Example> examples;
+  @JsonKey(defaultValue: [])
   final List<Example> sentences;
+  @JsonKey(defaultValue: [])
   final List<String> synonyms;
+  @JsonKey(defaultValue: [])
+  final List<String> forms;
+
   final String original;
   final String originalLowerCase;
   final String transcription;
@@ -53,6 +61,7 @@ class Record {
     required this.examples,
     required this.meanings,
     required this.synonyms,
+    required this.forms,
     required this.sentences,
     required this.translations,
     required this.lastReview,
@@ -80,6 +89,7 @@ class Record {
     List<Example>? examples,
     List<Example>? sentences,
     List<String>? synonyms,
+    List<String>? forms,
     String? original,
     String? originalLowerCase,
     String? transcription,
@@ -98,6 +108,7 @@ class Record {
       examples: examples ?? this.examples,
       sentences: sentences ?? this.sentences,
       synonyms: synonyms ?? this.synonyms,
+      forms: forms ?? this.forms,
       original: original ?? this.original,
       originalLowerCase: originalLowerCase ?? this.originalLowerCase,
       transcription: transcription ?? this.transcription,

@@ -42,3 +42,8 @@ List<int> encodeFile(List<String> content) {
 List<String> decodeFile(List<int> bytes) {
   return List<String>.from(json.decode(utf8.decode(bytes)));
 }
+
+bool isWholeWordInString(String word, String str) {
+  RegExp regExp = RegExp(r"\b" + word + r"\b");
+  return regExp.hasMatch(str);
+}

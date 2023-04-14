@@ -9,9 +9,12 @@ import 'package:provider/provider.dart';
 import 'package:edokuri/src/controllers/stores/reader_controller/reader_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/utils/iterable_extensions.dart';
 import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/form_word.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/known_word.dart';
+import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/part_of_record.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/reader_text_selection_controls.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/saved_word.dart';
 import 'package:edokuri/src/pages/reader/widgets/reader_content_view_page/unknown_word.dart';
@@ -24,8 +27,19 @@ class ReaderContentViewPage extends StatelessWidget {
   const ReaderContentViewPage({Key? key, required this.content})
       : super(key: key);
 
-  Widget getWord(Piece word, Function()? onTap) {
-    final record = getIt<RecordRepository>().getRecord(word.content);
+  Widget getWord(Piece word, List<Record> records, Function()? onTap) {
+    final content = word.content.toLowerCase().trim();
+
+    final recordsWithWord = records
+        .where(
+          (record) => isWholeWordInString(content, record.originalLowerCase),
+        )
+        .toList();
+
+    final record = recordsWithWord.firstWhereOrNull(
+      (record) => record.originalLowerCase == content,
+    );
+
     if (record != null) {
       return SavedWord(
         word: word,
@@ -33,12 +47,34 @@ class ReaderContentViewPage extends StatelessWidget {
         reviewInterval: record.reviewInterval,
       );
     }
+
+    final form = records.firstWhereOrNull(
+        (p0) => p0.forms.any((element) => element == content));
+
+    if (form != null) {
+      return FormWord(
+        word: word,
+        onTap: onTap,
+        reviewInterval: form.reviewInterval,
+      );
+    }
+
     if (getIt<KnownRecordsRepository>().exist(word.content)) {
       return KnownWord(
         word: word,
         onTap: onTap,
       );
     }
+
+    if (recordsWithWord.isNotEmpty) {
+      recordsWithWord
+          .sort((a, b) => a.reviewInterval.compareTo(b.reviewInterval));
+      return PartOfRecord(
+          word: word,
+          reviewInterval: recordsWithWord.first.reviewInterval,
+          onTap: onTap);
+    }
+
     return UnknownWord(
       word: word,
       onTap: onTap,
@@ -76,7 +112,9 @@ class ReaderContentViewPage extends StatelessWidget {
         textSpans.add(piece.isWord
             ? WidgetSpan(
                 child: Observer(
-                builder: (context) => getWord(piece,
+                builder: (context) => getWord(
+                    piece,
+                    getIt<RecordRepository>().records,
                     () => _translate(context, piece.content, tempCurrentIndex)),
               ))
             : TextSpan(
