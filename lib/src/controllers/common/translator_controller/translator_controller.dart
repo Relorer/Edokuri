@@ -7,6 +7,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/translator_controller/dictionary/msa_dictionary.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/dictionary/yandex_dictionary.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/forms/local_forms.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator/deepl_translator_service.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator/google_translator_service.dart';
@@ -23,6 +24,7 @@ class TranslatorController {
   final SettingsController _settingsController = getIt<SettingsController>();
   final MSADictionary _msaDicService = MSADictionary();
   final YandexDictionary _yaDicService = YandexDictionary();
+  final LocalForms _localForms = LocalForms();
 
   final translators = <String, Translator>{};
 
@@ -73,6 +75,11 @@ class TranslatorController {
                   .toList());
     }
 
+    final forms = <String>[];
+    for (var word in content.split(' ')) {
+      forms.addAll(await _localForms.getForms(word));
+    }
+
     return Record(
         original: content,
         originalLowerCase: content.toLowerCase(),
@@ -80,7 +87,7 @@ class TranslatorController {
         creationDate: DateTime.now().toUtc(),
         sentences: [],
         synonyms: synonyms,
-        forms: [],
+        forms: forms,
         meanings: meanings,
         examples: examples,
         translations: translations,

@@ -101,12 +101,10 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.3.3
   change_app_package_name: ^1.1.0
-  dart_pre_commit: ^4.1.0
   flutter_launcher_icons: ^0.11.0
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
-  git_hooks: ^1.0.0
   import_sorter: ^4.6.0
   json_serializable: ^6.6.1
   process_run: ^0.12.5+2
@@ -116,13 +114,6 @@ import_sorter:
   comments: true
   ignored_files:
     - \/bin\/*
-
-dart_pre_commit:
-  outdated: false
-  analyze:
-    error-level: warning
-    scan-mode: staged
-  pull-up-dependencies: false
 
 flutter_icons:
   android: "launcher_icon"
@@ -278,6 +269,7 @@ flutter:
   assets:
     - assets/books/
     - assets/ca/
+    - assets/words/
     - assets/icons/
     - assets/images/
     - assets/translations/
