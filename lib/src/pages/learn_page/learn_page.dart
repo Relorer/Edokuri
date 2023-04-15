@@ -86,13 +86,6 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
       ));
     }
 
-    if (record.examples.isNotEmpty) {
-      sections.add(RecordInfoExamplesSection(
-        examples: record.examples,
-        showTranslation: isAnswerShown,
-      ));
-    }
-
     if (isAnswerShown && record.synonyms.isNotEmpty) {
       sections.add(RecordInfoSynonymsSection(synonyms: record.synonyms));
     }
@@ -104,7 +97,12 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
         showTranslation: isAnswerShown,
       ));
     }
-
+    if (record.examples.isNotEmpty) {
+      sections.add(RecordInfoExamplesSection(
+        examples: record.examples,
+        showTranslation: isAnswerShown,
+      ));
+    }
     if (isAnswerShown && record.meanings.isNotEmpty) {
       sections.add(RecordInfoMeaningsSection(
         meanings: record.meanings,

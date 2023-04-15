@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
+import 'package:edokuri/src/core/widgets/translated_by.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
@@ -69,6 +70,9 @@ class _RecordInfoExamplesSectionState extends State<RecordInfoExamplesSection> {
                 ],
               ),
             )),
+        _showTranslation
+            ? TranslatedBy(source: widget.examples.first.source)
+            : Container()
       ],
     );
   }
