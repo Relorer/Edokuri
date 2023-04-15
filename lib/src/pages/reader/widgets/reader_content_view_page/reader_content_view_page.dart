@@ -48,6 +48,15 @@ class ReaderContentViewPage extends StatelessWidget {
       );
     }
 
+    if (recordsWithWord.isNotEmpty) {
+      recordsWithWord
+          .sort((a, b) => a.reviewInterval.compareTo(b.reviewInterval));
+      return PartOfRecord(
+          word: word,
+          reviewInterval: recordsWithWord.first.reviewInterval,
+          onTap: onTap);
+    }
+
     final form = records.firstWhereOrNull(
         (p0) => p0.forms.any((element) => element == content));
 
@@ -64,15 +73,6 @@ class ReaderContentViewPage extends StatelessWidget {
         word: word,
         onTap: onTap,
       );
-    }
-
-    if (recordsWithWord.isNotEmpty) {
-      recordsWithWord
-          .sort((a, b) => a.reviewInterval.compareTo(b.reviewInterval));
-      return PartOfRecord(
-          word: word,
-          reviewInterval: recordsWithWord.first.reviewInterval,
-          onTap: onTap);
     }
 
     return UnknownWord(
