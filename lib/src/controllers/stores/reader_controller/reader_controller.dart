@@ -48,11 +48,13 @@ abstract class ReaderControllerBase with Store {
   void jumpToNextPage() {
     if (pageController == null) return;
     pageController!.jumpToPage(pageController!.page!.toInt() + 1);
+    pageController!.notifyListeners();
   }
 
   void jumpToPreviousPage() {
     if (pageController == null) return;
     pageController!.jumpToPage(pageController!.page!.toInt() - 1);
+    pageController!.notifyListeners();
   }
 
   ReaderControllerBase(

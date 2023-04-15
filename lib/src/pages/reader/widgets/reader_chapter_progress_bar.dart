@@ -86,8 +86,14 @@ class _ReaderChapterProgressBarState extends State<ReaderChapterProgressBar> {
             onChangeEnd: (value) {
               final completed = reader.getCompletedChaptersPageCount();
               final real = value.toInt() + completed;
+              final completedPage =
+                  reader.currentChapter == reader.currentCompletedChapter
+                      ? reader.currentCompletedPage
+                      : reader.currentChapter < reader.currentCompletedChapter
+                          ? reader.pageCount
+                          : 0;
               pageController?.animateToPage(
-                min(real, completed + reader.currentCompletedPage),
+                min(real, completed + completedPage),
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
               );
