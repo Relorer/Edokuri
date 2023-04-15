@@ -86,6 +86,7 @@ dependencies:
   permission_handler: ^10.2.0
   pocketbase: ^0.7.3
   provider: ^6.0.5
+  random_x: ^0.3.1
   reorderables: ^0.6.0
   share_plus: ^6.3.1
   shared_preferences: ^2.0.18

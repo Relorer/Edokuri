@@ -86,9 +86,6 @@ class AddRecordPageState extends State<AddRecordPage> {
       )
     ];
 
-    if (record.examples.isNotEmpty) {
-      sections.add(RecordInfoExamplesSection(examples: record.examples));
-    }
     if (record.synonyms.isNotEmpty) {
       sections.add(RecordInfoSynonymsSection(synonyms: record.synonyms));
     }
@@ -98,6 +95,9 @@ class AddRecordPageState extends State<AddRecordPage> {
         sentences: record.sentences,
         showTranslation: true,
       ));
+    }
+    if (record.examples.isNotEmpty) {
+      sections.add(RecordInfoExamplesSection(examples: record.examples));
     }
     if (record.meanings.isNotEmpty) {
       sections.add(RecordInfoMeaningsSection(

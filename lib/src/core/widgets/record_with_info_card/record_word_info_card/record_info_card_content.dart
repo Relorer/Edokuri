@@ -28,9 +28,6 @@ class RecordInfoCardContent extends StatelessWidget {
       )
     ];
 
-    if (record.examples.isNotEmpty) {
-      sections.add(RecordInfoExamplesSection(examples: record.examples));
-    }
     if (record.synonyms.isNotEmpty) {
       sections.add(RecordInfoSynonymsSection(synonyms: record.synonyms));
     }
@@ -40,6 +37,9 @@ class RecordInfoCardContent extends StatelessWidget {
         sentences: record.sentences,
         showTranslation: showTranslationSourceSentences,
       ));
+    }
+    if (record.examples.isNotEmpty) {
+      sections.add(RecordInfoExamplesSection(examples: record.examples));
     }
     if (record.meanings.isNotEmpty) {
       sections.add(RecordInfoMeaningsSection(

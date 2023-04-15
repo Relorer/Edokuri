@@ -7,6 +7,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/translator_controller/dictionary/msa_dictionary.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/dictionary/yandex_dictionary.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/example/oxfordlearnersdictionaries.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/forms/local_forms.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator/deepl_translator_service.dart';
@@ -25,6 +26,8 @@ class TranslatorController {
   final MSADictionary _msaDicService = MSADictionary();
   final YandexDictionary _yaDicService = YandexDictionary();
   final LocalForms _localForms = LocalForms();
+  final OxfordLearnersDictionary _oxfordLearnersDictionary =
+      OxfordLearnersDictionary();
 
   final translators = <String, Translator>{};
 
@@ -78,6 +81,19 @@ class TranslatorController {
     final forms = <String>[];
     for (var word in content.split(' ')) {
       forms.addAll(await _localForms.getForms(word));
+    }
+
+    if (!content.contains(" ") && examples.isEmpty) {
+      final oxf = (await _oxfordLearnersDictionary.fetchExamples(content))
+          .take(10)
+          .toList();
+      final fullText = oxf.join("\n");
+      final translateFullText = await translateSentence(fullText);
+      final translations = translateFullText.text.first.split("\n");
+      for (var i = 0; i < oxf.length; i++) {
+        examples
+            .add(Example(oxf[i], translations[i], translateFullText.source));
+      }
     }
 
     return Record(
