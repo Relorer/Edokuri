@@ -27,8 +27,9 @@ class _RecordInfoExamplesSectionState extends State<RecordInfoExamplesSection> {
 
   @override
   void initState() {
-    super.initState();
     _showTranslation = widget.showTranslation;
+    setState(() {});
+    super.initState();
   }
 
   @override

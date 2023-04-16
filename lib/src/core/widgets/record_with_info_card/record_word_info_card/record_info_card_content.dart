@@ -39,7 +39,11 @@ class RecordInfoCardContent extends StatelessWidget {
       ));
     }
     if (record.examples.isNotEmpty) {
-      sections.add(RecordInfoExamplesSection(examples: record.examples));
+      sections.add(RecordInfoExamplesSection(
+        key: ValueKey("${record.id}example"),
+        examples: record.examples,
+        showTranslation: showTranslationSourceSentences,
+      ));
     }
     if (record.meanings.isNotEmpty) {
       sections.add(RecordInfoMeaningsSection(

@@ -97,7 +97,11 @@ class AddRecordPageState extends State<AddRecordPage> {
       ));
     }
     if (record.examples.isNotEmpty) {
-      sections.add(RecordInfoExamplesSection(examples: record.examples));
+      sections.add(RecordInfoExamplesSection(
+        key: ValueKey("${record.id}example"),
+        examples: record.examples,
+        showTranslation: true,
+      ));
     }
     if (record.meanings.isNotEmpty) {
       sections.add(RecordInfoMeaningsSection(

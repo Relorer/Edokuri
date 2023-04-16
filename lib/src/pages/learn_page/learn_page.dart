@@ -99,6 +99,7 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
     }
     if (record.examples.isNotEmpty) {
       sections.add(RecordInfoExamplesSection(
+        key: ValueKey("${record.id}${isAnswerShown}example"),
         examples: record.examples,
         showTranslation: isAnswerShown,
       ));
