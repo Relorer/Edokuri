@@ -52,7 +52,7 @@ abstract class RecordsSortControllerBase
               b1.original.toLowerCase().compareTo(b2.original.toLowerCase()));
       case RecordsSortTypes.recent:
         return types.toList()
-          ..sort((b1, b2) => b2.creationDate.compareTo(b1.creationDate));
+          ..sort((b1, b2) => b2.created.compareTo(b1.created));
     }
   }
 }

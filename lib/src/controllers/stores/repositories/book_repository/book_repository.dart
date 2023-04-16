@@ -12,6 +12,7 @@ import 'package:pocketbase/pocketbase.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/cache_controller/cache_controller.dart';
+import 'package:edokuri/src/controllers/common/date_controller/date_controller.dart';
 import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
@@ -27,6 +28,7 @@ const _book = "book";
 abstract class BookRepositoryBase with Store {
   final PocketbaseController pb;
   final CacheController cacheController = CacheController();
+  final DateController dateController = getIt<DateController>();
 
   @observable
   bool isLoading = false;
@@ -76,7 +78,7 @@ abstract class BookRepositoryBase with Store {
               book.currentPositionInChapter = newBook.currentPositionInChapter;
               book.readTimes = book.readTimes;
               book.title = book.title;
-              book.lastReading = book.lastReading;
+              book.updated = book.updated;
               books.replaceRange(0, 1, [books.first]);
             }
           }
@@ -90,7 +92,7 @@ abstract class BookRepositoryBase with Store {
         final user = getIt<PocketbaseController>().user;
         if (user == null ||
             user.created.isBefore(
-                DateTime.now().subtract(const Duration(seconds: 30))) ||
+                dateController.now().subtract(const Duration(minutes: 4))) ||
             books.any((element) =>
                 element.title == "Alice's Adventures in Wonderland")) {
           return;

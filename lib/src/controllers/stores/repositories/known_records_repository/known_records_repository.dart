@@ -89,7 +89,7 @@ abstract class KnownRecordsRepositoryBase with Store {
     try {
       if (records.isEmpty) return;
       await putKnownRecords(
-          KnownRecords(records: records, creationDate: DateTime.now().toUtc()));
+          KnownRecords(records: records, created: DateTime.utc(0)));
     } catch (e, stacktrace) {
       log("${e.toString()}\n${stacktrace.toString()}");
     }
@@ -109,7 +109,7 @@ abstract class KnownRecordsRepositoryBase with Store {
 
   int countForDay(DateTime day) {
     final batches =
-        knownRecords.where((element) => element.creationDate.isSameDate(day));
+        knownRecords.where((element) => element.created.isSameDate(day));
     if (batches.isEmpty) return 0;
 
     return batches.expand((element) => element.records).toSet().length;

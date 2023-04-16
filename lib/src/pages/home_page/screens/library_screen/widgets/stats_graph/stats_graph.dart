@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/date_controller/date_controller.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/utils/datetime_extensions.dart';
@@ -25,6 +26,7 @@ class StatsGraph extends StatefulWidget {
 
 class _StatsGraphState extends State<StatsGraph> {
   final Random random = Random();
+  final DateController dateController = getIt<DateController>();
 
   late List<double> placeholder;
   Offset? pressedPosition;
@@ -43,7 +45,7 @@ class _StatsGraphState extends State<StatsGraph> {
 
   int _getNewSavedRecords(Iterable<Record> records, DateTime day) {
     return records
-        .where((element) => (element.creationDate.isSameDate(day) ||
+        .where((element) => (element.created.isSameDate(day) ||
             element.translations.any(
                 (element) => element.selectionDate?.isSameDate(day) ?? false)))
         .length;
@@ -77,8 +79,9 @@ class _StatsGraphState extends State<StatsGraph> {
                     final graphData = GraphData([
                       ...Iterable<int>.generate(7)
                           .map((e) {
-                            final date =
-                                DateTime.now().subtract(Duration(days: e));
+                            final date = dateController
+                                .now()
+                                .subtract(Duration(days: e));
                             return GraphDayData(date,
                                 newKnownRecords: _getNewKnownRecords(date),
                                 newSavedRecords: _getNewSavedRecords(

@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/date_controller/date_controller.dart';
 import 'package:edokuri/src/controllers/common/dictionary_controller/dictionary_contoller.dart';
 import 'package:edokuri/src/controllers/common/file_controller/file_controller.dart';
 import 'package:edokuri/src/controllers/common/handle_volume_button/handle_volume_button.dart';
@@ -43,6 +44,9 @@ Future setupLocator() async {
     param.dispose();
   });
 
+  getIt.registerSingletonAsync<DateController>(
+      () => DateControllerFactory().getDateController());
+
   getIt.registerSingletonAsync(
       () => TranslatorControllerFactory().getTranslatorController());
 
@@ -68,28 +72,28 @@ Future setupRepositoryScope(String userId) async {
       init: (getIt) {
         getIt.registerSingletonWithDependencies<BookRepository>(
             () => BookRepository(getIt<PocketbaseController>()),
-            dependsOn: [PocketbaseController],
+            dependsOn: [PocketbaseController, DateController],
             dispose: (param) => param.dispose());
         getIt.registerSingletonWithDependencies<ActivityTimeRepository>(
             () => ActivityTimeRepository(getIt<PocketbaseController>()),
-            dependsOn: [PocketbaseController],
+            dependsOn: [PocketbaseController, DateController],
             dispose: (param) => param.dispose());
         getIt.registerSingletonWithDependencies<TimeMarkRepository>(
             () => TimeMarkRepository(getIt<PocketbaseController>()),
-            dependsOn: [PocketbaseController],
+            dependsOn: [PocketbaseController, DateController],
             dispose: (param) => param.dispose());
         getIt.registerSingletonWithDependencies<SetRecordsRepository>(
             () => SetRecordsRepository(getIt<PocketbaseController>()),
-            dependsOn: [PocketbaseController],
+            dependsOn: [PocketbaseController, DateController],
             dispose: (param) => param.dispose());
         getIt.registerSingletonWithDependencies<KnownRecordsRepository>(
             () => KnownRecordsRepository(getIt<PocketbaseController>()),
-            dependsOn: [PocketbaseController],
+            dependsOn: [PocketbaseController, DateController],
             dispose: (param) => param.dispose());
         getIt.registerSingletonWithDependencies<RecordRepository>(
             () => RecordRepository(getIt<PocketbaseController>(),
                 getIt<SetRecordsRepository>(), getIt<KnownRecordsRepository>()),
-            dependsOn: [PocketbaseController],
+            dependsOn: [PocketbaseController, DateController],
             dispose: (param) => param.dispose());
 
         getIt.registerSingletonWithDependencies(
@@ -116,7 +120,8 @@ Future setupRepositoryScope(String userId) async {
             dependsOn: [
               BookRepository,
               ActivityTimeRepository,
-              TimeMarkRepository
+              TimeMarkRepository,
+              DateController
             ]);
 
         getIt.registerSingletonWithDependencies<LearningTimerController>(

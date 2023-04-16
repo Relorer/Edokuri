@@ -5,10 +5,12 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/date_controller/date_controller.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/step_serializer.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/models/models.dart';
 import 'package:edokuri/src/models/recordState/record_state.dart';
 import 'package:edokuri/src/models/recordState/state_serializer.dart';
@@ -36,7 +38,7 @@ class Record {
   final String original;
   final String originalLowerCase;
   final String transcription;
-  final DateTime creationDate;
+  final DateTime created;
   DateTime lastReview;
   int reviewNumber;
   int reviewInterval;
@@ -57,7 +59,7 @@ class Record {
     required this.original,
     required this.originalLowerCase,
     required this.transcription,
-    required this.creationDate,
+    required this.created,
     required this.examples,
     required this.meanings,
     required this.synonyms,
@@ -93,7 +95,6 @@ class Record {
     String? original,
     String? originalLowerCase,
     String? transcription,
-    DateTime? creationDate,
     DateTime? lastReview,
     int? reviewNumber,
     int? reviewInterval,
@@ -112,7 +113,7 @@ class Record {
       original: original ?? this.original,
       originalLowerCase: originalLowerCase ?? this.originalLowerCase,
       transcription: transcription ?? this.transcription,
-      creationDate: creationDate ?? this.creationDate,
+      created: created,
       lastReview: lastReview ?? this.lastReview,
       reviewNumber: reviewNumber ?? this.reviewNumber,
       reviewInterval: reviewInterval ?? this.reviewInterval,
@@ -125,19 +126,19 @@ class Record {
 int timeToReview(Record record) {
   return record.lastReview.millisecondsSinceEpoch +
       record.reviewInterval -
-      DateTime.now().toUtc().millisecondsSinceEpoch;
+      getIt<DateController>().now().millisecondsSinceEpoch;
 }
 
 bool timeForReviewHasCome(Record record) {
-  return DateTime.now().toUtc().isAfter(DateTime.fromMillisecondsSinceEpoch(
-      record.reviewInterval +
+  return getIt<DateController>().now().isAfter(
+      DateTime.fromMillisecondsSinceEpoch(record.reviewInterval +
           record.lastReview.millisecondsSinceEpoch -
           preLookIntoFutureMilliseconds));
 }
 
 bool timeForReviewHasComeWithLookIntoFuture(Record record) {
-  return DateTime.now().toUtc().isAfter(DateTime.fromMillisecondsSinceEpoch(
-      record.reviewInterval +
+  return getIt<DateController>().now().isAfter(
+      DateTime.fromMillisecondsSinceEpoch(record.reviewInterval +
           record.lastReview.millisecondsSinceEpoch -
           lookIntoFutureMilliseconds));
 }

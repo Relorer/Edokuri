@@ -10,13 +10,12 @@ enum Type { reading, learning }
 class ActivityTime {
   String id;
   String user;
-  final DateTime start;
-  final DateTime end;
+  final DateTime created;
+  final int timeSpan;
   final Type type;
 
-  int get timespan => end.millisecondsSinceEpoch - start.millisecondsSinceEpoch;
-
-  ActivityTime(this.start, this.end, this.type, {this.id = "", this.user = ""});
+  ActivityTime(this.timeSpan, this.created, this.type,
+      {this.id = "", this.user = ""});
 
   factory ActivityTime.fromRecord(RecordModel record) =>
       ActivityTime.fromJson(record.toJson());

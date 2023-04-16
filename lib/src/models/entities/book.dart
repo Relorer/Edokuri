@@ -19,7 +19,7 @@ class Book {
   int currentPositionInChapter;
   int currentCompletedChapter;
   int currentCompletedPositionInChapter;
-  DateTime lastReading;
+  DateTime updated;
   String hash;
   List<String> readTimes;
 
@@ -40,7 +40,7 @@ class Book {
     required this.currentCompletedChapter,
     required this.currentCompletedPositionInChapter,
     required this.currentPositionInChapter,
-    required this.lastReading,
+    required this.updated,
     required this.hash,
     required this.readTimes,
     this.cover,
