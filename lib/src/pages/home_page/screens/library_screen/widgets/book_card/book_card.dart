@@ -119,8 +119,7 @@ class BookCard extends StatelessWidget {
           cover: book.cover,
         ),
         Observer(builder: (_) {
-          final repo = getIt<RecordRepository>();
-
+          final repo = getIt<RecordRepository>()..isLoading;
           if (repo.cached(book)) {
             return BookCardContent(
               author: book.author ?? LocaleKeys.noAuthor.tr(),
