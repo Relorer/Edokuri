@@ -100,7 +100,7 @@ class TranslatorController {
         original: content,
         originalLowerCase: content.toLowerCase(),
         transcription: transcription,
-        creationDate: DateTime.now().toUtc(),
+        created: DateTime.utc(0),
         sentences: [],
         synonyms: synonyms,
         forms: forms,

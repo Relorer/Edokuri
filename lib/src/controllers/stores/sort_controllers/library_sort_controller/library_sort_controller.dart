@@ -66,7 +66,7 @@ abstract class LibrarySortControllerBase
               .compareTo(b1.currentCompletedChapter / b1.chapters.length));
       case BooksSortTypes.recent:
         return types.toList()
-          ..sort((b1, b2) => (b2.lastReading).compareTo(b1.lastReading));
+          ..sort((b1, b2) => (b2.updated).compareTo(b1.updated));
     }
   }
 }

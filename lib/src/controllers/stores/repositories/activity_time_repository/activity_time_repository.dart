@@ -5,7 +5,9 @@ import 'dart:developer';
 import 'package:mobx/mobx.dart';
 
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/date_controller/date_controller.dart';
 import 'package:edokuri/src/controllers/stores/pocketbase/pocketbase_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/utils/datetime_extensions.dart';
 import 'package:edokuri/src/models/models.dart';
 
@@ -18,6 +20,7 @@ const _activityTime = "activityTime";
 
 abstract class ActivityTimeRepositoryBase with Store {
   final PocketbaseController pb;
+  final DateController dateController = getIt<DateController>();
 
   ObservableList<ActivityTime> activityTimes =
       ObservableList<ActivityTime>.of([]);
@@ -82,12 +85,11 @@ abstract class ActivityTimeRepositoryBase with Store {
   }
 
   int _timeForTodayInMinutes(Type type) {
-    final today = DateTime.now().toUtc();
+    final today = dateController.now();
     final timesForToday = activityTimes
         .where((element) => element.type == type)
-        .where((element) => element.start.isSameDate(today))
-        .map((e) =>
-            e.end.millisecondsSinceEpoch - e.start.millisecondsSinceEpoch);
+        .where((element) => element.created.isSameDate(today))
+        .map((e) => e.timeSpan);
 
     final learningTimeForToday =
         timesForToday.isEmpty ? 0 : timesForToday.reduce((t1, t2) => t1 + t2);
@@ -104,8 +106,9 @@ abstract class ActivityTimeRepositoryBase with Store {
   }
 
   int _timeInMinutes(Type type) {
-    final times = activityTimes.where((element) => element.type == type).map(
-        (e) => e.end.millisecondsSinceEpoch - e.start.millisecondsSinceEpoch);
+    final times = activityTimes
+        .where((element) => element.type == type)
+        .map((e) => e.timeSpan);
 
     final learningTimeForToday =
         times.isEmpty ? 0 : times.reduce((t1, t2) => t1 + t2);

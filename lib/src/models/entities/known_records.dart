@@ -8,7 +8,7 @@ part 'known_records.g.dart';
 class KnownRecords {
   String id;
   String user;
-  final DateTime creationDate;
+  final DateTime created;
 
   List<String> records;
 
@@ -16,7 +16,7 @@ class KnownRecords {
     this.id = "",
     this.user = "",
     required this.records,
-    required this.creationDate,
+    required this.created,
   });
 
   factory KnownRecords.fromRecord(RecordModel record) =>

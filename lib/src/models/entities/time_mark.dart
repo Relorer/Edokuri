@@ -7,10 +7,10 @@ part 'time_mark.g.dart';
 @JsonSerializable()
 class TimeMark {
   String id;
-  DateTime dateTime;
+  DateTime created;
   String user;
 
-  TimeMark({this.id = "", required this.dateTime, this.user = ""});
+  TimeMark({this.id = "", required this.created, this.user = ""});
 
   factory TimeMark.fromRecord(RecordModel record) =>
       TimeMark.fromJson(record.toJson());

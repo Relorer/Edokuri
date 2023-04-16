@@ -19,8 +19,11 @@ class LearningTimerController {
       final start = _startLearning!;
       _startLearning = null;
 
-      final at = await activityTimeRepository.putActivityTime(
-          ActivityTime(start, DateTime.now().toUtc(), Type.learning));
+      final at = await activityTimeRepository.putActivityTime(ActivityTime(
+          DateTime.now().toUtc().millisecondsSinceEpoch -
+              start.millisecondsSinceEpoch,
+          DateTime.utc(0),
+          Type.learning));
 
       if (at == null) return;
 

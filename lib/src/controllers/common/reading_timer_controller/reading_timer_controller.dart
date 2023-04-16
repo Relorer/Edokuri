@@ -22,13 +22,15 @@ class ReadingTimerController {
     if (_startReading != null && book != null) {
       final start = _startReading!;
       _startReading = null;
-      final at = await activityTimeRepository.putActivityTime(
-          ActivityTime(start, DateTime.now().toUtc(), Type.reading));
+      final at = await activityTimeRepository.putActivityTime(ActivityTime(
+          DateTime.now().toUtc().millisecondsSinceEpoch -
+              start.millisecondsSinceEpoch,
+          DateTime.utc(0),
+          Type.reading));
 
       if (at == null) return;
 
       book!.readTimes.add(at.id);
-      book!.lastReading = DateTime.now().toUtc();
       bookRepository.putBook(book!);
 
       timeMarkRepository.addTimeMarkForToday();

@@ -48,7 +48,7 @@ class EpubService {
         currentCompletedChapter: 0,
         currentPositionInChapter: 0,
         currentCompletedPositionInChapter: 0,
-        lastReading: DateTime(0),
+        updated: DateTime(0),
         hash: hash.toString(),
         readTimes: []);
 

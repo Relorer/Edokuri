@@ -1,5 +1,7 @@
 // 🌎 Project imports:
+import 'package:edokuri/src/controllers/common/date_controller/date_controller.dart';
 import 'package:edokuri/src/controllers/stores/learn_controller/learn_controller.dart';
+import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/models/entities/record.dart';
 import 'package:edokuri/src/models/recordState/record_state.dart';
 import 'package:edokuri/src/models/time_intervals_consts.dart';
@@ -60,7 +62,7 @@ abstract class RecordStep {
   }
 
   void markWord(Record record) {
-    record.lastReview = DateTime.now().toUtc();
+    record.lastReview = getIt<DateController>().now();
     record.reviewNumber++;
   }
 
