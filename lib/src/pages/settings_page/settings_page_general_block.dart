@@ -31,11 +31,8 @@ class SettingsPageGeneralBlock extends StatefulWidget {
 class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
   final secureStorage = getIt<FlutterSecureStorage>();
   TextEditingController controller = TextEditingController();
-  final List<String> voices = getIt<TTSController>()
-      .voices
-      .where((e) => (e as Map)["locale"].toString().contains("en-US"))
-      .map((e) => (e as Map)["name"].toString())
-      .toList();
+  final List<String> voiceNames =
+      getIt<TTSController>().voices.map((e) => e["name"].toString()).toList();
   String selectedVoice = getIt<SettingsController>().voice;
 
   void checkStateDownloadModel() async {
@@ -76,13 +73,12 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
                   svg: speakerSvg,
                   text: "TTS voice",
                   value: selectedVoice,
-                  values: voices,
+                  values: voiceNames,
                   onChanged: (value) {
                     setState(() {
                       selectedVoice = value;
                     });
                     getIt<SettingsController>().setVoice(value);
-                    getIt<TTSController>().setVoice(value);
                   }),
               SettingsPageSwitch(
                 svg: einkSvg,
