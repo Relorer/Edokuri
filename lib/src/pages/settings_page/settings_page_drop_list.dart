@@ -72,7 +72,9 @@ class SettingsPageDropList extends StatelessWidget {
                         ))
                     .toList(),
                 value: value,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  onChanged!(value.toString());
+                },
                 buttonStyleData: const ButtonStyleData(
                   elevation: 0,
                   height: 40,

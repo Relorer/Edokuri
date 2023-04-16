@@ -27,6 +27,7 @@ const _translatorOrderIndexes = "TRANSLATORORDERINDEXES";
 const _learningAutoPronouncing = "LEARNINGAUTOPRONOUNCING";
 const _ttsMaxRate = "TTSMAXRATE";
 const _ttsMinRate = "TTSMINRATE";
+const _voice = "VOICE";
 
 class SettingsControllerFactory {
   Future<SettingsController> getSettingsController() async {
@@ -65,6 +66,8 @@ abstract class SettingsControllerBase with Store {
   double ttsMaxRate = 0.3;
   @observable
   double ttsMinRate = 0.15;
+  @observable
+  String voice = "";
 
   var translators = [
     deeplSource,
@@ -128,6 +131,7 @@ abstract class SettingsControllerBase with Store {
     learningAutoPronouncing = _sp.getBool(_learningAutoPronouncing) ?? true;
     ttsMaxRate = _sp.getDouble(_ttsMaxRate) ?? 0.3;
     ttsMinRate = _sp.getDouble(_ttsMinRate) ?? 0.15;
+    voice = _sp.getString(_voice) ?? "";
   }
 
   @action
@@ -215,5 +219,11 @@ abstract class SettingsControllerBase with Store {
   Future setTtsMinRate(double value) async {
     await _sp.setDouble(_ttsMinRate, value);
     ttsMinRate = value;
+  }
+
+  @action
+  Future setVoice(String value) async {
+    await _sp.setString(_voice, value);
+    voice = value;
   }
 }

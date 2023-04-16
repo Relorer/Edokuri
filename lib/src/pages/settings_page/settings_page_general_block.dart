@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
+import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
 import 'package:edokuri/src/controllers/stores/package_controller/package_controller.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
@@ -30,6 +31,9 @@ class SettingsPageGeneralBlock extends StatefulWidget {
 class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
   final secureStorage = getIt<FlutterSecureStorage>();
   TextEditingController controller = TextEditingController();
+  final List<String> voiceNames =
+      getIt<TTSController>().voices.map((e) => e["name"].toString()).toList();
+  String selectedVoice = getIt<SettingsController>().voice;
 
   void checkStateDownloadModel() async {
     if (!getIt<MLController>().isLoaded) {
@@ -65,6 +69,17 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
                 values: const ["English"],
                 onChanged: (value) {},
               ),
+              SettingsPageDropList(
+                  svg: speakerSvg,
+                  text: "TTS voice",
+                  value: selectedVoice,
+                  values: voiceNames,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedVoice = value;
+                    });
+                    getIt<SettingsController>().setVoice(value);
+                  }),
               SettingsPageSwitch(
                 svg: einkSvg,
                 text: "Eink mode",
