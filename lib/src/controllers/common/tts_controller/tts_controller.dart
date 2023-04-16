@@ -42,6 +42,9 @@ class TTSController {
   }
 
   void speak(String text) async {
+    if (settingsController.voice == "") {
+      settingsController.voice = voices[0]["name"] as String;
+    }
     String settingsVoice = settingsController.voice;
     if (lastVoice != settingsVoice) {
       setVoice(settingsVoice);

@@ -67,7 +67,7 @@ abstract class SettingsControllerBase with Store {
   @observable
   double ttsMinRate = 0.15;
   @observable
-  String voice = "en-us-x-tpf-local";
+  String voice = "";
 
   var translators = [
     deeplSource,
@@ -131,7 +131,7 @@ abstract class SettingsControllerBase with Store {
     learningAutoPronouncing = _sp.getBool(_learningAutoPronouncing) ?? true;
     ttsMaxRate = _sp.getDouble(_ttsMaxRate) ?? 0.3;
     ttsMinRate = _sp.getDouble(_ttsMinRate) ?? 0.15;
-    voice = _sp.getString(_voice) ?? "en-us-x-tpf-local";
+    voice = _sp.getString(_voice) ?? "";
   }
 
   @action
