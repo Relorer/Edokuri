@@ -8,6 +8,7 @@ import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/record_with_info_card/record_word_info_card/record_info_section_header.dart';
 import 'package:edokuri/src/core/widgets/translated_by.dart';
 import 'package:edokuri/src/models/models.dart';
+import 'package:edokuri/src/pages/reader/widgets/tap_on_word_handler_provider.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoExamplesSection extends StatefulWidget {
@@ -38,6 +39,8 @@ class _RecordInfoExamplesSectionState extends State<RecordInfoExamplesSection> {
       children: [
         const RecordInfoSectionHeader("Usage examples"),
         ...widget.examples.map((element) => GestureDetector(
+              onDoubleTap: (() => TapOnWordHandlerProvider.of(context)
+                  .tapOnWordHandler(element.text, "")),
               onTap: () {
                 getIt<TTSController>().speak(element.text);
               },
