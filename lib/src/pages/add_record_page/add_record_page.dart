@@ -87,13 +87,17 @@ class AddRecordPageState extends State<AddRecordPage> {
     ];
 
     if (record.synonyms.isNotEmpty) {
-      sections.add(RecordInfoSynonymsSection(synonyms: record.synonyms));
+      sections.add(RecordInfoSynonymsSection(
+        synonyms: record.synonyms,
+        openCard: false,
+      ));
     }
     if (record.sentences.isNotEmpty) {
       sections.add(RecordInfoSentencesSection(
         key: ValueKey(record.id),
         sentences: record.sentences,
         showTranslation: true,
+        openCard: false,
       ));
     }
     if (record.examples.isNotEmpty) {
@@ -101,6 +105,7 @@ class AddRecordPageState extends State<AddRecordPage> {
         key: ValueKey("${record.id}example"),
         examples: record.examples,
         showTranslation: true,
+        openCard: false,
       ));
     }
     if (record.meanings.isNotEmpty) {
@@ -140,8 +145,8 @@ class AddRecordPageState extends State<AddRecordPage> {
                 child: BouncingCustomScrollView(
                   slivers: [
                     SliverSingleChild(Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: defaultMargin),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: doubleDefaultMargin),
                       child: Column(
                         children: [
                           TextFormFieldDefault(

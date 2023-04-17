@@ -16,9 +16,13 @@ import 'package:edokuri/src/theme/theme_consts.dart';
 class RecordInfoSentencesSection extends StatefulWidget {
   final bool showTranslation;
   final List<Example> sentences;
+  final bool openCard;
 
   const RecordInfoSentencesSection(
-      {super.key, required this.sentences, required this.showTranslation});
+      {super.key,
+      required this.sentences,
+      required this.showTranslation,
+      this.openCard = true});
 
   @override
   State<RecordInfoSentencesSection> createState() =>
@@ -42,8 +46,10 @@ class _RecordInfoSentencesSectionState
       children: [
         const RecordInfoSectionHeader("Sentences"),
         ...widget.sentences.map((element) => GestureDetector(
-              onDoubleTap: (() => TapOnWordHandlerProvider.of(context)
-                  .tapOnWordHandler(element.text, "")),
+              onDoubleTap: widget.openCard
+                  ? (() => TapOnWordHandlerProvider.of(context)
+                      .tapOnWordHandler(element.text, ""))
+                  : () => {},
               onTap: () {
                 getIt<TTSController>().speak(element.text);
               },

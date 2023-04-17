@@ -87,7 +87,10 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
     }
 
     if (isAnswerShown && record.synonyms.isNotEmpty) {
-      sections.add(RecordInfoSynonymsSection(synonyms: record.synonyms));
+      sections.add(RecordInfoSynonymsSection(
+        synonyms: record.synonyms,
+        openCard: false,
+      ));
     }
 
     if (record.sentences.isNotEmpty) {
@@ -95,6 +98,7 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
         key: ValueKey(record.id + isAnswerShown.toString()),
         sentences: record.sentences,
         showTranslation: isAnswerShown,
+        openCard: false,
       ));
     }
     if (record.examples.isNotEmpty) {
@@ -102,6 +106,7 @@ class LearnPageState extends State<LearnPage> with WidgetsBindingObserver {
         key: ValueKey("${record.id}${isAnswerShown}example"),
         examples: record.examples,
         showTranslation: isAnswerShown,
+        openCard: false,
       ));
     }
     if (isAnswerShown && record.meanings.isNotEmpty) {

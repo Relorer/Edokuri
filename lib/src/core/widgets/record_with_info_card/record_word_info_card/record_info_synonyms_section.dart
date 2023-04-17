@@ -11,10 +11,10 @@ import 'package:edokuri/src/theme/theme_consts.dart';
 
 class RecordInfoSynonymsSection extends StatelessWidget {
   final List<String> synonyms;
-  final bool pressable;
+  final bool openCard;
 
   const RecordInfoSynonymsSection(
-      {super.key, required this.synonyms, this.pressable = true});
+      {super.key, required this.synonyms, this.openCard = true});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class RecordInfoSynonymsSection extends StatelessWidget {
             synonyms.length,
             (int index) {
               return GestureDetector(
-                onDoubleTap: pressable
+                onDoubleTap: openCard
                     ? (() => TapOnWordHandlerProvider.of(context)
                         .tapOnWordHandler(synonyms[index].toLowerCase(), ""))
                     : () => {},
