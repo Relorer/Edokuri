@@ -50,6 +50,16 @@ class _RecordInfoTranslationsSectionState
     });
   }
 
+  Function(bool) getOnSelected(int index) => widget.changeable
+      ? (bool selected) {
+          setState(() {
+            translations[index].selected = !translations[index].selected;
+            translations[index].selectionDate =
+                selected ? DateTime.now().toUtc() : null;
+          });
+        }
+      : (_) => {};
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,40 +71,52 @@ class _RecordInfoTranslationsSectionState
           children: List<Widget>.generate(
             translations.length,
             (int index) {
-              return ChoiceChip(
-                shape: translations[index].source == googleSource ||
-                        translations[index].text.length > maxPhraseLength
-                    ? const RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(defaultRadius)))
-                    : null,
-                pressElevation: 3,
-                selectedColor: widget.changeable
-                    ? Theme.of(context).unknownWordColor.withOpacity(0.6)
-                    : Theme.of(context).unknownWordColor.withOpacity(0.2),
-                backgroundColor:
-                    Theme.of(context).unknownWordColor.withOpacity(0.2),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: const EdgeInsets.all(0),
-                visualDensity:
-                    const VisualDensity(horizontal: 0.0, vertical: 0),
-                label: Text(
-                  translations[index].text,
-                  softWrap: true,
-                  maxLines: 10000,
-                ),
-                selected: translations[index].selected,
-                onSelected: widget.changeable
-                    ? (bool selected) {
-                        setState(() {
-                          translations[index].selected =
-                              !translations[index].selected;
-                          translations[index].selectionDate =
-                              selected ? DateTime.now().toUtc() : null;
-                        });
-                      }
-                    : (_) => {},
-              );
+              return translations[index].text.length > maxPhraseLength
+                  ? ChoiceChip(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(defaultRadius),
+                        ),
+                      ),
+                      pressElevation: 3,
+                      selectedColor: widget.changeable
+                          ? Theme.of(context).unknownWordColor.withOpacity(0.6)
+                          : Theme.of(context).unknownWordColor.withOpacity(0.2),
+                      backgroundColor:
+                          Theme.of(context).unknownWordColor.withOpacity(0.2),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      visualDensity:
+                          const VisualDensity(horizontal: 0.0, vertical: 0.0),
+                      label: Text(
+                        translations[index].text,
+                        overflow: TextOverflow.clip,
+                        softWrap: true,
+                        maxLines: 10000,
+                      ),
+                      selected: translations[index].selected,
+                      onSelected: getOnSelected(index),
+                    )
+                  : ChoiceChip(
+                      pressElevation: 3,
+                      selectedColor: widget.changeable
+                          ? Theme.of(context).unknownWordColor.withOpacity(0.6)
+                          : Theme.of(context).unknownWordColor.withOpacity(0.2),
+                      backgroundColor:
+                          Theme.of(context).unknownWordColor.withOpacity(0.2),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      padding: const EdgeInsets.all(0),
+                      visualDensity:
+                          const VisualDensity(horizontal: 0.0, vertical: 0),
+                      label: Text(
+                        translations[index].text,
+                        softWrap: true,
+                        overflow: TextOverflow.clip,
+                        maxLines: 10000,
+                      ),
+                      selected: translations[index].selected,
+                      onSelected: getOnSelected(index),
+                    );
             },
           ).toList(),
         ),
