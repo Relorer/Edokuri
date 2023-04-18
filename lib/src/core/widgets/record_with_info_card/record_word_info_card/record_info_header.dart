@@ -42,6 +42,9 @@ class RecordInfoHeader extends StatelessWidget {
             transcription.isEmpty
                 ? Container()
                 : AutoSizeText(
+                    textAlign: title.contains("\n")
+                        ? TextAlign.left
+                        : TextAlign.center,
                     transcription,
                     style: Theme.of(context).cardSubtitleStyle,
                   ),

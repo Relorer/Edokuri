@@ -9,6 +9,7 @@ import 'package:edokuri/src/controllers/common/translator_controller/dictionary/
 import 'package:edokuri/src/controllers/common/translator_controller/dictionary/yandex_dictionary.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/example/oxfordlearnersdictionaries.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/forms/local_forms.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/transcriptions/local_transcriptions.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator/deepl_translator_service.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator/google_translator_service.dart';
@@ -26,6 +27,7 @@ class TranslatorController {
   final MSADictionary _msaDicService = MSADictionary();
   final YandexDictionary _yaDicService = YandexDictionary();
   final LocalForms _localForms = LocalForms();
+  final LocalTranscriptions _localTranscriptions = LocalTranscriptions();
   final OxfordLearnersDictionary _oxfordLearnersDictionary =
       OxfordLearnersDictionary();
 
@@ -68,6 +70,10 @@ class TranslatorController {
           : Future(() => null);
 
       await Future.wait([msaResult, yaResult]);
+    }
+
+    if (transcription.isEmpty && content.length < maxPhraseLength) {
+      transcription = await _localTranscriptions.getTranscription(content);
     }
 
     if (translations.isEmpty) {
