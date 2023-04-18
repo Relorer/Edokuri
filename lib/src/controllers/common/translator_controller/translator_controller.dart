@@ -9,6 +9,7 @@ import 'package:edokuri/src/controllers/common/translator_controller/dictionary/
 import 'package:edokuri/src/controllers/common/translator_controller/dictionary/yandex_dictionary.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/example/oxfordlearnersdictionaries.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/forms/local_forms.dart';
+import 'package:edokuri/src/controllers/common/translator_controller/transcriptions/local_transcriptions.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translate_source.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator/deepl_translator_service.dart';
 import 'package:edokuri/src/controllers/common/translator_controller/translator/google_translator_service.dart';
@@ -17,6 +18,7 @@ import 'package:edokuri/src/controllers/common/translator_controller/translator/
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
 
 const maxPhraseLength = 30;
@@ -26,6 +28,7 @@ class TranslatorController {
   final MSADictionary _msaDicService = MSADictionary();
   final YandexDictionary _yaDicService = YandexDictionary();
   final LocalForms _localForms = LocalForms();
+  final LocalTranscriptions _localTranscriptions = LocalTranscriptions();
   final OxfordLearnersDictionary _oxfordLearnersDictionary =
       OxfordLearnersDictionary();
 
@@ -68,6 +71,39 @@ class TranslatorController {
           : Future(() => null);
 
       await Future.wait([msaResult, yaResult]);
+    }
+
+    if (transcription.isEmpty) {
+      List<Paragraph> paragraphs = getParagraphs(content);
+      List<String> allTranscriptions = [];
+
+      if (paragraphs.length > 1 || paragraphs[0].pieces.length > 1) {
+        for (var paragraph in paragraphs) {
+          for (var piece in paragraph.pieces) {
+            allTranscriptions = [];
+            allTranscriptions = (await _localTranscriptions
+                .getTranscriptions(piece.content));
+
+            if (allTranscriptions.isEmpty) {
+              transcription += piece.content;
+            } else {
+              transcription += allTranscriptions[0];
+            }
+          }
+        }
+      } else {
+        allTranscriptions = await _localTranscriptions
+            .getTranscriptions(paragraphs[0].pieces[0].content);
+
+        if (allTranscriptions.isNotEmpty) {
+          for (var element in allTranscriptions) {
+            transcription += '[$element] ';
+          }
+        }
+        else{
+          transcription = '[${paragraphs[0].pieces[0].content}]';
+        }
+      }
     }
 
     if (translations.isEmpty) {

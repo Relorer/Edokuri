@@ -271,6 +271,7 @@ flutter:
     - assets/books/
     - assets/ca/
     - assets/words/
+    - assets/transcriptions/
     - assets/icons/
     - assets/images/
     - assets/translations/
