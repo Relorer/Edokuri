@@ -1,4 +1,3 @@
-import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:flutter/services.dart';
 
 class LocalTranscriptions {
