@@ -18,7 +18,6 @@ import 'package:edokuri/src/controllers/common/translator_controller/translator/
 import 'package:edokuri/src/controllers/stores/learn_controller/recordStep/record_step1.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
-import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:edokuri/src/models/models.dart';
 
 const maxPhraseLength = 30;
@@ -73,37 +72,8 @@ class TranslatorController {
       await Future.wait([msaResult, yaResult]);
     }
 
-    if (transcription.isEmpty) {
-      List<Paragraph> paragraphs = getParagraphs(content);
-      List<String> allTranscriptions = [];
-
-      if (paragraphs.length > 1 || paragraphs[0].pieces.length > 1) {
-        for (var paragraph in paragraphs) {
-          for (var piece in paragraph.pieces) {
-            allTranscriptions = [];
-            allTranscriptions = (await _localTranscriptions
-                .getTranscriptions(piece.content));
-
-            if (allTranscriptions.isEmpty) {
-              transcription += piece.content;
-            } else {
-              transcription += allTranscriptions[0];
-            }
-          }
-        }
-      } else {
-        allTranscriptions = await _localTranscriptions
-            .getTranscriptions(paragraphs[0].pieces[0].content);
-
-        if (allTranscriptions.isNotEmpty) {
-          for (var element in allTranscriptions) {
-            transcription += '[$element] ';
-          }
-        }
-        else{
-          transcription = '[${paragraphs[0].pieces[0].content}]';
-        }
-      }
+    if (transcription.isEmpty && content.length < maxPhraseLength) {
+      transcription = await _localTranscriptions.getTranscription(content);
     }
 
     if (translations.isEmpty) {
