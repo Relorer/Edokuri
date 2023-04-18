@@ -2,7 +2,6 @@ import 'package:edokuri/src/core/utils/string_utils.dart';
 import 'package:flutter/services.dart';
 
 class LocalTranscriptions {
-  Map<String, List<String>> wordsTranscriptions = {};
   String fileToString = "";
 
   Future<List<String>> getTranscriptions(String word) async {
