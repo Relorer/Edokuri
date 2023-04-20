@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:edokuri/src/controllers/stores/repositories/repositories.dart';
 import 'package:edokuri/src/core/service_locator.dart';
 import 'package:edokuri/src/core/widgets/app_bar_space_with_exp_coll.dart';
+import 'package:edokuri/src/pages/home_page/screens/library_screen/widgets/stats_chart_graph/stats_chart_graph.dart';
 import 'package:edokuri/src/pages/home_page/screens/person_screen/widgets/person_app_bar/person_app_bar_line.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page.dart';
 import 'package:edokuri/src/theme/svgs.dart';
@@ -85,38 +86,29 @@ class PersonAppBar extends StatelessWidget {
                   color: Theme.of(context).secondBackgroundColor,
                   child: Stack(
                     children: [
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: SvgPicture.asset(
-                          waveSvg,
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.white.withOpacity(0.8), BlendMode.srcIn),
-                        ),
-                      ),
                       Observer(builder: (_) {
                         final recordRepository = getIt<RecordRepository>();
-
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            PersonAppBarLine("Records:",
-                                recordRepository.records.length.toString()),
-                            PersonAppBarLine(
-                                "Known words:",
-                                getIt<KnownRecordsRepository>()
-                                    .count()
-                                    .toString()),
-                            PersonAppBarLine("reading:",
-                                "${(getIt<ActivityTimeRepository>().readingTimeInMinutes() / 60).toStringAsFixed(1)}H"),
-                            PersonAppBarLine("training:",
-                                "${(getIt<ActivityTimeRepository>().learningTimeInMinutes() / 60).toStringAsFixed(1)}H"),
-                            PersonAppBarLine("current streak:",
-                                "${getIt<TimeMarkRepository>().getStreak()}-days"),
-                          ],
-                        );
+                        return Stack(children: [
+                          const StatsChartGraph(),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              PersonAppBarLine("Records:",
+                                  recordRepository.records.length.toString()),
+                              PersonAppBarLine(
+                                  "Known words:",
+                                  getIt<KnownRecordsRepository>()
+                                      .count()
+                                      .toString()),
+                              PersonAppBarLine("reading:",
+                                  "${(getIt<ActivityTimeRepository>().readingTimeInMinutes() / 60).toStringAsFixed(1)}H"),
+                              PersonAppBarLine("training:",
+                                  "${(getIt<ActivityTimeRepository>().learningTimeInMinutes() / 60).toStringAsFixed(1)}H"),
+                              PersonAppBarLine("current streak:",
+                                  "${getIt<TimeMarkRepository>().getStreak()}-days"),
+                            ],
+                          )
+                        ]);
                       })
                     ],
                   )),
