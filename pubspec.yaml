@@ -47,6 +47,7 @@ dependencies:
   epubx:
     git: https://github.com/Relorer/epubx.dart
   file_picker: ^5.2.5
+  fl_chart: ^0.62.0
   flip_card: ^0.7.0
   flutter:
     sdk: flutter
