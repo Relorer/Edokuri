@@ -44,6 +44,10 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
 
   @override
   Widget build(BuildContext context) {
+    if (selectedVoice.isEmpty) {
+      selectedVoice = voiceNames.first;
+      getIt<SettingsController>().setVoice(selectedVoice);
+    }
     return SliverSingleChild(Material(
       color: Colors.transparent,
       child: SettingsPageBlockContainer(
