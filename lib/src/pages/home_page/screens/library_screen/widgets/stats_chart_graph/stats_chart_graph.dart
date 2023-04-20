@@ -20,7 +20,6 @@ class StatsChartGraph extends StatefulWidget {
 
 class _StatsChartGraphState extends State<StatsChartGraph> {
   final records = getIt<RecordRepository>().records;
-  List<Color> gradientColors = [Colors.amber, Colors.cyan];
 
   @override
   Widget build(BuildContext context) {
@@ -40,43 +39,34 @@ class _StatsChartGraphState extends State<StatsChartGraph> {
     map.forEach((key, value) {
       flSpotList.add(FlSpot(key.toDouble(), value));
     });
-    return Opacity(
-      opacity: 0.33,
-      child: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: LineChart(
-          LineChartData(
-              minY: 0,
-              minX: 0,
-              titlesData: FlTitlesData(show: false),
-              borderData: FlBorderData(show: false),
-              lineBarsData: [
-                LineChartBarData(
-                    color: const Color(0x00000000),
-                    isCurved: true,
-                    dotData: FlDotData(show: false),
-                    spots: flSpotList,
-                    belowBarData: BarAreaData(
-                      show: true,
-                      gradient: LinearGradient(
-                        colors: [
-                          ColorTween(
-                                  begin: gradientColors[0],
-                                  end: gradientColors[1])
-                              .lerp(0.2)!
-                              .withOpacity(0.5),
-                          ColorTween(
-                                  begin: gradientColors[0],
-                                  end: gradientColors[1])
-                              .lerp(0.2)!
-                              .withOpacity(0.5),
-                        ],
-                      ),
-                    ))
-              ]),
-        ),
-      ),
-    );
+    var widgetToReturn = map.length > 2
+        ? Opacity(
+            opacity: 0.33,
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: LineChart(
+                LineChartData(
+                    minY: 0,
+                    minX: 0,
+                    gridData: FlGridData(show: false),
+                    titlesData: FlTitlesData(show: false),
+                    borderData: FlBorderData(show: false),
+                    lineBarsData: [
+                      LineChartBarData(
+                          color: const Color(0x00000000),
+                          isCurved: true,
+                          dotData: FlDotData(show: false),
+                          spots: flSpotList,
+                          belowBarData: BarAreaData(
+                            show: true,
+                            color: Colors.white.withOpacity(0.2),
+                          ))
+                    ]),
+              ),
+            ),
+          )
+        : const SizedBox();
+    return widgetToReturn;
   }
 }

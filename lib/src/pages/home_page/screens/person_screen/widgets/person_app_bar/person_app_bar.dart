@@ -86,20 +86,10 @@ class PersonAppBar extends StatelessWidget {
                   color: Theme.of(context).secondBackgroundColor,
                   child: Stack(
                     children: [
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: SvgPicture.asset(
-                          waveSvg,
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.white.withOpacity(0.8), BlendMode.srcIn),
-                        ),
-                      ),
                       Observer(builder: (_) {
                         final recordRepository = getIt<RecordRepository>();
                         return Stack(children: [
+                          const StatsChartGraph(),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -117,8 +107,7 @@ class PersonAppBar extends StatelessWidget {
                               PersonAppBarLine("current streak:",
                                   "${getIt<TimeMarkRepository>().getStreak()}-days"),
                             ],
-                          ),
-                          const StatsChartGraph(),
+                          )
                         ]);
                       })
                     ],
