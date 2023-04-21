@@ -69,7 +69,7 @@ abstract class RecordStep {
   int roundDays(int interval) {
     if (interval > oneDay) {
       return (interval ~/ (oneDay) +
-              (((interval % (oneDay)) > (oneDay / 2)) ? oneDay : 0)) *
+              (((interval % (oneDay)) > (oneDay / 2)) ? 1 : 0)) *
           oneDay;
     }
     return interval;
