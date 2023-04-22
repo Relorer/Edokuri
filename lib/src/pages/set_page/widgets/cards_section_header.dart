@@ -33,10 +33,20 @@ class CardsSectionHeader extends StatefulWidget {
 
 class _CardsSectionHeaderState extends State<CardsSectionHeader> {
   final TextEditingController textEditingController = TextEditingController();
+  final _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        EasyDebounce.debounce('clear-search', const Duration(seconds: 10), () {
+          if (!_focusNode.hasFocus) {
+            textEditingController.clear();
+          }
+        });
+      }
+    });
     textEditingController.addListener(() {
       EasyDebounce.debounce('search-records', const Duration(seconds: 1), () {
         if (mounted) {
@@ -56,6 +66,7 @@ class _CardsSectionHeaderState extends State<CardsSectionHeader> {
       leftChild: Padding(
         padding: const EdgeInsets.only(right: defaultMargin),
         child: TextFormFieldWithoutPaddings(
+          focusNode: _focusNode,
           controller: textEditingController,
           onFieldSubmitted: _onFieldSubmitted,
           labelText: "Search",
