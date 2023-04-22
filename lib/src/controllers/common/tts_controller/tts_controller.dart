@@ -7,6 +7,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
 import 'package:edokuri/src/core/service_locator.dart';
+import 'package:edokuri/src/core/utils/iterable_extensions.dart';
 
 class TTSControllerFactory {
   Future<TTSController> getTTSController() async {
@@ -39,6 +40,22 @@ class TTSController {
       session.setActive(false);
     });
     tts.setLanguage("en-US");
+    if (settingsController.voice == "") {
+      tts.getDefaultVoice.then((value) {
+        if (value != null && value["name"] != null) {
+          final exist = voices.firstWhereOrNull(
+                  (element) => element["name"] == value["name"]) !=
+              null;
+          if (exist) {
+            settingsController.setVoice(value["name"]);
+            lastVoice = value["name"];
+          } else {
+            settingsController.setVoice(voices[0]["name"] as String);
+            lastVoice = voices[0]["name"] as String;
+          }
+        }
+      });
+    }
   }
 
   void speak(String text) async {

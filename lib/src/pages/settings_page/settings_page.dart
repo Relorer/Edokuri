@@ -1,7 +1,6 @@
 // 🎯 Dart imports:
 
 // 🐦 Flutter imports:
-import 'package:edokuri/src/pages/settings_page/settings_page_tts_block.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -25,6 +24,7 @@ import 'package:edokuri/src/pages/settings_page/settings_page_learning_block.dar
 import 'package:edokuri/src/pages/settings_page/settings_page_package_info.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_profile.dart';
 import 'package:edokuri/src/pages/settings_page/settings_page_translation_block.dart';
+import 'package:edokuri/src/pages/settings_page/settings_page_tts_block.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';

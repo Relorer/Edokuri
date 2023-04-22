@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/controllers/common/toast_controller/toast_controller.dart';
-import 'package:edokuri/src/controllers/common/tts_controller/tts_controller.dart';
 import 'package:edokuri/src/controllers/stores/ml_controller/ml_controller.dart';
 import 'package:edokuri/src/controllers/stores/package_controller/package_controller.dart';
 import 'package:edokuri/src/controllers/stores/settings_controller/settings_controller.dart';
@@ -62,7 +60,7 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
                 svg: languageSvg,
                 text: "Language",
                 value: "English",
-                values: const ["English"],
+                values: [SettingsPageDropListValue("English", "English")],
                 onChanged: (value) {},
               ),
               SettingsPageSwitch(

@@ -9,12 +9,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:edokuri/src/theme/theme.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
+class SettingsPageDropListValue {
+  final String value;
+  final String text;
+
+  SettingsPageDropListValue(this.value, this.text);
+}
+
 class SettingsPageDropList extends StatelessWidget {
   final String text;
   final String svg;
   final bool colorFilter;
   final String value;
-  final List<String> values;
+  final List<SettingsPageDropListValue> values;
   final ValueChanged<String>? onChanged;
 
   const SettingsPageDropList(
@@ -62,9 +69,9 @@ class SettingsPageDropList extends StatelessWidget {
               child: DropdownButton2(
                 items: values
                     .map((item) => DropdownMenuItem<String>(
-                          value: item,
+                          value: item.value,
                           child: Text(
-                            item,
+                            item.text,
                             style: const TextStyle(
                               fontSize: 14,
                             ),
@@ -93,6 +100,7 @@ class SettingsPageDropList extends StatelessWidget {
                   iconEnabledColor: lightGray,
                 ),
                 dropdownStyleData: const DropdownStyleData(
+                  maxHeight: 180,
                   decoration: BoxDecoration(
                     color: white,
                     borderRadius:
