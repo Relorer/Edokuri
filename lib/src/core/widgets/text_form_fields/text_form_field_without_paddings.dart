@@ -3,21 +3,30 @@ import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:edokuri/src/theme/theme.dart';
+import 'package:edokuri/src/theme/theme_consts.dart';
 
 class TextFormFieldWithoutPaddings extends StatelessWidget {
+  final FocusNode? focusNode;
   final void Function(String)? onFieldSubmitted;
   final TextEditingController? controller;
   final String? labelText;
 
   const TextFormFieldWithoutPaddings(
-      {super.key, this.controller, this.labelText, this.onFieldSubmitted});
+      {super.key,
+      this.controller,
+      this.labelText,
+      this.onFieldSubmitted,
+      this.focusNode});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       controller: controller,
       onFieldSubmitted: onFieldSubmitted,
-      scrollPadding: EdgeInsets.zero,
+      scrollPadding: EdgeInsets.only(
+          bottom: (MediaQuery.of(context).size.height),
+          top: doubleDefaultMargin + 10),
       cursorColor: Theme.of(context).secondBackgroundColor,
       decoration: InputDecoration(
         hoverColor: Theme.of(context).secondBackgroundColor,
