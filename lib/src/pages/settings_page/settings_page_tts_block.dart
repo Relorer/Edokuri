@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:edokuri/src/pages/settings_page/settings_page_drop_list.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -20,11 +21,24 @@ import 'package:edokuri/src/pages/settings_page/settings_page_switch.dart';
 import 'package:edokuri/src/theme/svgs.dart';
 import 'package:edokuri/src/theme/theme_consts.dart';
 
-class SettingsPageLearningBlock extends StatelessWidget {
-  const SettingsPageLearningBlock({super.key});
+class SettingsPageTTSBlock extends StatefulWidget {
+  const SettingsPageTTSBlock({super.key});
+
+  @override
+  State<SettingsPageTTSBlock> createState() => _SettingsPageTTSBlockState();
+}
+
+class _SettingsPageTTSBlockState extends State<SettingsPageTTSBlock> {
+  final List<String> voiceNames =
+      getIt<TTSController>().voices.map((e) => e["name"].toString()).toList();
+  String selectedVoice = getIt<SettingsController>().voice;
 
   @override
   Widget build(BuildContext context) {
+    if (selectedVoice.isEmpty) {
+      selectedVoice = voiceNames.first;
+      getIt<SettingsController>().setVoice(selectedVoice);
+    }
     return SliverSingleChild(Material(
       color: Colors.transparent,
       child: SettingsPageBlockContainer(
@@ -36,30 +50,36 @@ class SettingsPageLearningBlock extends StatelessWidget {
               const SizedBox(
                 height: defaultRadius,
               ),
-              SettingsPageSwitch(
-                svg: speakerSvg,
-                text: "Auto pronounce",
-                value: settings.learningAutoPronouncing,
-                onChanged: settings.setLearningAutoPronouncing,
+              SettingsPageDropList(
+                  svg: speakerSvg,
+                  text: "Voice",
+                  value: selectedVoice,
+                  values: voiceNames,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedVoice = value;
+                    });
+                    getIt<SettingsController>().setVoice(value);
+                  }),
+              SettingsPageSlider(
+                text: "Max rate",
+                min: 0.1,
+                value: settings.ttsMaxRate,
+                onChanged: settings.setTtsMaxRate,
+              ),
+              SettingsPageSlider(
+                text: "Min rate ",
+                min: 0.1,
+                value: settings.ttsMinRate,
+                onChanged: settings.setTtsMinRate,
               ),
               SettingPageButton(
-                text: "Clear known words",
-                onTap: () async {
-                  final count = getIt<KnownRecordsRepository>().count();
-                  final result = await showOkCancelAlertDialogStyled(
-                    context: context,
-                    title: "Are you sure you want to remove all known words?",
-                    message:
-                        "$count records will be deleted.${count > 1000 ? " This can take a long time" : ""}",
-                    okLabel: "Yes",
-                  );
-                  if (result == OkCancelResult.ok) {
-                    await getIt<KnownRecordsRepository>().removeAll();
-                    getIt<ToastController>()
-                        .showDefaultTost("Known words cleared");
-                  }
+                text: "Test TTS",
+                onTap: () {
+                  getIt<TTSController>()
+                      .speak("The quick brown fox jumps over the lazy dog.");
                 },
-                svg: trashSvg,
+                svg: bookMusicSvg,
               ),
               const SizedBox(
                 height: defaultRadius,

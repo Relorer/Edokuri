@@ -29,11 +29,7 @@ class SettingsPageGeneralBlock extends StatefulWidget {
 }
 
 class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
-  final secureStorage = getIt<FlutterSecureStorage>();
   TextEditingController controller = TextEditingController();
-  final List<String> voiceNames =
-      getIt<TTSController>().voices.map((e) => e["name"].toString()).toList();
-  String selectedVoice = getIt<SettingsController>().voice;
 
   void checkStateDownloadModel() async {
     if (!getIt<MLController>().isLoaded) {
@@ -44,10 +40,6 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
 
   @override
   Widget build(BuildContext context) {
-    if (selectedVoice.isEmpty) {
-      selectedVoice = voiceNames.first;
-      getIt<SettingsController>().setVoice(selectedVoice);
-    }
     return SliverSingleChild(Material(
       color: Colors.transparent,
       child: SettingsPageBlockContainer(
@@ -73,17 +65,6 @@ class _SettingsPageGeneralBlockState extends State<SettingsPageGeneralBlock> {
                 values: const ["English"],
                 onChanged: (value) {},
               ),
-              SettingsPageDropList(
-                  svg: speakerSvg,
-                  text: "TTS voice",
-                  value: selectedVoice,
-                  values: voiceNames,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedVoice = value;
-                    });
-                    getIt<SettingsController>().setVoice(value);
-                  }),
               SettingsPageSwitch(
                 svg: einkSvg,
                 text: "Eink mode",

@@ -1,6 +1,7 @@
 // 🎯 Dart imports:
 
 // 🐦 Flutter imports:
+import 'package:edokuri/src/pages/settings_page/settings_page_tts_block.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -106,6 +107,10 @@ class SettingsPageState extends State<SettingsPage> {
                       'You can change the priority and disable unwanted translators',
                 ),
                 const SettingsPageTranslationBlock(),
+                const SectionHeaderText(
+                  leftText: "TTS",
+                ),
+                const SettingsPageTTSBlock(),
                 const SectionHeaderText(
                   leftText: "Learning",
                 ),
